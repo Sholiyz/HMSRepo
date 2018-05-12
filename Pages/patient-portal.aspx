@@ -12,7 +12,7 @@
                               <li><a href="./dashboard.aspx">Dashboard</a></li>
                                 <li><a class="menu-top-active" href="./patient-portal.aspx">Patient's Portal</a></li>
                                 <li><a href="./nurse-portal.aspx">Nurse's Portal</a></li>
-                                <li><a href="./doctorsportal.aspx">Doctor's Portal</a></li>  
+                                <li><a href="./doctors-portal.aspx">Doctor's Portal</a></li>  
 
                             </ul>
                         </div>

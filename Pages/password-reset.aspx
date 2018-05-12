@@ -103,7 +103,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-12">
-                    &copy; 2018 MandE | By : <a href="http://www.relianceinfosystems.com/" target="_blank">RelianceInfoSystems</a>
+                     &copy; 2017 HMS | By : <a href="http://www.devgroupnet.com/" target="_blank">Devgroupnet</a>
                 </div>
 
             </div>
