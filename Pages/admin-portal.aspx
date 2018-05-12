@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Pages/hmsmaster.master" AutoEventWireup="true" CodeFile="doctors-portal.aspx.cs" Inherits="Pages_doctors_portal" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Pages/hmsmaster.master" AutoEventWireup="true" CodeFile="admin-portal.aspx.cs" Inherits="Pages_admin_portal" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" Runat="Server">
 </asp:Content>
@@ -9,11 +9,11 @@
                     <div class="col-md-12">
                         <div class="navbar-collapse collapse ">
                             <ul id="menu-top" class="nav navbar-nav navbar-right">
-                                <li><a href="./dashboard.aspx">Dashboard</a></li>
+                              <li><a href="./dashboard.aspx">Dashboard</a></li>
                                 <li><a href="./patient-portal.aspx">Patient's Portal</a></li>
                                 <li><a href="./nurse-portal.aspx">Nurse's Portal</a></li>
-                                <li><a class="menu-top-active" href="./doctors-portal.aspx">Doctor's Portal</a></li>
-                                <li><a href="./admin-portal.aspx">Admin Portal</a></li>                            
+                                <li><a href="./doctors-portal.aspx">Doctor's Portal</a></li>
+                                <li><a class="menu-top-active" href="./admin-portal.aspx">Admin Portal</a></li>   
                             </ul>
                         </div>
                     </div>
@@ -24,31 +24,27 @@
         <!-- MENU SECTION END-->
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="MainContent" Runat="Server">
-    <div class="content-wrapper">
+          <div class="content-wrapper">
             <div class="container">
                 <div class="row">
                     <div class="col-md-12">
-                        <h1 class="page-head-line">Doctor'S PORTAL</h1>
+                        <h1 class="page-head-line">PATIENT'S PORTAL</h1>
                     </div>
                 </div>
                 <div>
                     <div class="row">
                         <div class="col-md-12 col-sm-12">
                             <div class="panel panel-default">
-                                <%--<div class="panel-heading">
-                                  Nurse Portal  
-                                </div>--%>
+                                <div class="panel-heading">
+                                    Basic Tabs
+                                </div>
                                 <div class="panel-body">
                                     <ul class="nav nav-tabs">
-                                        <li class="active"><a href="#home" data-toggle="tab">Add Nurse</a>
+                                        <li class="active"><a href="#home" data-toggle="tab">Add Patient</a>
                                         </li>
-                                        <li class=""><a href="#profile" data-toggle="tab">View Nurse</a>
+                                        <li class=""><a href="#profile" data-toggle="tab">Profile</a>
                                         </li>
                                         <li class=""><a href="#messages" data-toggle="tab">Messages</a>
-                                        </li>
-                                        <li class=""><a href="#settings" data-toggle="tab">Settings</a>
-                                        </li> 
-                                        <li class=""><a href="#messages" data-toggle="tab">Manage Nurse Shift</a>
                                         </li>
                                         <li class=""><a href="#settings" data-toggle="tab">Settings</a>
                                         </li>
@@ -56,7 +52,7 @@
 
                                     <div class="tab-content">
                                         <div class="tab-pane fade active in" id="home">
-                                           <%-- <h4>Add New Nurse</h4>--%>
+                                            <h4>Add New Patient</h4>
                                             <div class="col-md-12">
                                                 <div class="panel panel-default">
                                                     <div class="panel-heading">
@@ -139,7 +135,7 @@
                                             <div class="col-md-12">
                                                 <div class="panel panel-default">
                                                     <div class="panel-heading">
-                                                        NURSE FORM
+                                                        PATIENT FORM
                                                     </div>
                                                     <div class="panel-body">
                                                         <div role="form">
@@ -246,5 +242,4 @@
         </div>
         <!-- CONTENT-WRAPPER SECTION END-->
 </asp:Content>
-
 
