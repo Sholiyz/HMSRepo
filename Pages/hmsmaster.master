@@ -1,4 +1,4 @@
-﻿<%@ Master Language="VB" CodeFile="hmsmaster.master.vb" Inherits="Pages_hmsmaster" %>
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeFile="hmsmaster.master.cs" Inherits="Pages_hmsmaster" %>
 
 <!DOCTYPE html>
 
@@ -83,7 +83,7 @@
                                     <h5><strong>Personal Bio : </strong></h5>
                                     Anim pariatur cliche reprehen derit.
                                 <hr />
-                                    <a href="#" class="btn btn-info btn-sm">Full Profile</a>&nbsp; <a href="login.html" class="btn btn-danger btn-sm">Logout</a>
+                                    <a href="#" class="btn btn-info btn-sm">Full Profile</a>&nbsp; <a href="./login.aspx" class="btn btn-danger btn-sm">Logout</a>
 
                                 </div>
                             </li>
@@ -123,3 +123,4 @@
     </form>
 </body>
 </html>
+

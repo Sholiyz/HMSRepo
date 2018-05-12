@@ -11,7 +11,7 @@
     <!--[if IE]>
         <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
         <![endif]-->
-    <title>E&M</title>
+    <title>HMS Portal</title>
     <!-- BOOTSTRAP CORE STYLE  -->
     <link href="../assets/css/bootstrap.css" rel="stylesheet" />
     <!-- FONT AWESOME ICONS  -->
@@ -84,14 +84,14 @@
                 </div>
                 <div class="col-md-6">
                    <hr />
-                     <h4> Login with <strong>M&E Account  :</strong></h4>
+                     <h4> Login with <strong>HMS Portal Account  :</strong></h4>
                     <br />
                      <label>Enter Email ID : </label>
                         <input type="text" class="form-control" />
                         <label>Enter Password :  </label>
                         <input type="password" class="form-control" />
                         <hr />
-                        <a href="./index.aspx" class="btn btn-info"><span class="glyphicon glyphicon-user"></span> &nbsp;Log Me In </a>&nbsp;
+                        <a href="./dashboard.aspx" class="btn btn-info"><span class="glyphicon glyphicon-user"></span> &nbsp;Log Me In </a>&nbsp;
                     <hr />
                     <%--<h4> Login with facebook <strong> / </strong>Google :</h4>
                     <br />
@@ -157,7 +157,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-12">
-                    &copy; 2018 MandE | By : <a href="http://www.relianceinfosystems.com/" target="_blank">RelianceInfoSystems</a>
+                     &copy; 2017 HMS | By : <a href="http://www.devgroupnet.com/" target="_blank">Devgroupnet</a>
                 </div>
 
             </div>

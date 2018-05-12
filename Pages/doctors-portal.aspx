@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="VB" MasterPageFile="~/Pages/hmsmaster.master" AutoEventWireup="false" CodeFile="doctorsportal.aspx.vb" Inherits="Pages_doctorsportal" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Pages/hmsmaster.master" AutoEventWireup="true" CodeFile="doctors-portal.aspx.cs" Inherits="Pages_doctors_portal" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" Runat="Server">
 </asp:Content>
@@ -9,10 +9,10 @@
                     <div class="col-md-12">
                         <div class="navbar-collapse collapse ">
                             <ul id="menu-top" class="nav navbar-nav navbar-right">
-                                <li><a href="./index.aspx">Dashboard</a></li>
-                                <li><a href="./patientform.aspx">Patient's Portal</a></li>
-                                <li><a href="nursepage.aspx">Nurse's Portal</a></li>
-                                <li><a class="menu-top-active" href="./doctorspage.aspx">Doctor's Portal</a></li>                            
+                                <li><a href="./dashboard.aspx">Dashboard</a></li>
+                                <li><a href="./patient-portal.aspx">Patient's Portal</a></li>
+                                <li><a href="./nurse-portal.aspx">Nurse's Portal</a></li>
+                                <li><a class="menu-top-active" href="./doctorsportal.aspx">Doctor's Portal</a></li>                            
                             </ul>
                         </div>
                     </div>
@@ -245,4 +245,5 @@
         </div>
         <!-- CONTENT-WRAPPER SECTION END-->
 </asp:Content>
+
 
