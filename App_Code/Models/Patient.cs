@@ -27,6 +27,12 @@
         [StringLength(10)]
         public string Gender { get; set; }
 
+        [StringLength(10)]
+        public string MaritalStatus { get; set; }
+
+        [StringLength(10)]
+        public string Occupation { get; set; }
+
         [StringLength(18)]
         public string PhoneNumber { get; set; }
 
@@ -39,7 +45,11 @@
         [Column(TypeName = "date")]
         public DateTime DOB { get; set; }
 
-        public int PlanID { get; set; }
+        [StringLength(150)]
+        public string NextofKinFullName { get; set; }
+
+        [StringLength(18)]
+        public string NextofKinPhoneNumber { get; set; }
 
         public int CreatedByID { get; set; }
 

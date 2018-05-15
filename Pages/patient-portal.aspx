@@ -99,6 +99,14 @@
                                                                     <asp:TextBox runat="server" CssClass="form-control"></asp:TextBox>
                                                                 </div>
                                                                 <div class="form-group">
+                                                                    <label class="control-label">OCCUPATION</label>
+                                                                    <asp:TextBox runat="server" CssClass="form-control"></asp:TextBox>
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <label class="control-label">MARITAL STATUS</label>
+                                                                    <asp:DropDownList runat="server" CssClass="form-control"></asp:DropDownList>
+                                                                </div>
+                                                                <div class="form-group">
                                                                     <label class="control-label">PHONE NUMBER</label>
                                                                     <asp:TextBox runat="server" TextMode="Phone" CssClass="form-control"></asp:TextBox>
                                                                 </div>
@@ -109,7 +117,15 @@
                                                                 <div class="form-group">
                                                                     <label class="control-label">DATE OF BIRTH (MM/DD/YYYY)</label>
                                                                     <asp:TextBox runat="server" TextMode="Date" CssClass="form-control"></asp:TextBox>
-                                                                </div>                                                               
+                                                                </div> 
+                                                                 <div class="form-group">
+                                                                    <label class="control-label">NEXT OF KIN FULLNAME</label>
+                                                                    <asp:TextBox runat="server" CssClass="form-control"></asp:TextBox>
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <label class="control-label">NEXT OF KIN PHONE NUMBER</label>
+                                                                    <asp:TextBox runat="server" TextMode="Phone" CssClass="form-control"></asp:TextBox>
+                                                                </div>                                                              
                                                                 <div class="form-group text-right">
                                                                     <asp:Button runat="server" CssClass="btn btn-default btn-primary" Text="PROCEED" />
                                                                 </div>
@@ -118,8 +134,7 @@
                                                             </div>
                                                         </div>
                                                     </div>
-                                                    <hr />
-                                                    <h4>VIEW PATIENT PROFILE</h4>
+                                                    <hr />                                                   
                                                     <div class="form-group" id="ViewPatientListDiv">                                                       
                                                            <div class="form-group">
                                                             <div class="row form-group">
@@ -215,6 +230,14 @@
                                                                     <asp:TextBox runat="server" CssClass="form-control"></asp:TextBox>
                                                                 </div>
                                                                 <div class="form-group">
+                                                                    <label class="control-label">OCCUPATION</label>
+                                                                    <asp:TextBox runat="server" CssClass="form-control"></asp:TextBox>
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <label class="control-label">MARITAL STATUS</label>
+                                                                    <asp:DropDownList runat="server" CssClass="form-control"></asp:DropDownList>
+                                                                </div>
+                                                                <div class="form-group">
                                                                     <label class="control-label">PHONE NUMBER</label>
                                                                     <asp:TextBox runat="server" TextMode="Phone" CssClass="form-control"></asp:TextBox>
                                                                 </div>
@@ -225,8 +248,15 @@
                                                                 <div class="form-group">
                                                                     <label class="control-label">DATE OF BIRTH (MM/DD/YYYY)</label>
                                                                     <asp:TextBox runat="server" TextMode="Date" CssClass="form-control"></asp:TextBox>
-                                                                </div>                                                              
-                                                               
+                                                                </div> 
+                                                                 <div class="form-group">
+                                                                    <label class="control-label">NEXT OF KIN FULLNAME</label>
+                                                                    <asp:TextBox runat="server" CssClass="form-control"></asp:TextBox>
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <label class="control-label">NEXT OF KIN PHONE NUMBER</label>
+                                                                    <asp:TextBox runat="server" TextMode="Phone" CssClass="form-control"></asp:TextBox>
+                                                                </div>
                                                                 <div class="form-group text-right">
                                                                     <asp:Button runat="server" CssClass="btn btn-default btn-primary" Text="UPDATE" />
                                                                 </div>
@@ -270,8 +300,16 @@
                                                                     <asp:TextBox runat="server" CssClass="form-control" ReadOnly="true"></asp:TextBox>
                                                                 </div>
                                                                 <div class="form-group">
-                                                                    <label class="control-label">PHONE NUMBER</label>
+                                                                    <label class="control-label">OCCUPATION</label>
                                                                     <asp:TextBox runat="server" CssClass="form-control" ReadOnly="true"></asp:TextBox>
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <label class="control-label">MARITAL STATUS</label>
+                                                                    <asp:TextBox runat="server" CssClass="form-control" ReadOnly="true"></asp:TextBox>
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <label class="control-label">PHONE NUMBER</label>
+                                                                    <asp:TextBox runat="server" TextMode="Phone" CssClass="form-control" ReadOnly="true"></asp:TextBox>
                                                                 </div>
                                                                 <div class="form-group">
                                                                     <label class="control-label">ADDRESS</label>
@@ -279,8 +317,16 @@
                                                                 </div>
                                                                 <div class="form-group">
                                                                     <label class="control-label">DATE OF BIRTH (MM/DD/YYYY)</label>
+                                                                    <asp:TextBox runat="server" TextMode="Date" CssClass="form-control" ReadOnly="true"></asp:TextBox>
+                                                                </div> 
+                                                                 <div class="form-group">
+                                                                    <label class="control-label">NEXT OF KIN FULLNAME</label>
                                                                     <asp:TextBox runat="server" CssClass="form-control" ReadOnly="true"></asp:TextBox>
-                                                                </div>                                                              
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <label class="control-label">NEXT OF KIN PHONE NUMBER</label>
+                                                                    <asp:TextBox runat="server" TextMode="Phone" CssClass="form-control" ReadOnly="true"></asp:TextBox>
+                                                                </div>                                                          
                                                                
                                                             </div>
                                                             <div class="col-lg-3">
@@ -398,6 +444,14 @@
                                                                     <asp:TextBox runat="server" CssClass="form-control"></asp:TextBox>
                                                                 </div>
                                                                 <div class="form-group">
+                                                                    <label class="control-label">OCCUPATION</label>
+                                                                    <asp:TextBox runat="server" CssClass="form-control"></asp:TextBox>
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <label class="control-label">MARITAL STATUS</label>
+                                                                    <asp:DropDownList runat="server" CssClass="form-control"></asp:DropDownList>
+                                                                </div>
+                                                                <div class="form-group">
                                                                     <label class="control-label">PHONE NUMBER</label>
                                                                     <asp:TextBox runat="server" TextMode="Phone" CssClass="form-control"></asp:TextBox>
                                                                 </div>
@@ -408,6 +462,14 @@
                                                                 <div class="form-group">
                                                                     <label class="control-label">DATE OF BIRTH (MM/DD/YYYY)</label>
                                                                     <asp:TextBox runat="server" TextMode="Date" CssClass="form-control"></asp:TextBox>
+                                                                </div> 
+                                                                 <div class="form-group">
+                                                                    <label class="control-label">NEXT OF KIN FULLNAME</label>
+                                                                    <asp:TextBox runat="server" CssClass="form-control"></asp:TextBox>
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <label class="control-label">NEXT OF KIN PHONE NUMBER</label>
+                                                                    <asp:TextBox runat="server" TextMode="Phone" CssClass="form-control"></asp:TextBox>
                                                                 </div>                                                               
                                                                 <div class="form-group text-right">
                                                                     <asp:Button runat="server" CssClass="btn btn-default btn-primary" Text="PROCEED" />
@@ -519,6 +581,14 @@
                                                                     <asp:TextBox runat="server" CssClass="form-control"></asp:TextBox>
                                                                 </div>
                                                                 <div class="form-group">
+                                                                    <label class="control-label">OCCUPATION</label>
+                                                                    <asp:TextBox runat="server" CssClass="form-control"></asp:TextBox>
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <label class="control-label">MARITAL STATUS</label>
+                                                                    <asp:DropDownList runat="server" CssClass="form-control"></asp:DropDownList>
+                                                                </div>
+                                                                <div class="form-group">
                                                                     <label class="control-label">PHONE NUMBER</label>
                                                                     <asp:TextBox runat="server" TextMode="Phone" CssClass="form-control"></asp:TextBox>
                                                                 </div>
@@ -529,9 +599,16 @@
                                                                 <div class="form-group">
                                                                     <label class="control-label">DATE OF BIRTH (MM/DD/YYYY)</label>
                                                                     <asp:TextBox runat="server" TextMode="Date" CssClass="form-control"></asp:TextBox>
-                                                                </div>                                                              
-                                                               
-                                                                <div class="form-group text-right">
+                                                                </div> 
+                                                                 <div class="form-group">
+                                                                    <label class="control-label">NEXT OF KIN FULLNAME</label>
+                                                                    <asp:TextBox runat="server" CssClass="form-control"></asp:TextBox>
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <label class="control-label">NEXT OF KIN PHONE NUMBER</label>
+                                                                    <asp:TextBox runat="server" TextMode="Phone" CssClass="form-control"></asp:TextBox>
+                                                                </div>                                                           
+                                                               <div class="form-group text-right">
                                                                     <asp:Button runat="server" CssClass="btn btn-default btn-primary" Text="UPDATE" />
                                                                 </div>
                                                             </div>
@@ -577,8 +654,16 @@
                                                                     <asp:TextBox runat="server" CssClass="form-control" ReadOnly="true"></asp:TextBox>
                                                                 </div>
                                                                 <div class="form-group">
-                                                                    <label class="control-label">PHONE NUMBER</label>
+                                                                    <label class="control-label">OCCUPATION</label>
                                                                     <asp:TextBox runat="server" CssClass="form-control" ReadOnly="true"></asp:TextBox>
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <label class="control-label">MARITAL STATUS</label>
+                                                                    <asp:TextBox runat="server" CssClass="form-control" ReadOnly="true"></asp:TextBox>
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <label class="control-label">PHONE NUMBER</label>
+                                                                    <asp:TextBox runat="server" TextMode="Phone" CssClass="form-control" ReadOnly="true"></asp:TextBox>
                                                                 </div>
                                                                 <div class="form-group">
                                                                     <label class="control-label">ADDRESS</label>
@@ -586,8 +671,16 @@
                                                                 </div>
                                                                 <div class="form-group">
                                                                     <label class="control-label">DATE OF BIRTH (MM/DD/YYYY)</label>
+                                                                    <asp:TextBox runat="server" TextMode="Date" CssClass="form-control" ReadOnly="true"></asp:TextBox>
+                                                                </div> 
+                                                                 <div class="form-group">
+                                                                    <label class="control-label">NEXT OF KIN FULLNAME</label>
                                                                     <asp:TextBox runat="server" CssClass="form-control" ReadOnly="true"></asp:TextBox>
-                                                                </div>                                                              
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <label class="control-label">NEXT OF KIN PHONE NUMBER</label>
+                                                                    <asp:TextBox runat="server" TextMode="Phone" CssClass="form-control" ReadOnly="true"></asp:TextBox>
+                                                                </div>                                                               
                                                                
                                                             </div>
                                                             <div class="col-lg-3">
@@ -601,14 +694,11 @@
                                         </div>
 
                                     </div>
-                                    <div class="tab-pane fade" id="messages">
+                                    <div class="tab-pane fade" id="consultation">
                                         <h4>Messages Tab</h4>
                                         <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
                                     </div>
-                                    <div class="tab-pane fade" id="settings">
-                                        <h4>Settings Tab</h4>
-                                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-                                    </div>
+                                    
                                 </div>
                             </div>
                         </div>

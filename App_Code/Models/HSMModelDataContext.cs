@@ -57,6 +57,14 @@
             modelBuilder.Entity<Patient>()
                 .Property(e => e.Gender)
                 .IsUnicode(false);
+
+            modelBuilder.Entity<Patient>()
+                .Property(e => e.MaritalStatus)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<Patient>()
+                .Property(e => e.Occupation)
+                .IsFixedLength();
         }
     }
 
