@@ -29,7 +29,7 @@ public partial class ResponseAlert : System.Web.UI.UserControl
     }
     protected void Page_Load(object sender, EventArgs e)
     {
-        //AlertContiner.Visible = true;
+        AlertContiner.Visible = false;
         //AlertDiv.Attributes["class"] = divsuccesscss;
         
         //AlertMessage.Text = "New Message";

@@ -121,16 +121,22 @@ public partial class Pages_admin_portal : System.Web.UI.Page
 
         //Response Alert Call Method
 
-        //ResponseAlert.NewMessage = "Show Alert Notification!";
-        //ResponseAlert.NoteType = "Success";
-        //ResponseAlert.NoteVisible = true;
+        ResponseAlert.NewMessage = "Show Alert Notification!";
+        ResponseAlert.NoteType = "Success";
+        ResponseAlert.NoteVisible = true;
 
-        //ResponseAlert.ShowNotification();
+        ResponseAlert.ShowNotification();
+        return;
 
+
+    }
+
+    protected void ShowPopAlert_Click(object sender, EventArgs e)
+    {
         //Call Pop up Alert
 
-        //Alert.CallAlert(Alert.Alerttype.warming.ToString(), "Check and try again.");
+        Alert.CallAlert(Alert.Alerttype.warming.ToString(), "Check and try again.");
         //Alert.CallAlert(Alert.Alerttype.error.ToString(), "Operation can not be done.");
-        //return;
+        return;
     }
 }
