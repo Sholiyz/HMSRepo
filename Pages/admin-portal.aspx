@@ -350,7 +350,7 @@
                             <div class="panel-body">
                                 <a class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">Click  Launch Demo Modal
                                 </a>
-                                <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+                                <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;" >
                                     <div class="modal-dialog">
                                         <div class="modal-content">
                                             <div class="modal-header">
