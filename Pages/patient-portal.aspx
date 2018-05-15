@@ -36,29 +36,27 @@
                         <div class="col-md-12 col-sm-12">
                             <div class="panel panel-default">
                                 <div class="panel-heading">
-                                    Basic Tabs
+                                    PATIENT MANAGEMENT
                                 </div>
                                 <div class="panel-body">
                                     <ul class="nav nav-tabs">
-                                        <li class="active"><a href="#home" data-toggle="tab">Add Patient</a>
+                                        <li class="active"><a href="#patient" data-toggle="tab">PATIENT MANAGEMENT</a>
                                         </li>
-                                        <li class=""><a href="#profile" data-toggle="tab">Profile</a>
+                                        <li class=""><a href="#familyplan" data-toggle="tab">FAMILY PLAN MANAGEMENT</a>
                                         </li>
-                                        <li class=""><a href="#messages" data-toggle="tab">Messages</a>
+                                        <li class=""><a href="#consultation" data-toggle="tab">CONSULTATION</a>
                                         </li>
                                         <li class=""><a href="#settings" data-toggle="tab">Settings</a>
                                         </li>
                                     </ul>
 
                                     <div class="tab-content">
-                                        <div class="tab-pane fade active in" id="home">
-                                            <h4>Add New Patient</h4>
-                                            <div class="col-md-12">
-                                                <div class="panel panel-default">
-                                                    <div class="panel-heading">
-                                                        PATIENT FORM
-                                                    </div>
+                                        <div class="tab-pane fade active in" id="patient">
+                                           <div class="col-md-12">
+                                                <div class="panel panel-default">                                                    
                                                     <div class="panel-body">
+                                                        <hr />
+                                                    <h4> PATIENT FORM </h4>
                                                         <div>
                                                             <div class="row">
                                                                 <div class="col-md-6">

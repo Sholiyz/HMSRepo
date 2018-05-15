@@ -32,7 +32,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-12">
-                    <h1 class="page-head-line">PATIENT'S PORTAL</h1>
+                    <h1 class="page-head-line">MANAGEMENT'S PORTAL</h1>
                 </div>
             </div>
             <uc1:ResponseAlert runat="server" ID="ResponseAlert" />
@@ -818,6 +818,10 @@
                                                                     <asp:TextBox runat="server" CssClass="form-control"></asp:TextBox>
                                                                 </div>
                                                                 <div class="form-group">
+                                                                    <label class="control-label">PLAN MAXIMUM MEMBER</label>
+                                                                    <asp:TextBox runat="server" TextMode="Number" CssClass="form-control"></asp:TextBox>
+                                                                </div>
+                                                                <div class="form-group">
                                                                     <label class="control-label">DESCRIPTION</label>
                                                                     <asp:TextBox runat="server" CssClass="form-control" TextMode="MultiLine"></asp:TextBox>
                                                                 </div>
@@ -901,6 +905,10 @@
                                                                     <asp:TextBox runat="server" CssClass="form-control"></asp:TextBox>
                                                                 </div>
                                                                 <div class="form-group">
+                                                                    <label class="control-label">PLAN MAXIMUM MEMBER</label>
+                                                                    <asp:TextBox runat="server" TextMode="Number" CssClass="form-control"></asp:TextBox>
+                                                                </div>
+                                                                <div class="form-group">
                                                                     <label class="control-label">DESCRIPTION</label>
                                                                     <asp:TextBox runat="server" CssClass="form-control" TextMode="MultiLine"></asp:TextBox>
                                                                 </div>
@@ -922,6 +930,10 @@
                                                                 <div class="form-group">
                                                                     <label class="control-label">PATIENT PLAN</label>
                                                                     <asp:TextBox runat="server" CssClass="form-control" ReadOnly="true"></asp:TextBox>
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <label class="control-label">PLAN MAXIMUM MEMBER</label>
+                                                                    <asp:TextBox runat="server" TextMode="Number" CssClass="form-control" ReadOnly="true"></asp:TextBox>
                                                                 </div>
                                                                 <div class="form-group">
                                                                     <label class="control-label">DESCRIPTION</label>
