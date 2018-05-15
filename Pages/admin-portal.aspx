@@ -231,7 +231,7 @@
                                                                     <asp:TextBox runat="server" CssClass="form-control"></asp:TextBox>
                                                                 </div>
                                                                 <div class="form-group text-right">
-                                                                    <asp:Button runat="server" CssClass="btn btn-default btn-primary" Text="Proceed" />
+                                                                    <asp:Button runat="server" CssClass="btn btn-default btn-primary" Text="PROCEED" />
                                                                 </div>
                                                             </div>
                                                             <div class="col-lg-3">
@@ -351,8 +351,6 @@
                                                                     <label class="control-label">USERNAME</label>
                                                                     <asp:TextBox runat="server" CssClass="form-control" ReadOnly="true"></asp:TextBox>
                                                                 </div>
-
-
                                                             </div>
                                                             <div class="col-lg-3">
                                                             </div>
