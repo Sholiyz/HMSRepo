@@ -124,7 +124,8 @@ public partial class Pages_admin_portal : System.Web.UI.Page
         ResponseAlert.NewMessage = "Show Alert Notification!";
         ResponseAlert.NoteType = "Success";
         ResponseAlert.NoteVisible = true;
-
+        
+       
         ResponseAlert.ShowNotification();
         return;
 
