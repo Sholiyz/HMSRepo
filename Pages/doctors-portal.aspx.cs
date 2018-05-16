@@ -16,8 +16,9 @@ public partial class Pages_doctors_portal : System.Web.UI.Page
             Session["SessionId"] = ViewState["ViewStateId"].ToString();
             HideDivsDocTab();
             ViewDoctorListDiv.Visible = true;
-            DoctorListGridView.DataSource = LoadOrderItems();
-            DoctorListGridView.DataBind();
+            //DoctorListGridView.DataSource = LoadOrderItems();
+            //DoctorListGridView.DataBind();
+            BindGrid();
         }
         else
         {
@@ -330,8 +331,10 @@ public partial class Pages_doctors_portal : System.Web.UI.Page
     {
         try
         {
-            var data = from d in context.Doctors
-                       select d;
+            //var data = from d in context.Doctors
+            //           select d;
+
+            List<Doctor> data = context.Doctors.Where(doc => doc.IsDeleted == false).ToList();
             DoctorListGridView.DataSource = data;
             DoctorListGridView.DataBind();
         }

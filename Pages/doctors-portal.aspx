@@ -143,8 +143,8 @@
                                                                     <asp:Button runat="server" CssClass="btn btn-default btn-primary text-right" Text="Add Doctor" ID="btnAddNewDoc" OnClick="btnAddNewDoc_Click" /></div>
                                                             </div>
                                                         </div>
-                                                        <div class="table-responsive">                                                           
-                                                            <asp:GridView ID="DoctorListGridView" runat="server" AutoGenerateColumns="false" CssClass="table  table-bordered " DataKeyNames="ID" EmptyDataText="There are no data records to display." OnRowCommand="DoctorListGridView_RowCommand">
+                                                        <div class="table-responsive center-block">                                                           
+                                                            <asp:GridView ID="DoctorListGridView" runat="server" AutoGenerateColumns="false" CssClass="table  table-bordered text-center" DataKeyNames="ID" EmptyDataText="There are no data records to display." OnRowCommand="DoctorListGridView_RowCommand">
                                                                 <Columns>
                                                                     <%--<asp:BoundField DataField="ID" HeaderText="Order ID" SortExpression="ID">
                                                                         <HeaderStyle CssClass="hide" HorizontalAlign="Left" />
