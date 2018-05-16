@@ -9,7 +9,7 @@ public partial class Pages_patient_portal : System.Web.UI.Page
 {
     protected void Page_Load(object sender, EventArgs e)
     {
-        //UpdateDisplayPannel();
+        UpdateDisplayPannel();
     }
 
     public string GetIsProcessStatus(bool value)

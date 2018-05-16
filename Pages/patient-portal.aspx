@@ -4,6 +4,7 @@
 
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="Server">
+    
    <script type="text/javascript">
     var selected_tab = 1;
     $(function () {
@@ -144,8 +145,15 @@
                                                                     <label class="control-label">NEXT OF KIN PHONE NUMBER</label>
                                                                     <asp:TextBox runat="server" TextMode="Phone" CssClass="form-control"></asp:TextBox>
                                                                 </div>                                                              
-                                                                <div class="form-group text-right">
-                                                                    <asp:Button runat="server" CssClass="btn btn-default btn-primary" Text="PROCEED" />
+                                                                 <div class="form-group">
+                                                                     <div class="row">
+                                                                    <div class="col-lg-6 text-left">
+                                                                        <asp:Button runat="server" CssClass="btn btn-default btn-danger" Text="BACK" />
+                                                                    </div>
+                                                                     <div class="col-lg-6 text-right">
+                                                                         <asp:Button runat="server" CssClass="btn btn-default btn-primary" Text="PROCEED" />
+                                                                    </div>                                                                    
+                                                                </div>
                                                                 </div>
                                                             </div>
                                                             <div class="col-lg-3">
@@ -275,8 +283,15 @@
                                                                     <label class="control-label">NEXT OF KIN PHONE NUMBER</label>
                                                                     <asp:TextBox runat="server" TextMode="Phone" CssClass="form-control"></asp:TextBox>
                                                                 </div>
-                                                                <div class="form-group text-right">
-                                                                    <asp:Button runat="server" CssClass="btn btn-default btn-primary" Text="UPDATE" />
+                                                                 <div class="form-group">
+                                                                     <div class="row">
+                                                                    <div class="col-lg-6 text-left">
+                                                                        <asp:Button runat="server" CssClass="btn btn-default btn-danger" Text="BACK" />
+                                                                    </div>
+                                                                     <div class="col-lg-6 text-right">
+                                                                         <asp:Button runat="server" CssClass="btn btn-default btn-primary" Text="UPDATE" />
+                                                                    </div>                                                                    
+                                                                </div>
                                                                 </div>
                                                             </div>
                                                             <div class="col-lg-3">
@@ -345,7 +360,14 @@
                                                                     <label class="control-label">NEXT OF KIN PHONE NUMBER</label>
                                                                     <asp:TextBox runat="server" TextMode="Phone" CssClass="form-control" ReadOnly="true"></asp:TextBox>
                                                                 </div>                                                          
-                                                               
+                                                                <div class="form-group">
+                                                                     <div class="row">
+                                                                    <div class="col-lg-12 text-left">
+                                                                        <asp:Button runat="server" CssClass="btn btn-default btn-danger" Text="BACK" />
+                                                                    </div>
+                                                                                                                                        
+                                                                </div>
+                                                                </div>
                                                             </div>
                                                             <div class="col-lg-3">
                                                             </div>
@@ -489,8 +511,15 @@
                                                                     <label class="control-label">NEXT OF KIN PHONE NUMBER</label>
                                                                     <asp:TextBox runat="server" TextMode="Phone" CssClass="form-control"></asp:TextBox>
                                                                 </div>                                                               
-                                                                <div class="form-group text-right">
-                                                                    <asp:Button runat="server" CssClass="btn btn-default btn-primary" Text="PROCEED" />
+                                                                 <div class="form-group">
+                                                                     <div class="row">
+                                                                    <div class="col-lg-6 text-left">
+                                                                        <asp:Button runat="server" CssClass="btn btn-default btn-danger" Text="BACK" />
+                                                                    </div>
+                                                                     <div class="col-lg-6 text-right">
+                                                                         <asp:Button runat="server" CssClass="btn btn-default btn-primary" Text="PROCEED" />
+                                                                    </div>                                                                    
+                                                                </div>
                                                                 </div>
                                                             </div>
                                                             <div class="col-lg-3">
@@ -626,8 +655,15 @@
                                                                     <label class="control-label">NEXT OF KIN PHONE NUMBER</label>
                                                                     <asp:TextBox runat="server" TextMode="Phone" CssClass="form-control"></asp:TextBox>
                                                                 </div>                                                           
-                                                               <div class="form-group text-right">
-                                                                    <asp:Button runat="server" CssClass="btn btn-default btn-primary" Text="UPDATE" />
+                                                                <div class="form-group">
+                                                                     <div class="row">
+                                                                    <div class="col-lg-6 text-left">
+                                                                        <asp:Button runat="server" CssClass="btn btn-default btn-danger" Text="BACK" />
+                                                                    </div>
+                                                                     <div class="col-lg-6 text-right">
+                                                                         <asp:Button runat="server" CssClass="btn btn-default btn-primary" Text="UPDATE" />
+                                                                    </div>                                                                    
+                                                                </div>
                                                                 </div>
                                                             </div>
                                                             <div class="col-lg-3">
@@ -699,7 +735,14 @@
                                                                     <label class="control-label">NEXT OF KIN PHONE NUMBER</label>
                                                                     <asp:TextBox runat="server" TextMode="Phone" CssClass="form-control" ReadOnly="true"></asp:TextBox>
                                                                 </div>                                                               
-                                                               
+                                                                <div class="form-group">
+                                                                     <div class="row">
+                                                                    <div class="col-lg-12 text-left">
+                                                                        <asp:Button runat="server" CssClass="btn btn-default btn-danger" Text="BACK" />
+                                                                    </div>
+                                                                                                                                      
+                                                                </div>
+                                                                </div>
                                                             </div>
                                                             <div class="col-lg-3">
                                                             </div>
