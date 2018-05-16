@@ -63,7 +63,7 @@
                                            <%-- <h4>Add New Nurse</h4>--%>
                                             <div class="col-md-12">
                                                 <div class="panel panel-default">
-                                                    <<div class="panel-body">
+                                                    <div class="panel-body">
                                                     <hr />
                                                         <%-- ========================ADD NEW DOCTOR ================================ --%>
                                                     <h4>ADD NEW DOCTOR</h4>
@@ -122,10 +122,18 @@
                                                                 <div class="form-group">
                                                                     <label class="control-label">NEXT OF KIN PHONE NUMBER</label>
                                                                     <asp:TextBox runat="server" TextMode="Phone" CssClass="form-control" required ID="txtKinPhone"></asp:TextBox>
-                                                                </div>                                                              
-                                                                <div class="form-group text-right">
-                                                                    <asp:Button runat="server" CssClass="btn btn-default btn-primary" Text="PROCEED" ID="btnProceed" OnClick="btnProceed_Click" />
+                                                                </div> 
+                                                                 <div class="form-group">
+                                                                     <div class="row">
+                                                                    <div class="col-lg-6 text-left">
+                                                                        <asp:Button runat="server" CssClass="btn btn-default btn-danger" Text="BACK" />
+                                                                    </div>
+                                                                     <div class="col-lg-6 text-right">
+                                                                         <asp:Button runat="server" CssClass="btn btn-default btn-primary" Text="PROCEED" ID="btnProceed" OnClick="btnProceed_Click" />
+                                                                    </div>                                                                    
                                                                 </div>
+                                                                </div>                                                             
+                                                                
                                                             </div>
                                                             <div class="col-lg-3">
                                                             </div>
@@ -140,7 +148,7 @@
                                                                     <h4 class="text-left">DOCTOR LIST</h4>
                                                                 </div>
                                                                 <div class="col-md-6 text-right">
-                                                                    <asp:Button runat="server" CssClass="btn btn-default btn-primary text-right" Text="Add Doctor" ID="btnAddNewDoc" OnClick="btnAddNewDoc_Click" /></div>
+                                                                    <asp:Button runat="server" CssClass="btn btn-default btn-primary text-right" Text="ADD DOCTOR" ID="btnAddNewDoc" OnClick="btnAddNewDoc_Click" /></div>
                                                             </div>
                                                         </div>
                                                         <div class="table-responsive center-block">                                                           
@@ -279,9 +287,17 @@
                                                                     <label class="control-label">NEXT OF KIN PHONE NUMBER</label>
                                                                     <asp:TextBox ID="txtKinPhoneE" runat="server" TextMode="Phone" CssClass="form-control"></asp:TextBox>
                                                                 </div>
-                                                                <div class="form-group text-right">
-                                                                    <asp:Button runat="server" CssClass="btn btn-default btn-primary" Text="UPDATE" ID="btnUpdate" OnClick="btnUpdate_Click" />
+                                                                 <div class="form-group">
+                                                                     <div class="row">
+                                                                    <div class="col-lg-6 text-left">
+                                                                        <asp:Button runat="server" CssClass="btn btn-default btn-danger" Text="BACK" />
+                                                                    </div>
+                                                                     <div class="col-lg-6 text-right">
+                                                                         <asp:Button runat="server" CssClass="btn btn-default btn-primary" Text="UPDATE" ID="btnUpdate" OnClick="btnUpdate_Click" />
+                                                                    </div>                                                                    
                                                                 </div>
+                                                                </div>
+                                                               
                                                             </div>
                                                             <div class="col-lg-3">
                                                             </div>
@@ -341,12 +357,18 @@
                                                                 <div class="form-group">
                                                                     <label class="control-label">NEXT OF KIN PHONE NUMBER</label>
                                                                     <asp:TextBox runat="server" TextMode="Phone" CssClass="form-control" ReadOnly="true" ID="txtKinPhoneV"></asp:TextBox>
-                                                                </div>                                                          
+                                                                </div> 
+                                                                     <div class="form-group">
+                                                                     <div class="row">
+                                                                    <div class="col-lg-12 text-left">
+                                                                        <asp:Button runat="server" CssClass="btn btn-default btn-danger" Text="BACK" /><asp:Button runat="server" CssClass="btn btn-default btn-primary text-right" Text="BACK" ID="btnBackView" OnClick="btnBackView_Click" />
+                                                                    </div>
+                                                                                                                                       
+                                                                </div>
+                                                                </div>                                                     
                                                                
                                                             </div>
-                                                           
-                                                                <div class="col-md-6 text-left">
-                                                                    <asp:Button runat="server" CssClass="btn btn-default btn-primary text-right" Text="Back" ID="btnBackView" OnClick="btnBackView_Click" /></div>
+                            
                                                             
                                                         </div>
                                                     </div>
