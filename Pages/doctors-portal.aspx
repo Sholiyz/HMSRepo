@@ -65,8 +65,9 @@
                                                 <div class="panel panel-default">
                                                     <<div class="panel-body">
                                                     <hr />
+                                                        <%-- ========================ADD NEW DOCTOR ================================ --%>
                                                     <h4>ADD NEW DOCTOR</h4>
-                                                    <div class="form-group" id="AddNewDoctorDiv">
+                                                    <div class="form-group" id="AddNewDoctorDiv" runat="server">
                                                         <div class="row">
                                                             <div class="col-lg-3">
                                                             </div>
@@ -84,67 +85,68 @@
                                                                 </div>
                                                                 <div class="form-group">
                                                                     <label class="control-label">FIRSTNAME</label>
-                                                                    <asp:TextBox runat="server" CssClass="form-control"></asp:TextBox>
+                                                                    <asp:TextBox runat="server" CssClass="form-control" required ID="txtFirstname"></asp:TextBox>
                                                                 </div>
                                                                 <div class="form-group">
                                                                     <label class="control-label">LASTNAME</label>
-                                                                    <asp:TextBox runat="server" CssClass="form-control"></asp:TextBox>
+                                                                    <asp:TextBox runat="server" CssClass="form-control" required ID="txtLastname"></asp:TextBox>
                                                                 </div>
                                                                 <div class="form-group">
                                                                     <label class="control-label">OTHERNAMES</label>
-                                                                    <asp:TextBox runat="server" CssClass="form-control"></asp:TextBox>
+                                                                    <asp:TextBox runat="server" CssClass="form-control" required ID="txtOthername"></asp:TextBox>
                                                                 </div>                                                              
                                                                 <div class="form-group">
                                                                     <label class="control-label">GENDER</label>
-                                                                    <asp:TextBox runat="server" CssClass="form-control"></asp:TextBox>
+                                                                    <asp:DropDownList runat="server" CssClass="form-control" required ID="ddlGender"></asp:DropDownList>
                                                                 </div>                                                                
                                                                 <div class="form-group">
                                                                     <label class="control-label">MARITAL STATUS</label>
-                                                                    <asp:DropDownList runat="server" CssClass="form-control"></asp:DropDownList>
+                                                                    <asp:DropDownList runat="server" CssClass="form-control" required ID="ddlMaritalStatus"></asp:DropDownList>
                                                                 </div>
                                                                 <div class="form-group">
                                                                     <label class="control-label">PHONE NUMBER</label>
-                                                                    <asp:TextBox runat="server" TextMode="Phone" CssClass="form-control"></asp:TextBox>
+                                                                    <asp:TextBox runat="server" TextMode="Phone" CssClass="form-control" required ID="txtPhone"></asp:TextBox>
                                                                 </div>
                                                                 <div class="form-group">
                                                                     <label class="control-label">ADDRESS</label>
-                                                                    <asp:TextBox runat="server" CssClass="form-control"></asp:TextBox>
+                                                                    <asp:TextBox runat="server" CssClass="form-control" TextMode="MultiLine" Rows="3" required ID="txtAddress"></asp:TextBox>
                                                                 </div>
                                                                 <div class="form-group">
                                                                     <label class="control-label">DATE OF BIRTH (MM/DD/YYYY)</label>
-                                                                    <asp:TextBox runat="server" TextMode="Date" CssClass="form-control"></asp:TextBox>
+                                                                    <asp:TextBox runat="server" TextMode="Date" CssClass="form-control" required ID="txtDOB"></asp:TextBox>
                                                                 </div> 
                                                                  <div class="form-group">
                                                                     <label class="control-label">NEXT OF KIN FULLNAME</label>
-                                                                    <asp:TextBox runat="server" CssClass="form-control"></asp:TextBox>
+                                                                    <asp:TextBox runat="server" CssClass="form-control" required ID="txtKinFullname"></asp:TextBox>
                                                                 </div>
                                                                 <div class="form-group">
                                                                     <label class="control-label">NEXT OF KIN PHONE NUMBER</label>
-                                                                    <asp:TextBox runat="server" TextMode="Phone" CssClass="form-control"></asp:TextBox>
+                                                                    <asp:TextBox runat="server" TextMode="Phone" CssClass="form-control" required ID="txtKinPhone"></asp:TextBox>
                                                                 </div>                                                              
                                                                 <div class="form-group text-right">
-                                                                    <asp:Button runat="server" CssClass="btn btn-default btn-primary" Text="PROCEED" />
+                                                                    <asp:Button runat="server" CssClass="btn btn-default btn-primary" Text="PROCEED" ID="btnProceed" OnClick="btnProceed_Click" />
                                                                 </div>
                                                             </div>
                                                             <div class="col-lg-3">
                                                             </div>
                                                         </div>
                                                     </div>
-                                                    <hr />                                                   
-                                                    <div class="form-group" id="ViewDoctorListDiv">                                                       
+                                                    <hr />   
+                                                        <%-- ==============================VIEW DOCTOR LIST ===================================== --%>                                                
+                                                    <div class="form-group" id="ViewDoctorListDiv" runat="server">                                                       
                                                            <div class="form-group">
                                                             <div class="row form-group">
                                                                 <div class="col-md-6 text-left">
                                                                     <h4 class="text-left">DOCTOR LIST</h4>
                                                                 </div>
                                                                 <div class="col-md-6 text-right">
-                                                                    <asp:Button runat="server" CssClass="btn btn-default btn-primary text-right" Text="ADD NEW PATIENT" /></div>
+                                                                    <asp:Button runat="server" CssClass="btn btn-default btn-primary text-right" Text="Add Doctor" ID="btnAddNewDoc" OnClick="btnAddNewDoc_Click" /></div>
                                                             </div>
                                                         </div>
                                                         <div class="table-responsive">                                                           
-                                                            <asp:GridView ID="DoctorListGridView" runat="server" AutoGenerateColumns="false" CssClass="table  table-bordered " DataKeyNames="ID" EmptyDataText="There are no data records to display.">
+                                                            <asp:GridView ID="DoctorListGridView" runat="server" AutoGenerateColumns="false" CssClass="table  table-bordered " DataKeyNames="ID" EmptyDataText="There are no data records to display." OnRowCommand="DoctorListGridView_RowCommand">
                                                                 <Columns>
-                                                                    <asp:BoundField DataField="ID" HeaderText="Order ID" SortExpression="ID">
+                                                                    <%--<asp:BoundField DataField="ID" HeaderText="Order ID" SortExpression="ID">
                                                                         <HeaderStyle CssClass="hide" HorizontalAlign="Left" />
                                                                         <ItemStyle CssClass="hide" HorizontalAlign="Left" />
                                                                     </asp:BoundField>
@@ -155,30 +157,60 @@
                                                                     <asp:BoundField DataField="Price" HeaderText="Price" SortExpression="Price">
                                                                         <HeaderStyle HorizontalAlign="Left" />
                                                                         <ItemStyle HorizontalAlign="Left" />
-                                                                    </asp:BoundField>
-
+                                                                    </asp:BoundField>--%>
+                                                                    
+                                                                    <asp:TemplateField HeaderText="Name">
+                                                                        <ItemTemplate>
+                                                                            <asp:Label ID="lblFullName" runat="server" Text='<%#DataBinder.Eval(Container.DataItem, "FullName")%>'></asp:Label>
+                                                                            <asp:Label ID="lblFirstName" runat="server" Text='<%#DataBinder.Eval(Container.DataItem, "FirstName")%>' Visible="false"></asp:Label>
+                                                                            <asp:Label ID="lblLastName" runat="server" Text='<%#DataBinder.Eval(Container.DataItem, "LastName")%>' Visible="false"></asp:Label>
+                                                                            <asp:Label ID="lblDoctorID" runat="server" Text='<%#DataBinder.Eval(Container.DataItem, "DoctorID")%>' Visible="false"></asp:Label>
+                                                                            <asp:Label runat="server"></asp:Label>
+                                                                        </ItemTemplate>
+                                                                    </asp:TemplateField>
+                                                                    <asp:TemplateField HeaderText="Gender">
+                                                                        <ItemTemplate>
+                                                                            <asp:Label ID="lblGender" runat="server" Text='<%#DataBinder.Eval(Container.DataItem, "Gender")%>'></asp:Label>
+                                                                            <asp:Label runat="server"></asp:Label>
+                                                                        </ItemTemplate>
+                                                                    </asp:TemplateField>
+                                                                    <asp:TemplateField HeaderText="Telephone">
+                                                                        <ItemTemplate>
+                                                                            <asp:Label ID="lblPhoneNumber" runat="server" Text='<%#DataBinder.Eval(Container.DataItem, "PhoneNumber")%>'></asp:Label>
+                                                                            <asp:Label runat="server"></asp:Label>
+                                                                        </ItemTemplate>
+                                                                    </asp:TemplateField>
+                                                                    <asp:TemplateField HeaderText="Address">
+                                                                        <ItemTemplate>
+                                                                            <asp:Label ID="lblAddress" runat="server" Text='<%#DataBinder.Eval(Container.DataItem, "Address")%>'></asp:Label>
+                                                                            <asp:Label runat="server"></asp:Label>
+                                                                        </ItemTemplate>
+                                                                    </asp:TemplateField>
                                                                     <asp:TemplateField HeaderText="Process Status">
                                                                         <ItemTemplate>
                                                                             <asp:Label runat="server" Text='<%#GetIsProcessStatus(Convert.ToBoolean(Eval("IsProcessing")))%>'></asp:Label>
+                                                                            <asp:Label runat="server"></asp:Label>
                                                                         </ItemTemplate>
                                                                     </asp:TemplateField>
                                                                     <asp:TemplateField HeaderText="Delivered Status">
                                                                         <ItemTemplate>
                                                                             <asp:Label runat="server" Text='<%#GetIsDeliveredStatus(Convert.ToBoolean(Eval("IsDelivered")))%>'></asp:Label>
+                                                                            <asp:Label runat="server"></asp:Label>
                                                                         </ItemTemplate>
                                                                     </asp:TemplateField>
                                                                     <asp:TemplateField HeaderText="Canceled Status">
                                                                         <ItemTemplate>
                                                                             <asp:Label runat="server" Text='<%#GetIsCancelledStatus(Convert.ToBoolean(Eval("IsCancelled")))%>'></asp:Label>
+                                                                            <asp:Label runat="server" ></asp:Label>
                                                                         </ItemTemplate>
                                                                     </asp:TemplateField>
                                                                     <asp:TemplateField HeaderText="Actions" HeaderStyle-CssClass="center text-center" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center" ItemStyle-VerticalAlign="Middle">
                                                                         <ItemTemplate>
                                                                             <div class="form-actions text-center">
                                                                                 <%--<asp:Button runat="server" Text="Processing" ID="lnkView" Enabled='<%#Eval("IsProcessing") %>' CssClass="btn btn-xs btn-success" />--%>
-                                                                                <asp:Button runat="server" Text="View" ID="CancelRoleBtn" Enabled='<%# (((Convert.ToBoolean(Eval("IsProcessing")) == true || Convert.ToBoolean(Eval("IsDelivered")) == true)|| Convert.ToBoolean(Eval("IsCancelled")) == true) ? false : true) %>' CssClass="btn btn-md btn-success" />
-                                                                                <asp:Button runat="server" Text="Edit" ID="EditRoleBtn" Enabled='<%# (((Convert.ToBoolean(Eval("IsProcessing")) == true || Convert.ToBoolean(Eval("IsDelivered")) == true)|| Convert.ToBoolean(Eval("IsCancelled")) == true) ? false : true) %>' CssClass="btn btn-md btn-warning" />
-                                                                                <asp:Button runat="server" Text="Delete" ID="DeleteRoleBtn" Enabled='<%# (((Convert.ToBoolean(Eval("IsProcessing")) == true || Convert.ToBoolean(Eval("IsDelivered")) == true)|| Convert.ToBoolean(Eval("IsCancelled")) == true) ? false : true) %>' CssClass="btn btn-md btn-danger" />
+                                                                                <asp:Button CommandArgument="View" runat="server" Text="View" ID="CancelRoleBtn" Enabled='<%# (((Convert.ToBoolean(Eval("IsProcessing")) == true || Convert.ToBoolean(Eval("IsDelivered")) == true)|| Convert.ToBoolean(Eval("IsCancelled")) == true) ? false : true) %>' CssClass="btn btn-md btn-success" />
+                                                                                <asp:Button CommandArgument="Edit" runat="server" Text="Edit" ID="EditRoleBtn" Enabled='<%# (((Convert.ToBoolean(Eval("IsProcessing")) == true || Convert.ToBoolean(Eval("IsDelivered")) == true)|| Convert.ToBoolean(Eval("IsCancelled")) == true) ? false : true) %>' CssClass="btn btn-md btn-warning" />
+                                                                                <asp:Button CommandArgument="Delete" runat="server" Text="Delete" ID="DeleteRoleBtn" Enabled='<%# (((Convert.ToBoolean(Eval("IsProcessing")) == true || Convert.ToBoolean(Eval("IsDelivered")) == true)|| Convert.ToBoolean(Eval("IsCancelled")) == true) ? false : true) %>' CssClass="btn btn-md btn-danger" />
                                                                             </div>
                                                                         </ItemTemplate>
                                                                     </asp:TemplateField>
@@ -188,8 +220,10 @@
                                                         </div>
                                                     </div>
                                                     <hr />
-                                                    <h4>EDIT DOCTOR PROFILE</h4>
-                                                    <div class="form-group" id="EditDoctorDiv">
+
+                                                        <%-- =====================================EDIT DOCTOR PROFILE======================================= --%>
+                                                    <div class="form-group" id="EditDoctorDiv" runat="server">
+                                                       <h4>EDIT DOCTOR PROFILE</h4>
                                                         <div class="row">
                                                             <div class="col-lg-3">
                                                             </div>
@@ -207,46 +241,46 @@
                                                                 </div>
                                                                 <div class="form-group">
                                                                     <label class="control-label">FIRSTNAME</label>
-                                                                    <asp:TextBox runat="server" CssClass="form-control"></asp:TextBox>
+                                                                    <asp:TextBox runat="server" CssClass="form-control" ID="txtFirstnameE"></asp:TextBox>
                                                                 </div>
                                                                 <div class="form-group">
                                                                     <label class="control-label">LASTNAME</label>
-                                                                    <asp:TextBox runat="server" CssClass="form-control"></asp:TextBox>
+                                                                    <asp:TextBox runat="server" CssClass="form-control" ID="txtLastnameE"></asp:TextBox>
                                                                 </div>
                                                                 <div class="form-group">
                                                                     <label class="control-label">OTHERNAMES</label>
-                                                                    <asp:TextBox runat="server" CssClass="form-control"></asp:TextBox>
+                                                                    <asp:TextBox runat="server" CssClass="form-control" ID="txtOthernamesE"></asp:TextBox>
                                                                 </div>                                                                
                                                                 <div class="form-group">
                                                                     <label class="control-label">GENDER</label>
-                                                                    <asp:TextBox runat="server" CssClass="form-control"></asp:TextBox>
+                                                                    <asp:DropDownList ID="ddlGenderE" runat="server"></asp:DropDownList>
                                                                 </div>
                                                                 <div class="form-group">
                                                                     <label class="control-label">MARITAL STATUS</label>
-                                                                    <asp:DropDownList runat="server" CssClass="form-control"></asp:DropDownList>
+                                                                    <asp:DropDownList ID="ddlMaritalStatusE" runat="server"></asp:DropDownList>
                                                                 </div>
                                                                 <div class="form-group">
                                                                     <label class="control-label">PHONE NUMBER</label>
-                                                                    <asp:TextBox runat="server" TextMode="Phone" CssClass="form-control"></asp:TextBox>
+                                                                    <asp:TextBox ID="txtPhoneE" runat="server" TextMode="Phone" CssClass="form-control"></asp:TextBox>
                                                                 </div>
                                                                 <div class="form-group">
                                                                     <label class="control-label">ADDRESS</label>
-                                                                    <asp:TextBox runat="server" CssClass="form-control"></asp:TextBox>
+                                                                    <asp:TextBox ID="txtAddressE" runat="server" CssClass="form-control" TextMode="MultiLine" Rows="3"></asp:TextBox>
                                                                 </div>
                                                                 <div class="form-group">
                                                                     <label class="control-label">DATE OF BIRTH (MM/DD/YYYY)</label>
-                                                                    <asp:TextBox runat="server" TextMode="Date" CssClass="form-control"></asp:TextBox>
+                                                                    <asp:TextBox ID="txtDOBE" runat="server" TextMode="Date" CssClass="form-control"></asp:TextBox>
                                                                 </div> 
                                                                  <div class="form-group">
                                                                     <label class="control-label">NEXT OF KIN FULLNAME</label>
-                                                                    <asp:TextBox runat="server" CssClass="form-control"></asp:TextBox>
+                                                                    <asp:TextBox ID="txtKinFullnameE" runat="server" CssClass="form-control"></asp:TextBox>
                                                                 </div>
                                                                 <div class="form-group">
                                                                     <label class="control-label">NEXT OF KIN PHONE NUMBER</label>
-                                                                    <asp:TextBox runat="server" TextMode="Phone" CssClass="form-control"></asp:TextBox>
+                                                                    <asp:TextBox ID="txtKinPhoneE" runat="server" TextMode="Phone" CssClass="form-control"></asp:TextBox>
                                                                 </div>
                                                                 <div class="form-group text-right">
-                                                                    <asp:Button runat="server" CssClass="btn btn-default btn-primary" Text="UPDATE" />
+                                                                    <asp:Button runat="server" CssClass="btn btn-default btn-primary" Text="UPDATE" ID="btnUpdate" OnClick="btnUpdate_Click" />
                                                                 </div>
                                                             </div>
                                                             <div class="col-lg-3">
@@ -254,8 +288,9 @@
                                                         </div>
                                                     </div>
                                                     <hr />
-                                                    <h4>VIEW DOCTOR PROFILE</h4>
-                                                    <div class="form-group" id="ViewDoctorDiv">
+                                                        <%-- ============================= VIEW DOCTOR PROFILE ==================================== --%>
+                                                    <div class="form-group" id="ViewDoctorDiv" runat="server">
+                                                        <h4>VIEW DOCTOR PROFILE</h4>
                                                         <div class="row">
                                                             <div class="col-lg-3">
                                                             </div>
@@ -269,48 +304,50 @@
                                                                 </div>
                                                                 <div class="form-group">
                                                                     <label class="control-label">FIRSTNAME</label>
-                                                                    <asp:TextBox runat="server" CssClass="form-control" ReadOnly="true"></asp:TextBox>
+                                                                    <asp:TextBox runat="server" CssClass="form-control" ReadOnly="true" ID="txtFirstnameV"></asp:TextBox>
                                                                 </div>
                                                                 <div class="form-group">
                                                                     <label class="control-label">LASTNAME</label>
-                                                                    <asp:TextBox runat="server" CssClass="form-control" ReadOnly="true"></asp:TextBox>
+                                                                    <asp:TextBox runat="server" CssClass="form-control" ReadOnly="true" ID="txtLastnameV"></asp:TextBox>
                                                                 </div>
                                                                 <div class="form-group">
                                                                     <label class="control-label">OTHERNAMES</label>
-                                                                    <asp:TextBox runat="server" CssClass="form-control" ReadOnly="true"></asp:TextBox>
+                                                                    <asp:TextBox runat="server" CssClass="form-control" ReadOnly="true" ID="txtOthernamesV"></asp:TextBox>
                                                                 </div>
                                                                 <div class="form-group">
                                                                     <label class="control-label">GENDER</label>
-                                                                    <asp:TextBox runat="server" CssClass="form-control" ReadOnly="true"></asp:TextBox>
+                                                                    <asp:TextBox runat="server" CssClass="form-control" ReadOnly="true" ID="txtGenderV"></asp:TextBox>
                                                                 </div>                                                                
                                                                 <div class="form-group">
                                                                     <label class="control-label">MARITAL STATUS</label>
-                                                                    <asp:TextBox runat="server" CssClass="form-control" ReadOnly="true"></asp:TextBox>
+                                                                    <asp:TextBox runat="server" CssClass="form-control" ReadOnly="true" ID="txtMaritalStatusV"></asp:TextBox>
                                                                 </div>
                                                                 <div class="form-group">
                                                                     <label class="control-label">PHONE NUMBER</label>
-                                                                    <asp:TextBox runat="server" TextMode="Phone" CssClass="form-control" ReadOnly="true"></asp:TextBox>
+                                                                    <asp:TextBox runat="server" TextMode="Phone" CssClass="form-control" ReadOnly="true" ID="txtPhoneV"></asp:TextBox>
                                                                 </div>
                                                                 <div class="form-group">
                                                                     <label class="control-label">ADDRESS</label>
-                                                                    <asp:TextBox runat="server" CssClass="form-control" ReadOnly="true"></asp:TextBox>
+                                                                    <asp:TextBox runat="server" CssClass="form-control" ReadOnly="true" ID="txtAddressV"></asp:TextBox>
                                                                 </div>
                                                                 <div class="form-group">
                                                                     <label class="control-label">DATE OF BIRTH (MM/DD/YYYY)</label>
-                                                                    <asp:TextBox runat="server" TextMode="Date" CssClass="form-control" ReadOnly="true"></asp:TextBox>
+                                                                    <asp:TextBox runat="server" TextMode="Date" CssClass="form-control" ReadOnly="true" ID="txtDOBV"></asp:TextBox>
                                                                 </div> 
                                                                  <div class="form-group">
                                                                     <label class="control-label">NEXT OF KIN FULLNAME</label>
-                                                                    <asp:TextBox runat="server" CssClass="form-control" ReadOnly="true"></asp:TextBox>
+                                                                    <asp:TextBox runat="server" CssClass="form-control" ReadOnly="true" ID="txtKinFullnameV"></asp:TextBox>
                                                                 </div>
                                                                 <div class="form-group">
                                                                     <label class="control-label">NEXT OF KIN PHONE NUMBER</label>
-                                                                    <asp:TextBox runat="server" TextMode="Phone" CssClass="form-control" ReadOnly="true"></asp:TextBox>
+                                                                    <asp:TextBox runat="server" TextMode="Phone" CssClass="form-control" ReadOnly="true" ID="txtKinPhoneV"></asp:TextBox>
                                                                 </div>                                                          
                                                                
                                                             </div>
-                                                            <div class="col-lg-3">
-                                                            </div>
+                                                           
+                                                                <div class="col-md-6 text-left">
+                                                                    <asp:Button runat="server" CssClass="btn btn-default btn-primary text-right" Text="Back" ID="btnBackView" OnClick="btnBackView_Click" /></div>
+                                                            
                                                         </div>
                                                     </div>
                                                    
