@@ -4,6 +4,23 @@
 
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="Server">
+   <script type="text/javascript">
+    var selected_tab = 1;
+    $(function () {
+        var tabs = $("#tabs").tabs({
+            select: function (e, i) {
+                selected_tab = i.index;
+            }
+        });
+        selected_tab = $("[id$=selected_tab]").val() != "" ? parseInt($("[id$=selected_tab]").val()) : 0;
+        tabs.tabs('select', selected_tab);
+        $("form").submit(function () {
+            $("[id$=selected_tab]").val(selected_tab);
+        });
+    });
+   
+</script>
+        
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="NavigationMenu" runat="Server">
     <section class="menu-section">
@@ -44,9 +61,10 @@
                             <%--<div class="panel-heading">
                                 PATIENT MANAGEMENT
                             </div>--%>
-                            <div class="panel-body">
+                            <asp:HiddenField ID="selected_tab" runat="server" />
+                            <div class="panel-body" id="tabs">
                                 <ul class="nav nav-tabs">
-                                    <li class="active"><a href="#patient" data-toggle="tab">PATIENT MANAGEMENT</a>
+                                    <li class="active" ><a href="#patient" data-toggle="tab">PATIENT MANAGEMENT</a>
                                     </li>
                                     <li class=""><a href="#familyplan" data-toggle="tab">FAMILY PLAN MANAGEMENT</a>
                                     </li>

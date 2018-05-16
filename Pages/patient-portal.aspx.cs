@@ -9,7 +9,7 @@ public partial class Pages_patient_portal : System.Web.UI.Page
 {
     protected void Page_Load(object sender, EventArgs e)
     {
-
+        //UpdateDisplayPannel();
     }
 
     public string GetIsProcessStatus(bool value)
@@ -36,17 +36,25 @@ public partial class Pages_patient_portal : System.Web.UI.Page
 
 
         ResponseAlert.ShowNotification();
-        return;
+        //return;
 
 
     }
 
     protected void ShowPopAlert_Click(object sender, EventArgs e)
     {
+        UpdateDisplayPannel();
         //Call Pop up Alert
 
         Alert.CallAlert(Alert.Alerttype.warming.ToString(), "Check and try again.");
+        
         //Alert.CallAlert(Alert.Alerttype.error.ToString(), "Operation can not be done.");
-        return;
+        //return;
+    }
+
+    private void UpdateDisplayPannel()
+    {
+        selected_tab.Value = Request.Form[selected_tab.UniqueID];
+
     }
 }
