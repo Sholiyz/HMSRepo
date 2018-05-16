@@ -65,7 +65,7 @@
                             <asp:HiddenField ID="selected_tab" runat="server" />
                             <div class="panel-body" id="tabs">
                                 <ul class="nav nav-tabs">
-                                    <li class="active" ><a href="#patient" data-toggle="tab">PATIENT MANAGEMENT</a>
+                                    <li class="active"><a href="#patient" data-toggle="tab">PATIENT MANAGEMENT</a>
                                     </li>
                                     <li class=""><a href="#familyplan" data-toggle="tab">FAMILY PLAN MANAGEMENT</a>
                                     </li>
