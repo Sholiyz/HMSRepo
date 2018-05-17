@@ -5,14 +5,14 @@
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity.Spatial;
 
-    [Table("TrasactionType")]
-    public partial class TrasactionType
+    [Table("TransactionType")]
+    public partial class TransactionType
     {
-        public int TrasactionTypeID { get; set; }
+        public int TransactionTypeID { get; set; }
 
         [Required]
         [StringLength(50)]
-        public string TrasactionTypeName { get; set; }
+        public string TransactionTypeName { get; set; }
 
         [StringLength(150)]
         public string Description { get; set; }

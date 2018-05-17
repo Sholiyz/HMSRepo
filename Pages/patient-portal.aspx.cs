@@ -46,7 +46,7 @@ public partial class Pages_patient_portal : System.Web.UI.Page
         UpdateDisplayPannel();
         //Call Pop up Alert
 
-        Alert.CallAlert(Alert.Alerttype.warming.ToString(), "Check and try again.");
+        Alert.CallAlert(Alert.Alerttype.warning.ToString(), "Check and try again.");
         
         //Alert.CallAlert(Alert.Alerttype.error.ToString(), "Operation can not be done.");
         //return;

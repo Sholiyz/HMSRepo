@@ -122,7 +122,7 @@ public partial class Pages_admin_portal : System.Web.UI.Page
         //Response Alert Call Method
 
         ResponseAlert.NewMessage = "Show Alert Notification!";
-        ResponseAlert.NoteType = "Success";
+        ResponseAlert.NoteType = PastureAlert.ResponseNotetype.info.ToString() ;//"Success";
         ResponseAlert.NoteVisible = true;
         
        
@@ -136,7 +136,7 @@ public partial class Pages_admin_portal : System.Web.UI.Page
     {
         //Call Pop up Alert
 
-        Alert.CallAlert(Alert.Alerttype.warming.ToString(), "Check and try again.");
+        Alert.CallAlert(Alert.Alerttype.success.ToString(), "Check and try again.");
         //Alert.CallAlert(Alert.Alerttype.error.ToString(), "Operation can not be done.");
         return;
     }

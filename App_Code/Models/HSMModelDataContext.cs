@@ -11,6 +11,7 @@
         {
         }
 
+        public virtual DbSet<AttendanceLog> AttendanceLogs { get; set; }
         public virtual DbSet<AuthRole> AuthRoles { get; set; }
         public virtual DbSet<AuthUser> AuthUsers { get; set; }
         public virtual DbSet<Billing> Billings { get; set; }
@@ -18,14 +19,23 @@
         public virtual DbSet<Doctor> Doctors { get; set; }
         public virtual DbSet<DutyType> DutyTypes { get; set; }
         public virtual DbSet<FamilyMember> FamilyMembers { get; set; }
+        public virtual DbSet<HospitalInfo> HospitalInfoes { get; set; }
         public virtual DbSet<NurseDuty> NurseDuties { get; set; }
         public virtual DbSet<Nurse> Nurses { get; set; }
         public virtual DbSet<PatientPlanType> PatientPlanTypes { get; set; }
         public virtual DbSet<Patient> Patients { get; set; }
-        public virtual DbSet<TrasactionType> TrasactionTypes { get; set; }
+        public virtual DbSet<TransactionType> TransactionTypes { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<AttendanceLog>()
+                .Property(e => e.ClockInTime)
+                .HasPrecision(0);
+
+            modelBuilder.Entity<AttendanceLog>()
+                .Property(e => e.ClockOutTime)
+                .HasPrecision(0);
+
             modelBuilder.Entity<Billing>()
                 .Property(e => e.BillingID)
                 .IsUnicode(false);
@@ -49,6 +59,10 @@
             modelBuilder.Entity<FamilyMember>()
                 .Property(e => e.Gender)
                 .IsUnicode(false);
+
+            modelBuilder.Entity<HospitalInfo>()
+                .Property(e => e.PhoneNumber)
+                .IsFixedLength();
 
             modelBuilder.Entity<Nurse>()
                 .Property(e => e.Gender)

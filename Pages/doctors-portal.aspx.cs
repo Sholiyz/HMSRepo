@@ -155,7 +155,7 @@ public partial class Pages_doctors_portal : System.Web.UI.Page
     {
         //Call Pop up Alert
 
-        Alert.CallAlert(Alert.Alerttype.warming.ToString(), "Check and try again.");
+        Alert.CallAlert(Alert.Alerttype.warning.ToString(), "Check and try again.");
         //Alert.CallAlert(Alert.Alerttype.error.ToString(), "Operation can not be done.");
         return;
     }
@@ -248,7 +248,8 @@ public partial class Pages_doctors_portal : System.Web.UI.Page
             {
                 //Delete
                 Doctor docDelete = context.Doctors.FirstOrDefault(doc => doc.DoctorID == int.Parse(itemID));
-                context.Doctors.Remove(docDelete);
+                //Update IsDeleted= true;
+                //context.Doctors.Remove(docDelete);
                 //Bind Data to Grid
                 BindGrid();
                 SxsMessage("Doctor removed");
@@ -306,7 +307,7 @@ public partial class Pages_doctors_portal : System.Web.UI.Page
     public void SxsMessage(string message)
     {
         ResponseAlert.NewMessage = message;
-        ResponseAlert.NoteType = "Success";
+        ResponseAlert.NoteType = PastureAlert.ResponseNotetype.success.ToString();//"Success";
         ResponseAlert.NoteVisible = true;
         ResponseAlert.ShowNotification();
         return;

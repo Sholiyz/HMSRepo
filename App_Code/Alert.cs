@@ -24,7 +24,7 @@ public static class Alert
         if (alerttype == Alert.Alerttype.success.ToString())
         {
             System.Web.UI.Page page = (System.Web.UI.Page)HttpContext.Current.Handler;
-            string scriptsuccess = "<script>swal('Good job!', '" + message + "', 'success');</script>";
+            string scriptsuccess = "<script>swal('Success!', '" + message + "', 'success');</script>";
             page.ClientScript.RegisterStartupScript(page.GetType(), "Scripts", scriptsuccess);
 
         }
@@ -35,7 +35,7 @@ public static class Alert
             page.ClientScript.RegisterStartupScript(page.GetType(), "Scripts", scriptsuccess);
 
         }
-        else if (alerttype == Alert.Alerttype.warming.ToString())
+        else if (alerttype == Alert.Alerttype.warning.ToString())
         {
             System.Web.UI.Page page = (System.Web.UI.Page)HttpContext.Current.Handler;
             string scriptsuccess = "<script>swal('Warning!!', '" + message + "', 'warning');</script>";
@@ -59,7 +59,7 @@ public static class Alert
             page.ClientScript.RegisterStartupScript(page.GetType(), "Scripts", scriptsuccess);
 
         }
-        else if (alerttype == Alert.Alerttype.warming.ToString())
+        else if (alerttype == Alert.Alerttype.warning.ToString())
         {
             System.Web.UI.Page page = (System.Web.UI.Page)HttpContext.Current.Handler;
             string scriptsuccess = "<script>swal('Warning!!', 'Kindly check and try again.', 'warning');</script>";
@@ -71,7 +71,7 @@ public static class Alert
     {
         success,
             error,
-            warming
+            warning
     };
 
     public static void CallNotification(string notetype,string message)
@@ -86,7 +86,7 @@ public static class Alert
            
 
         }
-        else if (notetype == Alert.Alerttype.warming.ToString())
+        else if (notetype == Alert.Alerttype.warning.ToString())
         {
             
 
