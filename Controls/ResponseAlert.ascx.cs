@@ -14,7 +14,6 @@ public partial class ResponseAlert : System.Web.UI.UserControl
         get { return NMessage; }
         set { NMessage = value; }
     }
-
     private bool NVisible;
     public bool NoteVisible
     {
@@ -68,8 +67,6 @@ public partial class ResponseAlert : System.Web.UI.UserControl
         }
 
     }
-
-
     public void HideNotification()
     {
         AlertContiner.Visible = true;

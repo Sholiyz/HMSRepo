@@ -97,7 +97,11 @@
                                                                 </div>                                                              
                                                                 <div class="form-group">
                                                                     <label class="control-label">GENDER</label>
-                                                                    <asp:DropDownList runat="server" CssClass="form-control" required ID="ddlGender"></asp:DropDownList>
+                                                                    <asp:DropDownList runat="server" CssClass="form-control" required ID="ddlGender">
+                                                                        <asp:ListItem Value="0" Text="Select Gender..." Selected="True">Select Gender....</asp:ListItem>
+                                                                        <asp:ListItem Value="1" Text="Female">Female</asp:ListItem>
+                                                                        <asp:ListItem Value="2" Text="Male">Male</asp:ListItem>
+                                                                    </asp:DropDownList>
                                                                 </div>                                                                
                                                                 <div class="form-group">
                                                                     <label class="control-label">MARITAL STATUS</label>
@@ -152,7 +156,7 @@
                                                             </div>
                                                         </div>
                                                         <div class="table-responsive center-block">                                                           
-                                                            <asp:GridView ID="DoctorListGridView" runat="server" AutoGenerateColumns="false" CssClass="table  table-bordered text-center" DataKeyNames="ID" EmptyDataText="There are no data records to display." OnRowCommand="DoctorListGridView_RowCommand">
+                                                            <asp:GridView ID="DoctorListGridView" runat="server" AutoGenerateColumns="false" CssClass="table  table-bordered text-center" DataKeyNames="DoctorID" EmptyDataText="There are no data records to display." OnRowCommand="DoctorListGridView_RowCommand">
                                                                 <Columns>
                                                                     <%--<asp:BoundField DataField="ID" HeaderText="Order ID" SortExpression="ID">
                                                                         <HeaderStyle CssClass="hide" HorizontalAlign="Left" />
@@ -194,7 +198,7 @@
                                                                             <asp:Label runat="server"></asp:Label>
                                                                         </ItemTemplate>
                                                                     </asp:TemplateField>
-                                                                    <asp:TemplateField HeaderText="Process Status">
+                                                                    <%--<asp:TemplateField HeaderText="Process Status">
                                                                         <ItemTemplate>
                                                                             <asp:Label runat="server" Text='<%#GetIsProcessStatus(Convert.ToBoolean(Eval("IsProcessing")))%>'></asp:Label>
                                                                             <asp:Label runat="server"></asp:Label>
@@ -211,14 +215,15 @@
                                                                             <asp:Label runat="server" Text='<%#GetIsCancelledStatus(Convert.ToBoolean(Eval("IsCancelled")))%>'></asp:Label>
                                                                             <asp:Label runat="server" ></asp:Label>
                                                                         </ItemTemplate>
-                                                                    </asp:TemplateField>
+                                                                    </asp:TemplateField>--%>
                                                                     <asp:TemplateField HeaderText="Actions" HeaderStyle-CssClass="center text-center" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center" ItemStyle-VerticalAlign="Middle">
                                                                         <ItemTemplate>
                                                                             <div class="form-actions text-center">
                                                                                 <%--<asp:Button runat="server" Text="Processing" ID="lnkView" Enabled='<%#Eval("IsProcessing") %>' CssClass="btn btn-xs btn-success" />--%>
-                                                                                <asp:Button CommandArgument="View" runat="server" Text="View" ID="CancelRoleBtn" Enabled='<%# (((Convert.ToBoolean(Eval("IsProcessing")) == true || Convert.ToBoolean(Eval("IsDelivered")) == true)|| Convert.ToBoolean(Eval("IsCancelled")) == true) ? false : true) %>' CssClass="btn btn-md btn-success" />
-                                                                                <asp:Button CommandArgument="Edit" runat="server" Text="Edit" ID="EditRoleBtn" Enabled='<%# (((Convert.ToBoolean(Eval("IsProcessing")) == true || Convert.ToBoolean(Eval("IsDelivered")) == true)|| Convert.ToBoolean(Eval("IsCancelled")) == true) ? false : true) %>' CssClass="btn btn-md btn-warning" />
-                                                                                <asp:Button CommandArgument="Delete" runat="server" Text="Delete" ID="DeleteRoleBtn" Enabled='<%# (((Convert.ToBoolean(Eval("IsProcessing")) == true || Convert.ToBoolean(Eval("IsDelivered")) == true)|| Convert.ToBoolean(Eval("IsCancelled")) == true) ? false : true) %>' CssClass="btn btn-md btn-danger" />
+                                                                                <asp:Button CommandArgument="View" runat="server" Text="View" ID="CancelRoleBtn" CssClass="btn btn-md btn-success" />
+                                                                                <asp:Button CommandArgument="Edit" runat="server" Text="Edit" ID="EditRoleBtn" CssClass="btn btn-md btn-warning" />
+                                                                                <asp:Button CommandArgument="Delete" runat="server" Text='<%# (Convert.ToBoolean(Eval("IsActive")) == true  ? "Deactivate" : "Activate") %>' ID="DeleteRoleBtn"  CssClass='<%# (Convert.ToBoolean(Eval("IsActive")) == true  ? "btn btn-md btn-danger" : "btn btn-md btn-success") %>' />   <%--Enabled='<%# (Convert.ToBoolean(Eval("IsActive")) == true  ? false : true) %>' --%>
+                                                                                <asp:Button CommandArgument="Delete" runat="server" Text="Delete" ID="Button1"  CssClass="btn btn-md btn-danger" />
                                                                             </div>
                                                                         </ItemTemplate>
                                                                     </asp:TemplateField>

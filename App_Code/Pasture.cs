@@ -167,6 +167,27 @@ public class Pasture
         User = DBContext.AuthUsers.Where(u => u.UserID == userID).FirstOrDefault();
         return User;
     }
+
+    public static List<Employee> GetEmployeeList()
+    {
+        List<Employee> EmployeeList = new List<Employee>();
+        List<Doctor> doctorlist = new List<Doctor>();
+        List<Nurse> nurselist = new List<Nurse>();
+        doctorlist = DBContext.Doctors.Where(doc=> doc.IsDeleted==false).ToList();
+        nurselist = DBContext.Nurses.Where(nur => nur.IsDeleted == false).ToList();
+
+        foreach(Doctor doctor in doctorlist)
+        {
+            EmployeeAddDoctor(EmployeeList, doctor);
+        }
+        foreach (Nurse nurse in nurselist)
+        {
+            EmployeeAddNurse(EmployeeList, nurse);
+        }
+
+
+        return EmployeeList.OrderBy(emp=> emp.FullName).ToList();
+    }
     public static AuthUser GetUserByUsername(string username)
     {
         AuthUser User = new AuthUser();
@@ -627,9 +648,353 @@ public class Pasture
         }
 
     }
-    
+
     #endregion
 
+    #region AttendanceLog Management
+
+    public static List<AttendanceLog> GetAttendanceLogList()
+    {
+        List<AttendanceLog> AttendanceLogList = new List<AttendanceLog>();
+        AttendanceLogList = DBContext.AttendanceLogs.ToList();
+        return AttendanceLogList;
+    }
+    public static int AddAttendanceLog(AttendanceLog newAttendanceLog)
+    {
+        try
+        {
+            int responce;
+            newAttendanceLog.StaffID = GetCurrentUserSessionID();
+            newAttendanceLog.DutyID = GetStaffLastAttendanceID(GetCurrentUserSessionID());
+            newAttendanceLog.ClockInTime = DateTime.Now.TimeOfDay;
+            newAttendanceLog.AttendanceDate = DateTime.Now;
+            DBContext.AttendanceLogs.Add(newAttendanceLog);
+            responce = DBContext.SaveChanges();
+            return responce;
+        }
+        catch (Exception ex)
+        {
+            return 0;
+            //log ex.Message;
+            throw;
+        }
+
+    }
+
+    public static int CheckActiveAttendanceLog(AttendanceLog UpdateAttendanceLog)
+    {
+        try
+        {
+            int responce;
+            AttendanceLog AttendanceLog = DBContext.AttendanceLogs.Where(atlog => atlog.AttendanceID == UpdateAttendanceLog.AttendanceID && atlog.StaffID==GetCurrentUserSessionID()).FirstOrDefault();
+            //DBContext.AuthRoles.Add(newRole);
+
+            //AttendanceLog.ModifiedByID = GetCurrentUserSessionID();
+            AttendanceLog.ClockOutTime = DateTime.Now.TimeOfDay;
+            AttendanceLog.IsLocked = true;
+            responce = DBContext.SaveChanges();
+            return responce;
+        }
+        catch (Exception ex)
+        {
+            return 0;
+            //log ex.Message;
+            throw;
+        }
+
+    }
+
+    public static int UpdatenewAttendanceLog(AttendanceLog UpdateAttendanceLog)
+    {
+        try
+        {
+            int responce;
+            AttendanceLog AttendanceLog = DBContext.AttendanceLogs.Where(atlog=> atlog.AttendanceID== UpdateAttendanceLog.AttendanceID && atlog.StaffID == GetCurrentUserSessionID()).FirstOrDefault();
+            //DBContext.AuthRoles.Add(newRole);
+
+            //AttendanceLog.ModifiedByID = GetCurrentUserSessionID();
+            AttendanceLog.ClockOutTime = DateTime.Now.TimeOfDay;
+            AttendanceLog.IsLocked = true;
+            responce = DBContext.SaveChanges();
+            return responce;
+        }
+        catch (Exception ex)
+        {
+            return 0;
+            //log ex.Message;
+            throw;
+        }
+
+    }
+
+    #endregion
+
+    #region FamilyMember Management
+    public static List<FamilyMember> GetFamilyMembers()
+    {
+        List<FamilyMember> FamilyMemberList = new List<FamilyMember>();
+        FamilyMemberList = DBContext.FamilyMembers.Where(fm => fm.IsDeleted == false).ToList();
+        return FamilyMemberList;
+    }
+    public static List<FamilyMember> GetFamilyMembersListByPatientID(int PatientID)
+    {
+        List<FamilyMember> FamilyMemberList = new List<FamilyMember>();
+        FamilyMemberList = DBContext.FamilyMembers.Where(fm => fm.IsDeleted == false && fm.PatientID==PatientID).ToList();
+        return FamilyMemberList;
+    }
+    public static FamilyMember GetFamilyMemberByID(int familymemberID)
+    {
+        FamilyMember FamilyMember = new FamilyMember();
+        FamilyMember = DBContext.FamilyMembers.Where(fm => fm.FamilyMemberID == familymemberID).FirstOrDefault();
+        return FamilyMember;
+    }
+    public static int AddNewFamilyMember(FamilyMember newFamilyMember)
+    {
+        try
+        {
+            int responce;
+            newFamilyMember.CreatedByID = GetCurrentUserSessionID();
+            newFamilyMember.CreatedDate = DateTime.Now;
+            DBContext.FamilyMembers.Add(newFamilyMember);
+            responce = DBContext.SaveChanges();
+            return responce;
+        }
+        catch (Exception ex)
+        {
+            return 0;
+            //log ex.Message;
+            throw;
+        }
+
+    }
+    public static int UpdateFamilyMember(FamilyMember UpdateFamilyMember)
+    {
+        try
+        {
+            int responce;
+            FamilyMember familyMember = DBContext.FamilyMembers.Where(fm => fm.FamilyMemberID == UpdateFamilyMember.FamilyMemberID).FirstOrDefault();
+
+            //DBContext.AuthRoles.Add(newRole);         
+            
+            familyMember.ModifiedByID = GetCurrentUserSessionID();
+            familyMember.ModifiedDate = DateTime.Now;
+            responce = DBContext.SaveChanges();
+            return responce;
+        }
+        catch (Exception ex)
+        {
+            return 0;
+            //log ex.Message;
+            throw;
+        }
+
+    }
+    public static int DeleteFamilyMemberByID(FamilyMember DeleteFamilyMember)
+    {
+        try
+        {
+            int responce;
+            FamilyMember familyMember = DBContext.FamilyMembers.Where(fm => fm.FamilyMemberID == DeleteFamilyMember.PatientID).FirstOrDefault();
+            familyMember.ModifiedByID = GetCurrentUserSessionID();
+            familyMember.ModifiedDate = DateTime.Now;
+            familyMember.IsDeleted = true;
+           
+            responce = DBContext.SaveChanges();
+            return responce;
+        }
+        catch (Exception ex)
+        {
+            return 0;
+            //log ex.Message;
+            throw;
+        }
+
+    }
+    #endregion
+
+    #region Billing Management
+
+    public static List<Billing> GetBillings()
+    {
+        List<Billing> BillingList = new List<Billing>();
+        BillingList = DBContext.Billings.Where(b => b.IsDeleted == false).ToList();
+        return BillingList;
+    }
+    public static List<Billing> GetBillingsByPatientID(int PatientID)
+    {
+        List<Billing> BillingList = new List<Billing>();
+        BillingList = DBContext.Billings.Where(b => b.IsDeleted == false && b.PatientID==PatientID).ToList();
+        return BillingList;
+    }
+    public static Billing GetBillingByID(int BillingID)
+    {
+        Billing Billing = new Billing();
+        Billing = DBContext.Billings.Where(b => b.ID == BillingID).FirstOrDefault();
+        return Billing;
+    }
+    public static List<Billing> GetBillingByListConsultantID(int ConsultantID)
+    {
+        List<Billing> Billing = new List<Billing>();
+        Billing = DBContext.Billings.Where(b => b.IsDeleted == false && b.ConsultationID == ConsultantID).ToList();
+        return Billing;
+    }
+    public static int AddNewBilling(Billing newBilling)
+    {
+        try
+        {
+            int responce;
+            newBilling.StaffID = GetCurrentUserSessionID();
+            newBilling.CreatedByID = GetCurrentUserSessionID();
+            newBilling.CreatedDate = DateTime.Now;
+            DBContext.Billings.Add(newBilling);
+            responce = DBContext.SaveChanges();
+            return responce;
+        }
+        catch (Exception ex)
+        {
+            return 0;
+            //log ex.Message;
+            throw;
+        }
+
+    }
+    public static int UpdateBilling(Billing UpdateBilling)
+    {
+        try
+        {
+            int responce;
+            Billing Billing = DBContext.Billings.Where(u => u.BillingID == UpdateBilling.BillingID).FirstOrDefault();
+
+            //DBContext.Roles.Add(newRole);
+            //Billing.ConsultationID = UpdateBilling.BillingName;
+           //Billing.StaffID= GetCurrentUserSessionID();
+            Billing.ModifiedByID = GetCurrentUserSessionID();
+            Billing.ModifiedDate = DateTime.Now;
+            responce = DBContext.SaveChanges();
+            return responce;
+        }
+        catch (Exception ex)
+        {
+            return 0;
+            //log ex.Message;
+            throw;
+        }
+
+    }
+    public static int DeleteBillingByID(Billing DeleteBilling)
+    {
+        try
+        {
+            int responce;
+            Billing Billing = DBContext.Billings.Where(r => r.BillingID == DeleteBilling.BillingID).FirstOrDefault();
+            Billing.ModifiedByID = GetCurrentUserSessionID();
+            Billing.ModifiedDate = DateTime.Now;
+            Billing.IsDeleted = true;
+            responce = DBContext.SaveChanges();
+            return responce;
+        }
+        catch (Exception ex)
+        {
+            return 0;
+            //log ex.Message;
+            throw;
+        }
+
+    }
+
+    #endregion
+
+    #region Consultation Management
+
+    public static List<Consultation> GetConsultations()
+    {
+        List<Consultation> ConsultationList = new List<Consultation>();
+        ConsultationList = DBContext.Consultations.Where(b => b.IsDeleted == false).ToList();
+        return ConsultationList;
+    }
+    public static List<Consultation> GetConsultationsListByPatientID(int PatientID)
+    {
+        List<Consultation> ConsultationList = new List<Consultation>();
+        ConsultationList = DBContext.Consultations.Where(b => b.IsDeleted == false && b.PatientID == PatientID).ToList();
+        return ConsultationList;
+    }
+    public static Consultation GetConsultationByID(int ConsultationID)
+    {
+        Consultation Consultation = new Consultation();
+        Consultation = DBContext.Consultations.Where(b => b.ConsultationID == ConsultationID).FirstOrDefault();
+        return Consultation;
+    }
+    public static List<Consultation> GetConsultationListByConsultantID(int ConsultantID)
+    {
+        List<Consultation> Consultation = new List<Consultation>();
+        Consultation = DBContext.Consultations.Where(b => b.IsDeleted == false && b.ConsultationID == ConsultantID).ToList();
+        return Consultation;
+    }
+    public static int AddNewConsultation(Consultation newConsultation)
+    {
+        try
+        {
+            int responce;
+            newConsultation.ConsultantID = GetCurrentUserSessionID();
+            newConsultation.CreatedByID = GetCurrentUserSessionID();
+            newConsultation.CreatedDate = DateTime.Now;
+            DBContext.Consultations.Add(newConsultation);
+            responce = DBContext.SaveChanges();
+            return responce;
+        }
+        catch (Exception ex)
+        {
+            return 0;
+            //log ex.Message;
+            throw;
+        }
+
+    }
+    public static int UpdateConsultation(Consultation UpdateConsultation)
+    {
+        try
+        {
+            int responce;
+            Consultation Consultation = DBContext.Consultations.Where(u => u.ConsultationID == UpdateConsultation.ConsultationID).FirstOrDefault();
+
+            //DBContext.Roles.Add(newRole);
+            //Consultation.ConsultationID = UpdateConsultation.ConsultationName;
+            //Consultation.ConsultantID= GetCurrentUserSessionID();
+            Consultation.ModifiedByID = GetCurrentUserSessionID();
+            Consultation.ModifiedDate = DateTime.Now;
+            responce = DBContext.SaveChanges();
+            return responce;
+        }
+        catch (Exception ex)
+        {
+            return 0;
+            //log ex.Message;
+            throw;
+        }
+
+    }
+    public static int DeleteConsultationByID(Consultation DeleteConsultation)
+    {
+        try
+        {
+            int responce;
+            Consultation Consultation = DBContext.Consultations.Where(r => r.ConsultationID == DeleteConsultation.ConsultationID).FirstOrDefault();
+            Consultation.ModifiedByID = GetCurrentUserSessionID();
+            Consultation.ModifiedDate = DateTime.Now;
+            Consultation.IsDeleted = true;
+            responce = DBContext.SaveChanges();
+            return responce;
+        }
+        catch (Exception ex)
+        {
+            return 0;
+            //log ex.Message;
+            throw;
+        }
+
+    }
+
+    #endregion
 
     #region Authentication
 
@@ -721,6 +1086,74 @@ public class Pasture
 
     #region Utility
 
+    private static void EmployeeAddNurse(List<Employee> Employeelist,Nurse nurse)
+    {
+        Employee newEmployee = new Employee()
+        {
+            StaffID = nurse.NurseID,
+            StaffType = "Nurse",
+            FirstName = nurse.FirstName,
+            LastName = nurse.LastName,
+            OtherNames = nurse.OtherNames,
+            FullName = nurse.LastName + " " + nurse.LastName + " " + nurse.OtherNames,
+            Gender = nurse.Gender,
+            PhoneNumber = nurse.PhoneNumber,
+            Address = nurse.Address,
+            DOB = nurse.DOB,
+            DateEmployed = nurse.DateEmployed,
+            CreatedByID = nurse.CreatedByID,
+            ModifiedByID = nurse.ModifiedByID,
+            CreatedDate = nurse.CreatedDate,
+            ModifiedDate = nurse.ModifiedDate,
+            IsActive = nurse.IsActive,
+            IsDeleted = nurse.IsDeleted
+        };
+
+        Employeelist.Add(newEmployee);
+    }
+
+    private static void EmployeeAddDoctor(List<Employee> Employeelist, Doctor doctor)
+    {
+        Employee newEmployee = new Employee()
+        {
+            StaffID = doctor.DoctorID,
+            StaffType = "doctor",
+            FirstName = doctor.FirstName,
+            LastName = doctor.LastName,
+            OtherNames = doctor.OtherNames,
+            FullName = doctor.LastName + " " + doctor.LastName + " " + doctor.OtherNames,
+            Gender = doctor.Gender,
+            PhoneNumber = doctor.PhoneNumber,
+            Address = doctor.Address,
+            DOB = doctor.DOB,
+            DateEmployed = doctor.DateEmployed,
+            CreatedByID = doctor.CreatedByID,
+            ModifiedByID = doctor.ModifiedByID,
+            CreatedDate = doctor.CreatedDate,
+            ModifiedDate = doctor.ModifiedDate,
+            IsActive = doctor.IsActive,
+            IsDeleted = doctor.IsDeleted
+        };
+
+        Employeelist.Add(newEmployee);
+    }
+
+
+    public static int GetStaffLastAttendanceID(int currentstaffid)
+    {
+        NurseDuty Nurseduty= DBContext.NurseDuties.Where(nd => nd.NurseID == currentstaffid).LastOrDefault();
+
+        if(Nurseduty != null)
+        {
+            return Nurseduty.NurseDutyID;
+        }
+        else
+        {
+            return 0;
+        }
+
+        
+    }
 
     //ddlSubject.DataSource = subjects;
     //        ddlSubject.DataTextField = "SubjectNamne";
