@@ -51,17 +51,23 @@
                                     <li class=""><a href="#profile" data-toggle="tab">Profile</a>
                                     </li>--%>
 
-                                    <li class="active"><a href="#usercreation" data-toggle="tab">USER MANAGEMENT</a>
+                                    <li class="active" runat="server" id="usercreationli"><%--<a href="#usercreation" data-toggle="tab">USER MANAGEMENT</a>--%>
+                                        <asp:LinkButton runat="server" ID="UsercreationDivNav" Text="USER MANAGEMENT" OnClick="UsercreationDivNav_Click"></asp:LinkButton>
                                     </li>
-                                    <li class=""><a href="#transactiontype" data-toggle="tab">TRANSACTION TYPE</a>
+                                    <li class="" id="transactiontypeli" runat="server"><%--<a href="#transactiontype" data-toggle="tab">TRANSACTION TYPE</a>--%>
+                                        <asp:LinkButton runat="server" ID="TransactionTypeDivNav" Text="TRANSACTION TYPE" OnClick="TransactionTypeDivNav_Click"></asp:LinkButton>
                                     </li>
-                                    <li class=""><a href="#role" data-toggle="tab">ROLE MANAGEMENT</a>
+                                    <li class="" id="roleli" runat="server"><%--<a href="#role" data-toggle="tab">ROLE MANAGEMENT</a>--%>
+                                        <asp:LinkButton runat="server" ID="RoleDivNav" Text="ROLE MANAGEMENT" OnClick="RoleDivNav_Click"></asp:LinkButton>
                                     </li>
-                                    <li class=""><a href="#patientplan" data-toggle="tab">PATIENT PLAN</a>
+                                    <li class="" id="patientplanli" runat="server"><%--<a href="#patientplan" data-toggle="tab">PATIENT PLAN</a>--%>
+                                        <asp:LinkButton runat="server" ID="PatientPlanDivNav" Text="PATIENT PLAN" OnClick="PatientPlanDivNav_Click"></asp:LinkButton>
                                     </li>
-                                    <li class=""><a href="#dutytype" data-toggle="tab">DUTY TYPE</a>
+                                    <li class="" id="dutytypeli" runat="server"><%--<a href="#dutytype" data-toggle="tab">DUTY TYPE</a>--%>
+                                        <asp:LinkButton runat="server" ID="DutyTypeDivNav" Text="DUTY TYPE" OnClick="DutyTypeDivNav_Click"></asp:LinkButton>
                                     </li>
-                                    <li class=""><a href="#assigningnurseduty" data-toggle="tab">ASSIGN NURSE DUTY</a>
+                                    <li class="" id="assigningnursedutyli" runat="server"><%--<a href="#assigningnurseduty" data-toggle="tab">ASSIGN NURSE DUTY</a>--%>
+                                        <asp:LinkButton runat="server" ID="AssigningNurseDutyDivNav" Text="ASSIGN NURSE DUTY" OnClick="AssigningNurseDutyDivNav_Click"></asp:LinkButton>
                                     </li>
 
                                 </ul>
@@ -75,7 +81,7 @@
                                                 <div class="panel-body">
                                                     <hr />
                                                     <h4>ADD NEW USER</h4>
-                                                    <div class="form-group" id="AddUserDiv">
+                                                    <div class="form-group" id="AddUserDiv" runat="server">
                                                         <div class="row">
                                                             <div class="col-lg-3">
                                                             </div>
@@ -117,7 +123,7 @@
                                                         </div>
                                                     </div>
                                                     <hr />
-                                                    <div class="form-group" id="ViewUserListDiv">                                                       
+                                                    <div class="form-group" id="ViewUserListDiv" runat="server">                                                       
                                                          <div class="form-group">
                                                             <div class="row form-group">
                                                                 <div class="col-md-6 text-left">
@@ -176,7 +182,7 @@
                                                         </div>
                                                     </div>
                                                     <hr />
-                                                    <div class="form-group" id="EditUserDiv">
+                                                    <div class="form-group" id="EditUserDiv" runat="server">
                                                         <h4>EDIT USER</h4>
                                                         <div class="row">
                                                             <div class="col-lg-3">
@@ -218,7 +224,7 @@
                                                         </div>
                                                     </div>
                                                     <hr />
-                                                    <div class="form-group" id="ViewUserCreationDiv">
+                                                    <div class="form-group" id="ViewUserCreationDiv" runat="server">
                                                         <h4>VIEW USER DETAIL</h4>
                                                         <div class="row">
                                                             <div class="col-lg-3">

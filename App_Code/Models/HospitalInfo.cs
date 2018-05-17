@@ -43,3 +43,4 @@
         [StringLength(150)]
         public string CloudHospitalID { get; set; }
     }
+

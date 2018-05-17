@@ -20,11 +20,12 @@
         [StringLength(50)]
         public string OtherNames { get; set; }
 
-        [Required]
-        [StringLength(150)]
-        public string FullName { get { return FirstName + " " + LastName + " " + OtherNames; } }
+    [Required]
+    [StringLength(150)]
+    public string FullName { get { return FirstName + " " + LastName + " " + OtherNames; } }
 
-        [StringLength(10)]
+
+    [StringLength(10)]
         public string Gender { get; set; }
 
         [StringLength(18)]

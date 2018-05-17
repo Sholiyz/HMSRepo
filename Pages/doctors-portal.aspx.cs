@@ -18,7 +18,7 @@ public partial class Pages_doctors_portal : System.Web.UI.Page
             ViewDoctorListDiv.Visible = true;
             //DoctorListGridView.DataSource = LoadOrderItems();
             //DoctorListGridView.DataBind();
-            BindGrid();
+            
         }
         else
         {
@@ -358,6 +358,7 @@ public partial class Pages_doctors_portal : System.Web.UI.Page
     protected void DoctorDivNav_Click(object sender, EventArgs e)
     {
         SetDoctorContainerVisible();
+        BindGrid();
     }
 
     protected void AttendanceDivNav_Click(object sender, EventArgs e)
@@ -368,6 +369,7 @@ public partial class Pages_doctors_portal : System.Web.UI.Page
     private void SetDoctorContainerVisible()
     {
         HideContentView();
+        doctorli.Attributes["class"] = "active";
         doctor.Visible = true;
     }
     private void SetAttendanceContainerVisible()

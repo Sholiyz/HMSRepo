@@ -222,7 +222,7 @@
                                                                         <ItemTemplate>
                                                                             <div class="form-actions text-center">
                                                                                 <%--<asp:Button runat="server" Text="Processing" ID="lnkView" Enabled='<%#Eval("IsProcessing") %>' CssClass="btn btn-xs btn-success" />--%>
-                                                                                <asp:Button CommandArgument="View" runat="server" Text="View" ID="CancelRoleBtn" CssClass="btn btn-md btn-success" />
+                                                                                <asp:Button CommandArgument="View" runat="server" Text="View" ID="CancelRoleBtn" CssClass="btn btn-md btn-primary" />
                                                                                 <asp:Button CommandArgument="Edit" runat="server" Text="Edit" ID="EditRoleBtn" CssClass="btn btn-md btn-warning" />
                                                                                 <asp:Button CommandArgument="Delete" runat="server" Text='<%# (Convert.ToBoolean(Eval("IsActive")) == true  ? "Deactivate" : "Activate") %>' ID="DeleteRoleBtn"  CssClass='<%# (Convert.ToBoolean(Eval("IsActive")) == true  ? "btn btn-md btn-danger" : "btn btn-md btn-success") %>' />   <%--Enabled='<%# (Convert.ToBoolean(Eval("IsActive")) == true  ? false : true) %>' --%>
                                                                                 <asp:Button CommandArgument="Delete" runat="server" Text="Delete" ID="Button1"  CssClass="btn btn-md btn-danger" />

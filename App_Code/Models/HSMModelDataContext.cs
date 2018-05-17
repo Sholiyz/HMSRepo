@@ -25,6 +25,7 @@
         public virtual DbSet<PatientPlanType> PatientPlanTypes { get; set; }
         public virtual DbSet<Patient> Patients { get; set; }
         public virtual DbSet<TransactionType> TransactionTypes { get; set; }
+        public virtual DbSet<VitalSign> VitalSigns { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -79,6 +80,29 @@
             modelBuilder.Entity<Patient>()
                 .Property(e => e.Occupation)
                 .IsFixedLength();
+
+            modelBuilder.Entity<VitalSign>()
+                .Property(e => e.Temprature)
+                .HasPrecision(4, 2);
+
+            modelBuilder.Entity<VitalSign>()
+                .Property(e => e.Pulse)
+                .HasPrecision(4, 2);
+
+            modelBuilder.Entity<VitalSign>()
+                .Property(e => e.Respiration)
+                .HasPrecision(4, 2);
+
+            modelBuilder.Entity<VitalSign>()
+                .Property(e => e.BloodPressure)
+                .HasPrecision(4, 2);
+
+            modelBuilder.Entity<VitalSign>()
+                .Property(e => e.Weight)
+                .HasPrecision(4, 2);
+
+            modelBuilder.Entity<VitalSign>()
+                .Property(e => e.Height)
+                .HasPrecision(4, 2);
         }
     }
-

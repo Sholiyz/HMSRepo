@@ -5,6 +5,7 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Web;
 
+
 /// <summary>
 /// Summary description for Pasture
 /// </summary>
@@ -1074,6 +1075,20 @@ public class Pasture
             return null;
         }
     }
+    public static string GetCurrentUserSessionRole()
+    {
+        HttpContext context = HttpContext.Current;
+        AuthUser CurrentUser = new AuthUser();
+        CurrentUser = (AuthUser)(context.Session["UserDetail"]);
+        if (!(CurrentUser == null))
+        {
+            return DBContext.AuthRoles.Where(r=> r.RoleID== CurrentUser.StaffRoleID).FirstOrDefault().RoleName;
+        }
+        else
+        {
+            return null;
+        }
+    }
     public static void EndCurrentSession()
     {
 
@@ -1242,4 +1257,6 @@ public class Pasture
     }
 
     #endregion
+
+
 }

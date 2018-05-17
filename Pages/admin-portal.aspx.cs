@@ -9,8 +9,7 @@ public partial class Pages_admin_portal : System.Web.UI.Page
 {
     protected void Page_Load(object sender, EventArgs e)
     {
-        RoleListGrid.DataSource = LoadOrderItems();
-        RoleListGrid.DataBind();
+     
     }
 
     private List<RoleItems> LoadOrderItems()
@@ -148,5 +147,135 @@ public partial class Pages_admin_portal : System.Web.UI.Page
         Alert.CallAlert(Alert.Alerttype.success.ToString(), "Check and try again.");
         //Alert.CallAlert(Alert.Alerttype.error.ToString(), "Operation can not be done.");
         return;
+    }
+
+    private void SetActiveContainerVisible(string NavtabName)
+    {
+        if (NavtabName.ToLower()=="user")
+        {
+            HideContentView();
+            usercreationli.Attributes["class"] = "active";
+            usercreation.Visible = true;
+            usercreation.Attributes["class"] = "tab-pane fade active in";
+            return;
+        }
+        if (NavtabName.ToLower() == "role")
+        {
+            HideContentView();
+            roleli.Attributes["class"] = "active";
+            role.Visible = true;
+            role.Attributes["class"] = "tab-pane fade active in";
+            return;
+        }
+        if (NavtabName.ToLower() == "transactiontype")
+        {
+            HideContentView();
+            transactiontypeli.Attributes["class"] = "active";
+            transactiontype.Visible = true;
+            transactiontype.Attributes["class"] = "tab-pane fade active in";
+            return;
+        }
+        if (NavtabName.ToLower() == "patientplan")
+        {
+            HideContentView();
+            patientplanli.Attributes["class"] = "active";
+            patientplan.Visible = true;
+            patientplan.Attributes["class"] = "tab-pane fade active in";
+            return;
+        }
+        if (NavtabName.ToLower() == "dutytype")
+        {
+            HideContentView();
+            dutytypeli.Attributes["class"] = "active";
+            dutytype.Visible = true;
+            dutytype.Attributes["class"] = "tab-pane fade active in";
+            return;
+        }
+        if (NavtabName.ToLower() == "assigningnurseduty")
+        {
+            HideContentView();
+            assigningnursedutyli.Attributes["class"] = "active";
+            assigningnurseduty.Visible = true;
+            assigningnurseduty.Attributes["class"] = "tab-pane fade active in";
+            return;
+        }
+        //if (NavtabName.ToLower() == "role")
+        //{
+        //    HideContentView();
+        //    assigningnursedutyli.Attributes["class"] = "active";
+        //    assigningnurseduty.Visible = true;
+        //}
+
+
+
+       
+
+        
+    }
+
+    private void HideContentView()
+    {
+        usercreation.Visible = false;
+        usercreationli.Attributes["class"] = "";
+        transactiontype.Visible = false;
+        transactiontypeli.Attributes["class"] = "";
+        role.Visible = false;
+        roleli.Attributes["class"] = "";
+        dutytype.Visible = false;
+        dutytypeli.Attributes["class"] = "";
+        patientplan.Visible = false;
+        patientplanli.Attributes["class"] = "";
+        assigningnurseduty.Visible = false;
+        assigningnursedutyli.Attributes["class"] = "";
+    }
+
+
+    protected void UsercreationDivNav_Click(object sender, EventArgs e)
+    {
+        SetActiveContainerVisible("Usercreation");
+    }
+
+    protected void TransactionTypeDivNav_Click(object sender, EventArgs e)
+    {
+        SetActiveContainerVisible("TransactionType");
+    }
+
+    protected void RoleDivNav_Click(object sender, EventArgs e)
+    {
+        SetActiveContainerVisible("Role");
+        RoleListGrid.DataSource = LoadOrderItems();
+        RoleListGrid.DataBind();
+    }
+
+    protected void PatientPlanDivNav_Click(object sender, EventArgs e)
+    {
+        SetActiveContainerVisible("PatientPlan");
+    }
+
+    protected void DutyTypeDivNav_Click(object sender, EventArgs e)
+    {
+        SetActiveContainerVisible("DutyType");
+    }
+
+    protected void AssigningNurseDutyDivNav_Click(object sender, EventArgs e)
+    {
+        SetActiveContainerVisible("AssigningNurseDuty");
+    }
+
+    private void ManageRoleView()
+    {
+        
+        string role = "admin"; //Pasture.GetCurrentUserSessionRole();
+
+
+        if (role.ToLower() == "admin")
+        {
+
+        }
+        else
+        {
+            transactiontypeli.Visible = false;
+            roleli.Visible = false;
+        }
     }
 }
