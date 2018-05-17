@@ -605,7 +605,7 @@ public class Pasture
         }
 
     }
-    public static int DeletePatientPlanByID(TransactionType DeleteTransactionType)
+    public static int DeleteTransactionTypeByID(TransactionType DeleteTransactionType)
     {
         try
         {
@@ -718,8 +718,14 @@ public class Pasture
     }
 
     #endregion
-    
+
     #region Utility
+
+
+    //ddlSubject.DataSource = subjects;
+    //        ddlSubject.DataTextField = "SubjectNamne";
+    //        ddlSubject.DataValueField = "SubjectID";
+    //        ddlSubject.DataBind();
 
     public enum LoginMessage
     {
