@@ -159,6 +159,14 @@ public partial class Pages_doctors_portal : System.Web.UI.Page
         //Alert.CallAlert(Alert.Alerttype.error.ToString(), "Operation can not be done.");
         return;
     }
+
+    private void HideContentView()
+    {
+        doctor.Visible = false;
+        doctorli.Attributes["class"] = "";
+        attendance.Visible = false;
+        attendanceli.Attributes["class"] = "";
+    }
     #endregion
 
 
@@ -346,4 +354,26 @@ public partial class Pages_doctors_portal : System.Web.UI.Page
     }
     #endregion
 
+
+    protected void DoctorDivNav_Click(object sender, EventArgs e)
+    {
+        SetDoctorContainerVisible();
+    }
+
+    protected void AttendanceDivNav_Click(object sender, EventArgs e)
+    {
+        SetAttendanceContainerVisible();
+    }
+
+    private void SetDoctorContainerVisible()
+    {
+        HideContentView();
+        doctor.Visible = true;
+    }
+    private void SetAttendanceContainerVisible()
+    {
+        HideContentView();
+        attendanceli.Attributes["class"] = "active";
+        attendance.Visible = true;
+    }
 }

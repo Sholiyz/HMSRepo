@@ -132,6 +132,15 @@ public partial class Pages_admin_portal : System.Web.UI.Page
 
     }
 
+    private void SetActiveView()
+    {
+
+    }
+
+
+
+
+
     protected void ShowPopAlert_Click(object sender, EventArgs e)
     {
         //Call Pop up Alert

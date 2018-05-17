@@ -44,9 +44,11 @@
                                 </div>--%>
                                 <div class="panel-body">
                                     <ul class="nav nav-tabs">
-                                        <li class="active"><a href="#doctor" data-toggle="tab">DOCTOR MANAGEMENT</a>
+                                        <li class="active" id="doctorli" runat="server"><%--<a href="#doctor" data-toggle="tab">DOCTOR MANAGEMENT</a>--%>
+                                            <asp:LinkButton runat="server" ID="DoctorDivNav" OnClick="DoctorDivNav_Click" Text="DOCTOR MANAGEMENT"></asp:LinkButton>
                                         </li>
-                                        <li class=""><a href="#attendance" data-toggle="tab">ATTENDANCE</a>
+                                        <li class="" runat="server" id="attendanceli"><%--<a href="#attendance" data-toggle="tab">ATTENDANCE</a>--%>
+                                            <asp:LinkButton  runat="server" ID="AttendanceDivNav" OnClick="AttendanceDivNav_Click" Text="ATTENDANCE"> </asp:LinkButton>
                                         </li>
                                         <li class=""><a href="#messages" data-toggle="tab">Messages</a>
                                         </li>
@@ -59,7 +61,7 @@
                                     </ul>
 
                                     <div class="tab-content">
-                                        <div class="tab-pane fade active in" id="doctor">
+                                        <div class="tab-pane fade active in" id="doctor" runat="server">
                                            <%-- <h4>Add New Nurse</h4>--%>
                                             <div class="col-md-12">
                                                 <div class="panel panel-default">
@@ -382,7 +384,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="tab-pane fade" id="attendance">
+                                        <div class="tab-pane fade" id="attendance" runat="server">
                                           
                                             <div class="col-md-12">
                                                 <div class="panel panel-default">

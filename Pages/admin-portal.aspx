@@ -69,7 +69,7 @@
                                 <div class="tab-content">
                                     <%--User Creation USER CREATION UserCreation UserCreationList usercreation --%>
                                 
-                                    <div class="tab-pane fade active in" id="usercreation">
+                                    <div class="tab-pane fade active in" id="usercreation" runat="server">
                                         <div class="col-md-12">
                                             <div class="panel panel-default">
                                                 <div class="panel-body">
@@ -82,11 +82,11 @@
                                                             <div class="col-lg-6">
                                                                 <div class="form-group">
                                                                     <label class="control-label">EMPLOYEE NAME</label>
-                                                                    <asp:DropDownList runat="server" CssClass="form-control"></asp:DropDownList>
+                                                                    <asp:DropDownList runat="server" ID="AddUserEmployeelistddl" CssClass="form-control"></asp:DropDownList>
                                                                 </div>
                                                                 <div class="form-group">
                                                                     <label class="control-label">SELECT ROLE</label>
-                                                                    <asp:DropDownList runat="server" CssClass="form-control"></asp:DropDownList>
+                                                                    <asp:DropDownList runat="server" ID="Adduserrolelistddl" CssClass="form-control"></asp:DropDownList>
                                                                 </div>
                                                                 <div class="form-group">
                                                                     <label class="control-label">USERNAME</label>
@@ -103,10 +103,10 @@
                                                                 <div class="form-group">
                                                                      <div class="row">
                                                                     <div class="col-lg-6 text-left">
-                                                                        <asp:Button runat="server" CssClass="btn btn-default btn-danger" Text="BACK" />
+                                                                        <asp:Button runat="server" ID="AddUserBackBtn" CssClass="btn btn-default btn-danger" Text="BACK" />
                                                                     </div>
                                                                      <div class="col-lg-6 text-right">
-                                                                         <asp:Button runat="server" CssClass="btn btn-default btn-primary" Text="PROCEED" />
+                                                                         <asp:Button runat="server" ID="AddUserSubmitBtn" CssClass="btn btn-default btn-primary" Text="PROCEED" />
                                                                     </div>                                                                    
                                                                 </div>
                                                                 </div>
@@ -255,7 +255,7 @@
                                         </div>
                                     </div>
 
-                                    <div class="tab-pane fade" id="transactiontype">
+                                    <div class="tab-pane fade" id="transactiontype" runat="server">
                                         <div class="col-md-12">
                                             <div class="panel panel-default">
                                                 <div class="panel-body">
@@ -412,7 +412,7 @@
                                         </div>
                                     </div>
 
-                                    <div class="tab-pane fade" id="role">
+                                    <div class="tab-pane fade" id="role" runat="server">
                                         <div class="col-md-12">
                                             <div class="panel panel-default">
                                                 <div class="panel-body">
@@ -572,7 +572,7 @@
                                         </div>
                                     </div>
 
-                                    <div class="tab-pane fade" id="dutytype">
+                                    <div class="tab-pane fade" id="dutytype" runat="server">
                                         <div class="col-md-12">
                                             <div class="panel panel-default">
                                                 <div class="panel-body">
@@ -756,7 +756,7 @@
                                         </div>
                                     </div>
 
-                                    <div class="tab-pane fade" id="patientplan">
+                                    <div class="tab-pane fade" id="patientplan" runat="server">
                                         <div class="col-md-12">
                                             <div class="panel panel-default">
                                                 <div class="panel-body">
@@ -927,7 +927,7 @@
                                         </div>
                                     </div>
 
-                                    <div class="tab-pane fade" id="assigningnurseduty">
+                                    <div class="tab-pane fade" id="assigningnurseduty" runat="server">
                                         <div class="col-md-12">
                                             <div class="panel panel-default">
                                                 <div class="panel-body">
