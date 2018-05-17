@@ -61,6 +61,7 @@
                                     </ul>
 
                                     <div class="tab-content">
+
                                         <div class="tab-pane fade active in" id="doctor" runat="server">
                                            <%-- <h4>Add New Nurse</h4>--%>
                                             <div class="col-md-12">
@@ -68,8 +69,8 @@
                                                     <div class="panel-body">
                                                     <hr />
                                                         <%-- ========================ADD NEW DOCTOR ================================ --%>
-                                                    <h4>ADD NEW DOCTOR</h4>
                                                     <div class="form-group" id="AddNewDoctorDiv" runat="server">
+                                                        <h4>ADD NEW DOCTOR</h4>
                                                         <div class="row">
                                                             <div class="col-lg-3">
                                                             </div>
@@ -132,7 +133,7 @@
                                                                  <div class="form-group">
                                                                      <div class="row">
                                                                     <div class="col-lg-6 text-left">
-                                                                        <asp:Button runat="server" CssClass="btn btn-default btn-danger" Text="BACK" />
+                                                                        <asp:Button runat="server" CssClass="btn btn-default btn-danger" Text="BACK"  UseSubmitBehavior="false"  ID="btnAddNewBack" OnClick="btnAddNewBack_Click"  />
                                                                     </div>
                                                                      <div class="col-lg-6 text-right">
                                                                          <asp:Button runat="server" CssClass="btn btn-default btn-primary" Text="PROCEED" ID="btnProceed" OnClick="btnProceed_Click" />
@@ -297,7 +298,7 @@
                                                                  <div class="form-group">
                                                                      <div class="row">
                                                                     <div class="col-lg-6 text-left">
-                                                                        <asp:Button runat="server" CssClass="btn btn-default btn-danger" Text="BACK" />
+                                                                        <asp:Button runat="server" CssClass="btn btn-default btn-danger" Text="BACK"  UseSubmitBehavior="false"  ID="btnEditBack"   />
                                                                     </div>
                                                                      <div class="col-lg-6 text-right">
                                                                          <asp:Button runat="server" CssClass="btn btn-default btn-primary" Text="UPDATE" ID="btnUpdate" OnClick="btnUpdate_Click" />
@@ -368,7 +369,7 @@
                                                                      <div class="form-group">
                                                                      <div class="row">
                                                                     <div class="col-lg-12 text-left">
-                                                                        <asp:Button runat="server" CssClass="btn btn-default btn-danger" Text="BACK" /><asp:Button runat="server" CssClass="btn btn-default btn-primary text-right" Text="BACK" ID="btnBackView" OnClick="btnBackView_Click" />
+                                                                        <asp:Button runat="server" CssClass="btn btn-default btn-danger" Text="BACK" ID="btnBackView" OnClick="btnBackView_Click" />
                                                                     </div>
                                                                                                                                        
                                                                 </div>
@@ -384,6 +385,7 @@
                                                 </div>
                                             </div>
                                         </div>
+
                                         <div class="tab-pane fade" id="attendance" runat="server">
                                           
                                             <div class="col-md-12">
@@ -436,14 +438,17 @@
                                             </div>
 
                                         </div>
+
                                         <div class="tab-pane fade" id="messages">
                                             <h4>Messages Tab</h4>
                                             <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
                                         </div>
+
                                         <div class="tab-pane fade" id="settings">
                                             <h4>Settings Tab</h4>
                                             <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
                                         </div>
+
                                     </div>
                                 </div>
                             </div>
