@@ -18,7 +18,7 @@ public partial class Pages_doctors_portal : System.Web.UI.Page
             ViewDoctorListDiv.Visible = true;
             //DoctorListGridView.DataSource = LoadOrderItems();
             //DoctorListGridView.DataBind();
-            BindGrid();
+            //BindGrid();
         }
         else
         {
@@ -375,5 +375,12 @@ public partial class Pages_doctors_portal : System.Web.UI.Page
         HideContentView();
         attendanceli.Attributes["class"] = "active";
         attendance.Visible = true;
+        attendance.Attributes["class"] = "tab-pane fade active in";
+    }
+
+    protected void btnAddNewBack_Click(object sender, EventArgs e)
+    {
+        HideDivsDocTab();
+        ViewDoctorListDiv.Visible = true;
     }
 }

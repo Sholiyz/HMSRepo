@@ -19,6 +19,129 @@ public class Pasture
         //
     }
 
+    #region Doctor
+    public static List<Doctor> GetDoctors()
+    {
+        List<Doctor> doctorList = new List<Doctor>();
+        doctorList =  DBContext.Doctors.Where(d => d.IsActive == true).ToList();
+        return doctorList;
+    }
+
+    public static Doctor GetDoctorByID(int doctorID)
+    {
+        Doctor doctor = new Doctor();
+        doctor = DBContext.Doctors.Where(d => d.DoctorID == doctorID).FirstOrDefault();
+        return doctor;
+    }
+
+    public static int AddNewDoctor(Doctor newDoctor)
+    {
+        int response = 0;
+        try
+        {
+            newDoctor.CreatedByID = GetCurrentUserSessionID();
+            newDoctor.CreatedDate = DateTime.Now;
+            DBContext.Doctors.Add(newDoctor);
+            response = DBContext.SaveChanges();
+            return response;
+        }
+        catch (Exception)
+        {
+            return response;
+            //throw;
+        }
+    }
+
+    public static int UpdateDoctor(Doctor updDoctor)
+    {
+        int response = 0;
+        try
+        {
+            //get patient
+            Doctor doctor = DBContext.Doctors.Where(d => d.DoctorID == updDoctor.DoctorID).FirstOrDefault();
+
+            doctor.ModifiedByID = GetCurrentUserSessionID();
+            doctor.ModifiedDate = DateTime.Now;
+            response = DBContext.SaveChanges();
+            return response;
+        }
+        catch (Exception)
+        {
+            return response;
+            //throw;
+        }
+    }
+
+    public static int DeleteDoctor(Doctor delDoctor)
+    {
+        int response = 0;
+        try
+        {
+            Doctor doctor = DBContext.Doctors.Where(d => d.DoctorID == delDoctor.DoctorID).FirstOrDefault();
+
+            //update fields
+            doctor.IsActive = false;
+            doctor.IsDeleted = false;
+            doctor.ModifiedByID = GetCurrentUserSessionID();
+            doctor.ModifiedDate = DateTime.Now;
+            response = DBContext.SaveChanges();
+            return response;
+        }
+        catch (Exception)
+        {
+            return response;
+            //throw;
+        }
+    }
+
+    public static bool DeactivateDoctor(Doctor doc)
+    {
+        bool response = false;
+        try
+        {
+            Doctor doctor = DBContext.Doctors.FirstOrDefault(d => d.DoctorID == doc.DoctorID);
+
+            if (doctor.IsActive.Equals(true))
+            {
+                //Deactive Doctor
+                doctor.IsActive = false;
+                doctor.ModifiedByID = GetCurrentUserSessionID();
+                doctor.ModifiedDate = DateTime.Now;
+                response = Convert.ToBoolean(DBContext.SaveChanges());
+            }
+            return response;
+        }
+        catch (Exception)
+        {
+            return response;
+            throw;
+        }
+    }
+
+    public static bool ActivateDoctor(Doctor doc)
+    {
+        bool response = false;
+        try
+        {
+            Doctor doctor = DBContext.Doctors.FirstOrDefault(d => d.DoctorID == doc.DoctorID);
+
+            if (doctor.IsActive.Equals(false))
+            {
+                //Deactive Doctor
+                doctor.IsActive = true;
+                doctor.ModifiedByID = GetCurrentUserSessionID();
+                doctor.ModifiedDate = DateTime.Now;
+                response = Convert.ToBoolean(DBContext.SaveChanges());
+            }
+            return response;
+        }
+        catch (Exception)
+        {
+            return response;
+            //throw;
+        }
+    }
+    #endregion
 
     #region Hospital Info Management
 
@@ -305,7 +428,7 @@ public class Pasture
             Patient patient = DBContext.Patients.Where(u => u.PatientID == UpdatePatient.PatientID).FirstOrDefault();
 
             //DBContext.AuthRoles.Add(newRole);         
-            patient.IsActive = UpdatePatient.IsActive;
+            //patient.IsActive = UpdatePatient.IsActive;
             patient.ModifiedByID = GetCurrentUserSessionID();
             patient.ModifiedDate = DateTime.Now;
             responce = DBContext.SaveChanges();
