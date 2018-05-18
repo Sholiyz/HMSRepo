@@ -9,7 +9,11 @@ public partial class Pages_admin_portal : System.Web.UI.Page
 {
     protected void Page_Load(object sender, EventArgs e)
     {
-     
+        string role = Pasture.GetCurrentUserSessionRole();
+
+        ManageRoleView("adin");
+
+
     }
 
     private List<RoleItems> LoadOrderItems()
@@ -233,6 +237,8 @@ public partial class Pages_admin_portal : System.Web.UI.Page
     protected void UsercreationDivNav_Click(object sender, EventArgs e)
     {
         SetActiveContainerVisible("Usercreation");
+        PopulateRolelist(Adduserrolelistddl);
+
     }
 
     protected void TransactionTypeDivNav_Click(object sender, EventArgs e)
@@ -262,20 +268,98 @@ public partial class Pages_admin_portal : System.Web.UI.Page
         SetActiveContainerVisible("AssigningNurseDuty");
     }
 
-    private void ManageRoleView()
+    private void ManageRoleView(string rolename)
     {
         
-        string role = "admin"; //Pasture.GetCurrentUserSessionRole();
+        //string role = "edmin"; //Pasture.GetCurrentUserSessionRole();
 
 
-        if (role.ToLower() == "admin")
+        if (rolename.ToLower() == "admin")
         {
-
+            dashboard.Visible = true;
+            patientsportal.Visible = true;
+            nursesportal.Visible = true;
+            doctorsportal.Visible = true;
+            adminportal.Visible = true;
+            return;
         }
-        else
+        if (rolename.ToLower().Contains( "nurse"))
         {
-            transactiontypeli.Visible = false;
-            roleli.Visible = false;
+            HideAllMenuNav();           
+            patientsportal.Visible = true;
+            nursesportal.Visible = true;           
+            return;
         }
+        if (rolename.ToLower().Contains("doctor"))
+        {
+            HideAllMenuNav();            
+            patientsportal.Visible = true;            
+            doctorsportal.Visible = true;
+            return;
+        }
+    }
+
+    private void HideAllMenuNav()
+    {
+        dashboard.Visible = false;
+        patientsportal.Visible = false;
+        nursesportal.Visible = false;
+        doctorsportal.Visible = false;
+        adminportal.Visible = false;
+    }
+
+    protected void AddRoleProceedButton_Click(object sender, EventArgs e)
+    {
+        AuthRole newRole = new AuthRole()
+        {
+            RoleName = RoleNameTxtbox.Text,
+            RoleDescription=RoleDescriptionTxtbox.Text
+            
+        };
+
+        Pasture.AddNewRole(newRole);
+       
+    }
+
+    protected void AddRoleBackButton_Click(object sender, EventArgs e)
+    {
+
+    }
+
+    protected void AddUserBackBtn_Click(object sender, EventArgs e)
+    {
+        AuthUser newUser = new AuthUser
+        {
+            UserName=AddUsernameTxtBox.Text,
+            Password=AddUserPasswordTxtBox.Text,
+            StaffRoleID=Convert.ToInt32(Adduserrolelistddl.SelectedValue.ToString())
+
+        };
+    }
+
+    protected void AddUserSubmitBtn_Click(object sender, EventArgs e)
+    {
+
+    }
+
+
+    private void PopulateRolelist(DropDownList ddlistname)
+    {
+        AuthRole role = new AuthRole();        
+        ddlistname.DataSource = Pasture.GetRoles();
+        ddlistname.DataTextField = "RoleName";
+        ddlistname.DataValueField = "RoleID";
+        ddlistname.DataBind();
+    }
+
+    private void PopulateEmployeelist(DropDownList ddlistname)
+    {
+        Employee role = new Employee();
+
+        
+        ddlistname.DataSource = Pasture.GetRoles();
+        ddlistname.DataTextField = "RoleName";
+        ddlistname.DataValueField = "RoleID";
+        ddlistname.DataBind();
     }
 }

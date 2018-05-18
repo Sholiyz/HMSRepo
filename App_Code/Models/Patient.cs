@@ -22,7 +22,7 @@
 
         [Required]
         [StringLength(150)]
-        public string FullName { get { return FirstName + " " + LastName + " " + OtherNames; } }
+        public string FullName { get; set; }
 
         [StringLength(10)]
         public string Gender { get; set; }

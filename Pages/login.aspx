@@ -1,5 +1,8 @@
 ﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="login.aspx.cs" Inherits="Pages_login" %>
 
+<%@ Register Src="~/Controls/ResponseAlert.ascx" TagPrefix="uc1" TagName="ResponseAlert" %>
+
+
 <!DOCTYPE html>
 
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -18,6 +21,8 @@
     <link href="../assets/css/font-awesome.css" rel="stylesheet" />
     <!-- CUSTOM STYLE  -->
     <link href="../assets/css/style.css" rel="stylesheet" />
+    <link href="../assets/css/sweetalert/sweetalert.css" rel="stylesheet" />
+   
      <!-- HTML5 Shiv and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -31,9 +36,9 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-12">
-                    <strong>Email: </strong>info@yourdomain.com
+                    <strong>Email: </strong>info@hmsdomain.com
                     &nbsp;&nbsp;
-                    <strong>Support: </strong>+90-897-678-44
+                    <strong>Support: </strong>+234-807-053-6458
                 </div>
 
             </div>
@@ -77,7 +82,12 @@
                 </div>
 
             </div>
+             <div class="row">
+                <div class="col-md-12">
+                    <uc1:ResponseAlert runat="server" ID="ResponseAlert" />
 
+                </div>
+            </div>
             <div class="row">
                 <div class="col-md-3" >
 
@@ -86,64 +96,16 @@
                    <hr />
                      <h4> Login with <strong>HMS Portal Account  :</strong></h4>
                     <br />
-                     <label>Enter Email ID : </label>
-                        <input type="text" class="form-control" />
+                     <label>Enter UserName : </label>
+                        <input type="text" class="form-control" runat="server" id="usernametextbox" />
                         <label>Enter Password :  </label>
-                        <input type="password" class="form-control" />
+                        <input type="password" class="form-control" runat="server" id="passwordtextbox" />
                         <hr />
-                        <a href="./dashboard.aspx" class="btn btn-info"><span class="glyphicon glyphicon-user"></span> &nbsp;Log Me In </a>&nbsp;
+                   <asp:Button runat="server" ID="LoginButton" OnClick="LoginButton_Click" CssClass="btn btn-info" Text="Log Me In" />
+                       <%-- <a href="./dashboard.aspx" class="btn btn-info"><span class="glyphicon glyphicon-user"></span> &nbsp; </a>&nbsp;--%>
                     <hr />
-                    <%--<h4> Login with facebook <strong> / </strong>Google :</h4>
-                    <br />
-                    <a href="../index.html" class="btn btn-social btn-facebook">
-                            <i class="fa fa-facebook"></i>&nbsp; Facebook Account</a>
-                    &nbsp;OR&nbsp;
-                    <a href="../index.html" class="btn btn-social btn-google">
-                            <i class="fa fa-google-plus"></i>&nbsp; Google Account</a>--%>
-                    
-                </div>
-                <%--<div class="col-md-6">
-                    <div class="alert alert-info">
-                        This is a free bootstrap admin template with basic pages you need to craft your project. 
-                        Use this template for free to use for personal and commercial use.
-                        <br />
-                         <strong> Some of its features are given below :</strong>
-                        <ul>
-                            <li>
-                                Responsive Design Framework Used
-                            </li>
-                            <li>
-                                Easy to use and customize
-                            </li>
-                            <li>
-                                Font awesome icons included
-                            </li>
-                            <li>
-                                Clean and light code used.
-                            </li>
-                        </ul>
-                       
-                    </div>
-                    <div class="alert alert-success">
-                         <strong> Instructions To Use:</strong>
-                        <ul>
-                            <li>
-                               Lorem ipsum dolor sit amet ipsum dolor sit ame
-                            </li>
-                            <li>
-                                 Aamet ipsum dolor sit ame
-                            </li>
-                            <li>
-                               Lorem ipsum dolor sit amet ipsum dolor
-                            </li>
-                            <li>
-                                 Cpsum dolor sit ame
-                            </li>
-                        </ul>
-                       
-                    </div>
-                </div>--%>
-
+                   </div>
+               
                 <div class="col-md-3" >
 
                 </div>
@@ -167,6 +129,9 @@
     <!-- JAVASCRIPT AT THE BOTTOM TO REDUCE THE LOADING TIME  -->
     <!-- CORE JQUERY SCRIPTS -->
     <script src="../assets/js/jquery-1.11.1.js"></script>
+        <!-- scripit init-->
+         <script src="../assets/js/sweetalert/sweetalert.min.js"></script>
+        <script src="../assets/js/sweetalert/sweetalert.init.js"></script>
     <!-- BOOTSTRAP SCRIPTS  -->
     <script src="../assets/js/bootstrap.js"></script>
     </form>

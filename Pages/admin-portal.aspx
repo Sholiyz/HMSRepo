@@ -13,11 +13,11 @@
                 <div class="col-md-12">
                     <div class="navbar-collapse collapse ">
                         <ul id="menu-top" class="nav navbar-nav navbar-right">
-                            <li><a href="./dashboard.aspx">Dashboard</a></li>
-                            <li><a href="./patient-portal.aspx">Patient's Portal</a></li>
-                            <li><a href="./nurse-portal.aspx">Nurse's Portal</a></li>
-                            <li><a href="./doctors-portal.aspx">Doctor's Portal</a></li>
-                            <li><a class="menu-top-active" href="./admin-portal.aspx">Admin Portal</a></li>
+                            <li runat="server" id="dashboard" ><a href="./dashboard.aspx">Dashboard</a></li>
+                            <li runat="server" id="patientsportal"><a href="./patient-portal.aspx">Patient's Portal</a></li>
+                            <li runat="server" id="nursesportal"><a href="./nurse-portal.aspx">Nurse's Portal</a></li>
+                            <li runat="server" id="doctorsportal"><a href="./doctors-portal.aspx">Doctor's Portal</a></li>
+                            <li runat="server" id="adminportal"><a class="menu-top-active" href="./admin-portal.aspx">Admin Portal</a></li>
                         </ul>
                     </div>
                 </div>
@@ -52,7 +52,7 @@
                                     </li>--%>
 
                                     <li class="active" runat="server" id="usercreationli"><%--<a href="#usercreation" data-toggle="tab">USER MANAGEMENT</a>--%>
-                                        <asp:LinkButton runat="server" ID="UsercreationDivNav" Text="USER MANAGEMENT" OnClick="UsercreationDivNav_Click"></asp:LinkButton>
+                                        <asp:LinkButton runat="server"  ID="UsercreationDivNav" Text="USER MANAGEMENT" OnClick="UsercreationDivNav_Click"></asp:LinkButton>
                                     </li>
                                     <li class="" id="transactiontypeli" runat="server"><%--<a href="#transactiontype" data-toggle="tab">TRANSACTION TYPE</a>--%>
                                         <asp:LinkButton runat="server" ID="TransactionTypeDivNav" Text="TRANSACTION TYPE" OnClick="TransactionTypeDivNav_Click"></asp:LinkButton>
@@ -96,23 +96,23 @@
                                                                 </div>
                                                                 <div class="form-group">
                                                                     <label class="control-label">USERNAME</label>
-                                                                    <asp:TextBox runat="server" CssClass="form-control"></asp:TextBox>
+                                                                    <asp:TextBox runat="server" ID="AddUsernameTxtBox" CssClass="form-control"></asp:TextBox>
                                                                 </div>
                                                                 <div class="form-group">
                                                                     <label class="control-label">PASSWORD</label>
-                                                                    <asp:TextBox runat="server" CssClass="form-control"></asp:TextBox>
+                                                                    <asp:TextBox runat="server" ID="AddUserPasswordTxtBox" CssClass="form-control"></asp:TextBox>
                                                                 </div>
                                                                 <div class="form-group">
                                                                     <label class="control-label">CONFIRM PASSWORD</label>
-                                                                    <asp:TextBox runat="server" CssClass="form-control"></asp:TextBox>
+                                                                    <asp:TextBox runat="server" ID="AddUserConfirmPasswordTxtBox" CssClass="form-control"></asp:TextBox>
                                                                 </div>
                                                                 <div class="form-group">
                                                                      <div class="row">
                                                                     <div class="col-lg-6 text-left">
-                                                                        <asp:Button runat="server" ID="AddUserBackBtn" CssClass="btn btn-default btn-danger" Text="BACK" />
+                                                                        <asp:Button runat="server" ID="AddUserBackBtn" CssClass="btn btn-default btn-danger" OnClick="AddUserBackBtn_Click" Text="BACK" />
                                                                     </div>
                                                                      <div class="col-lg-6 text-right">
-                                                                         <asp:Button runat="server" ID="AddUserSubmitBtn" CssClass="btn btn-default btn-primary" Text="PROCEED" />
+                                                                         <asp:Button runat="server" ID="AddUserSubmitBtn" CssClass="btn btn-default btn-primary" OnClick="AddUserSubmitBtn_Click" Text="PROCEED" />
                                                                     </div>                                                                    
                                                                 </div>
                                                                 </div>
@@ -431,19 +431,19 @@
                                                             <div class="col-lg-6">
                                                                 <div class="form-group">
                                                                     <label class="control-label">ROLE NAME</label>
-                                                                    <asp:TextBox runat="server" CssClass="form-control"></asp:TextBox>
+                                                                    <asp:TextBox runat="server" ID="RoleNameTxtbox" CssClass="form-control"></asp:TextBox>
                                                                 </div>
                                                                 <div class="form-group">
                                                                     <label class="control-label">DESCRIPTION</label>
-                                                                    <asp:TextBox runat="server" CssClass="form-control" TextMode="MultiLine"></asp:TextBox>
+                                                                    <asp:TextBox runat="server" CssClass="form-control" ID="RoleDescriptionTxtbox" TextMode="MultiLine"></asp:TextBox>
                                                                 </div>
                                                                  <div class="form-group">
                                                                      <div class="row">
                                                                     <div class="col-lg-6 text-left">
-                                                                        <asp:Button runat="server" CssClass="btn btn-default btn-danger" Text="BACK" />
+                                                                        <asp:Button runat="server" CssClass="btn btn-default btn-danger" ID="AddRoleBackButton" OnClick="AddRoleBackButton_Click" Text="BACK" />
                                                                     </div>
                                                                      <div class="col-lg-6 text-right">
-                                                                         <asp:Button runat="server" CssClass="btn btn-default btn-primary" Text="PROCEED" />
+                                                                         <asp:Button runat="server" CssClass="btn btn-default btn-primary" ID="AddRoleProceedButton" OnClick="AddRoleProceedButton_Click" Text="PROCEED" />
                                                                     </div>                                                                    
                                                                 </div>
                                                                 </div>

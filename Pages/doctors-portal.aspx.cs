@@ -191,11 +191,12 @@ public partial class Pages_doctors_portal : System.Web.UI.Page
                 return;
 
             //Save to DB
-            context.Doctors.Add(new Doctor()
+            context.Employees.Add(new Employee()
             {
                 FirstName = txtFirstname.Text.Trim(),
                 LastName = txtLastname.Text.Trim(),
                 OtherNames = txtOthername.Text.Trim(),
+                StaffTypeID =2,//2 doctor 
                 Gender = ddlGender.SelectedItem.Text.Trim(),
                 PhoneNumber = txtPhone.Text.Trim(),
                 Address = txtAddress.Text.Trim(),
@@ -257,7 +258,7 @@ public partial class Pages_doctors_portal : System.Web.UI.Page
             else
             {
                 //Delete
-                Doctor docDelete = context.Doctors.FirstOrDefault(doc => doc.DoctorID == int.Parse(itemID));
+                Employee docDelete = context.Employees.FirstOrDefault(doc => doc.EmployeeID == int.Parse(itemID));
                 //Update IsDeleted= true;
                 //context.Doctors.Remove(docDelete);
                 //Bind Data to Grid
@@ -282,7 +283,7 @@ public partial class Pages_doctors_portal : System.Web.UI.Page
     {
         try
         {
-            Doctor doc = new Doctor()
+            Employee doc = new Employee()
             {
                 FirstName = txtFirstname.Text.Trim(),
                 LastName = txtLastname.Text.Trim(),
@@ -292,7 +293,7 @@ public partial class Pages_doctors_portal : System.Web.UI.Page
                 Address = txtAddress.Text.Trim(),
                 DOB = Convert.ToDateTime(txtDOB.Text).Date,
             };
-            context.Doctors.Add(doc);
+            context.Employees.Add(doc);
             context.Entry(doc).State = System.Data.Entity.EntityState.Modified;
             context.SaveChanges();
 
@@ -342,7 +343,7 @@ public partial class Pages_doctors_portal : System.Web.UI.Page
     {
         try
         {
-            var data = (from d in context.Doctors
+            var data = (from d in context.Employees where d.StaffTypeID==2
                        select d).ToList();
 
             //List<Doctor> data = context.Doctors.Where(doc => doc.IsDeleted == false).ToList();

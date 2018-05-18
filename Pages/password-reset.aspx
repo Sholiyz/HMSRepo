@@ -18,6 +18,8 @@
     <link href="../assets/css/font-awesome.css" rel="stylesheet" />
     <!-- CUSTOM STYLE  -->
     <link href="../assets/css/style.css" rel="stylesheet" />
+    <link href="../assets/css/sweetalert/sweetalert.css" rel="stylesheet" />
+   
      <!-- HTML5 Shiv and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -33,7 +35,7 @@
                 <div class="col-md-12">
                     <strong>Email: </strong>info@yourdomain.com
                     &nbsp;&nbsp;
-                    <strong>Support: </strong>+90-897-678-44
+                    <strong>Support: </strong>+234-807-053-6458
                 </div>
 
             </div>
@@ -113,6 +115,9 @@
     <!-- JAVASCRIPT AT THE BOTTOM TO REDUCE THE LOADING TIME  -->
     <!-- CORE JQUERY SCRIPTS -->
     <script src="../assets/js/jquery-1.11.1.js"></script>
+        <!-- scripit init-->
+        <script src="../assets/js/sweetalert/sweetalert.min.js"></script>
+        <script src="../assets/js/sweetalert/sweetalert.init.js"></script>
     <!-- BOOTSTRAP SCRIPTS  -->
     <script src="../assets/js/bootstrap.js"></script>
     </form>

@@ -21,28 +21,28 @@ public class Pasture
     }
 
     #region Doctor
-    public static List<Doctor> GetDoctors()
+    public static List<Employee> GetEmployees()
     {
-        List<Doctor> doctorList = new List<Doctor>();
-        doctorList =  DBContext.Doctors.Where(d => d.IsActive == true).ToList();
-        return doctorList;
+        List<Employee> EmployeeList = new List<Employee>();
+        EmployeeList =  DBContext.Employees.Where(d => d.IsActive == true).ToList();
+        return EmployeeList;
     }
 
-    public static Doctor GetDoctorByID(int doctorID)
+    public static Employee GetEmployeeByID(int EmployeeID)
     {
-        Doctor doctor = new Doctor();
-        doctor = DBContext.Doctors.Where(d => d.DoctorID == doctorID).FirstOrDefault();
-        return doctor;
+        Employee Employee = new Employee();
+        Employee = DBContext.Employees.Where(d => d.EmployeeID == EmployeeID).FirstOrDefault();
+        return Employee;
     }
 
-    public static int AddNewDoctor(Doctor newDoctor)
+    public static int AddNewEmployee(Employee newEmployee)
     {
         int response = 0;
         try
         {
-            newDoctor.CreatedByID = GetCurrentUserSessionID();
-            newDoctor.CreatedDate = DateTime.Now;
-            DBContext.Doctors.Add(newDoctor);
+            newEmployee.CreatedByID = GetCurrentUserSessionID();
+            newEmployee.CreatedDate = DateTime.Now;
+            DBContext.Employees.Add(newEmployee);
             response = DBContext.SaveChanges();
             return response;
         }
@@ -53,16 +53,16 @@ public class Pasture
         }
     }
 
-    public static int UpdateDoctor(Doctor updDoctor)
+    public static int UpdateEmployee(Employee updEmployee)
     {
         int response = 0;
         try
         {
             //get patient
-            Doctor doctor = DBContext.Doctors.Where(d => d.DoctorID == updDoctor.DoctorID).FirstOrDefault();
+            Employee Employee = DBContext.Employees.Where(d => d.EmployeeID == updEmployee.EmployeeID).FirstOrDefault();
 
-            doctor.ModifiedByID = GetCurrentUserSessionID();
-            doctor.ModifiedDate = DateTime.Now;
+            Employee.ModifiedByID = GetCurrentUserSessionID();
+            Employee.ModifiedDate = DateTime.Now;
             response = DBContext.SaveChanges();
             return response;
         }
@@ -73,18 +73,18 @@ public class Pasture
         }
     }
 
-    public static int DeleteDoctor(Doctor delDoctor)
+    public static int DeleteEmployee(Employee delEmployee)
     {
         int response = 0;
         try
         {
-            Doctor doctor = DBContext.Doctors.Where(d => d.DoctorID == delDoctor.DoctorID).FirstOrDefault();
+            Employee Employee = DBContext.Employees.Where(d => d.EmployeeID == delEmployee.EmployeeID).FirstOrDefault();
 
             //update fields
-            doctor.IsActive = false;
-            doctor.IsDeleted = false;
-            doctor.ModifiedByID = GetCurrentUserSessionID();
-            doctor.ModifiedDate = DateTime.Now;
+            Employee.IsActive = false;
+            Employee.IsDeleted = false;
+            Employee.ModifiedByID = GetCurrentUserSessionID();
+            Employee.ModifiedDate = DateTime.Now;
             response = DBContext.SaveChanges();
             return response;
         }
@@ -95,19 +95,19 @@ public class Pasture
         }
     }
 
-    public static bool DeactivateDoctor(Doctor doc)
+    public static bool DeactivateEmployee(Employee doc)
     {
         bool response = false;
         try
         {
-            Doctor doctor = DBContext.Doctors.FirstOrDefault(d => d.DoctorID == doc.DoctorID);
+            Employee Employee = DBContext.Employees.FirstOrDefault(d => d.EmployeeID == doc.EmployeeID);
 
-            if (doctor.IsActive.Equals(true))
+            if (Employee.IsActive.Equals(true))
             {
-                //Deactive Doctor
-                doctor.IsActive = false;
-                doctor.ModifiedByID = GetCurrentUserSessionID();
-                doctor.ModifiedDate = DateTime.Now;
+                //Deactive Employee
+                Employee.IsActive = false;
+                Employee.ModifiedByID = GetCurrentUserSessionID();
+                Employee.ModifiedDate = DateTime.Now;
                 response = Convert.ToBoolean(DBContext.SaveChanges());
             }
             return response;
@@ -119,19 +119,19 @@ public class Pasture
         }
     }
 
-    public static bool ActivateDoctor(Doctor doc)
+    public static bool ActivateEmployee(Employee doc)
     {
         bool response = false;
         try
         {
-            Doctor doctor = DBContext.Doctors.FirstOrDefault(d => d.DoctorID == doc.DoctorID);
+            Employee Employee = DBContext.Employees.FirstOrDefault(d => d.EmployeeID == doc.EmployeeID);
 
-            if (doctor.IsActive.Equals(false))
+            if (Employee.IsActive.Equals(false))
             {
-                //Deactive Doctor
-                doctor.IsActive = true;
-                doctor.ModifiedByID = GetCurrentUserSessionID();
-                doctor.ModifiedDate = DateTime.Now;
+                //Deactive Employee
+                Employee.IsActive = true;
+                Employee.ModifiedByID = GetCurrentUserSessionID();
+                Employee.ModifiedDate = DateTime.Now;
                 response = Convert.ToBoolean(DBContext.SaveChanges());
             }
             return response;
@@ -297,19 +297,8 @@ public class Pasture
         List<Employee> EmployeeList = new List<Employee>();
         List<Doctor> doctorlist = new List<Doctor>();
         List<Nurse> nurselist = new List<Nurse>();
-        doctorlist = DBContext.Doctors.Where(doc=> doc.IsDeleted==false).ToList();
-        nurselist = DBContext.Nurses.Where(nur => nur.IsDeleted == false).ToList();
-
-        foreach(Doctor doctor in doctorlist)
-        {
-            EmployeeAddDoctor(EmployeeList, doctor);
-        }
-        foreach (Nurse nurse in nurselist)
-        {
-            EmployeeAddNurse(EmployeeList, nurse);
-        }
-
-
+        EmployeeList = DBContext.Employees.Where(emp=> emp.IsDeleted==false).ToList();
+       
         return EmployeeList.OrderBy(emp=> emp.FullName).ToList();
     }
     public static AuthUser GetUserByUsername(string username)
@@ -1224,57 +1213,57 @@ public class Pasture
 
     #region Utility
 
-    private static void EmployeeAddNurse(List<Employee> Employeelist,Nurse nurse)
-    {
-        Employee newEmployee = new Employee()
-        {
-            StaffID = nurse.NurseID,
-            StaffType = "Nurse",
-            FirstName = nurse.FirstName,
-            LastName = nurse.LastName,
-            OtherNames = nurse.OtherNames,
-            FullName = nurse.FullName,
-            Gender = nurse.Gender,
-            PhoneNumber = nurse.PhoneNumber,
-            Address = nurse.Address,
-            DOB = nurse.DOB,
-            DateEmployed = nurse.DateEmployed,
-            CreatedByID = nurse.CreatedByID,
-            ModifiedByID = nurse.ModifiedByID,
-            CreatedDate = nurse.CreatedDate,
-            ModifiedDate = nurse.ModifiedDate,
-            IsActive = nurse.IsActive,
-            IsDeleted = nurse.IsDeleted
-        };
+    //private static void EmployeeAddNurse(List<Employee> Employeelist,Nurse nurse)
+    //{
+    //    Employee newEmployee = new Employee()
+    //    {
+    //        StaffID = nurse.NurseID,
+    //        StaffType = "Nurse",
+    //        FirstName = nurse.FirstName,
+    //        LastName = nurse.LastName,
+    //        OtherNames = nurse.OtherNames,
+    //        FullName = nurse.FullName,
+    //        Gender = nurse.Gender,
+    //        PhoneNumber = nurse.PhoneNumber,
+    //        Address = nurse.Address,
+    //        DOB = nurse.DOB,
+    //        DateEmployed = nurse.DateEmployed,
+    //        CreatedByID = nurse.CreatedByID,
+    //        ModifiedByID = nurse.ModifiedByID,
+    //        CreatedDate = nurse.CreatedDate,
+    //        ModifiedDate = nurse.ModifiedDate,
+    //        IsActive = nurse.IsActive,
+    //        IsDeleted = nurse.IsDeleted
+    //    };
 
-        Employeelist.Add(newEmployee);
-    }
+    //    Employeelist.Add(newEmployee);
+    //}
 
-    private static void EmployeeAddDoctor(List<Employee> Employeelist, Doctor doctor)
-    {
-        Employee newEmployee = new Employee()
-        {
-            StaffID = doctor.DoctorID,
-            StaffType = "doctor",
-            FirstName = doctor.FirstName,
-            LastName = doctor.LastName,
-            OtherNames = doctor.OtherNames,
-            FullName = doctor.FullName,
-            Gender = doctor.Gender,
-            PhoneNumber = doctor.PhoneNumber,
-            Address = doctor.Address,
-            DOB = doctor.DOB,
-            DateEmployed = doctor.DateEmployed,
-            CreatedByID = doctor.CreatedByID,
-            ModifiedByID = doctor.ModifiedByID,
-            CreatedDate = doctor.CreatedDate,
-            ModifiedDate = doctor.ModifiedDate,
-            IsActive = doctor.IsActive,
-            IsDeleted = doctor.IsDeleted
-        };
+    //private static void EmployeeAddDoctor(List<Employee> Employeelist, Doctor doctor)
+    //{
+    //    Employee newEmployee = new Employee()
+    //    {
+    //        StaffID = doctor.DoctorID,
+    //        StaffType = "doctor",
+    //        FirstName = doctor.FirstName,
+    //        LastName = doctor.LastName,
+    //        OtherNames = doctor.OtherNames,
+    //        FullName = doctor.FullName,
+    //        Gender = doctor.Gender,
+    //        PhoneNumber = doctor.PhoneNumber,
+    //        Address = doctor.Address,
+    //        DOB = doctor.DOB,
+    //        DateEmployed = doctor.DateEmployed,
+    //        CreatedByID = doctor.CreatedByID,
+    //        ModifiedByID = doctor.ModifiedByID,
+    //        CreatedDate = doctor.CreatedDate,
+    //        ModifiedDate = doctor.ModifiedDate,
+    //        IsActive = doctor.IsActive,
+    //        IsDeleted = doctor.IsDeleted
+    //    };
 
-        Employeelist.Add(newEmployee);
-    }
+    //    Employeelist.Add(newEmployee);
+    //}
 
 
     public static int GetStaffLastAttendanceID(int currentstaffid)
