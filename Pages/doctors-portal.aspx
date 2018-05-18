@@ -101,14 +101,19 @@
                                                                 <div class="form-group">
                                                                     <label class="control-label">GENDER</label>
                                                                     <asp:DropDownList runat="server" CssClass="form-control" required ID="ddlGender">
-                                                                        <asp:ListItem Value="0" Text="Select Gender..." Selected="True">Select Gender....</asp:ListItem>
+                                                                        <asp:ListItem Value="0" Text="--Select Gender--" Selected="True">Select Gender....</asp:ListItem>
                                                                         <asp:ListItem Value="1" Text="Female">Female</asp:ListItem>
                                                                         <asp:ListItem Value="2" Text="Male">Male</asp:ListItem>
                                                                     </asp:DropDownList>
                                                                 </div>                                                                
                                                                 <div class="form-group">
                                                                     <label class="control-label">MARITAL STATUS</label>
-                                                                    <asp:DropDownList runat="server" CssClass="form-control" required ID="ddlMaritalStatus"></asp:DropDownList>
+                                                                    <asp:DropDownList runat="server" CssClass="form-control" required ID="ddlMaritalStatus">
+                                                                        <asp:ListItem Value="0" Text="--Select Marital Status--" Selected="True">--Select Marital Status--</asp:ListItem>
+                                                                        <asp:ListItem Value="1" Text="Single">Single</asp:ListItem>
+                                                                        <asp:ListItem Value="2" Text="Married">Married</asp:ListItem>
+                                                                        <asp:ListItem Value="3" Text="Divorced">Divorced</asp:ListItem>
+                                                                    </asp:DropDownList>
                                                                 </div>
                                                                 <div class="form-group">
                                                                     <label class="control-label">PHONE NUMBER</label>
@@ -269,11 +274,20 @@
                                                                 </div>                                                                
                                                                 <div class="form-group">
                                                                     <label class="control-label">GENDER</label>
-                                                                    <asp:DropDownList ID="ddlGenderE" runat="server"></asp:DropDownList>
+                                                                    <asp:DropDownList ID="ddlGenderE" runat="server">
+                                                                        <asp:ListItem Value="0" Text="--Select Gender--" Selected="True">Select Gender....</asp:ListItem>
+                                                                        <asp:ListItem Value="1" Text="Female">Female</asp:ListItem>
+                                                                        <asp:ListItem Value="2" Text="Male">Male</asp:ListItem>
+                                                                    </asp:DropDownList>
                                                                 </div>
                                                                 <div class="form-group">
                                                                     <label class="control-label">MARITAL STATUS</label>
-                                                                    <asp:DropDownList ID="ddlMaritalStatusE" runat="server"></asp:DropDownList>
+                                                                    <asp:DropDownList ID="ddlMaritalStatusE" runat="server">
+                                                                        <asp:ListItem Value="0" Text="--Select Marital Status--" Selected="True">--Select Marital Status--</asp:ListItem>
+                                                                        <asp:ListItem Value="1" Text="Single">Single</asp:ListItem>
+                                                                        <asp:ListItem Value="2" Text="Married">Married</asp:ListItem>
+                                                                        <asp:ListItem Value="3" Text="Divorced">Divorced</asp:ListItem>
+                                                                    </asp:DropDownList>
                                                                 </div>
                                                                 <div class="form-group">
                                                                     <label class="control-label">PHONE NUMBER</label>

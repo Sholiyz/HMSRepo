@@ -9,7 +9,7 @@ using System.Web;
 /// <summary>
 /// Summary description for Pasture
 /// </summary>
-public class Pasture
+public partial class Pasture
 {
 
     public static HSMModelDataContext DBContext = new HSMModelDataContext();
@@ -73,12 +73,12 @@ public class Pasture
         }
     }
 
-    public static int DeleteEmployee(Employee delEmployee)
+    public static int DeleteEmployee(int delEmployeeId)
     {
         int response = 0;
         try
         {
-            Employee Employee = DBContext.Employees.Where(d => d.EmployeeID == delEmployee.EmployeeID).FirstOrDefault();
+            Employee Employee = DBContext.Employees.Where(d => d.EmployeeID == delEmployeeId).FirstOrDefault();
 
             //update fields
             Employee.IsActive = false;
@@ -1367,6 +1367,12 @@ public class Pasture
 
         return sBuilder.ToString().ToUpper();
     }
+
+    public enum EmployeeType : int
+    {
+        Nurse = 1,
+        Doctor = 2
+    };
 
     #endregion
 

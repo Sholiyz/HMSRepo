@@ -5,12 +5,13 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
+
 public partial class Pages_doctors_portal : System.Web.UI.Page
 {
     bool IsPageRefresh = false;
     protected void Page_Load(object sender, EventArgs e)
     {
-        if(!Page.IsPostBack)
+        if (!Page.IsPostBack)
         {
             ViewState["ViewStateId"] = System.Guid.NewGuid().ToString();
             Session["SessionId"] = ViewState["ViewStateId"].ToString();
@@ -31,7 +32,7 @@ public partial class Pages_doctors_portal : System.Web.UI.Page
             Session["SessionId"] = System.Guid.NewGuid().ToString();
             ViewState["ViewStateId"] = Session["SessionId"].ToString();
         }
-        
+
     }
     #region WrittenBy Ola
     private List<RoleItems> LoadOrderItems()
@@ -172,7 +173,7 @@ public partial class Pages_doctors_portal : System.Web.UI.Page
     #endregion
 
 
-    HSMModelDataContext context = new HSMModelDataContext();
+    //HSMModelDataContext context = new HSMModelDataContext();
 
 
 
@@ -191,18 +192,30 @@ public partial class Pages_doctors_portal : System.Web.UI.Page
                 return;
 
             //Save to DB
-            context.Employees.Add(new Employee()
+            int result = Pasture.AddNewEmployee(new Employee()
             {
                 FirstName = txtFirstname.Text.Trim(),
                 LastName = txtLastname.Text.Trim(),
                 OtherNames = txtOthername.Text.Trim(),
-                StaffTypeID =2,//2 doctor 
+                StaffTypeID = (int)Pasture.EmployeeType.Doctor, //2,//2 doctor 
                 Gender = ddlGender.SelectedItem.Text.Trim(),
                 PhoneNumber = txtPhone.Text.Trim(),
                 Address = txtAddress.Text.Trim(),
                 DOB = Convert.ToDateTime(txtDOB.Text).Date,
             });
-            if (context.SaveChanges() > 0)
+
+            //context.Employees.Add(new Employee()
+            //{
+            //    FirstName = txtFirstname.Text.Trim(),
+            //    LastName = txtLastname.Text.Trim(),
+            //    OtherNames = txtOthername.Text.Trim(),
+            //    StaffTypeID =2,//2 doctor 
+            //    Gender = ddlGender.SelectedItem.Text.Trim(),
+            //    PhoneNumber = txtPhone.Text.Trim(),
+            //    Address = txtAddress.Text.Trim(),
+            //    DOB = Convert.ToDateTime(txtDOB.Text).Date,
+            //});
+            if (result > 0)
             {
                 HideDivsDocTab();
                 ViewDoctorListDiv.Visible = true;
@@ -212,18 +225,7 @@ public partial class Pages_doctors_portal : System.Web.UI.Page
         {
             throw new Exception(ex.Message);
         }
-        //Validate and save into db
-        //Doctor doc = new Doctor()
-        //{
-        //    FirstName = txtFirstname.Text.Trim(),
-        //    LastName = txtLastname.Text.Trim(),
-        //    OtherNames = txtOthername.Text.Trim(),
-        //    Gender = ddlGender.SelectedItem.Text.Trim(),
-        //    PhoneNumber = txtPhone.Text.Trim(),
-        //    Address = txtAddress.Text.Trim(),
-        //    DOB = Convert.ToDateTime(txtDOB.Text).Date,
-        //};
-        
+
     }
 
     protected void DoctorListGridView_RowCommand(object sender, GridViewCommandEventArgs e)
@@ -243,7 +245,7 @@ public partial class Pages_doctors_portal : System.Web.UI.Page
                 HideDivsDocTab();
                 ViewDoctorDiv.Visible = true;
             }
-            else if(e.CommandArgument.Equals("Edit"))
+            else if (e.CommandArgument.Equals("Edit"))
             {
                 txtFirstnameE.Text = (DoctorListGridView.SelectedRow.FindControl("lblFirstName") as Label).Text;
                 txtLastnameE.Text = (DoctorListGridView.SelectedRow.FindControl("lblLastName") as Label).Text;
@@ -258,12 +260,16 @@ public partial class Pages_doctors_portal : System.Web.UI.Page
             else
             {
                 //Delete
-                Employee docDelete = context.Employees.FirstOrDefault(doc => doc.EmployeeID == int.Parse(itemID));
+                int result = Pasture.DeleteEmployee(int.Parse(itemID));
+                if (result > 0)
+                {
+                    //Bind Data to Grid
+                    BindGrid();
+                    SxsMessage("Doctor deleted");
+                }
+                //Employee docDelete = context.Employees.FirstOrDefault(doc => doc.EmployeeID == int.Parse(itemID));
                 //Update IsDeleted= true;
-                //context.Doctors.Remove(docDelete);
-                //Bind Data to Grid
-                BindGrid();
-                SxsMessage("Doctor removed");
+                //context.Doctors.Remove(docDelete);   
             }
         }
         catch (Exception)
@@ -283,28 +289,41 @@ public partial class Pages_doctors_portal : System.Web.UI.Page
     {
         try
         {
-            Employee doc = new Employee()
-            {
-                FirstName = txtFirstname.Text.Trim(),
-                LastName = txtLastname.Text.Trim(),
-                OtherNames = txtOthername.Text.Trim(),
-                Gender = ddlGender.SelectedItem.Text.Trim(),
-                PhoneNumber = txtPhone.Text.Trim(),
-                Address = txtAddress.Text.Trim(),
-                DOB = Convert.ToDateTime(txtDOB.Text).Date,
-            };
-            context.Employees.Add(doc);
-            context.Entry(doc).State = System.Data.Entity.EntityState.Modified;
-            context.SaveChanges();
+            //Employee doc = new Employee()
+            //{
+            //    FirstName = txtFirstname.Text.Trim(),
+            //    LastName = txtLastname.Text.Trim(),
+            //    OtherNames = txtOthername.Text.Trim(),
+            //    Gender = ddlGender.SelectedItem.Text.Trim(),
+            //    PhoneNumber = txtPhone.Text.Trim(),
+            //    Address = txtAddress.Text.Trim(),
+            //    DOB = Convert.ToDateTime(txtDOB.Text).Date,
+            //};
+            //context.Employees.Add(doc);
+            //context.Entry(doc).State = System.Data.Entity.EntityState.Modified;
+            //context.SaveChanges();
 
-            //Bind to Grid
-            BindGrid();
-            HideDivsDocTab();
-            ViewDoctorListDiv.Visible = true;
+           int result = Pasture.UpdateEmployee(new Employee
+           {
+               FirstName = txtFirstname.Text.Trim(),
+               LastName = txtLastname.Text.Trim(),
+               OtherNames = txtOthername.Text.Trim(),
+               Gender = ddlGender.SelectedItem.Text.Trim(),
+               PhoneNumber = txtPhone.Text.Trim(),
+               Address = txtAddress.Text.Trim(),
+               DOB = Convert.ToDateTime(txtDOB.Text).Date
+           });
+
+            if (result > 0)
+            {
+                //Bind to Grid
+                BindGrid();
+                HideDivsDocTab();
+                ViewDoctorListDiv.Visible = true;
+            }
         }
         catch (Exception)
         {
-
             throw;
         }
     }
@@ -343,12 +362,25 @@ public partial class Pages_doctors_portal : System.Web.UI.Page
     {
         try
         {
-            var data = (from d in context.Employees where d.StaffTypeID==2
-                       select d).ToList();
+            //var data = (from d in context.Employees
+            //            where d.StaffTypeID == 2
+            //            select d).ToList();
 
             //List<Doctor> data = context.Doctors.Where(doc => doc.IsDeleted == false).ToList();
-            DoctorListGridView.DataSource = data;
-            DoctorListGridView.DataBind();
+
+            var data = Pasture.GetEmployees();
+            if (!(data.Count < 1))
+            {
+                DoctorListGridView.DataSource = data;
+                DoctorListGridView.DataBind();
+            }
+            else
+            {
+                DoctorListGridView.Caption = "You have no doctor yet";
+                DoctorListGridView.DataSource = data;
+                DoctorListGridView.DataBind();
+            }
+
         }
         catch (Exception ex)
         {
