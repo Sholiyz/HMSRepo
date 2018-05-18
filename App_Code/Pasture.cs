@@ -294,9 +294,7 @@ public class Pasture
 
     public static List<Employee> GetEmployeeList()
     {
-        List<Employee> EmployeeList = new List<Employee>();
-        List<Doctor> doctorlist = new List<Doctor>();
-        List<Nurse> nurselist = new List<Nurse>();
+        List<Employee> EmployeeList = new List<Employee>();   
         EmployeeList = DBContext.Employees.Where(emp=> emp.IsDeleted==false).ToList();
        
         return EmployeeList.OrderBy(emp=> emp.FullName).ToList();
