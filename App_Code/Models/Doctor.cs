@@ -28,7 +28,11 @@
     [StringLength(10)]
         public string Gender { get; set; }
 
-        [StringLength(18)]
+
+    [StringLength(10)]
+    public string MaritalStatus { get; set; }
+
+    [StringLength(18)]
         public string PhoneNumber { get; set; }
 
         [StringLength(50)]

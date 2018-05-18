@@ -96,7 +96,7 @@
                                                                 </div>
                                                                 <div class="form-group">
                                                                     <label class="control-label">OTHERNAMES</label>
-                                                                    <asp:TextBox runat="server" CssClass="form-control" required ID="txtOthername"></asp:TextBox>
+                                                                    <asp:TextBox runat="server" CssClass="form-control"  ID="txtOthername"></asp:TextBox>
                                                                 </div>                                                              
                                                                 <div class="form-group">
                                                                     <label class="control-label">GENDER</label>
@@ -109,7 +109,7 @@
                                                                 <div class="form-group">
                                                                     <label class="control-label">MARITAL STATUS</label>
                                                                     <asp:DropDownList runat="server" CssClass="form-control" required ID="ddlMaritalStatus">
-                                                                        <asp:ListItem Value="0" Text="--Select Marital Status--" Selected="True">--Select Marital Status--</asp:ListItem>
+                                                                        <asp:ListItem Value="0" Text="Select Marital Status..." Selected="True">Select Marital Status...</asp:ListItem>
                                                                         <asp:ListItem Value="1" Text="Single">Single</asp:ListItem>
                                                                         <asp:ListItem Value="2" Text="Married">Married</asp:ListItem>
                                                                         <asp:ListItem Value="3" Text="Divorced">Divorced</asp:ListItem>
@@ -121,20 +121,20 @@
                                                                 </div>
                                                                 <div class="form-group">
                                                                     <label class="control-label">ADDRESS</label>
-                                                                    <asp:TextBox runat="server" CssClass="form-control" TextMode="MultiLine" Rows="3" required ID="txtAddress"></asp:TextBox>
+                                                                    <asp:TextBox runat="server" CssClass="form-control" TextMode="MultiLine" Rows="3"  ID="txtAddress"></asp:TextBox>
                                                                 </div>
                                                                 <div class="form-group">
                                                                     <label class="control-label">DATE OF BIRTH (MM/DD/YYYY)</label>
                                                                     <asp:TextBox runat="server" TextMode="Date" CssClass="form-control" required ID="txtDOB"></asp:TextBox>
                                                                 </div> 
-                                                                 <div class="form-group">
+                                                                 <%--<div class="form-group">
                                                                     <label class="control-label">NEXT OF KIN FULLNAME</label>
                                                                     <asp:TextBox runat="server" CssClass="form-control" required ID="txtKinFullname"></asp:TextBox>
                                                                 </div>
                                                                 <div class="form-group">
                                                                     <label class="control-label">NEXT OF KIN PHONE NUMBER</label>
                                                                     <asp:TextBox runat="server" TextMode="Phone" CssClass="form-control" required ID="txtKinPhone"></asp:TextBox>
-                                                                </div> 
+                                                                </div> --%>
                                                                  <div class="form-group">
                                                                      <div class="row">
                                                                     <div class="col-lg-6 text-left">
@@ -164,7 +164,7 @@
                                                             </div>
                                                         </div>
                                                         <div class="table-responsive center-block">                                                           
-                                                            <asp:GridView ID="DoctorListGridView" runat="server" AutoGenerateColumns="false" CssClass="table  table-bordered text-center" DataKeyNames="DoctorID" EmptyDataText="There are no data records to display." OnRowCommand="DoctorListGridView_RowCommand">
+                                                            <asp:GridView ID="DoctorListGridView" runat="server" AutoGenerateColumns="false" CssClass="table  table-bordered table-condensed text-center" DataKeyNames="EmployeeID" EmptyDataText="There are no data records to display." OnRowCommand="DoctorListGridView_RowCommand">
                                                                 <Columns>
                                                                     <%--<asp:BoundField DataField="ID" HeaderText="Order ID" SortExpression="ID">
                                                                         <HeaderStyle CssClass="hide" HorizontalAlign="Left" />
@@ -184,13 +184,20 @@
                                                                             <asp:Label ID="lblFullName" runat="server" Text='<%#DataBinder.Eval(Container.DataItem, "FullName")%>'></asp:Label>
                                                                             <asp:Label ID="lblFirstName" runat="server" Text='<%#DataBinder.Eval(Container.DataItem, "FirstName")%>' Visible="false"></asp:Label>
                                                                             <asp:Label ID="lblLastName" runat="server" Text='<%#DataBinder.Eval(Container.DataItem, "LastName")%>' Visible="false"></asp:Label>
-                                                                            <asp:Label ID="lblDoctorID" runat="server" Text='<%#DataBinder.Eval(Container.DataItem, "DoctorID")%>' Visible="false"></asp:Label>
+                                                                            <asp:Label ID="lblEmployeeID" runat="server" Text='<%#DataBinder.Eval(Container.DataItem, "EmployeeID")%>' Visible="false"></asp:Label>
+                                                                            <asp:Label ID="lblStaffTypeID" runat="server" Text='<%#DataBinder.Eval(Container.DataItem, "StaffTypeID")%>' Visible="false"></asp:Label>
                                                                             <asp:Label runat="server"></asp:Label>
                                                                         </ItemTemplate>
                                                                     </asp:TemplateField>
                                                                     <asp:TemplateField HeaderText="Gender">
                                                                         <ItemTemplate>
                                                                             <asp:Label ID="lblGender" runat="server" Text='<%#DataBinder.Eval(Container.DataItem, "Gender")%>'></asp:Label>
+                                                                            <asp:Label runat="server"></asp:Label>
+                                                                        </ItemTemplate>
+                                                                    </asp:TemplateField>
+                                                                    <asp:TemplateField HeaderText="Mar. Status">
+                                                                        <ItemTemplate>
+                                                                            <asp:Label ID="lblMaritalStatus" runat="server" Text='<%#DataBinder.Eval(Container.DataItem, "MaritalStatus")%>'></asp:Label>
                                                                             <asp:Label runat="server"></asp:Label>
                                                                         </ItemTemplate>
                                                                     </asp:TemplateField>
@@ -228,10 +235,10 @@
                                                                         <ItemTemplate>
                                                                             <div class="form-actions text-center">
                                                                                 <%--<asp:Button runat="server" Text="Processing" ID="lnkView" Enabled='<%#Eval("IsProcessing") %>' CssClass="btn btn-xs btn-success" />--%>
-                                                                                <asp:Button CommandArgument="View" runat="server" Text="View" ID="CancelRoleBtn" CssClass="btn btn-md btn-primary" />
-                                                                                <asp:Button CommandArgument="Edit" runat="server" Text="Edit" ID="EditRoleBtn" CssClass="btn btn-md btn-warning" />
-                                                                                <asp:Button CommandArgument="Delete" runat="server" Text='<%# (Convert.ToBoolean(Eval("IsActive")) == true  ? "Deactivate" : "Activate") %>' ID="DeleteRoleBtn"  CssClass='<%# (Convert.ToBoolean(Eval("IsActive")) == true  ? "btn btn-md btn-danger" : "btn btn-md btn-success") %>' />   <%--Enabled='<%# (Convert.ToBoolean(Eval("IsActive")) == true  ? false : true) %>' --%>
-                                                                                <asp:Button CommandArgument="Delete" runat="server" Text="Delete" ID="Button1"  CssClass="btn btn-md btn-danger" />
+                                                                                <asp:Button CommandArgument="View" runat="server" Text="View" ID="CancelRoleBtn" CssClass="btn btn-sm btn-primary" />
+                                                                                <asp:Button CommandArgument="Edit" runat="server" Text="Edit" ID="EditRoleBtn" CssClass="btn btn-sm btn-warning" />
+                                                                                <asp:Button CommandArgument="Deactivate" runat="server" Text='<%# (Convert.ToBoolean(Eval("IsActive")) == true  ? "Deactivate" : "Activate") %>' ID="DeleteRoleBtn"  CssClass='<%# (Convert.ToBoolean(Eval("IsActive")) == true  ? "btn btn-sm btn-danger" : "btn btn-sm btn-success") %>' />   <%--Enabled='<%# (Convert.ToBoolean(Eval("IsActive")) == true  ? false : true) %>' --%>
+                                                                                <asp:Button CommandArgument="Delete" runat="server" Text="Delete" ID="Button1"  CssClass="btn btn-sm btn-danger" />
                                                                             </div>
                                                                         </ItemTemplate>
                                                                     </asp:TemplateField>

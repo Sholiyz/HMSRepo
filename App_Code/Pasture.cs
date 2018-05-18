@@ -11,7 +11,7 @@ using System.Web;
 /// </summary>
 public partial class Pasture
 {
-
+    
     public static HSMModelDataContext DBContext = new HSMModelDataContext();
     public Pasture()
     {
@@ -37,17 +37,22 @@ public partial class Pasture
 
     public static int AddNewEmployee(Employee newEmployee)
     {
+        //Employee emp = new Employee();
+        string errorMessage = string.Empty;
         int response = 0;
         try
         {
             newEmployee.CreatedByID = GetCurrentUserSessionID();
             newEmployee.CreatedDate = DateTime.Now;
+            newEmployee.FullName = newEmployee.FullName;
+            newEmployee.IsActive = true;
             DBContext.Employees.Add(newEmployee);
             response = DBContext.SaveChanges();
             return response;
         }
-        catch (Exception)
+        catch (Exception ex)
         {
+            errorMessage = ex.Message != "" ? ex.Message : ex.InnerException.Message;
             return response;
             //throw;
         }
@@ -95,12 +100,12 @@ public partial class Pasture
         }
     }
 
-    public static bool DeactivateEmployee(Employee doc)
+    public static bool DeactivateEmployee(int employeeId)
     {
         bool response = false;
         try
         {
-            Employee Employee = DBContext.Employees.FirstOrDefault(d => d.EmployeeID == doc.EmployeeID);
+            Employee Employee = DBContext.Employees.FirstOrDefault(d => d.EmployeeID == employeeId);
 
             if (Employee.IsActive.Equals(true))
             {
@@ -119,12 +124,12 @@ public partial class Pasture
         }
     }
 
-    public static bool ActivateEmployee(Employee doc)
+    public static bool ActivateEmployee(int employeeId)
     {
         bool response = false;
         try
         {
-            Employee Employee = DBContext.Employees.FirstOrDefault(d => d.EmployeeID == doc.EmployeeID);
+            Employee Employee = DBContext.Employees.FirstOrDefault(d => d.EmployeeID == employeeId);
 
             if (Employee.IsActive.Equals(false))
             {
