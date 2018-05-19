@@ -64,8 +64,6 @@ public partial class Pages_login : System.Web.UI.Page
 
 
     }
-
-
     private void GetNavigateToPage(string role)
     {
         role = role.ToLower();
