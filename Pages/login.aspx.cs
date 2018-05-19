@@ -24,7 +24,12 @@ public partial class Pages_login : System.Web.UI.Page
             int valresponse = Pasture.VefiryLoginDetail(Username, Password);
             if (valresponse == 100)
             {
-                PastureAlert.PopSuccessAlert("Login Successful!!");
+                Pasture.CreateUserSession(Username);
+                //int useid = Pasture.GetCurrentUserSessionID();
+                string userrole= Pasture.GetCurrentUserSessionRole();
+                //AuthUser CurrentUser = Pasture.GetCurrentUserSessionDetail();
+                GetNavigateToPage(userrole);
+                //PastureAlert.PopSuccessAlert("Login Successful!!");
                 return;
             }
             if (valresponse == 101)
@@ -61,11 +66,40 @@ public partial class Pages_login : System.Web.UI.Page
     }
 
 
+    private void GetNavigateToPage(string role)
+    {
+        role = role.ToLower();
+        if (role.Contains("nurse"))
+        {
+            Response.Redirect("./nurse-portal.aspx");
+            return;
+        }
+        if (role.Contains("doctor"))
+        {
+            Response.Redirect("./doctors-portal.aspx");
+            return;
+        }
+        if (role == "admin")
+        {
+            Response.Redirect("./dashboard.aspx");
+            return;
+        }
+        if (role=="super-admin")
+        {
+            Response.Redirect("./dashboard.aspx");
+            return;
+        }
+
+    }
+
+
+
+    #region Response Message
     private void ShowSxsResponse(string message)
     {
         ResponseAlert.NewMessage = message;
         ResponseAlert.NoteType = PastureAlert.ResponseNotetype.success.ToString();//"Success";
-        ResponseAlert.NoteVisible = true;        
+        ResponseAlert.NoteVisible = true;
         ResponseAlert.ShowNotification();
         return;
     }
@@ -94,4 +128,6 @@ public partial class Pages_login : System.Web.UI.Page
         ResponseAlert.ShowNotification();
         return;
     }
+    #endregion
+
 }

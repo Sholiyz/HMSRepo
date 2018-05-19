@@ -242,7 +242,7 @@ public partial class Pasture
     {
         DBContext = new HSMModelDataContext();
         List<AuthRole> RoleList = new List<AuthRole>();
-        RoleList = DBContext.AuthRoles.Where(r => r.IsDeleted == false).ToList();
+        RoleList = DBContext.AuthRoles.Where(r => r.IsDeleted == false && r.RoleID>1).ToList();
         return RoleList;
     }
     public static AuthRole GetRoleByID(int roleID)
@@ -1516,7 +1516,7 @@ public partial class Pasture
         // Create a StringComparer an compare the hashes.
         StringComparer comparer = StringComparer.OrdinalIgnoreCase;
 
-        if (0 == comparer.Compare(hashOfInput, hash))
+        if (0 == comparer.Compare(hashOfInput.ToUpper(), hash))
         {
             return true;
         }
