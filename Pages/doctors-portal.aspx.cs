@@ -393,7 +393,7 @@ public partial class Pages_doctors_portal : System.Web.UI.Page
 
             //List<Doctor> data = context.Doctors.Where(doc => doc.IsDeleted == false).ToList();
 
-            var data = Pasture.GetEmployees();
+            var data = Pasture.GetDoctorsList();
             if (!(data.Count < 1))
             {
                 DoctorListGridView.DataSource = data;

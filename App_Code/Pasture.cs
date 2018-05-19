@@ -12,7 +12,7 @@ using System.Web;
 public partial class Pasture
 {
     
-    public static HSMModelDataContext DBContext = new HSMModelDataContext();
+    private static HSMModelDataContext DBContext = new HSMModelDataContext();
     public Pasture()
     {
         //
@@ -23,13 +23,29 @@ public partial class Pasture
     #region Doctor
     public static List<Employee> GetEmployees()
     {
+        
         List<Employee> EmployeeList = new List<Employee>();
-        EmployeeList =  DBContext.Employees.Where(d => d.IsActive == true).ToList();
+        EmployeeList =  DBContext.Employees.Where(d => d.IsDeleted==false).ToList();//d.IsActive == true &&
+        return EmployeeList;
+    }
+    public static List<Employee> GetDoctorsList()
+    {
+        
+        List<Employee> EmployeeList = new List<Employee>();
+        EmployeeList = DBContext.Employees.Where(d => d.StaffTypeID==2 && d.IsDeleted == false).ToList();//d.IsActive == true &&
         return EmployeeList;
     }
 
+    public static List<Employee> GetNursesList()
+    {
+        
+        List<Employee> EmployeeList = new List<Employee>();
+        EmployeeList = DBContext.Employees.Where(d => d.StaffTypeID == 1 && d.IsDeleted == false).ToList();//d.IsActive == true &&
+        return EmployeeList;
+    }
     public static Employee GetEmployeeByID(int EmployeeID)
     {
+        
         Employee Employee = new Employee();
         Employee = DBContext.Employees.Where(d => d.EmployeeID == EmployeeID).FirstOrDefault();
         return Employee;
@@ -37,6 +53,7 @@ public partial class Pasture
 
     public static int AddNewEmployee(Employee newEmployee)
     {
+        
         //Employee emp = new Employee();
         string errorMessage = string.Empty;
         int response = 0;
@@ -44,7 +61,7 @@ public partial class Pasture
         {
             newEmployee.CreatedByID = GetCurrentUserSessionID();
             newEmployee.CreatedDate = DateTime.Now;
-            newEmployee.FullName = newEmployee.FullName;
+            newEmployee.FullName = newEmployee.FirstName+" "+newEmployee.LastName+" "+newEmployee.OtherNames;
             newEmployee.IsActive = true;
             DBContext.Employees.Add(newEmployee);
             response = DBContext.SaveChanges();
@@ -60,14 +77,17 @@ public partial class Pasture
 
     public static int UpdateEmployee(Employee updEmployee)
     {
+
         int response = 0;
         try
         {
+            
             //get patient
-            Employee Employee = DBContext.Employees.Where(d => d.EmployeeID == updEmployee.EmployeeID).FirstOrDefault();
+            Employee employee = DBContext.Employees.Where(d => d.EmployeeID == updEmployee.EmployeeID).FirstOrDefault();
 
-            Employee.ModifiedByID = GetCurrentUserSessionID();
-            Employee.ModifiedDate = DateTime.Now;
+            employee.FirstName = updEmployee.FirstName +" "+ updEmployee.LastName +" "+updEmployee.OtherNames;
+            employee.ModifiedByID = GetCurrentUserSessionID();
+            employee.ModifiedDate = DateTime.Now;
             response = DBContext.SaveChanges();
             return response;
         }
@@ -83,6 +103,7 @@ public partial class Pasture
         int response = 0;
         try
         {
+            
             Employee Employee = DBContext.Employees.Where(d => d.EmployeeID == delEmployeeId).FirstOrDefault();
 
             //update fields
@@ -105,6 +126,7 @@ public partial class Pasture
         bool response = false;
         try
         {
+            
             Employee Employee = DBContext.Employees.FirstOrDefault(d => d.EmployeeID == employeeId);
 
             if (Employee.IsActive.Equals(true))
@@ -129,6 +151,7 @@ public partial class Pasture
         bool response = false;
         try
         {
+            
             Employee Employee = DBContext.Employees.FirstOrDefault(d => d.EmployeeID == employeeId);
 
             if (Employee.IsActive.Equals(false))
@@ -153,6 +176,7 @@ public partial class Pasture
 
     public static HospitalInfo GetHospitalInfo()
     {
+        
         HospitalInfo HospitalInfo = new HospitalInfo();
         HospitalInfo = DBContext.HospitalInfoes.FirstOrDefault();
         return HospitalInfo;
@@ -162,6 +186,7 @@ public partial class Pasture
     {
         try
         {
+            
             int responce;
             newHospitalInfo.CreatedByID = GetCurrentUserSessionID();
             newHospitalInfo.CreatedDate = DateTime.Now;
@@ -181,6 +206,7 @@ public partial class Pasture
     {
         try
         {
+            
             int responce;
             HospitalInfo HospitalInfo = DBContext.HospitalInfoes.FirstOrDefault();
             //DBContext.AuthRoles.Add(newRole);
@@ -205,20 +231,31 @@ public partial class Pasture
 
     public static List<AuthRole> GetRoles()
     {
+        
         List<AuthRole> RoleList = new List<AuthRole>();
         RoleList = DBContext.AuthRoles.Where(r => r.IsDeleted == false).ToList();
         return RoleList;
     }
     public static AuthRole GetRoleByID(int roleID)
     {
+        
         AuthRole Role = new AuthRole();
         Role = DBContext.AuthRoles.Where(r => r.RoleID == roleID).FirstOrDefault();
         return Role;
+    }
+
+    public static string GetRoleNameByRoleID(int roleID)
+    {
+        
+        string RoleName = "";
+        RoleName = DBContext.AuthRoles.Where(r => r.RoleID == roleID).FirstOrDefault().RoleName;
+        return RoleName;
     }
     public static int AddNewRole(AuthRole newRole)
     {
         try
         {
+            
             int responce;
             newRole.CreatedByID = GetCurrentUserSessionID();
             newRole.CreatedDate = DateTime.Now;            
@@ -238,6 +275,7 @@ public partial class Pasture
     {
         try
         {
+            
             int responce;
             AuthRole Role = DBContext.AuthRoles.Where(r => r.RoleID == UpdateRole.RoleID).FirstOrDefault();
             //DBContext.AuthRoles.Add(newRole);
@@ -260,6 +298,7 @@ public partial class Pasture
     {
         try
         {
+            
             int responce;
             AuthRole Role = DBContext.AuthRoles.Where(r => r.RoleID == DeleteRole.RoleID).FirstOrDefault();
             //DBContext.AuthRoles.Add(newRole);
@@ -286,12 +325,14 @@ public partial class Pasture
 
     public static List<AuthUser> GetUsers()
     {
+        
         List<AuthUser> UserList = new List<AuthUser>();
         UserList = DBContext.AuthUsers.Where(u => u.IsDeleted == false).ToList();
         return UserList;
     }
     public static AuthUser GetUserByID(int userID)
     {
+        
         AuthUser User = new AuthUser();
         User = DBContext.AuthUsers.Where(u => u.UserID == userID).FirstOrDefault();
         return User;
@@ -299,6 +340,7 @@ public partial class Pasture
 
     public static List<Employee> GetEmployeeList()
     {
+        
         List<Employee> EmployeeList = new List<Employee>();   
         EmployeeList = DBContext.Employees.Where(emp=> emp.IsDeleted==false).ToList();
        
@@ -306,6 +348,7 @@ public partial class Pasture
     }
     public static AuthUser GetUserByUsername(string username)
     {
+        
         AuthUser User = new AuthUser();
         User = DBContext.AuthUsers.Where(u => u.UserName == username).FirstOrDefault();
         return User;
@@ -314,10 +357,11 @@ public partial class Pasture
     {
         try
         {
+            
             int responce;
             newUser.Password = ProtectPassword(newUser.Password).ToUpper();
-            
-            newUser.CreatedByID = GetCurrentUserSessionID();
+
+            newUser.CreatedByID = 1;// GetCurrentUserSessionID();
             newUser.CreatedDate = DateTime.Now;
             DBContext.AuthUsers.Add(newUser);
             responce = DBContext.SaveChanges();
@@ -335,6 +379,7 @@ public partial class Pasture
     {
         try
         {
+            
             int responce;
             AuthUser User = DBContext.AuthUsers.Where(u => u.UserID == UpdateUser.UserID).FirstOrDefault();
             
@@ -360,6 +405,7 @@ public partial class Pasture
     {
         try
         {
+            
             int responce;
             AuthUser User = DBContext.AuthUsers.Where(r => r.UserID == DeleteUser.UserID).FirstOrDefault();
             User.ModifiedByID = GetCurrentUserSessionID();
@@ -384,12 +430,14 @@ public partial class Pasture
 
     public static List<Patient> GetPatients()
     {
+        
         List<Patient> PatientList = new List<Patient>();
         PatientList = DBContext.Patients.Where(p => p.IsDeleted == false).ToList();
         return PatientList;
     }
     public static Patient GetPatientListByID(int patientID)
     {
+        
         Patient Patient = new Patient();
         Patient = DBContext.Patients.Where(p => p.PatientID == patientID).FirstOrDefault();
         return Patient;
@@ -398,8 +446,10 @@ public partial class Pasture
     {
         try
         {
+            
             int responce;           
             newpatient.CreatedByID = GetCurrentUserSessionID();
+            newpatient.FullName = newpatient.FirstName + " " + newpatient.LastName + " " + newpatient.OtherNames;
             newpatient.CreatedDate = DateTime.Now;
             DBContext.Patients.Add(newpatient);
             responce = DBContext.SaveChanges();
@@ -417,11 +467,16 @@ public partial class Pasture
     {
         try
         {
+            
             int responce;
             Patient patient = DBContext.Patients.Where(u => u.PatientID == UpdatePatient.PatientID).FirstOrDefault();
 
             //DBContext.AuthRoles.Add(newRole);         
             //patient.IsActive = UpdatePatient.IsActive;
+
+
+            patient.OtherNames = UpdatePatient.OtherNames;
+            patient.FullName = UpdatePatient.FirstName + " " + UpdatePatient.LastName + " " + UpdatePatient.OtherNames;
             patient.ModifiedByID = GetCurrentUserSessionID();
             patient.ModifiedDate = DateTime.Now;
             responce = DBContext.SaveChanges();
@@ -439,6 +494,7 @@ public partial class Pasture
     {
         try
         {
+            
             int responce;
             Patient patient = DBContext.Patients.Where(p => p.PatientID == DeletePatient.PatientID).FirstOrDefault();
             patient.ModifiedByID = GetCurrentUserSessionID();
@@ -463,12 +519,14 @@ public partial class Pasture
 
     public static List<NurseDuty> GetAssignNurseDutys()
     {
+        
         List<NurseDuty> NurseDutyList = new List<NurseDuty>();
         NurseDutyList = DBContext.NurseDuties.ToList();
         return NurseDutyList;
     }
     public static NurseDuty GetNurseDutyByID(int NurseDutyID)
     {
+        
         NurseDuty NurseDuty = new NurseDuty();
         NurseDuty = DBContext.NurseDuties.Where(n => n.NurseDutyID == NurseDutyID).FirstOrDefault();
         return NurseDuty;
@@ -477,6 +535,7 @@ public partial class Pasture
     {
         try
         {
+            
             int responce;
             newNurseDuty.CreatedByID = GetCurrentUserSessionID();
             newNurseDuty.CreatedByDate = DateTime.Now;
@@ -496,6 +555,7 @@ public partial class Pasture
     {
         try
         {
+            
             int responce;
             NurseDuty NurseDuty = DBContext.NurseDuties.Where(nd => nd.NurseDutyID == updateNurseDuty.NurseDutyID).FirstOrDefault();
             //DBContext.AuthRoles.Add(newRole);
@@ -533,12 +593,14 @@ public partial class Pasture
     #region Patient Plan Management
     public static List<PatientPlanType> GetPatientPlans()
     {
+        
         List<PatientPlanType> PatientPlanList = new List<PatientPlanType>();
         PatientPlanList = DBContext.PatientPlanTypes.Where(ppt=> ppt.IsDeleted==false).ToList();
         return PatientPlanList;
     }
     public static PatientPlanType GetPatientPlanByID(int PatientPlanTypeID)
     {
+        
         PatientPlanType PatientPlan = new PatientPlanType();
         PatientPlan = DBContext.PatientPlanTypes.Where(ppt => ppt.PlanTypeID == PatientPlanTypeID).FirstOrDefault();
         return PatientPlan;
@@ -547,6 +609,7 @@ public partial class Pasture
     {
         try
         {
+            
             int responce;
             newPatientPlan.CreatedByID = GetCurrentUserSessionID();
             newPatientPlan.CreatedDate = DateTime.Now;
@@ -566,6 +629,7 @@ public partial class Pasture
     {
         try
         {
+            
             int responce;
             PatientPlanType PatientPlan = DBContext.PatientPlanTypes.Where(ppt => ppt.PlanTypeID == updatePatientPlan.PlanTypeID).FirstOrDefault();
             //DBContext.AuthRoles.Add(newRole);
@@ -587,6 +651,7 @@ public partial class Pasture
     {
         try
         {
+            
             int responce;
             PatientPlanType PatientPlan = DBContext.PatientPlanTypes.Where(ppt => ppt.PlanTypeID == DeletePatientPlan.PlanTypeID).FirstOrDefault();
             //DBContext.AuthRoles.Add(newRole);
@@ -612,12 +677,14 @@ public partial class Pasture
 
     public static List<DutyType> GetDutyTypes()
     {
+        
         List<DutyType> DutyTypeList = new List<DutyType>();
         DutyTypeList = DBContext.DutyTypes.Where(dt => dt.IsDeleted == false).ToList();
         return DutyTypeList;
     }
     public static DutyType GetDutyTypeByID(int DutyTypeID)
     {
+        
         DutyType dutyType = new DutyType();
         dutyType = DBContext.DutyTypes.Where(dt => dt.DutyTypeID == DutyTypeID).FirstOrDefault();
         return dutyType;
@@ -626,6 +693,7 @@ public partial class Pasture
     {
         try
         {
+            
             int responce;
             newDutyType.CreatedByID = GetCurrentUserSessionID();
             newDutyType.CreatedDate = DateTime.Now;
@@ -646,6 +714,7 @@ public partial class Pasture
     {
         try
         {
+            
             int responce;
             DutyType dutyType = DBContext.DutyTypes.Where(dt => dt.DutyTypeID == updateDutyType.DutyTypeID).FirstOrDefault();
           
@@ -667,6 +736,7 @@ public partial class Pasture
     {
         try
         {
+            
             int responce;
             DutyType dutyType = DBContext.DutyTypes.Where(dt => dt.DutyTypeID == DeleteDutyType.DutyTypeID).FirstOrDefault();
             //DBContext.AuthRoles.Add(newRole);
@@ -692,12 +762,14 @@ public partial class Pasture
 
     public static List<TransactionType> GetTransactionTypes()
     {
+        
         List<TransactionType> TransactionTypeList = new List<TransactionType>();
         TransactionTypeList = DBContext.TransactionTypes.Where(tranx => tranx.IsDeleted == false).ToList();
         return TransactionTypeList;
     }
     public static TransactionType GetTransactionTypeByID(int TransactionTypeID)
     {
+        
         TransactionType TransactionType = new TransactionType();
         TransactionType = DBContext.TransactionTypes.Where(tranx => tranx.TransactionTypeID == TransactionTypeID).FirstOrDefault();
         return TransactionType;
@@ -706,6 +778,7 @@ public partial class Pasture
     {
         try
         {
+            
             int responce;
             newTransactionType.CreatedByID = GetCurrentUserSessionID();
             newTransactionType.CreatedDate = DateTime.Now;
@@ -725,6 +798,7 @@ public partial class Pasture
     {
         try
         {
+            
             int responce;
             TransactionType TransactionType = DBContext.TransactionTypes.Where(tranx => tranx.TransactionTypeID == updateTransactionType.TransactionTypeID).FirstOrDefault();
             //DBContext.AuthRoles.Add(newRole);
@@ -746,6 +820,7 @@ public partial class Pasture
     {
         try
         {
+            
             int responce;
             TransactionType TransactionType = DBContext.TransactionTypes.Where(tranx => tranx.TransactionTypeID == DeleteTransactionType.TransactionTypeID).FirstOrDefault();
             //DBContext.AuthRoles.Add(newRole);
@@ -771,6 +846,7 @@ public partial class Pasture
 
     public static List<AttendanceLog> GetAttendanceLogList()
     {
+        
         List<AttendanceLog> AttendanceLogList = new List<AttendanceLog>();
         AttendanceLogList = DBContext.AttendanceLogs.ToList();
         return AttendanceLogList;
@@ -779,6 +855,7 @@ public partial class Pasture
     {
         try
         {
+            
             int responce;
             newAttendanceLog.StaffID = GetCurrentUserSessionID();
             newAttendanceLog.DutyID = GetStaffLastAttendanceID(GetCurrentUserSessionID());
@@ -801,6 +878,7 @@ public partial class Pasture
     {
         try
         {
+            
             int responce;
             AttendanceLog AttendanceLog = DBContext.AttendanceLogs.Where(atlog => atlog.AttendanceID == UpdateAttendanceLog.AttendanceID && atlog.StaffID==GetCurrentUserSessionID()).FirstOrDefault();
             //DBContext.AuthRoles.Add(newRole);
@@ -824,6 +902,7 @@ public partial class Pasture
     {
         try
         {
+            
             int responce;
             AttendanceLog AttendanceLog = DBContext.AttendanceLogs.Where(atlog=> atlog.AttendanceID== UpdateAttendanceLog.AttendanceID && atlog.StaffID == GetCurrentUserSessionID()).FirstOrDefault();
             //DBContext.AuthRoles.Add(newRole);
@@ -848,18 +927,21 @@ public partial class Pasture
     #region FamilyMember Management
     public static List<FamilyMember> GetFamilyMembers()
     {
+        
         List<FamilyMember> FamilyMemberList = new List<FamilyMember>();
         FamilyMemberList = DBContext.FamilyMembers.Where(fm => fm.IsDeleted == false).ToList();
         return FamilyMemberList;
     }
     public static List<FamilyMember> GetFamilyMembersListByPatientID(int PatientID)
     {
+        
         List<FamilyMember> FamilyMemberList = new List<FamilyMember>();
         FamilyMemberList = DBContext.FamilyMembers.Where(fm => fm.IsDeleted == false && fm.PatientID==PatientID).ToList();
         return FamilyMemberList;
     }
     public static FamilyMember GetFamilyMemberByID(int familymemberID)
     {
+        
         FamilyMember FamilyMember = new FamilyMember();
         FamilyMember = DBContext.FamilyMembers.Where(fm => fm.FamilyMemberID == familymemberID).FirstOrDefault();
         return FamilyMember;
@@ -868,6 +950,7 @@ public partial class Pasture
     {
         try
         {
+            
             int responce;
             newFamilyMember.CreatedByID = GetCurrentUserSessionID();
             newFamilyMember.CreatedDate = DateTime.Now;
@@ -887,6 +970,7 @@ public partial class Pasture
     {
         try
         {
+            
             int responce;
             FamilyMember familyMember = DBContext.FamilyMembers.Where(fm => fm.FamilyMemberID == UpdateFamilyMember.FamilyMemberID).FirstOrDefault();
 
@@ -909,6 +993,7 @@ public partial class Pasture
     {
         try
         {
+            
             int responce;
             FamilyMember familyMember = DBContext.FamilyMembers.Where(fm => fm.FamilyMemberID == DeleteFamilyMember.PatientID).FirstOrDefault();
             familyMember.ModifiedByID = GetCurrentUserSessionID();
@@ -932,24 +1017,28 @@ public partial class Pasture
 
     public static List<Billing> GetBillings()
     {
+        
         List<Billing> BillingList = new List<Billing>();
         BillingList = DBContext.Billings.Where(b => b.IsDeleted == false).ToList();
         return BillingList;
     }
     public static List<Billing> GetBillingsByPatientID(int PatientID)
     {
+        
         List<Billing> BillingList = new List<Billing>();
         BillingList = DBContext.Billings.Where(b => b.IsDeleted == false && b.PatientID==PatientID).ToList();
         return BillingList;
     }
     public static Billing GetBillingByID(int BillingID)
     {
+        
         Billing Billing = new Billing();
         Billing = DBContext.Billings.Where(b => b.ID == BillingID).FirstOrDefault();
         return Billing;
     }
     public static List<Billing> GetBillingByListConsultantID(int ConsultantID)
     {
+        
         List<Billing> Billing = new List<Billing>();
         Billing = DBContext.Billings.Where(b => b.IsDeleted == false && b.ConsultationID == ConsultantID).ToList();
         return Billing;
@@ -958,6 +1047,7 @@ public partial class Pasture
     {
         try
         {
+            
             int responce;
             newBilling.StaffID = GetCurrentUserSessionID();
             newBilling.CreatedByID = GetCurrentUserSessionID();
@@ -978,6 +1068,7 @@ public partial class Pasture
     {
         try
         {
+            
             int responce;
             Billing Billing = DBContext.Billings.Where(u => u.BillingID == UpdateBilling.BillingID).FirstOrDefault();
 
@@ -1001,6 +1092,7 @@ public partial class Pasture
     {
         try
         {
+            
             int responce;
             Billing Billing = DBContext.Billings.Where(r => r.BillingID == DeleteBilling.BillingID).FirstOrDefault();
             Billing.ModifiedByID = GetCurrentUserSessionID();
@@ -1024,24 +1116,28 @@ public partial class Pasture
 
     public static List<Consultation> GetConsultations()
     {
+        
         List<Consultation> ConsultationList = new List<Consultation>();
         ConsultationList = DBContext.Consultations.Where(b => b.IsDeleted == false).ToList();
         return ConsultationList;
     }
     public static List<Consultation> GetConsultationsListByPatientID(int PatientID)
     {
+        
         List<Consultation> ConsultationList = new List<Consultation>();
         ConsultationList = DBContext.Consultations.Where(b => b.IsDeleted == false && b.PatientID == PatientID).ToList();
         return ConsultationList;
     }
     public static Consultation GetConsultationByID(int ConsultationID)
     {
+        
         Consultation Consultation = new Consultation();
         Consultation = DBContext.Consultations.Where(b => b.ConsultationID == ConsultationID).FirstOrDefault();
         return Consultation;
     }
     public static List<Consultation> GetConsultationListByConsultantID(int ConsultantID)
     {
+        
         List<Consultation> Consultation = new List<Consultation>();
         Consultation = DBContext.Consultations.Where(b => b.IsDeleted == false && b.ConsultationID == ConsultantID).ToList();
         return Consultation;
@@ -1050,6 +1146,7 @@ public partial class Pasture
     {
         try
         {
+            
             int responce;
             newConsultation.ConsultantID = GetCurrentUserSessionID();
             newConsultation.CreatedByID = GetCurrentUserSessionID();
@@ -1070,6 +1167,7 @@ public partial class Pasture
     {
         try
         {
+            
             int responce;
             Consultation Consultation = DBContext.Consultations.Where(u => u.ConsultationID == UpdateConsultation.ConsultationID).FirstOrDefault();
 
@@ -1093,6 +1191,7 @@ public partial class Pasture
     {
         try
         {
+            
             int responce;
             Consultation Consultation = DBContext.Consultations.Where(r => r.ConsultationID == DeleteConsultation.ConsultationID).FirstOrDefault();
             Consultation.ModifiedByID = GetCurrentUserSessionID();
@@ -1116,6 +1215,7 @@ public partial class Pasture
 
     public static bool VefiryNewCreateUserName(string Username)
     {
+        
         int User = 0;// new AuthUser();
         User = DBContext.AuthUsers.Where(u => u.UserName == Username).Count();
         if (User > 0)
@@ -1129,6 +1229,7 @@ public partial class Pasture
     }
     public static int VefiryLoginDetail(string Username, string Password)
     {
+        
         AuthUser User = new AuthUser();
         User = DBContext.AuthUsers.Where(u => u.UserName == Username).FirstOrDefault();
 
@@ -1192,6 +1293,7 @@ public partial class Pasture
     }
     public static string GetCurrentUserSessionRole()
     {
+        
         HttpContext context = HttpContext.Current;
         AuthUser CurrentUser = new AuthUser();
         CurrentUser = (AuthUser)(context.Session["UserDetail"]);
@@ -1271,6 +1373,7 @@ public partial class Pasture
 
     public static int GetStaffLastAttendanceID(int currentstaffid)
     {
+        
         NurseDuty Nurseduty= DBContext.NurseDuties.Where(nd => nd.NurseID == currentstaffid).LastOrDefault();
 
         if(Nurseduty != null)
@@ -1370,7 +1473,6 @@ public partial class Pasture
 
         return sBuilder.ToString().ToUpper();
     }
-
     public enum EmployeeType : int
     {
         Nurse = 1,

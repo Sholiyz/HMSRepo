@@ -80,8 +80,18 @@
                                             <div class="panel panel-default">
                                                 <div class="panel-body">
                                                     <hr />
-                                                    <h4>ADD NEW USER</h4>
+                                                    
                                                     <div class="form-group" id="AddUserDiv" runat="server">
+                                                         <div class="form-group">
+                                                            <div class="row form-group">
+                                                                <div class="col-md-6 text-left">
+                                                                    <h4 class="text-left">ADD NEW USER</h4>
+                                                                </div>
+                                                                <div class="col-md-6 text-right">
+                                                                    
+                                                                </div>
+                                                            </div>
+                                                        </div>
                                                         <div class="row">
                                                             <div class="col-lg-3">
                                                             </div>
@@ -122,7 +132,7 @@
                                                             </div>
                                                         </div>
                                                     </div>
-                                                    <hr />
+                                                    <%--<hr />--%>
                                                     <div class="form-group" id="ViewUserListDiv" runat="server">                                                       
                                                          <div class="form-group">
                                                             <div class="row form-group">
@@ -130,47 +140,39 @@
                                                                     <h4 class="text-left">USER LIST</h4>
                                                                 </div>
                                                                 <div class="col-md-6 text-right">
-                                                                    <asp:Button runat="server" CssClass="btn btn-default btn-primary text-right" Text="ADD NEW USER" /></div>
+                                                                    <asp:Button runat="server" CssClass="btn btn-default btn-primary text-right" ID="ViewUserlistAddUserButton" OnClick="ViewUserlistAddUserButton_Click" Text="ADD NEW USER" /></div>
                                                             </div>
                                                         </div>
                                                         <div class="table-responsive">                                                        
-                                                            <asp:GridView ID="UserListGridView" runat="server" AutoGenerateColumns="false" CssClass="table  table-bordered " DataKeyNames="ID" EmptyDataText="There are no data records to display.">
+                                                            <asp:GridView ID="UserListGridView" runat="server" AutoGenerateColumns="false" CssClass="table  table-bordered text-center" DataKeyNames="UserID" EmptyDataText="There are no data records to display.">
                                                                 <Columns>
-                                                                    <asp:BoundField DataField="ID" HeaderText="Order ID" SortExpression="ID">
+                                                                    <asp:BoundField DataField="UserID" HeaderText="User ID" SortExpression="ID">
                                                                         <HeaderStyle CssClass="hide" HorizontalAlign="Left" />
                                                                         <ItemStyle CssClass="hide" HorizontalAlign="Left" />
                                                                     </asp:BoundField>
-                                                                    <asp:BoundField DataField="Name" HeaderText="Order Name" SortExpression="Name">
+                                                                    <asp:BoundField DataField="UserName" HeaderText="UserName" SortExpression="Name">
                                                                         <HeaderStyle HorizontalAlign="Left" />
                                                                         <ItemStyle HorizontalAlign="Left" />
                                                                     </asp:BoundField>
-                                                                    <asp:BoundField DataField="Price" HeaderText="Price" SortExpression="Price">
+                                                                    <asp:BoundField DataField="UserRole" HeaderText="Price" SortExpression="Price">
                                                                         <HeaderStyle HorizontalAlign="Left" />
                                                                         <ItemStyle HorizontalAlign="Left" />
                                                                     </asp:BoundField>
 
                                                                     <asp:TemplateField HeaderText="Process Status">
                                                                         <ItemTemplate>
-                                                                            <asp:Label runat="server" Text='<%#GetIsProcessStatus(Convert.ToBoolean(Eval("IsProcessing")))%>'></asp:Label>
+                                                                            <asp:Label runat="server" Text='<%#Pasture.GetRoleNameByRoleID(Convert.ToInt32("StaffRoleID"))%>'></asp:Label>
                                                                         </ItemTemplate>
                                                                     </asp:TemplateField>
-                                                                    <asp:TemplateField HeaderText="Delivered Status">
-                                                                        <ItemTemplate>
-                                                                            <asp:Label runat="server" Text='<%#GetIsDeliveredStatus(Convert.ToBoolean(Eval("IsDelivered")))%>'></asp:Label>
-                                                                        </ItemTemplate>
-                                                                    </asp:TemplateField>
-                                                                    <asp:TemplateField HeaderText="Canceled Status">
-                                                                        <ItemTemplate>
-                                                                            <asp:Label runat="server" Text='<%#GetIsCancelledStatus(Convert.ToBoolean(Eval("IsCancelled")))%>'></asp:Label>
-                                                                        </ItemTemplate>
-                                                                    </asp:TemplateField>
+                                                                    
                                                                     <asp:TemplateField HeaderText="Actions" HeaderStyle-CssClass="center text-center" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center" ItemStyle-VerticalAlign="Middle">
                                                                         <ItemTemplate>
                                                                             <div class="form-actions text-center">
                                                                                 <%--<asp:Button runat="server" Text="Processing" ID="lnkView" Enabled='<%#Eval("IsProcessing") %>' CssClass="btn btn-xs btn-success" />--%>
-                                                                                <asp:Button runat="server" Text="View" ID="CancelRoleBtn" Enabled='<%# (((Convert.ToBoolean(Eval("IsProcessing")) == true || Convert.ToBoolean(Eval("IsDelivered")) == true)|| Convert.ToBoolean(Eval("IsCancelled")) == true) ? false : true) %>' CssClass="btn btn-md btn-success" />
-                                                                                <asp:Button runat="server" Text="Edit" ID="EditRoleBtn" Enabled='<%# (((Convert.ToBoolean(Eval("IsProcessing")) == true || Convert.ToBoolean(Eval("IsDelivered")) == true)|| Convert.ToBoolean(Eval("IsCancelled")) == true) ? false : true) %>' CssClass="btn btn-md btn-warning" />
-                                                                                <asp:Button runat="server" Text="Delete" ID="DeleteRoleBtn" Enabled='<%# (((Convert.ToBoolean(Eval("IsProcessing")) == true || Convert.ToBoolean(Eval("IsDelivered")) == true)|| Convert.ToBoolean(Eval("IsCancelled")) == true) ? false : true) %>' CssClass="btn btn-md btn-danger" />
+                                                                                <asp:Button runat="server" CommandArgument='<%# Eval("UserID") %>' Text="View" ID="ViewUserBtn" OnClick="ViewUserBtn_Click"  CssClass="btn btn-sm btn-primary" />
+                                                                                <asp:Button runat="server" Text="Edit" ID="EditUserBtn"  CssClass="btn btn-sm btn-warning" />
+                                                                                <asp:Button runat="server" Text="Delete" ID="DeleteUserBtn" CssClass="btn btn-sm btn-danger" />
+                                                                                <asp:Button runat="server" Text='<%# (Convert.ToBoolean(Eval("IsActive")) == true  ? "Deactivate" : "Activate") %>' ID="UserActivatioButton" CssClass='<%#(Convert.ToBoolean(Eval("IsActive")) == true  ? "btn btn-sm btn-danger" : "btn btn-sm btn-success") %>'  />
                                                                             </div>
                                                                         </ItemTemplate>
                                                                     </asp:TemplateField>
@@ -181,7 +183,7 @@
 
                                                         </div>
                                                     </div>
-                                                    <hr />
+                                                    <%--<hr />--%>
                                                     <div class="form-group" id="EditUserDiv" runat="server">
                                                         <h4>EDIT USER</h4>
                                                         <div class="row">
@@ -223,7 +225,7 @@
                                                             </div>
                                                         </div>
                                                     </div>
-                                                    <hr />
+                                                   <%-- <hr />--%>
                                                     <div class="form-group" id="ViewUserCreationDiv" runat="server">
                                                         <h4>VIEW USER DETAIL</h4>
                                                         <div class="row">

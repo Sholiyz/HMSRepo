@@ -9,11 +9,13 @@ public partial class Pages_admin_portal : System.Web.UI.Page
 {
     protected void Page_Load(object sender, EventArgs e)
     {
-        string role = Pasture.GetCurrentUserSessionRole();
-
-        ManageRoleView("adin");
-
-
+        if (!IsPostBack)
+        {
+            string role = Pasture.GetCurrentUserSessionRole();
+            ManageRoleView("admin");
+            SetDefualtView();
+        }
+        
     }
 
     private List<RoleItems> LoadOrderItems()
@@ -153,9 +155,13 @@ public partial class Pages_admin_portal : System.Web.UI.Page
         return;
     }
 
+
+
+    #region Manage Page Nav
+
     private void SetActiveContainerVisible(string NavtabName)
     {
-        if (NavtabName.ToLower()=="user")
+        if (NavtabName.ToLower() == "user")
         {
             HideContentView();
             usercreationli.Attributes["class"] = "active";
@@ -212,11 +218,10 @@ public partial class Pages_admin_portal : System.Web.UI.Page
 
 
 
-       
 
-        
+
+
     }
-
     private void HideContentView()
     {
         usercreation.Visible = false;
@@ -232,48 +237,52 @@ public partial class Pages_admin_portal : System.Web.UI.Page
         assigningnurseduty.Visible = false;
         assigningnursedutyli.Attributes["class"] = "";
     }
-
-
     protected void UsercreationDivNav_Click(object sender, EventArgs e)
     {
-        SetActiveContainerVisible("Usercreation");
-        PopulateRolelist(Adduserrolelistddl);
+        SetActiveContainerVisible("User");
+        HideUserViews();
+        ViewUserListDiv.Visible = true;
+        BindUserList();
 
     }
 
+    private void SetDefualtView()
+    {
+        SetActiveContainerVisible("Usercreation");
+        HideUserViews();
+        ViewUserListDiv.Visible = true;
+        BindUserList();
+    }
     protected void TransactionTypeDivNav_Click(object sender, EventArgs e)
     {
         SetActiveContainerVisible("TransactionType");
     }
-
     protected void RoleDivNav_Click(object sender, EventArgs e)
     {
         SetActiveContainerVisible("Role");
         RoleListGrid.DataSource = LoadOrderItems();
         RoleListGrid.DataBind();
     }
-
     protected void PatientPlanDivNav_Click(object sender, EventArgs e)
     {
         SetActiveContainerVisible("PatientPlan");
     }
-
     protected void DutyTypeDivNav_Click(object sender, EventArgs e)
     {
         SetActiveContainerVisible("DutyType");
     }
-
     protected void AssigningNurseDutyDivNav_Click(object sender, EventArgs e)
     {
         SetActiveContainerVisible("AssigningNurseDuty");
     }
 
+    #endregion
+
+    #region Manage MenuNav
     private void ManageRoleView(string rolename)
     {
-        
+
         //string role = "edmin"; //Pasture.GetCurrentUserSessionRole();
-
-
         if (rolename.ToLower() == "admin")
         {
             dashboard.Visible = true;
@@ -281,22 +290,33 @@ public partial class Pages_admin_portal : System.Web.UI.Page
             nursesportal.Visible = true;
             doctorsportal.Visible = true;
             adminportal.Visible = true;
+            SetActiveContainerVisible("adminportal");
+            HideUserViews();
+            ViewUserListDiv.Visible = true;
+            BindUserList();
             return;
         }
-        if (rolename.ToLower().Contains( "nurse"))
+        if (rolename.ToLower().Contains("nurse"))
         {
-            HideAllMenuNav();           
+            HideAllMenuNav();
             patientsportal.Visible = true;
-            nursesportal.Visible = true;           
+            nursesportal.Visible = true;
+            SetActiveContainerVisible("PatientPlan");
             return;
         }
         if (rolename.ToLower().Contains("doctor"))
         {
-            HideAllMenuNav();            
-            patientsportal.Visible = true;            
+            HideAllMenuNav();
+            patientsportal.Visible = true;
             doctorsportal.Visible = true;
+            SetActiveContainerVisible("PatientPlan");
             return;
         }
+        else
+        {
+            HideAllMenuNav();
+        }
+
     }
 
     private void HideAllMenuNav()
@@ -308,6 +328,9 @@ public partial class Pages_admin_portal : System.Web.UI.Page
         adminportal.Visible = false;
     }
 
+    #endregion
+
+    #region Role Management
     protected void AddRoleProceedButton_Click(object sender, EventArgs e)
     {
         AuthRole newRole = new AuthRole()
@@ -326,40 +349,182 @@ public partial class Pages_admin_portal : System.Web.UI.Page
 
     }
 
+    #endregion
+
+    #region User Section
+
+    protected void ViewUserlistAddUserButton_Click(object sender, EventArgs e)
+    {
+        HideUserViews();
+        AddUserDiv.Visible = true;
+        PopulateRolelist(Adduserrolelistddl);
+        PopulateEmployeelist(AddUserEmployeelistddl);
+    }
+
     protected void AddUserBackBtn_Click(object sender, EventArgs e)
     {
-        AuthUser newUser = new AuthUser
-        {
-            UserName=AddUsernameTxtBox.Text,
-            Password=AddUserPasswordTxtBox.Text,
-            StaffRoleID=Convert.ToInt32(Adduserrolelistddl.SelectedValue.ToString())
 
-        };
+        try
+        {
+            HideUserViews();
+            ViewUserListDiv.Visible = true;
+            BindUserList();
+
+        }
+        catch (Exception)
+        {
+
+            throw;
+        }
+
     }
 
     protected void AddUserSubmitBtn_Click(object sender, EventArgs e)
     {
+        try
+        {
+            AuthUser newUser = new AuthUser
+            {
+                
+                UserName = AddUsernameTxtBox.Text,
+                Password = AddUserPasswordTxtBox.Text,
+                StaffRoleID = Convert.ToInt32(Adduserrolelistddl.SelectedValue.ToString())
 
+            };
+
+            int response = Pasture.AddNewUser(newUser);
+            if (response > 0)
+            {
+                ShowSxsResponse("User Successfly Added!!");
+            }
+            else
+            {
+                ShowErrorResponse("User not added kindly try again!!");
+            }
+        }
+        catch (Exception)
+        {
+            PastureAlert.PopErrorAlert("User Not Added Kindly Contact admin.");
+            //throw;
+        }
     }
 
+    protected void ViewUserBtn_Click(object sender, EventArgs e)
+    {
+       
+        try
+        {
+            Button btn = (Button)sender;
+            int userid = Convert.ToInt32((btn.CommandArgument.ToString()));
+           
+            HideUserViews();
+            ViewUserCreationDiv.Visible = true;
 
+            
+            
+        }
+        catch (Exception)
+        {
+
+            throw;
+        }
+    }
+
+    
+
+    private void HideUserViews()
+    {
+        AddUserDiv.Visible = false;
+        ViewUserListDiv.Visible = false;
+        ViewUserCreationDiv.Visible = false;
+        EditUserDiv.Visible = false;
+    }
+    #endregion
+
+
+    #region Populate DroupDownlist
     private void PopulateRolelist(DropDownList ddlistname)
     {
-        AuthRole role = new AuthRole();        
+        //AuthRole role = new AuthRole();        
         ddlistname.DataSource = Pasture.GetRoles();
         ddlistname.DataTextField = "RoleName";
         ddlistname.DataValueField = "RoleID";
+        ListItem initval = new ListItem();
+        initval.Text = "Select Role...";
+        initval.Value = "-1";
+        ddlistname.Items.Insert(0, initval);
         ddlistname.DataBind();
     }
-
     private void PopulateEmployeelist(DropDownList ddlistname)
     {
-        Employee role = new Employee();
+        //Employee role = new Employee();
+        ddlistname.DataSource = Pasture.GetEmployeeList();
+        ddlistname.DataTextField = "FullName";
+        ddlistname.DataValueField = "EmployeeID";
+        ListItem initval = new ListItem();
+        initval.Text = "Select Employee...";
+        initval.Value = "-1";
+        ddlistname.Items.Insert(0,initval);
 
-        
-        ddlistname.DataSource = Pasture.GetRoles();
-        ddlistname.DataTextField = "RoleName";
-        ddlistname.DataValueField = "RoleID";
         ddlistname.DataBind();
     }
+    #endregion
+
+
+
+    #region Bindings
+
+    private void BindUserList()
+    {
+        UserListGridView.DataSource = Pasture.GetUsers();
+        UserListGridView.DataBind();
+    }
+
+    private void BindRoleList()
+    {
+        RoleListGrid.DataSource = Pasture.GetRoles();
+        RoleListGrid.DataBind();
+    }
+
+    #endregion
+
+    #region Response Message
+    private void ShowSxsResponse(string message)
+    {
+        ResponseAlert.NewMessage = message;
+        ResponseAlert.NoteType = PastureAlert.ResponseNotetype.success.ToString();//"Success";
+        ResponseAlert.NoteVisible = true;
+        ResponseAlert.ShowNotification();
+        return;
+    }
+
+    private void ShowErrorResponse(string message)
+    {
+        ResponseAlert.NewMessage = message;
+        ResponseAlert.NoteType = PastureAlert.ResponseNotetype.error.ToString();//"Success";
+        ResponseAlert.NoteVisible = true;
+        ResponseAlert.ShowNotification();
+        return;
+    }
+    private void ShowWarningResponse(string message)
+    {
+        ResponseAlert.NewMessage = message;
+        ResponseAlert.NoteType = PastureAlert.ResponseNotetype.warning.ToString();//"Success";
+        ResponseAlert.NoteVisible = true;
+        ResponseAlert.ShowNotification();
+        return;
+    }
+    private void ShowInfoResponse(string message)
+    {
+        ResponseAlert.NewMessage = message;
+        ResponseAlert.NoteType = PastureAlert.ResponseNotetype.info.ToString();//"Success";
+        ResponseAlert.NoteVisible = true;
+        ResponseAlert.ShowNotification();
+        return;
+    }
+    #endregion
+
+
+
+   
 }

@@ -25,15 +25,15 @@ public partial class Employee
 
     [Required]
     [StringLength(150)]
-    //public string FullName { get { return FirstName + " " + LastName + " " + OtherNames; } }
+    public string FullName { get; set; }
 
-    private string _fullName;
+    //private string _fullName;
 
-    public string FullName
-    {
-        get { return FirstName + " " + LastName + " " + OtherNames; }
-        set { _fullName = value; }
-    }
+    //public string FullName
+    //{
+    //    get { return FirstName + " " + LastName + " " + OtherNames; }
+    //    set { _fullName = value; }
+    //}
 
 
     [StringLength(10)]
