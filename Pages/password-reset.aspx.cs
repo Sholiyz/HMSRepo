@@ -29,6 +29,18 @@ public partial class Pages_password_reset : System.Web.UI.Page
                 if (newpassword.Value.ToString() == confirmnewpassword.Value.ToString())
                 {
                     UpdateUser.Password = newpassword.Value.ToString();
+                    int response = Pasture.UpdateUser(UpdateUser);
+                    if (response > 0)
+                    {
+                        PastureAlert.PopWarningAlert("Password reset successful, login again to continue.");
+                        Pasture.EndCurrentSession();
+                        Response.Redirect("./login.aspx");
+                        return;
+                    }
+                    else
+                    {
+                        PastureAlert.PopWarningAlert("Password reset not successful try again.");
+                    }
                 }
                 else
                 {

@@ -33,7 +33,7 @@
             <div class="container">
                 <div class="row">
                     <div class="col-md-12">
-                        <strong>Email: </strong>info@yourdomain.com
+                        <strong>Email: </strong>info@hmsdomain.com
                     &nbsp;&nbsp;
                     <strong>Support: </strong>+234-807-053-6458
                     </div>

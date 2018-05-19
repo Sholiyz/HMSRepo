@@ -1396,7 +1396,6 @@ public partial class Pasture
         context.Session["UserDetail"] = null;
 
     }
-
     public static bool VerifyUserPassword(string DBPassword,string VerfiyPassword)
     {
         if (ValidatePassword(VerfiyPassword, DBPassword))
