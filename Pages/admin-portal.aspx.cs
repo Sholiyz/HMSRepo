@@ -351,95 +351,7 @@ public partial class Pages_admin_portal : System.Web.UI.Page
 
     #endregion
 
-    #region User Section
-
-    protected void ViewUserlistAddUserButton_Click(object sender, EventArgs e)
-    {
-        HideUserViews();
-        AddUserDiv.Visible = true;
-        PopulateRolelist(Adduserrolelistddl);
-        PopulateEmployeelist(AddUserEmployeelistddl);
-    }
-
-    protected void AddUserBackBtn_Click(object sender, EventArgs e)
-    {
-
-        try
-        {
-            HideUserViews();
-            ViewUserListDiv.Visible = true;
-            BindUserList();
-
-        }
-        catch (Exception)
-        {
-
-            throw;
-        }
-
-    }
-
-    protected void AddUserSubmitBtn_Click(object sender, EventArgs e)
-    {
-        try
-        {
-            AuthUser newUser = new AuthUser
-            {
-                
-                UserName = AddUsernameTxtBox.Text,
-                Password = AddUserPasswordTxtBox.Text,
-                StaffRoleID = Convert.ToInt32(Adduserrolelistddl.SelectedValue.ToString())
-
-            };
-
-            int response = Pasture.AddNewUser(newUser);
-            if (response > 0)
-            {
-                ShowSxsResponse("User Successfly Added!!");
-            }
-            else
-            {
-                ShowErrorResponse("User not added kindly try again!!");
-            }
-        }
-        catch (Exception)
-        {
-            PastureAlert.PopErrorAlert("User Not Added Kindly Contact admin.");
-            //throw;
-        }
-    }
-
-    protected void ViewUserBtn_Click(object sender, EventArgs e)
-    {
-       
-        try
-        {
-            Button btn = (Button)sender;
-            int userid = Convert.ToInt32((btn.CommandArgument.ToString()));
-           
-            HideUserViews();
-            ViewUserCreationDiv.Visible = true;
-
-            
-            
-        }
-        catch (Exception)
-        {
-
-            throw;
-        }
-    }
-
-    
-
-    private void HideUserViews()
-    {
-        AddUserDiv.Visible = false;
-        ViewUserListDiv.Visible = false;
-        ViewUserCreationDiv.Visible = false;
-        EditUserDiv.Visible = false;
-    }
-    #endregion
+  
 
 
     #region Populate DroupDownlist
@@ -448,25 +360,18 @@ public partial class Pages_admin_portal : System.Web.UI.Page
         //AuthRole role = new AuthRole();        
         ddlistname.DataSource = Pasture.GetRoles();
         ddlistname.DataTextField = "RoleName";
-        ddlistname.DataValueField = "RoleID";
-        ListItem initval = new ListItem();
-        initval.Text = "Select Role...";
-        initval.Value = "-1";
-        ddlistname.Items.Insert(0, initval);
+        ddlistname.DataValueField = "RoleID";     
         ddlistname.DataBind();
+        ddlistname.Items.Insert(0, new ListItem("Select Role...", "NA"));
     }
     private void PopulateEmployeelist(DropDownList ddlistname)
     {
         //Employee role = new Employee();
         ddlistname.DataSource = Pasture.GetEmployeeList();
         ddlistname.DataTextField = "FullName";
-        ddlistname.DataValueField = "EmployeeID";
-        ListItem initval = new ListItem();
-        initval.Text = "Select Employee...";
-        initval.Value = "-1";
-        ddlistname.Items.Insert(0,initval);
-
+        ddlistname.DataValueField = "EmployeeID";        
         ddlistname.DataBind();
+        ddlistname.Items.Insert(0, new ListItem("Select Employee...", "NA"));
     }
     #endregion
 
@@ -525,6 +430,212 @@ public partial class Pages_admin_portal : System.Web.UI.Page
     #endregion
 
 
+    #region User Section
 
-   
+    protected void ViewUserlistAddUserButton_Click(object sender, EventArgs e)
+    {
+        HideUserViews();
+        AddUserDiv.Visible = true;
+        PopulateRolelist(Adduserrolelistddl);
+        PopulateEmployeelist(AddUserEmployeelistddl);
+    }
+    protected void ViewUserBackButton_Click(object sender, EventArgs e)
+    {
+        try
+        {
+            HideUserViews();
+            ViewUserListDiv.Visible = true;
+            BindUserList();
+
+        }
+        catch (Exception)
+        {
+
+            throw;
+        }
+
+    }
+
+    protected void AddUserBackBtn_Click(object sender, EventArgs e)
+    {
+
+        try
+        {
+            HideUserViews();
+            ViewUserListDiv.Visible = true;
+            BindUserList();
+
+        }
+        catch (Exception)
+        {
+
+            throw;
+        }
+
+    }
+
+    protected void AddUserSubmitBtn_Click(object sender, EventArgs e)
+    {
+        try
+        {
+            if (AddUserEmployeelistddl.SelectedValue.ToString() == "NA")
+            {
+                ShowErrorResponse("Employee Not Selected!!");
+                return;
+            }
+
+            if (Adduserrolelistddl.SelectedValue.ToString() == "NA")
+            {
+                ShowErrorResponse("User Role Not Selected!!");
+                return;
+            }
+            if (AddUserPasswordTxtBox.Text == AddUserConfirmPasswordTxtBox.Text)
+            {
+                ShowErrorResponse("Password Not match!!");
+                return;
+            }
+
+            AuthUser newUser = new AuthUser
+            {
+
+                //UserName = AddUsernameTxtBox.Text,
+                Password = AddUserPasswordTxtBox.Text,
+                StaffRoleID = Convert.ToInt32(Adduserrolelistddl.SelectedValue.ToString()),
+                StaffID = Convert.ToInt32(AddUserEmployeelistddl.SelectedValue.ToString())
+
+            };
+
+            int response = Pasture.AddNewUser(newUser);
+            if (response > 0)
+            {
+                PopulateRolelist(Adduserrolelistddl);
+                PopulateEmployeelist(AddUserEmployeelistddl);
+                //ShowSxsResponse("User Successfly Added!!");
+                PastureAlert.PopErrorAlert("User Successfly Added!!");
+            }
+            else
+            {
+                ShowErrorResponse("User not added kindly try again!!");
+            }
+
+
+        }
+        catch (Exception)
+        {
+            PastureAlert.PopErrorAlert("User Not Added Kindly Contact admin.");
+            //throw;
+        }
+    }
+
+    protected void ViewUserBtn_Click(object sender, EventArgs e)
+    {
+
+        try
+        {
+            Button btn = (Button)sender;
+            int userid = Convert.ToInt32((btn.CommandArgument.ToString()));
+            AuthUser viewUser = Pasture.GetUserByID(userid);
+            ViewUserEmployeeNameTextField.Text = Pasture.GetEmployeeFullNameById(viewUser.StaffID);
+            ViewUserUserNameTextField.Text = viewUser.UserName;
+            ViewUserRoleTextField.Text = Pasture.GetRoleNameByRoleID(viewUser.StaffRoleID);
+            HideUserViews();
+            ViewUserCreationDiv.Visible = true;
+
+
+
+        }
+        catch (Exception)
+        {
+
+            throw;
+        }
+    }
+
+    protected void EditUserBackButton_Click(object sender, EventArgs e)
+    {
+
+    }
+
+    protected void EditUserProceedButton_Click(object sender, EventArgs e)
+    {
+
+    }
+
+    protected void EditUserBtn_Click(object sender, EventArgs e)
+    {
+        try
+        {
+            Button btn = (Button)sender;
+            int userid = Convert.ToInt32((btn.CommandArgument.ToString()));
+            AuthUser viewUser = Pasture.GetUserByID(userid);
+            ViewUserEmployeeNameTextField.Text = Pasture.GetEmployeeFullNameById(viewUser.StaffID);
+            ViewUserUserNameTextField.Text = viewUser.UserName;
+            ViewUserRoleTextField.Text = Pasture.GetRoleNameByRoleID(viewUser.StaffRoleID);
+            HideUserViews();
+            ViewUserCreationDiv.Visible = true;
+
+
+
+        }
+        catch (Exception)
+        {
+
+            throw;
+        }
+    }
+
+    protected void DeleteUserBtn_Click(object sender, EventArgs e)
+    {
+        try
+        {
+            Button btn = (Button)sender;
+            int userid = Convert.ToInt32((btn.CommandArgument.ToString()));
+            AuthUser viewUser = Pasture.GetUserByID(userid);
+            ViewUserEmployeeNameTextField.Text = Pasture.GetEmployeeFullNameById(viewUser.StaffID);
+            ViewUserUserNameTextField.Text = viewUser.UserName;
+            ViewUserRoleTextField.Text = Pasture.GetRoleNameByRoleID(viewUser.StaffRoleID);
+            HideUserViews();
+            ViewUserCreationDiv.Visible = true;
+
+
+
+        }
+        catch (Exception)
+        {
+
+            throw;
+        }
+    }
+
+    protected void UserActivatioButton_Click(object sender, EventArgs e)
+    {
+        try
+        {
+            Button btn = (Button)sender;
+            int userid = Convert.ToInt32((btn.CommandArgument.ToString()));
+            int response = Pasture.ActivateOrDeactivateUser(userid);
+
+
+
+        }
+        catch (Exception)
+        {
+
+            throw;
+        }
+    }
+
+    private void HideUserViews()
+    {
+        AddUserDiv.Visible = false;
+        ViewUserListDiv.Visible = false;
+        ViewUserCreationDiv.Visible = false;
+        EditUserDiv.Visible = false;
+    }
+    #endregion
+
+
+
+
+  
 }

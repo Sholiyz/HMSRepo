@@ -102,24 +102,26 @@
                                                                 </div>
                                                                 <div class="form-group">
                                                                     <label class="control-label">SELECT ROLE</label>
-                                                                    <asp:DropDownList runat="server" ID="Adduserrolelistddl" CssClass="form-control"></asp:DropDownList>
+                                                                    <asp:DropDownList runat="server" ID="Adduserrolelistddl" CssClass="form-control dropdown-settings" >
+                                                                        
+                                                                    </asp:DropDownList>
                                                                 </div>
-                                                                <div class="form-group">
+                                                                <%--<div class="form-group">
                                                                     <label class="control-label">USERNAME</label>
                                                                     <asp:TextBox runat="server" ID="AddUsernameTxtBox" CssClass="form-control"></asp:TextBox>
-                                                                </div>
+                                                                </div>--%>
                                                                 <div class="form-group">
                                                                     <label class="control-label">PASSWORD</label>
-                                                                    <asp:TextBox runat="server" ID="AddUserPasswordTxtBox" CssClass="form-control"></asp:TextBox>
+                                                                    <asp:TextBox runat="server" ID="AddUserPasswordTxtBox" TextMode="Password" CssClass="form-control" ></asp:TextBox>
                                                                 </div>
                                                                 <div class="form-group">
                                                                     <label class="control-label">CONFIRM PASSWORD</label>
-                                                                    <asp:TextBox runat="server" ID="AddUserConfirmPasswordTxtBox" CssClass="form-control"></asp:TextBox>
+                                                                    <asp:TextBox runat="server" ID="AddUserConfirmPasswordTxtBox" TextMode="Password" CssClass="form-control"></asp:TextBox>
                                                                 </div>
                                                                 <div class="form-group">
                                                                      <div class="row">
                                                                     <div class="col-lg-6 text-left">
-                                                                        <asp:Button runat="server" ID="AddUserBackBtn" CssClass="btn btn-default btn-danger" OnClick="AddUserBackBtn_Click" Text="BACK" />
+                                                                        <asp:Button runat="server" ID="AddUserBackBtn" CssClass="btn btn-default btn-danger" OnClick="AddUserBackBtn_Click" Text="BACK"/>
                                                                     </div>
                                                                      <div class="col-lg-6 text-right">
                                                                          <asp:Button runat="server" ID="AddUserSubmitBtn" CssClass="btn btn-default btn-primary" OnClick="AddUserSubmitBtn_Click" Text="PROCEED" />
@@ -150,21 +152,23 @@
                                                                         <HeaderStyle CssClass="hide" HorizontalAlign="Left" />
                                                                         <ItemStyle CssClass="hide" HorizontalAlign="Left" />
                                                                     </asp:BoundField>
+                                                                    <asp:TemplateField HeaderText="Employee">
+                                                                        <ItemTemplate>
+                                                                            <asp:Label runat="server" Text='<%#Pasture.GetEmployeeFullNameById(int.Parse(Eval("StaffID").ToString()))%>'></asp:Label>
+                                                                        </ItemTemplate>
+                                                                    </asp:TemplateField>
+
                                                                     <asp:BoundField DataField="UserName" HeaderText="UserName" SortExpression="Name">
                                                                         <HeaderStyle HorizontalAlign="Left" />
                                                                         <ItemStyle HorizontalAlign="Left" />
                                                                     </asp:BoundField>
-                                                                    <asp:BoundField DataField="UserRole" HeaderText="Price" SortExpression="Price">
-                                                                        <HeaderStyle HorizontalAlign="Left" />
-                                                                        <ItemStyle HorizontalAlign="Left" />
-                                                                    </asp:BoundField>
-
-                                                                    <asp:TemplateField HeaderText="Process Status">
+                                                                                                     
+                                                                     <asp:TemplateField HeaderText="User Role">
                                                                         <ItemTemplate>
-                                                                            <asp:Label runat="server" Text='<%#Pasture.GetRoleNameByRoleID(Convert.ToInt32("StaffRoleID"))%>'></asp:Label>
+                                                                            <asp:Label runat="server" Text='<%#Pasture.GetRoleNameByRoleID(int.Parse(Eval("StaffRoleID").ToString()))%>'></asp:Label>
                                                                         </ItemTemplate>
-                                                                    </asp:TemplateField>
-                                                                    
+                                                                    </asp:TemplateField> 
+                                                                                                                                       
                                                                     <asp:TemplateField HeaderText="Actions" HeaderStyle-CssClass="center text-center" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center" ItemStyle-VerticalAlign="Middle">
                                                                         <ItemTemplate>
                                                                             <div class="form-actions text-center">
@@ -234,20 +238,20 @@
                                                             <div class="col-lg-6">
                                                                 <div class="form-group">
                                                                     <label class="control-label">EMPLOYEE NAME</label>
-                                                                    <asp:TextBox runat="server" CssClass="form-control" ReadOnly="true"></asp:TextBox>
+                                                                    <asp:TextBox runat="server" CssClass="form-control" ID="ViewUserEmployeeNameTextField" ReadOnly="true"></asp:TextBox>
                                                                 </div>
                                                                 <div class="form-group">
                                                                     <label class="control-label">USER ROLE</label>
-                                                                    <asp:TextBox runat="server" CssClass="form-control" ReadOnly="true"></asp:TextBox>
+                                                                    <asp:TextBox runat="server" CssClass="form-control"  ID="ViewUserRoleTextField" ReadOnly="true"></asp:TextBox>
                                                                 </div>
                                                                 <div class="form-group">
                                                                     <label class="control-label">USERNAME</label>
-                                                                    <asp:TextBox runat="server" CssClass="form-control" ReadOnly="true"></asp:TextBox>
+                                                                    <asp:TextBox runat="server" CssClass="form-control" ID="ViewUserUserNameTextField" ReadOnly="true"></asp:TextBox>
                                                                 </div>
                                                                  <div class="form-group">
                                                                      <div class="row">
                                                                     <div class="col-lg-12 text-left">
-                                                                        <asp:Button runat="server" CssClass="btn btn-default btn-danger" Text="BACK" />
+                                                                        <asp:Button runat="server" CssClass="btn btn-default btn-danger" Text="BACK" ID="ViewUserBackButton" OnClick="ViewUserBackButton_Click" />
                                                                     </div>
                                                                                                                                        
                                                                 </div>

@@ -20,7 +20,7 @@ public partial class Pasture
         //
     }
 
-    #region Doctor
+    #region Employee
     public static List<Employee> GetEmployees()
     {
         
@@ -49,6 +49,13 @@ public partial class Pasture
         Employee Employee = new Employee();
         Employee = DBContext.Employees.Where(d => d.EmployeeID == EmployeeID).FirstOrDefault();
         return Employee;
+    }
+
+    public static string GetEmployeeFullNameById(int staffid)
+    {
+        string fullname;// = new Employee();
+        fullname = DBContext.Employees.Where(e => e.EmployeeID == staffid).FirstOrDefault().FullName;
+        return fullname;
     }
 
     public static int AddNewEmployee(Employee newEmployee)
@@ -294,13 +301,13 @@ public partial class Pasture
         }
 
     }
-    public static int DeleteRoleByID(AuthRole DeleteRole)
+    public static int DeleteRoleByID(int DeleteRoleID)
     {
         try
         {
             
             int responce;
-            AuthRole Role = DBContext.AuthRoles.Where(r => r.RoleID == DeleteRole.RoleID).FirstOrDefault();
+            AuthRole Role = DBContext.AuthRoles.Where(r => r.RoleID == DeleteRoleID).FirstOrDefault();
             //DBContext.AuthRoles.Add(newRole);
             //Role.RoleName = UpdateRole.RoleName;
             //Role.RoleDescription = UpdateRole.RoleDescription;
@@ -352,7 +359,7 @@ public partial class Pasture
         AuthUser User = new AuthUser();
         User = DBContext.AuthUsers.Where(u => u.UserName == username).FirstOrDefault();
         return User;
-    }
+    }   
     public static int AddNewUser(AuthUser newUser)
     {
         try
@@ -360,8 +367,9 @@ public partial class Pasture
             
             int responce;
             newUser.Password = ProtectPassword(newUser.Password).ToUpper();
-
+            newUser.UserName = GenerateNewUserName(newUser.StaffID);
             newUser.CreatedByID = 1;// GetCurrentUserSessionID();
+            newUser.IsActive = true;
             newUser.CreatedDate = DateTime.Now;
             DBContext.AuthUsers.Add(newUser);
             responce = DBContext.SaveChanges();
@@ -374,6 +382,27 @@ public partial class Pasture
             throw;
         }
 
+    }
+
+    private static string GenerateNewUserName(int staffid)
+    {
+        string username;
+
+        Employee emp = GetEmployeeByID(staffid);
+        if (emp.StaffTypeID == 1)
+        {
+            username = "HMS-NRS" + emp.EmployeeID.ToString(); //+emp.LastName
+        }
+        else if(emp.StaffTypeID == 2)
+        {
+            username = "HMS-DR" + emp.EmployeeID.ToString();
+        }
+        else
+        {
+            username = "HMS" + emp.EmployeeID.ToString();
+        }
+
+        return username;
     }
     public static int UpdateUser(AuthUser UpdateUser)
     {
@@ -401,13 +430,47 @@ public partial class Pasture
         }
 
     }
-    public static int DeleteUserByID(AuthUser DeleteUser)
+
+    public static int ActivateOrDeactivateUser(int userid,out bool activatestate)
     {
         try
         {
             
             int responce;
-            AuthUser User = DBContext.AuthUsers.Where(r => r.UserID == DeleteUser.UserID).FirstOrDefault();
+            AuthUser User = DBContext.AuthUsers.Where(u => u.UserID == userid).FirstOrDefault();
+
+            //DBContext.AuthRoles.Add(newRole);
+            if (User.IsActive == true)
+            {
+                User.IsActive = false;
+                activatestate = false;
+            }
+            else
+            {
+                User.IsActive = true;
+                activatestate = true;
+            }
+            
+            User.ModifiedByID = GetCurrentUserSessionID();
+            User.ModifiedDate = DateTime.Now;
+            responce = DBContext.SaveChanges();
+            return responce;
+        }
+        catch (Exception ex)
+        {
+            //return 0;
+            //log ex.Message;
+            throw;
+        }
+
+    }
+    public static int DeleteUserByID(int DeleteUserid)
+    {
+        try
+        {
+            
+            int responce;
+            AuthUser User = DBContext.AuthUsers.Where(r => r.UserID == DeleteUserid).FirstOrDefault();
             User.ModifiedByID = GetCurrentUserSessionID();
             User.ModifiedDate = DateTime.Now;
             User.IsDeleted = true;
@@ -490,13 +553,13 @@ public partial class Pasture
         }
 
     }
-    public static int DeletePatientByID(Patient DeletePatient)
+    public static int DeletePatientByID(int DeletePatientID)
     {
         try
         {
             
             int responce;
-            Patient patient = DBContext.Patients.Where(p => p.PatientID == DeletePatient.PatientID).FirstOrDefault();
+            Patient patient = DBContext.Patients.Where(p => p.PatientID == DeletePatientID).FirstOrDefault();
             patient.ModifiedByID = GetCurrentUserSessionID();
             patient.ModifiedDate = DateTime.Now;
             patient.IsDeleted = true;
@@ -647,13 +710,13 @@ public partial class Pasture
         }
 
     }
-    public static int DeletePatientPlanByID(PatientPlanType DeletePatientPlan)
+    public static int DeletePatientPlanByID(int DeletePatientPlanID)
     {
         try
         {
             
             int responce;
-            PatientPlanType PatientPlan = DBContext.PatientPlanTypes.Where(ppt => ppt.PlanTypeID == DeletePatientPlan.PlanTypeID).FirstOrDefault();
+            PatientPlanType PatientPlan = DBContext.PatientPlanTypes.Where(ppt => ppt.PlanTypeID == DeletePatientPlanID).FirstOrDefault();
             //DBContext.AuthRoles.Add(newRole);
 
             PatientPlan.ModifiedByID = GetCurrentUserSessionID();
@@ -732,13 +795,13 @@ public partial class Pasture
         }
 
     }
-    public static int DeleteDutyTypeByID(DutyType DeleteDutyType)
+    public static int DeleteDutyTypeByID(int DeleteDutyTypeID)
     {
         try
         {
             
             int responce;
-            DutyType dutyType = DBContext.DutyTypes.Where(dt => dt.DutyTypeID == DeleteDutyType.DutyTypeID).FirstOrDefault();
+            DutyType dutyType = DBContext.DutyTypes.Where(dt => dt.DutyTypeID == DeleteDutyTypeID).FirstOrDefault();
             //DBContext.AuthRoles.Add(newRole);
 
             dutyType.ModifiedByID = GetCurrentUserSessionID();
@@ -816,13 +879,13 @@ public partial class Pasture
         }
 
     }
-    public static int DeleteTransactionTypeByID(TransactionType DeleteTransactionType)
+    public static int DeleteTransactionTypeByID(int DeleteTransactionTypeID)
     {
         try
         {
             
             int responce;
-            TransactionType TransactionType = DBContext.TransactionTypes.Where(tranx => tranx.TransactionTypeID == DeleteTransactionType.TransactionTypeID).FirstOrDefault();
+            TransactionType TransactionType = DBContext.TransactionTypes.Where(tranx => tranx.TransactionTypeID == DeleteTransactionTypeID).FirstOrDefault();
             //DBContext.AuthRoles.Add(newRole);
 
             TransactionType.ModifiedByID = GetCurrentUserSessionID();
@@ -989,13 +1052,13 @@ public partial class Pasture
         }
 
     }
-    public static int DeleteFamilyMemberByID(FamilyMember DeleteFamilyMember)
+    public static int DeleteFamilyMemberByID(int DeleteFamilyMemberID)
     {
         try
         {
             
             int responce;
-            FamilyMember familyMember = DBContext.FamilyMembers.Where(fm => fm.FamilyMemberID == DeleteFamilyMember.PatientID).FirstOrDefault();
+            FamilyMember familyMember = DBContext.FamilyMembers.Where(fm => fm.FamilyMemberID == DeleteFamilyMemberID).FirstOrDefault();
             familyMember.ModifiedByID = GetCurrentUserSessionID();
             familyMember.ModifiedDate = DateTime.Now;
             familyMember.IsDeleted = true;
@@ -1088,13 +1151,13 @@ public partial class Pasture
         }
 
     }
-    public static int DeleteBillingByID(Billing DeleteBilling)
+    public static int DeleteBillingByID(string DeleteBillingID)
     {
         try
         {
             
             int responce;
-            Billing Billing = DBContext.Billings.Where(r => r.BillingID == DeleteBilling.BillingID).FirstOrDefault();
+            Billing Billing = DBContext.Billings.Where(r => r.BillingID == DeleteBillingID).FirstOrDefault();
             Billing.ModifiedByID = GetCurrentUserSessionID();
             Billing.ModifiedDate = DateTime.Now;
             Billing.IsDeleted = true;
@@ -1187,13 +1250,13 @@ public partial class Pasture
         }
 
     }
-    public static int DeleteConsultationByID(Consultation DeleteConsultation)
+    public static int DeleteConsultationByID(int DeleteConsultationID)
     {
         try
         {
             
             int responce;
-            Consultation Consultation = DBContext.Consultations.Where(r => r.ConsultationID == DeleteConsultation.ConsultationID).FirstOrDefault();
+            Consultation Consultation = DBContext.Consultations.Where(r => r.ConsultationID == DeleteConsultationID).FirstOrDefault();
             Consultation.ModifiedByID = GetCurrentUserSessionID();
             Consultation.ModifiedDate = DateTime.Now;
             Consultation.IsDeleted = true;
