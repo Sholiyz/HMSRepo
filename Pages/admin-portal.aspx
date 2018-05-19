@@ -174,9 +174,9 @@
                                                                             <div class="form-actions text-center">
                                                                                 <%--<asp:Button runat="server" Text="Processing" ID="lnkView" Enabled='<%#Eval("IsProcessing") %>' CssClass="btn btn-xs btn-success" />--%>
                                                                                 <asp:Button runat="server" CommandArgument='<%# Eval("UserID") %>' Text="View" ID="ViewUserBtn" OnClick="ViewUserBtn_Click"  CssClass="btn btn-sm btn-primary" />
-                                                                                <asp:Button runat="server" Text="Edit" ID="EditUserBtn"  CssClass="btn btn-sm btn-warning" />
-                                                                                <asp:Button runat="server" Text="Delete" ID="DeleteUserBtn" CssClass="btn btn-sm btn-danger" />
-                                                                                <asp:Button runat="server" Text='<%# (Convert.ToBoolean(Eval("IsActive")) == true  ? "Deactivate" : "Activate") %>' ID="UserActivatioButton" CssClass='<%#(Convert.ToBoolean(Eval("IsActive")) == true  ? "btn btn-sm btn-danger" : "btn btn-sm btn-success") %>'  />
+                                                                                <asp:Button runat="server" CommandArgument='<%# Eval("UserID") %>' Text="Edit" ID="EditUserBtn" OnClick="EditUserBtn_Click"  CssClass="btn btn-sm btn-warning" />
+                                                                                <asp:Button runat="server" CommandArgument='<%# Eval("UserID") %>' Text="Delete" ID="DeleteUserBtn" OnClick="DeleteUserBtn_Click" CssClass="btn btn-sm btn-danger" />
+                                                                                <asp:Button runat="server" CommandArgument='<%# Eval("UserID") %>' Text='<%# (Convert.ToBoolean(Eval("IsActive")) == true  ? "Deactivate" : "Activate") %>' ID="UserActivatioButton" OnClick="UserActivatioButton_Click" CssClass='<%#(Convert.ToBoolean(Eval("IsActive")) == true  ? "btn btn-sm btn-danger" : "btn btn-sm btn-success") %>'  />
                                                                             </div>
                                                                         </ItemTemplate>
                                                                     </asp:TemplateField>
@@ -196,31 +196,31 @@
                                                             <div class="col-lg-6">
                                                                 <div class="form-group">
                                                                     <label class="control-label">EMPLOYEE NAME</label>
-                                                                    <asp:TextBox runat="server" CssClass="form-control" ReadOnly="true"></asp:TextBox>
+                                                                    <asp:TextBox runat="server" ID="EditUserEmployeeNameTextBox" CssClass="form-control" ReadOnly="true"></asp:TextBox>
                                                                 </div>
                                                                 <div class="form-group">
                                                                     <label class="control-label">USER ROLE</label>
-                                                                    <asp:DropDownList runat="server" CssClass="form-control"></asp:DropDownList>
+                                                                    <asp:DropDownList runat="server" ID="EditUserUserRoleddl" CssClass="form-control"></asp:DropDownList>
                                                                 </div>
                                                                 <div class="form-group">
                                                                     <label class="control-label">USERNAME</label>
-                                                                    <asp:TextBox runat="server" CssClass="form-control"></asp:TextBox>
+                                                                    <asp:TextBox runat="server" ID="EditUserUsername" CssClass="form-control"></asp:TextBox>
                                                                 </div>
                                                                 <div class="form-group">
                                                                     <label class="control-label">RESET PASSWORD</label>
-                                                                    <asp:TextBox runat="server" CssClass="form-control"></asp:TextBox>
+                                                                    <asp:TextBox runat="server" ID="EditUserPasswordTextbox" CssClass="form-control"></asp:TextBox>
                                                                 </div>
                                                                 <div class="form-group">
                                                                     <label class="control-label">CONFIRM RESET PASSWORD</label>
-                                                                    <asp:TextBox runat="server" CssClass="form-control"></asp:TextBox>
+                                                                    <asp:TextBox runat="server" ID="EditUserConfirmPasswordTextbox" CssClass="form-control"></asp:TextBox>
                                                                 </div>
                                                                  <div class="form-group">
                                                                      <div class="row">
                                                                     <div class="col-lg-6 text-left">
-                                                                        <asp:Button runat="server" CssClass="btn btn-default btn-danger" Text="BACK" />
+                                                                        <asp:Button runat="server" CssClass="btn btn-default btn-danger" ID="EditUserBackButton" OnClick="EditUserBackButton_Click" Text="BACK" />
                                                                     </div>
                                                                      <div class="col-lg-6 text-right">
-                                                                         <asp:Button runat="server" CssClass="btn btn-default btn-primary" Text="UPDATE" />
+                                                                         <asp:Button runat="server" CssClass="btn btn-default btn-primary" ID="EditUserProceedButton" OnClick="EditUserProceedButton_Click" Text="UPDATE" />
                                                                     </div>                                                                    
                                                                 </div>
                                                                 </div>

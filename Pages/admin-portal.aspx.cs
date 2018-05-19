@@ -511,18 +511,18 @@ public partial class Pages_admin_portal : System.Web.UI.Page
                 PopulateRolelist(Adduserrolelistddl);
                 PopulateEmployeelist(AddUserEmployeelistddl);
                 //ShowSxsResponse("User Successfly Added!!");
-                PastureAlert.PopErrorAlert("User Successfly Added!!");
+                PastureAlert.PopSuccessAlert("User account successfly created!!");
             }
             else
             {
-                ShowErrorResponse("User not added kindly try again!!");
+                ShowErrorResponse("User account not created kindly try again!!");
             }
 
 
         }
         catch (Exception)
         {
-            PastureAlert.PopErrorAlert("User Not Added Kindly Contact admin.");
+            PastureAlert.PopErrorAlert("User acount Not created Kindly Contact admin.");
             //throw;
         }
     }
@@ -553,12 +553,63 @@ public partial class Pages_admin_portal : System.Web.UI.Page
 
     protected void EditUserBackButton_Click(object sender, EventArgs e)
     {
+        try
+        {
+            HideUserViews();
+            ViewUserListDiv.Visible = true;
+            BindUserList();
 
+        }
+        catch (Exception)
+        {
+
+            throw;
+        }
     }
 
     protected void EditUserProceedButton_Click(object sender, EventArgs e)
     {
+        try
+        {
+            if (EditUserUserRoleddl.SelectedValue.ToString() == "NA")
+            {
+                ShowErrorResponse("User Role Not Selected!!");
+                return;
+            }
+            if (!(EditUserPasswordTextbox.Text == EditUserConfirmPasswordTextbox.Text))
+            {
+                ShowErrorResponse("Password Not match!!");
+                return;
+            }
 
+            AuthUser newUser = new AuthUser
+            {
+
+                //UserName = AddUsernameTxtBox.Text,
+                Password = AddUserPasswordTxtBox.Text,
+                StaffRoleID = Convert.ToInt32(Adduserrolelistddl.SelectedValue.ToString()),
+                StaffID = Convert.ToInt32(AddUserEmployeelistddl.SelectedValue.ToString())
+
+            };
+
+            int response = Pasture.UpdateUser(newUser);
+            if (response > 0)
+            {
+                PopulateRolelist(Adduserrolelistddl);
+                //ShowSxsResponse("User Successfly Added!!");
+                PastureAlert.PopSuccessAlert("User account successfly updated!!");
+            }
+            else
+            {
+                ShowErrorResponse("User Account not updated kindly try again!!");
+            }
+        }
+        catch (Exception)
+        {
+
+            throw;
+        }
+        
     }
 
     protected void EditUserBtn_Click(object sender, EventArgs e)
@@ -567,12 +618,14 @@ public partial class Pages_admin_portal : System.Web.UI.Page
         {
             Button btn = (Button)sender;
             int userid = Convert.ToInt32((btn.CommandArgument.ToString()));
+            PopulateRolelist(EditUserUserRoleddl);
             AuthUser viewUser = Pasture.GetUserByID(userid);
-            ViewUserEmployeeNameTextField.Text = Pasture.GetEmployeeFullNameById(viewUser.StaffID);
-            ViewUserUserNameTextField.Text = viewUser.UserName;
-            ViewUserRoleTextField.Text = Pasture.GetRoleNameByRoleID(viewUser.StaffRoleID);
+            EditUserEmployeeNameTextBox.Text = Pasture.GetEmployeeFullNameById(viewUser.StaffID);
+            EditUserUsername.Text = viewUser.UserName;
+            EditUserUserRoleddl.SelectedValue = viewUser.StaffRoleID.ToString();
+
             HideUserViews();
-            ViewUserCreationDiv.Visible = true;
+            EditUserDiv.Visible = true;
 
 
 
@@ -590,14 +643,28 @@ public partial class Pages_admin_portal : System.Web.UI.Page
         {
             Button btn = (Button)sender;
             int userid = Convert.ToInt32((btn.CommandArgument.ToString()));
-            AuthUser viewUser = Pasture.GetUserByID(userid);
-            ViewUserEmployeeNameTextField.Text = Pasture.GetEmployeeFullNameById(viewUser.StaffID);
-            ViewUserUserNameTextField.Text = viewUser.UserName;
-            ViewUserRoleTextField.Text = Pasture.GetRoleNameByRoleID(viewUser.StaffRoleID);
-            HideUserViews();
-            ViewUserCreationDiv.Visible = true;
+            int response = Pasture.DeleteUserByID(userid);
+            if (response > 0)
+            {
+               PastureAlert.PopSuccessAlert("User Successfly Deleted!!");
+                
+                try
+                {
+                    HideUserViews();
+                    ViewUserListDiv.Visible = true;
+                    BindUserList();
 
+                }
+                catch (Exception)
+                {
 
+                    throw;
+                }
+            }
+            else
+            {
+                ShowErrorResponse("Operation Failed Kindly try agian");
+            }
 
         }
         catch (Exception)
@@ -613,7 +680,36 @@ public partial class Pages_admin_portal : System.Web.UI.Page
         {
             Button btn = (Button)sender;
             int userid = Convert.ToInt32((btn.CommandArgument.ToString()));
-            int response = Pasture.ActivateOrDeactivateUser(userid);
+            bool ActivateState;
+            int response = Pasture.ActivateOrDeactivateUser(userid,out ActivateState);
+
+            if (response > 0)
+            {
+                if (ActivateState)
+                {
+                    PastureAlert.PopSuccessAlert("User Successfly Activated!!");
+                }
+                else
+                {
+                    PastureAlert.PopSuccessAlert("User Successfly Deactivated!!");
+                }
+                try
+                {
+                    HideUserViews();
+                    ViewUserListDiv.Visible = true;
+                    BindUserList();
+
+                }
+                catch (Exception)
+                {
+
+                    throw;
+                }
+            }
+            else
+            {
+                ShowErrorResponse("Operation Failed Kindly try agian");
+            }
 
 
 

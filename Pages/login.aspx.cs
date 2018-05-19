@@ -25,14 +25,27 @@ public partial class Pages_login : System.Web.UI.Page
             if (valresponse == 100)
             {
                 PastureAlert.PopSuccessAlert("Login Successful!!");
+                return;
             }
             if (valresponse == 101)
             {
                 PastureAlert.PopWarningAlert("Invalide username and password!!!");
+                return;
             }
             if (valresponse == 102)
             {
                 PastureAlert.PopWarningAlert("User logged out kindly contact the administrator!!!");
+                return;
+            }
+            if (valresponse == 103)
+            {
+                PastureAlert.PopWarningAlert("Account is inactive kinly contact the adminstrator!!!");
+                return;
+            }
+            if (valresponse == 104)
+            {
+                PastureAlert.PopErrorAlert("Bad Request- Account does not exist!!!");
+                return;
             }
         }
         else

@@ -23,14 +23,14 @@ public partial class Pasture
     #region Employee
     public static List<Employee> GetEmployees()
     {
-        
+        DBContext = new HSMModelDataContext();
         List<Employee> EmployeeList = new List<Employee>();
         EmployeeList =  DBContext.Employees.Where(d => d.IsDeleted==false).ToList();//d.IsActive == true &&
         return EmployeeList;
     }
     public static List<Employee> GetDoctorsList()
     {
-        
+        DBContext = new HSMModelDataContext();
         List<Employee> EmployeeList = new List<Employee>();
         EmployeeList = DBContext.Employees.Where(d => d.StaffTypeID==2 && d.IsDeleted == false).ToList();//d.IsActive == true &&
         return EmployeeList;
@@ -38,14 +38,14 @@ public partial class Pasture
 
     public static List<Employee> GetNursesList()
     {
-        
+        DBContext = new HSMModelDataContext();
         List<Employee> EmployeeList = new List<Employee>();
         EmployeeList = DBContext.Employees.Where(d => d.StaffTypeID == 1 && d.IsDeleted == false).ToList();//d.IsActive == true &&
         return EmployeeList;
     }
     public static Employee GetEmployeeByID(int EmployeeID)
     {
-        
+        DBContext = new HSMModelDataContext();
         Employee Employee = new Employee();
         Employee = DBContext.Employees.Where(d => d.EmployeeID == EmployeeID).FirstOrDefault();
         return Employee;
@@ -53,6 +53,7 @@ public partial class Pasture
 
     public static string GetEmployeeFullNameById(int staffid)
     {
+        DBContext = new HSMModelDataContext();
         string fullname;// = new Employee();
         fullname = DBContext.Employees.Where(e => e.EmployeeID == staffid).FirstOrDefault().FullName;
         return fullname;
@@ -66,6 +67,7 @@ public partial class Pasture
         int response = 0;
         try
         {
+            DBContext = new HSMModelDataContext();
             newEmployee.CreatedByID = GetCurrentUserSessionID();
             newEmployee.CreatedDate = DateTime.Now;
             newEmployee.FullName = newEmployee.FirstName+" "+newEmployee.LastName+" "+newEmployee.OtherNames;
@@ -88,7 +90,7 @@ public partial class Pasture
         int response = 0;
         try
         {
-            
+            DBContext = new HSMModelDataContext();
             //get patient
             Employee employee = DBContext.Employees.Where(d => d.EmployeeID == updEmployee.EmployeeID).FirstOrDefault();
 
@@ -110,7 +112,7 @@ public partial class Pasture
         int response = 0;
         try
         {
-            
+            DBContext = new HSMModelDataContext();
             Employee Employee = DBContext.Employees.Where(d => d.EmployeeID == delEmployeeId).FirstOrDefault();
 
             //update fields
@@ -133,7 +135,7 @@ public partial class Pasture
         bool response = false;
         try
         {
-            
+            DBContext = new HSMModelDataContext();
             Employee Employee = DBContext.Employees.FirstOrDefault(d => d.EmployeeID == employeeId);
 
             if (Employee.IsActive.Equals(true))
@@ -158,7 +160,7 @@ public partial class Pasture
         bool response = false;
         try
         {
-            
+            DBContext = new HSMModelDataContext();
             Employee Employee = DBContext.Employees.FirstOrDefault(d => d.EmployeeID == employeeId);
 
             if (Employee.IsActive.Equals(false))
@@ -183,7 +185,7 @@ public partial class Pasture
 
     public static HospitalInfo GetHospitalInfo()
     {
-        
+        DBContext = new HSMModelDataContext();
         HospitalInfo HospitalInfo = new HospitalInfo();
         HospitalInfo = DBContext.HospitalInfoes.FirstOrDefault();
         return HospitalInfo;
@@ -193,7 +195,7 @@ public partial class Pasture
     {
         try
         {
-            
+            DBContext = new HSMModelDataContext();
             int responce;
             newHospitalInfo.CreatedByID = GetCurrentUserSessionID();
             newHospitalInfo.CreatedDate = DateTime.Now;
@@ -213,7 +215,7 @@ public partial class Pasture
     {
         try
         {
-            
+            DBContext = new HSMModelDataContext();
             int responce;
             HospitalInfo HospitalInfo = DBContext.HospitalInfoes.FirstOrDefault();
             //DBContext.AuthRoles.Add(newRole);
@@ -238,14 +240,14 @@ public partial class Pasture
 
     public static List<AuthRole> GetRoles()
     {
-        
+        DBContext = new HSMModelDataContext();
         List<AuthRole> RoleList = new List<AuthRole>();
         RoleList = DBContext.AuthRoles.Where(r => r.IsDeleted == false).ToList();
         return RoleList;
     }
     public static AuthRole GetRoleByID(int roleID)
     {
-        
+        DBContext = new HSMModelDataContext();
         AuthRole Role = new AuthRole();
         Role = DBContext.AuthRoles.Where(r => r.RoleID == roleID).FirstOrDefault();
         return Role;
@@ -253,7 +255,7 @@ public partial class Pasture
 
     public static string GetRoleNameByRoleID(int roleID)
     {
-        
+        DBContext = new HSMModelDataContext();
         string RoleName = "";
         RoleName = DBContext.AuthRoles.Where(r => r.RoleID == roleID).FirstOrDefault().RoleName;
         return RoleName;
@@ -262,7 +264,7 @@ public partial class Pasture
     {
         try
         {
-            
+            DBContext = new HSMModelDataContext();
             int responce;
             newRole.CreatedByID = GetCurrentUserSessionID();
             newRole.CreatedDate = DateTime.Now;            
@@ -282,7 +284,7 @@ public partial class Pasture
     {
         try
         {
-            
+            DBContext = new HSMModelDataContext();
             int responce;
             AuthRole Role = DBContext.AuthRoles.Where(r => r.RoleID == UpdateRole.RoleID).FirstOrDefault();
             //DBContext.AuthRoles.Add(newRole);
@@ -305,7 +307,7 @@ public partial class Pasture
     {
         try
         {
-            
+            DBContext = new HSMModelDataContext();
             int responce;
             AuthRole Role = DBContext.AuthRoles.Where(r => r.RoleID == DeleteRoleID).FirstOrDefault();
             //DBContext.AuthRoles.Add(newRole);
@@ -332,14 +334,14 @@ public partial class Pasture
 
     public static List<AuthUser> GetUsers()
     {
-        
+        DBContext = new HSMModelDataContext();
         List<AuthUser> UserList = new List<AuthUser>();
         UserList = DBContext.AuthUsers.Where(u => u.IsDeleted == false).ToList();
         return UserList;
     }
     public static AuthUser GetUserByID(int userID)
     {
-        
+        DBContext = new HSMModelDataContext();
         AuthUser User = new AuthUser();
         User = DBContext.AuthUsers.Where(u => u.UserID == userID).FirstOrDefault();
         return User;
@@ -347,7 +349,7 @@ public partial class Pasture
 
     public static List<Employee> GetEmployeeList()
     {
-        
+        DBContext = new HSMModelDataContext();
         List<Employee> EmployeeList = new List<Employee>();   
         EmployeeList = DBContext.Employees.Where(emp=> emp.IsDeleted==false).ToList();
        
@@ -355,7 +357,7 @@ public partial class Pasture
     }
     public static AuthUser GetUserByUsername(string username)
     {
-        
+        DBContext = new HSMModelDataContext();
         AuthUser User = new AuthUser();
         User = DBContext.AuthUsers.Where(u => u.UserName == username).FirstOrDefault();
         return User;
@@ -364,7 +366,7 @@ public partial class Pasture
     {
         try
         {
-            
+            DBContext = new HSMModelDataContext();
             int responce;
             newUser.Password = ProtectPassword(newUser.Password).ToUpper();
             newUser.UserName = GenerateNewUserName(newUser.StaffID);
@@ -408,7 +410,7 @@ public partial class Pasture
     {
         try
         {
-            
+            DBContext = new HSMModelDataContext();
             int responce;
             AuthUser User = DBContext.AuthUsers.Where(u => u.UserID == UpdateUser.UserID).FirstOrDefault();
             
@@ -417,7 +419,7 @@ public partial class Pasture
             User.Password = ProtectPassword(UpdateUser.Password).ToUpper();
             User.StaffRoleID = UpdateUser.StaffRoleID;
             User.IsActive = UpdateUser.IsActive;
-            User.ModifiedByID = GetCurrentUserSessionID();
+            User.ModifiedByID = 1;// GetCurrentUserSessionID();
             User.ModifiedDate = DateTime.Now;
             responce = DBContext.SaveChanges();
             return responce;
@@ -435,18 +437,20 @@ public partial class Pasture
     {
         try
         {
-            
+            DBContext = new HSMModelDataContext();
             int responce;
             AuthUser User = DBContext.AuthUsers.Where(u => u.UserID == userid).FirstOrDefault();
 
             //DBContext.AuthRoles.Add(newRole);
             if (User.IsActive == true)
             {
+                User.FailedLoginCount = 0;
                 User.IsActive = false;
                 activatestate = false;
             }
             else
             {
+                User.FailedLoginCount = 0;
                 User.IsActive = true;
                 activatestate = true;
             }
@@ -468,7 +472,7 @@ public partial class Pasture
     {
         try
         {
-            
+            DBContext = new HSMModelDataContext();
             int responce;
             AuthUser User = DBContext.AuthUsers.Where(r => r.UserID == DeleteUserid).FirstOrDefault();
             User.ModifiedByID = GetCurrentUserSessionID();
@@ -493,14 +497,14 @@ public partial class Pasture
 
     public static List<Patient> GetPatients()
     {
-        
+        DBContext = new HSMModelDataContext();
         List<Patient> PatientList = new List<Patient>();
         PatientList = DBContext.Patients.Where(p => p.IsDeleted == false).ToList();
         return PatientList;
     }
     public static Patient GetPatientListByID(int patientID)
     {
-        
+        DBContext = new HSMModelDataContext();
         Patient Patient = new Patient();
         Patient = DBContext.Patients.Where(p => p.PatientID == patientID).FirstOrDefault();
         return Patient;
@@ -509,7 +513,7 @@ public partial class Pasture
     {
         try
         {
-            
+            DBContext = new HSMModelDataContext();
             int responce;           
             newpatient.CreatedByID = GetCurrentUserSessionID();
             newpatient.FullName = newpatient.FirstName + " " + newpatient.LastName + " " + newpatient.OtherNames;
@@ -530,7 +534,7 @@ public partial class Pasture
     {
         try
         {
-            
+            DBContext = new HSMModelDataContext();
             int responce;
             Patient patient = DBContext.Patients.Where(u => u.PatientID == UpdatePatient.PatientID).FirstOrDefault();
 
@@ -557,7 +561,7 @@ public partial class Pasture
     {
         try
         {
-            
+            DBContext = new HSMModelDataContext();
             int responce;
             Patient patient = DBContext.Patients.Where(p => p.PatientID == DeletePatientID).FirstOrDefault();
             patient.ModifiedByID = GetCurrentUserSessionID();
@@ -582,14 +586,14 @@ public partial class Pasture
 
     public static List<NurseDuty> GetAssignNurseDutys()
     {
-        
+        DBContext = new HSMModelDataContext();
         List<NurseDuty> NurseDutyList = new List<NurseDuty>();
         NurseDutyList = DBContext.NurseDuties.ToList();
         return NurseDutyList;
     }
     public static NurseDuty GetNurseDutyByID(int NurseDutyID)
     {
-        
+        DBContext = new HSMModelDataContext();
         NurseDuty NurseDuty = new NurseDuty();
         NurseDuty = DBContext.NurseDuties.Where(n => n.NurseDutyID == NurseDutyID).FirstOrDefault();
         return NurseDuty;
@@ -598,7 +602,7 @@ public partial class Pasture
     {
         try
         {
-            
+            DBContext = new HSMModelDataContext();
             int responce;
             newNurseDuty.CreatedByID = GetCurrentUserSessionID();
             newNurseDuty.CreatedByDate = DateTime.Now;
@@ -618,7 +622,7 @@ public partial class Pasture
     {
         try
         {
-            
+            DBContext = new HSMModelDataContext();
             int responce;
             NurseDuty NurseDuty = DBContext.NurseDuties.Where(nd => nd.NurseDutyID == updateNurseDuty.NurseDutyID).FirstOrDefault();
             //DBContext.AuthRoles.Add(newRole);
@@ -656,14 +660,14 @@ public partial class Pasture
     #region Patient Plan Management
     public static List<PatientPlanType> GetPatientPlans()
     {
-        
+        DBContext = new HSMModelDataContext();
         List<PatientPlanType> PatientPlanList = new List<PatientPlanType>();
         PatientPlanList = DBContext.PatientPlanTypes.Where(ppt=> ppt.IsDeleted==false).ToList();
         return PatientPlanList;
     }
     public static PatientPlanType GetPatientPlanByID(int PatientPlanTypeID)
     {
-        
+        DBContext = new HSMModelDataContext();
         PatientPlanType PatientPlan = new PatientPlanType();
         PatientPlan = DBContext.PatientPlanTypes.Where(ppt => ppt.PlanTypeID == PatientPlanTypeID).FirstOrDefault();
         return PatientPlan;
@@ -672,7 +676,7 @@ public partial class Pasture
     {
         try
         {
-            
+            DBContext = new HSMModelDataContext();
             int responce;
             newPatientPlan.CreatedByID = GetCurrentUserSessionID();
             newPatientPlan.CreatedDate = DateTime.Now;
@@ -692,7 +696,7 @@ public partial class Pasture
     {
         try
         {
-            
+            DBContext = new HSMModelDataContext();
             int responce;
             PatientPlanType PatientPlan = DBContext.PatientPlanTypes.Where(ppt => ppt.PlanTypeID == updatePatientPlan.PlanTypeID).FirstOrDefault();
             //DBContext.AuthRoles.Add(newRole);
@@ -714,7 +718,7 @@ public partial class Pasture
     {
         try
         {
-            
+            DBContext = new HSMModelDataContext();
             int responce;
             PatientPlanType PatientPlan = DBContext.PatientPlanTypes.Where(ppt => ppt.PlanTypeID == DeletePatientPlanID).FirstOrDefault();
             //DBContext.AuthRoles.Add(newRole);
@@ -740,14 +744,14 @@ public partial class Pasture
 
     public static List<DutyType> GetDutyTypes()
     {
-        
+        DBContext = new HSMModelDataContext();
         List<DutyType> DutyTypeList = new List<DutyType>();
         DutyTypeList = DBContext.DutyTypes.Where(dt => dt.IsDeleted == false).ToList();
         return DutyTypeList;
     }
     public static DutyType GetDutyTypeByID(int DutyTypeID)
     {
-        
+        DBContext = new HSMModelDataContext();
         DutyType dutyType = new DutyType();
         dutyType = DBContext.DutyTypes.Where(dt => dt.DutyTypeID == DutyTypeID).FirstOrDefault();
         return dutyType;
@@ -756,7 +760,7 @@ public partial class Pasture
     {
         try
         {
-            
+            DBContext = new HSMModelDataContext();
             int responce;
             newDutyType.CreatedByID = GetCurrentUserSessionID();
             newDutyType.CreatedDate = DateTime.Now;
@@ -777,7 +781,7 @@ public partial class Pasture
     {
         try
         {
-            
+            DBContext = new HSMModelDataContext();
             int responce;
             DutyType dutyType = DBContext.DutyTypes.Where(dt => dt.DutyTypeID == updateDutyType.DutyTypeID).FirstOrDefault();
           
@@ -799,7 +803,7 @@ public partial class Pasture
     {
         try
         {
-            
+            DBContext = new HSMModelDataContext();
             int responce;
             DutyType dutyType = DBContext.DutyTypes.Where(dt => dt.DutyTypeID == DeleteDutyTypeID).FirstOrDefault();
             //DBContext.AuthRoles.Add(newRole);
@@ -825,14 +829,14 @@ public partial class Pasture
 
     public static List<TransactionType> GetTransactionTypes()
     {
-        
+        DBContext = new HSMModelDataContext();
         List<TransactionType> TransactionTypeList = new List<TransactionType>();
         TransactionTypeList = DBContext.TransactionTypes.Where(tranx => tranx.IsDeleted == false).ToList();
         return TransactionTypeList;
     }
     public static TransactionType GetTransactionTypeByID(int TransactionTypeID)
     {
-        
+        DBContext = new HSMModelDataContext();
         TransactionType TransactionType = new TransactionType();
         TransactionType = DBContext.TransactionTypes.Where(tranx => tranx.TransactionTypeID == TransactionTypeID).FirstOrDefault();
         return TransactionType;
@@ -841,7 +845,7 @@ public partial class Pasture
     {
         try
         {
-            
+            DBContext = new HSMModelDataContext();
             int responce;
             newTransactionType.CreatedByID = GetCurrentUserSessionID();
             newTransactionType.CreatedDate = DateTime.Now;
@@ -861,7 +865,7 @@ public partial class Pasture
     {
         try
         {
-            
+            DBContext = new HSMModelDataContext();
             int responce;
             TransactionType TransactionType = DBContext.TransactionTypes.Where(tranx => tranx.TransactionTypeID == updateTransactionType.TransactionTypeID).FirstOrDefault();
             //DBContext.AuthRoles.Add(newRole);
@@ -883,7 +887,7 @@ public partial class Pasture
     {
         try
         {
-            
+            DBContext = new HSMModelDataContext();
             int responce;
             TransactionType TransactionType = DBContext.TransactionTypes.Where(tranx => tranx.TransactionTypeID == DeleteTransactionTypeID).FirstOrDefault();
             //DBContext.AuthRoles.Add(newRole);
@@ -909,7 +913,7 @@ public partial class Pasture
 
     public static List<AttendanceLog> GetAttendanceLogList()
     {
-        
+        DBContext = new HSMModelDataContext();
         List<AttendanceLog> AttendanceLogList = new List<AttendanceLog>();
         AttendanceLogList = DBContext.AttendanceLogs.ToList();
         return AttendanceLogList;
@@ -918,7 +922,7 @@ public partial class Pasture
     {
         try
         {
-            
+            DBContext = new HSMModelDataContext();
             int responce;
             newAttendanceLog.StaffID = GetCurrentUserSessionID();
             newAttendanceLog.DutyID = GetStaffLastAttendanceID(GetCurrentUserSessionID());
@@ -941,7 +945,7 @@ public partial class Pasture
     {
         try
         {
-            
+            DBContext = new HSMModelDataContext();
             int responce;
             AttendanceLog AttendanceLog = DBContext.AttendanceLogs.Where(atlog => atlog.AttendanceID == UpdateAttendanceLog.AttendanceID && atlog.StaffID==GetCurrentUserSessionID()).FirstOrDefault();
             //DBContext.AuthRoles.Add(newRole);
@@ -965,7 +969,7 @@ public partial class Pasture
     {
         try
         {
-            
+            DBContext = new HSMModelDataContext();
             int responce;
             AttendanceLog AttendanceLog = DBContext.AttendanceLogs.Where(atlog=> atlog.AttendanceID== UpdateAttendanceLog.AttendanceID && atlog.StaffID == GetCurrentUserSessionID()).FirstOrDefault();
             //DBContext.AuthRoles.Add(newRole);
@@ -990,21 +994,21 @@ public partial class Pasture
     #region FamilyMember Management
     public static List<FamilyMember> GetFamilyMembers()
     {
-        
+        DBContext = new HSMModelDataContext();
         List<FamilyMember> FamilyMemberList = new List<FamilyMember>();
         FamilyMemberList = DBContext.FamilyMembers.Where(fm => fm.IsDeleted == false).ToList();
         return FamilyMemberList;
     }
     public static List<FamilyMember> GetFamilyMembersListByPatientID(int PatientID)
     {
-        
+        DBContext = new HSMModelDataContext();
         List<FamilyMember> FamilyMemberList = new List<FamilyMember>();
         FamilyMemberList = DBContext.FamilyMembers.Where(fm => fm.IsDeleted == false && fm.PatientID==PatientID).ToList();
         return FamilyMemberList;
     }
     public static FamilyMember GetFamilyMemberByID(int familymemberID)
     {
-        
+        DBContext = new HSMModelDataContext();
         FamilyMember FamilyMember = new FamilyMember();
         FamilyMember = DBContext.FamilyMembers.Where(fm => fm.FamilyMemberID == familymemberID).FirstOrDefault();
         return FamilyMember;
@@ -1013,7 +1017,7 @@ public partial class Pasture
     {
         try
         {
-            
+            DBContext = new HSMModelDataContext();
             int responce;
             newFamilyMember.CreatedByID = GetCurrentUserSessionID();
             newFamilyMember.CreatedDate = DateTime.Now;
@@ -1033,7 +1037,7 @@ public partial class Pasture
     {
         try
         {
-            
+            DBContext = new HSMModelDataContext();
             int responce;
             FamilyMember familyMember = DBContext.FamilyMembers.Where(fm => fm.FamilyMemberID == UpdateFamilyMember.FamilyMemberID).FirstOrDefault();
 
@@ -1056,7 +1060,7 @@ public partial class Pasture
     {
         try
         {
-            
+            DBContext = new HSMModelDataContext();
             int responce;
             FamilyMember familyMember = DBContext.FamilyMembers.Where(fm => fm.FamilyMemberID == DeleteFamilyMemberID).FirstOrDefault();
             familyMember.ModifiedByID = GetCurrentUserSessionID();
@@ -1080,28 +1084,28 @@ public partial class Pasture
 
     public static List<Billing> GetBillings()
     {
-        
+        DBContext = new HSMModelDataContext();
         List<Billing> BillingList = new List<Billing>();
         BillingList = DBContext.Billings.Where(b => b.IsDeleted == false).ToList();
         return BillingList;
     }
     public static List<Billing> GetBillingsByPatientID(int PatientID)
     {
-        
+        DBContext = new HSMModelDataContext();
         List<Billing> BillingList = new List<Billing>();
         BillingList = DBContext.Billings.Where(b => b.IsDeleted == false && b.PatientID==PatientID).ToList();
         return BillingList;
     }
     public static Billing GetBillingByID(int BillingID)
     {
-        
+        DBContext = new HSMModelDataContext();
         Billing Billing = new Billing();
         Billing = DBContext.Billings.Where(b => b.ID == BillingID).FirstOrDefault();
         return Billing;
     }
     public static List<Billing> GetBillingByListConsultantID(int ConsultantID)
     {
-        
+        DBContext = new HSMModelDataContext();
         List<Billing> Billing = new List<Billing>();
         Billing = DBContext.Billings.Where(b => b.IsDeleted == false && b.ConsultationID == ConsultantID).ToList();
         return Billing;
@@ -1110,7 +1114,7 @@ public partial class Pasture
     {
         try
         {
-            
+            DBContext = new HSMModelDataContext();
             int responce;
             newBilling.StaffID = GetCurrentUserSessionID();
             newBilling.CreatedByID = GetCurrentUserSessionID();
@@ -1131,7 +1135,7 @@ public partial class Pasture
     {
         try
         {
-            
+            DBContext = new HSMModelDataContext();
             int responce;
             Billing Billing = DBContext.Billings.Where(u => u.BillingID == UpdateBilling.BillingID).FirstOrDefault();
 
@@ -1155,7 +1159,7 @@ public partial class Pasture
     {
         try
         {
-            
+            DBContext = new HSMModelDataContext();
             int responce;
             Billing Billing = DBContext.Billings.Where(r => r.BillingID == DeleteBillingID).FirstOrDefault();
             Billing.ModifiedByID = GetCurrentUserSessionID();
@@ -1179,28 +1183,28 @@ public partial class Pasture
 
     public static List<Consultation> GetConsultations()
     {
-        
+        DBContext = new HSMModelDataContext();
         List<Consultation> ConsultationList = new List<Consultation>();
         ConsultationList = DBContext.Consultations.Where(b => b.IsDeleted == false).ToList();
         return ConsultationList;
     }
     public static List<Consultation> GetConsultationsListByPatientID(int PatientID)
     {
-        
+        DBContext = new HSMModelDataContext();
         List<Consultation> ConsultationList = new List<Consultation>();
         ConsultationList = DBContext.Consultations.Where(b => b.IsDeleted == false && b.PatientID == PatientID).ToList();
         return ConsultationList;
     }
     public static Consultation GetConsultationByID(int ConsultationID)
     {
-        
+        DBContext = new HSMModelDataContext();
         Consultation Consultation = new Consultation();
         Consultation = DBContext.Consultations.Where(b => b.ConsultationID == ConsultationID).FirstOrDefault();
         return Consultation;
     }
     public static List<Consultation> GetConsultationListByConsultantID(int ConsultantID)
     {
-        
+        DBContext = new HSMModelDataContext();
         List<Consultation> Consultation = new List<Consultation>();
         Consultation = DBContext.Consultations.Where(b => b.IsDeleted == false && b.ConsultationID == ConsultantID).ToList();
         return Consultation;
@@ -1209,7 +1213,7 @@ public partial class Pasture
     {
         try
         {
-            
+            DBContext = new HSMModelDataContext();
             int responce;
             newConsultation.ConsultantID = GetCurrentUserSessionID();
             newConsultation.CreatedByID = GetCurrentUserSessionID();
@@ -1230,7 +1234,7 @@ public partial class Pasture
     {
         try
         {
-            
+            DBContext = new HSMModelDataContext();
             int responce;
             Consultation Consultation = DBContext.Consultations.Where(u => u.ConsultationID == UpdateConsultation.ConsultationID).FirstOrDefault();
 
@@ -1254,7 +1258,7 @@ public partial class Pasture
     {
         try
         {
-            
+            DBContext = new HSMModelDataContext();
             int responce;
             Consultation Consultation = DBContext.Consultations.Where(r => r.ConsultationID == DeleteConsultationID).FirstOrDefault();
             Consultation.ModifiedByID = GetCurrentUserSessionID();
@@ -1278,7 +1282,7 @@ public partial class Pasture
 
     public static bool VefiryNewCreateUserName(string Username)
     {
-        
+        DBContext = new HSMModelDataContext();
         int User = 0;// new AuthUser();
         User = DBContext.AuthUsers.Where(u => u.UserName == Username).Count();
         if (User > 0)
@@ -1292,34 +1296,53 @@ public partial class Pasture
     }
     public static int VefiryLoginDetail(string Username, string Password)
     {
-        
+        DBContext = new HSMModelDataContext();
         AuthUser User = new AuthUser();
         User = DBContext.AuthUsers.Where(u => u.UserName == Username).FirstOrDefault();
 
         if (!(User == null))
         {
-            int Failedlogin = User.FailedLoginCount;
-            if (Failedlogin <= 3)
+            if (User.IsDeleted == false)
             {
-                if (ValidatePassword(Password, User.Password))
+                if (User.IsActive == true)
                 {
-                    //Save current user to session
-                    return (int)LoginMessage.success;
+                    int Failedlogin = User.FailedLoginCount;
+                    if (Failedlogin <= 3)
+                    {
+                        if (ValidatePassword(Password, User.Password))
+                        {
+                            //Save current user to session
+                            return (int)LoginMessage.success;
+                        }
+                        else
+                        {
+                            User.FailedLoginCount = (Failedlogin + 1);
+                            DBContext.SaveChanges();
+                            return (int)LoginMessage.invalidedetail;
+                           
+                        }
+                    }                    
+                    else
+                    {
+                        User.IsActive = false;
+                        DBContext.SaveChanges();
+                        return (int)LoginMessage.accountlocked;
+                    }
                 }
                 else
                 {
-                    User.FailedLoginCount = (Failedlogin + 1);
-                    return (int)LoginMessage.invalidedetail;
+                    return (int)LoginMessage.inactive;
                 }
             }
             else
             {
-                return (int)LoginMessage.accountlocked;
+                return (int)LoginMessage.deleted;
             }
+            
 
         }
         
-        return (int)LoginMessage.badrequest;
+        return (int)LoginMessage.deleted;
     }
     public static void CreateUserSession(string Username)
     {
@@ -1356,7 +1379,7 @@ public partial class Pasture
     }
     public static string GetCurrentUserSessionRole()
     {
-        
+        DBContext = new HSMModelDataContext();
         HttpContext context = HttpContext.Current;
         AuthUser CurrentUser = new AuthUser();
         CurrentUser = (AuthUser)(context.Session["UserDetail"]);
@@ -1436,7 +1459,7 @@ public partial class Pasture
 
     public static int GetStaffLastAttendanceID(int currentstaffid)
     {
-        
+        DBContext = new HSMModelDataContext();
         NurseDuty Nurseduty= DBContext.NurseDuties.Where(nd => nd.NurseID == currentstaffid).LastOrDefault();
 
         if(Nurseduty != null)
@@ -1461,8 +1484,8 @@ public partial class Pasture
         success = 100,
         invalidedetail = 101, // "Invalide Username and Password",
         accountlocked = 102,//102= "User Logged Out Kindly Contact the Administrator",
-        tryagain = 103,   //103= "Something Happed Kindly Try Agin",
-        badrequest = 104//104= "Bad Request"
+        inactive = 103,   //103= "Account is inactive kinly contact the adminstrator",
+        deleted = 104//104= "Bad Request- Account does not exist"
     }
     private static string GetMd5Hash(MD5 md5Hash, string input)
     {
