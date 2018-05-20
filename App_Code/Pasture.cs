@@ -94,13 +94,27 @@ public partial class Pasture
             //get patient
             Employee employee = DBContext.Employees.Where(d => d.EmployeeID == updEmployee.EmployeeID).FirstOrDefault();
 
-            employee.FirstName = updEmployee.FirstName +" "+ updEmployee.LastName +" "+updEmployee.OtherNames;
-            employee.ModifiedByID = GetCurrentUserSessionID();
-            employee.ModifiedDate = DateTime.Now;
-            response = DBContext.SaveChanges();
+            if(employee != null)
+            {
+                employee.FirstName = updEmployee.FirstName;
+                employee.LastName = updEmployee.LastName;
+                employee.OtherNames = employee.OtherNames;
+                employee.PhoneNumber = employee.PhoneNumber;
+                employee.Address = updEmployee.Address;
+                employee.DOB = updEmployee.DOB;
+                employee.Gender = updEmployee.Gender;
+                employee.MaritalStatus = updEmployee.MaritalStatus;
+                employee.FullName = updEmployee.FirstName + " " + updEmployee.LastName + " " + updEmployee.OtherNames;
+                employee.ModifiedByID = GetCurrentUserSessionID();
+                employee.ModifiedDate = DateTime.Now;
+                response = DBContext.SaveChanges();
+                //DBContext.Entry(employee).State = System.Data.Entity.EntityState.Modified;
+            }
+
+
             return response;
         }
-        catch (Exception)
+        catch (Exception ex)
         {
             return response;
             //throw;
@@ -113,14 +127,16 @@ public partial class Pasture
         try
         {
             DBContext = new HSMModelDataContext();
-            Employee Employee = DBContext.Employees.Where(d => d.EmployeeID == delEmployeeId).FirstOrDefault();
-
-            //update fields
-            Employee.IsActive = false;
-            Employee.IsDeleted = false;
-            Employee.ModifiedByID = GetCurrentUserSessionID();
-            Employee.ModifiedDate = DateTime.Now;
-            response = DBContext.SaveChanges();
+            Employee employee = DBContext.Employees.Where(d => d.EmployeeID == delEmployeeId).FirstOrDefault();
+            if (employee != null)
+            {
+                //update fields
+                //Employee.IsActive = false;
+                employee.IsDeleted = true;// Convert.ToBoolean(1);
+                employee.ModifiedByID = GetCurrentUserSessionID();
+                employee.ModifiedDate = DateTime.Now;
+                response = DBContext.SaveChanges();
+            }
             return response;
         }
         catch (Exception)
@@ -242,7 +258,7 @@ public partial class Pasture
     {
         DBContext = new HSMModelDataContext();
         List<AuthRole> RoleList = new List<AuthRole>();
-        RoleList = DBContext.AuthRoles.Where(r => r.IsDeleted == false && r.RoleID>1).ToList();
+        RoleList = DBContext.AuthRoles.Where(r => r.IsDeleted == false && r.RoleID >=1).ToList();
         return RoleList;
     }
     public static AuthRole GetRoleByID(int roleID)
