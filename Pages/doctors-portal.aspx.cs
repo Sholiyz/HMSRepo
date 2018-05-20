@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
@@ -172,7 +173,7 @@ public partial class Pages_doctors_portal : System.Web.UI.Page
     }
     #endregion
 
-
+    private static HSMModelDataContext context = new HSMModelDataContext();
     protected void btnAddNewDoc_Click(object sender, EventArgs e)
     {
         //Redirect to Add New Page
@@ -201,17 +202,7 @@ public partial class Pages_doctors_portal : System.Web.UI.Page
                 DOB = Convert.ToDateTime(txtDOB.Text).Date,
             });
 
-            //context.Employees.Add(new Employee()
-            //{
-            //    FirstName = txtFirstname.Text.Trim(),
-            //    LastName = txtLastname.Text.Trim(),
-            //    OtherNames = txtOthername.Text.Trim(),
-            //    StaffTypeID =2,//2 doctor 
-            //    Gender = ddlGender.SelectedItem.Text.Trim(),
-            //    PhoneNumber = txtPhone.Text.Trim(),
-            //    Address = txtAddress.Text.Trim(),
-            //    DOB = Convert.ToDateTime(txtDOB.Text).Date,
-            //});
+
             if (result > 0)
             {
                 //Bind Grid
@@ -231,16 +222,22 @@ public partial class Pages_doctors_portal : System.Web.UI.Page
     {
         try
         {
-            string itemID = (DoctorListGridView.SelectedRow.FindControl("lblEmployeeID") as Label).Text;
-            string StaffTypeID = (DoctorListGridView.SelectedRow.FindControl("lblStaffTypeID") as Label).Text;
+            GridViewRow row = (GridViewRow)(((Button)e.CommandSource).NamingContainer);
+            string itemID = (row.FindControl("lblEmployeeID") as Label).Text;
+            string StaffTypeID = (row.FindControl("lblStaffTypeID") as Label).Text;
+
+            ViewState["itemID"] = itemID;
+            ViewState["StaffTypeID"] = StaffTypeID;
+
             if (e.CommandArgument.Equals("View"))
             {
-                txtFirstnameV.Text = (DoctorListGridView.SelectedRow.FindControl("lblFirstName") as Label).Text;
-                txtLastnameV.Text = (DoctorListGridView.SelectedRow.FindControl("lblLastName") as Label).Text;
-                txtKinPhoneV.Text = (DoctorListGridView.SelectedRow.FindControl("lblPhoneNumber") as Label).Text;
-                txtGenderV.Text = (DoctorListGridView.SelectedRow.FindControl("lblGender") as Label).Text;
-                txtAddressV.Text = (DoctorListGridView.SelectedRow.FindControl("lblAddress") as Label).Text;
-                txtMaritalStatusV.Text = (DoctorListGridView.SelectedRow.FindControl("lblMaritalStatus") as Label).Text;
+                txtFirstnameV.Text = (row.FindControl("lblFirstName") as Label).Text;
+                txtLastnameV.Text = (row.FindControl("lblLastName") as Label).Text;
+                txtPhoneV.Text = (row.FindControl("lblPhoneNumber") as Label).Text;
+                txtGenderV.Text = (row.FindControl("lblGender") as Label).Text;
+                txtAddressV.Text = (row.FindControl("lblAddress") as Label).Text;
+                txtMaritalStatusV.Text = (row.FindControl("lblMaritalStatus") as Label).Text;
+                txtDOBV.Text = Convert.ToDateTime((row.FindControl("lblDOB") as Label).Text).ToString("yyyy-MM-dd");
 
                 //HideDivs
                 HideDivsDocTab();
@@ -248,13 +245,13 @@ public partial class Pages_doctors_portal : System.Web.UI.Page
             }
             else if (e.CommandArgument.Equals("Edit"))
             {
-                txtFirstnameE.Text = (DoctorListGridView.SelectedRow.FindControl("lblFirstName") as Label).Text;
-                txtLastnameE.Text = (DoctorListGridView.SelectedRow.FindControl("lblLastName") as Label).Text;
-                txtKinPhoneE.Text = (DoctorListGridView.SelectedRow.FindControl("lblPhoneNumber") as Label).Text;
-                ddlGenderE.SelectedValue = (DoctorListGridView.SelectedRow.FindControl("lblGender") as Label).Text;
-                ddlMaritalStatusE.SelectedValue = (DoctorListGridView.SelectedRow.FindControl("lblMaritalStatus") as Label).Text;
-                txtAddressE.Text = (DoctorListGridView.SelectedRow.FindControl("lblAddress") as Label).Text;
-                
+                txtFirstnameE.Text = (row.FindControl("lblFirstName") as Label).Text;
+                txtLastnameE.Text = (row.FindControl("lblLastName") as Label).Text;
+                txtPhoneE.Text = (row.FindControl("lblPhoneNumber") as Label).Text;
+                ddlGenderE.SelectedItem.Text = (row.FindControl("lblGender") as Label).Text;
+                ddlMaritalStatusE.SelectedItem.Text = (row.FindControl("lblMaritalStatus") as Label).Text;
+                txtAddressE.Text = (row.FindControl("lblAddress") as Label).Text;
+                txtDOBE.Text = Convert.ToDateTime((row.FindControl("lblDOB") as Label).Text).ToString("yyyy-MM-dd");
 
                 //HideDivs
                 HideDivsDocTab();
@@ -263,19 +260,27 @@ public partial class Pages_doctors_portal : System.Web.UI.Page
             else if (e.CommandArgument.Equals("Deactivate"))
             {
                 bool result;
-                string btnValue = (DoctorListGridView.SelectedRow.FindControl("DeleteRoleBtn") as Button).Text;
+                string btnValue = (row.FindControl("DeleteRoleBtn") as Button).Text;
                 switch (btnValue)
                 {
                     case "Deactivate":
                         result = Pasture.DeactivateEmployee(int.Parse(itemID));
                         if (result)
-                            SxsMessage("Doctor deleted");
+                        {
+                            BindGrid();
+                            //DisableButton(e);
+                            SxsMessage("Doctor Deactivated");
+                        }
                         break;
 
                     case "Activate":
-                         result = Pasture.ActivateEmployee(int.Parse(itemID));
+                        result = Pasture.ActivateEmployee(int.Parse(itemID));
                         if (result)
-                            SxsMessage("Doctor deleted");
+                        {
+                            BindGrid();
+                            //EnableButton(e);
+                            SxsMessage("Doctor Activated");
+                        }
                         break;
                     default:
                         break;
@@ -291,15 +296,13 @@ public partial class Pages_doctors_portal : System.Web.UI.Page
                     BindGrid();
                     SxsMessage("Doctor deleted");
                 }
-                //Employee docDelete = context.Employees.FirstOrDefault(doc => doc.EmployeeID == int.Parse(itemID));
-                //Update IsDeleted= true;
-                //context.Doctors.Remove(docDelete);   
+
             }
         }
-        catch (Exception)
+        catch (Exception ex)
         {
 
-            throw;
+            throw new Exception(ex.Message);
         }
     }
 
@@ -313,30 +316,17 @@ public partial class Pages_doctors_portal : System.Web.UI.Page
     {
         try
         {
-            //Employee doc = new Employee()
-            //{
-            //    FirstName = txtFirstname.Text.Trim(),
-            //    LastName = txtLastname.Text.Trim(),
-            //    OtherNames = txtOthername.Text.Trim(),
-            //    Gender = ddlGender.SelectedItem.Text.Trim(),
-            //    PhoneNumber = txtPhone.Text.Trim(),
-            //    Address = txtAddress.Text.Trim(),
-            //    DOB = Convert.ToDateTime(txtDOB.Text).Date,
-            //};
-            //context.Employees.Add(doc);
-            //context.Entry(doc).State = System.Data.Entity.EntityState.Modified;
-            //context.SaveChanges();
-
             int result = Pasture.UpdateEmployee(new Employee
             {
-                FirstName = txtFirstname.Text.Trim(),
-                LastName = txtLastname.Text.Trim(),
-                OtherNames = txtOthername.Text.Trim(),
-                Gender = ddlGender.SelectedItem.Text.Trim(),
-                MaritalStatus = ddlMaritalStatus.SelectedItem.Text.Trim(),
-                PhoneNumber = txtPhone.Text.Trim(),
-                Address = txtAddress.Text.Trim(),
-                DOB = Convert.ToDateTime(txtDOB.Text).Date
+                FirstName = txtFirstnameE.Text.Trim(),
+                LastName = txtLastnameE.Text.Trim(),
+                OtherNames = txtOthernamesE.Text.Trim(),
+                Gender = ddlGenderE.SelectedItem.Text.Trim(),
+                MaritalStatus = ddlMaritalStatusE.SelectedItem.Text.Trim(),
+                PhoneNumber = txtPhoneE.Text.Trim(),
+                Address = txtAddressE.Text.Trim(),
+                DOB = Convert.ToDateTime(txtDOBE.Text).Date,
+                EmployeeID = Convert.ToInt32(ViewState["itemID"])
             });
 
             if (result > 0)
@@ -387,12 +377,6 @@ public partial class Pages_doctors_portal : System.Web.UI.Page
     {
         try
         {
-            //var data = (from d in context.Employees
-            //            where d.StaffTypeID == 2
-            //            select d).ToList();
-
-            //List<Doctor> data = context.Doctors.Where(doc => doc.IsDeleted == false).ToList();
-
             var data = Pasture.GetDoctorsList();
             if (!(data.Count < 1))
             {
@@ -411,6 +395,24 @@ public partial class Pages_doctors_portal : System.Web.UI.Page
         {
             throw new Exception(ex.Message);
         }
+    }
+
+    public void EnableButton(GridViewCommandEventArgs e)
+    {
+        GridViewRow row = (GridViewRow)(((Button)e.CommandSource).NamingContainer);
+        Button btnEdit = ((Button)row.FindControl("btnEdit"));
+        Button btnDelete = ((Button)row.FindControl("btnDelete"));
+        btnEdit.Attributes["class"] = "enable";
+        btnDelete.Attributes["class"] = "enable";
+    }
+
+    public void DisableButton(GridViewCommandEventArgs e)
+    {
+        GridViewRow row = (GridViewRow)(((Button)e.CommandSource).NamingContainer);
+        Button btnEdit = ((Button)row.FindControl("btnEdit"));
+        Button btnDelete = ((Button)row.FindControl("btnDelete"));
+        btnEdit.Attributes["class"] = "disabled";
+        btnDelete.Attributes["class"] = "disabled";
     }
     #endregion
 
@@ -444,5 +446,11 @@ public partial class Pages_doctors_portal : System.Web.UI.Page
     {
         HideDivsDocTab();
         ViewDoctorListDiv.Visible = true;
+    }
+
+    protected void btnEditBack_Click(object sender, EventArgs e)
+    {
+        HideDivsDocTab();
+        DoctorListGridView.Visible = true;
     }
 }
