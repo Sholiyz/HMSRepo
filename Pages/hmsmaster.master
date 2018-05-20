@@ -72,20 +72,17 @@
                                 <div class="dropdown-menu dropdown-settings">
                                     <div class="media">
                                         <a class="media-left" href="#">
-                                            <img src="../assets/img/64-64.jpg" alt="" class="img-rounded" />
+                                            <asp:Image Width="64" Height="64" runat="server" ID="Userimage" CssClass="img-rounded" ImageUrl="../assets/img/dummypicture.png" />
                                         </a>
                                         <div class="media-body">
-                                            <h4 class="media-heading">Jhon Deo Alex </h4>
-                                            <h5>Developer & Designer</h5>
+                                           <%--Jhon Deo Alex--%> <h4 class="media-heading"><asp:Literal runat="server" ID="fullnameLiteraltext" Text=""></asp:Literal> </h4>
+                                            <%--Developer & Designer--%><h5><asp:Literal runat="server" ID="userroleLiteraltext" Text=""></asp:Literal></h5>
 
                                         </div>
                                     </div>
-                                    <hr />
-                                    <h5><strong>Personal Bio : </strong></h5>
-                                    Anim pariatur cliche reprehen derit.
-                                <hr />
-                                    <a href="#" class="btn btn-info btn-sm">Full Profile</a>&nbsp; <a href="./login.aspx" class="btn btn-danger btn-sm">Logout</a>
-
+                                    
+                                <hr />                                    
+                                    <asp:Button runat="server" CssClass="btn btn-info btn-sm" ID="ResetPasswordTextBox" Text="Reset Password" OnClick="ResetPasswordTextBox_Click" />&nbsp; <asp:Button runat="server" ID="LogoutTextBox" OnClick="LogoutTextBox_Click" Text="Logout" CssClass="btn btn-danger btn-sm" />
                                 </div>
                             </li>
 

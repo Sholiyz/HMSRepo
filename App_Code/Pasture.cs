@@ -362,7 +362,6 @@ public partial class Pasture
         User = DBContext.AuthUsers.Where(u => u.UserID == userID).FirstOrDefault();
         return User;
     }
-
     public static List<Employee> GetEmployeeList()
     {
         DBContext = new HSMModelDataContext();
@@ -386,7 +385,7 @@ public partial class Pasture
             int responce;
             newUser.Password = ProtectPassword(newUser.Password).ToUpper();
             newUser.UserName = GenerateNewUserName(newUser.StaffID);
-            newUser.CreatedByID = 1;// GetCurrentUserSessionID();
+            newUser.CreatedByID = GetCurrentUserSessionID();
             newUser.IsActive = true;
             newUser.CreatedDate = DateTime.Now;
             DBContext.AuthUsers.Add(newUser);
@@ -401,7 +400,6 @@ public partial class Pasture
         }
 
     }
-
     private static string GenerateNewUserName(int staffid)
     {
         string username;
@@ -435,7 +433,7 @@ public partial class Pasture
             User.Password = ProtectPassword(UpdateUser.Password).ToUpper();
             User.StaffRoleID = UpdateUser.StaffRoleID;
             User.IsActive = UpdateUser.IsActive;
-            User.ModifiedByID = 1;// GetCurrentUserSessionID();
+            User.ModifiedByID = GetCurrentUserSessionID();
             User.ModifiedDate = DateTime.Now;
             responce = DBContext.SaveChanges();
             return responce;
@@ -448,7 +446,6 @@ public partial class Pasture
         }
 
     }
-
     public static int ActivateOrDeactivateUser(int userid,out bool activatestate)
     {
         try
@@ -1415,6 +1412,17 @@ public partial class Pasture
         context.Session["UserDetail"] = null;
 
     }
+    public static bool VerifyUserPassword(string DBPassword,string VerfiyPassword)
+    {
+        if (ValidatePassword(VerfiyPassword, DBPassword))
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
 
     #endregion
 
@@ -1580,6 +1588,21 @@ public partial class Pasture
         Nurse = 1,
         Doctor = 2
     };
+
+    //Add Image
+    
+    //if (FileUpload1.HasFile)
+    //        {
+    //            HttpPostedFile file = FileUpload1.PostedFile;
+    //Byte[] imgbyte = new Byte[file.ContentLength];
+    //file.InputStream.Read(imgbyte, 0, file.ContentLength);          
+    //         insert imgbyte
+
+    //Retrieve imag
+    //            byte[] bytes = (byte[])dr["image"];
+    //string base64String = Convert.ToBase64String(bytes, 0, bytes.Length);
+    //Image1.ImageUrl = "data:image/png;base64," + base64String;
+    
 
     #endregion
 
