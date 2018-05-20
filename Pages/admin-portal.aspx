@@ -69,7 +69,9 @@
                                     <li class="" id="assigningnursedutyli" runat="server"><%--<a href="#assigningnurseduty" data-toggle="tab">ASSIGN NURSE DUTY</a>--%>
                                         <asp:LinkButton runat="server" ID="AssigningNurseDutyDivNav" Text="ASSIGN NURSE DUTY" OnClick="AssigningNurseDutyDivNav_Click"></asp:LinkButton>
                                     </li>
-
+                                     <li class="" id="attendancelogli" runat="server">
+                                        <asp:LinkButton runat="server" ID="AttendanceLogDivNav" Text="ATTENDANCE LOG" OnClick="AttendanceLogDivNav_Click" ></asp:LinkButton>
+                                    </li>
                                 </ul>
 
                                 <div class="tab-content">
@@ -79,8 +81,7 @@
                                         <div class="col-md-12">
                                             <div class="panel panel-default">
                                                 <div class="panel-body">
-                                                    <hr />
-                                                    
+                                                    <hr />                                                    
                                                     <div class="form-group" id="AddUserDiv" runat="server">
                                                          <div class="form-group">
                                                             <div class="row form-group">
@@ -136,13 +137,22 @@
                                                     </div>
                                                     <%--<hr />--%>
                                                     <div class="form-group" id="ViewUserListDiv" runat="server">                                                       
-                                                         <div class="form-group">
+                                                        <div class="form-group">
                                                             <div class="row form-group">
                                                                 <div class="col-md-6 text-left">
                                                                     <h4 class="text-left">USER LIST</h4>
                                                                 </div>
                                                                 <div class="col-md-6 text-right">
                                                                     <asp:Button runat="server" CssClass="btn btn-default btn-primary text-right" ID="ViewUserlistAddUserButton" OnClick="ViewUserlistAddUserButton_Click" Text="ADD NEW USER" /></div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <div class="row form-group">
+                                                                <div class="col-sm-2 form-group text-right"><h4 class="text-right">Employee Name</h4> </div>
+                                                                <div class="col-sm-3 form-group text-left"><asp:DropDownList runat="server" ID="UserSearchEmployeeNameddl" CssClass="form-control"></asp:DropDownList></div>
+                                                                <div class="col-sm-2 form-group text-right"><h4 class="text-right">HMS UserName</h4> </div>
+                                                                <div class="col-sm-3 form-group text-left"><asp:TextBox runat="server" ID="UserSearchEmployeeHMSID"></asp:TextBox> </div>
+                                                                <div class="col-sm-2 form-group text-left"> <asp:Button runat="server" CssClass="btn btn-default btn-primary text-right" ID="UserSearchButton" Text="SEARCH" OnClick="UserSearchButton_Click" /></div>                                                              
                                                             </div>
                                                         </div>
                                                         <div class="table-responsive">                                                        
@@ -271,28 +281,37 @@
                                         <div class="col-md-12">
                                             <div class="panel panel-default">
                                                 <div class="panel-body">
-                                                    <hr />
-                                                    <h4>ADD TRANSACTION TYPE</h4>
-                                                    <div class="form-group" id="AddTransactionTypeDiv">
+                                                    <hr />                                                    
+                                                    <div class="form-group" id="AddTransactionTypeDiv" runat="server">
+                                                         <div class="form-group">
+                                                            <div class="row form-group">
+                                                                <div class="col-md-6 text-left">
+                                                                    <h4 class="text-left">ADD TRANSACTION TYPE</h4>
+                                                                </div>
+                                                                <div class="col-md-6 text-right">
+                                                                    
+                                                                </div>
+                                                            </div>
+                                                        </div>
                                                         <div class="row">
                                                             <div class="col-lg-3">
                                                             </div>
                                                             <div class="col-lg-6">
                                                                 <div class="form-group">
                                                                     <label class="control-label">TRANSACTION TYPE</label>
-                                                                    <asp:TextBox runat="server" CssClass="form-control"></asp:TextBox>
+                                                                    <asp:TextBox runat="server" CssClass="form-control" ID="AddTranxTypeTextBox"></asp:TextBox>
                                                                 </div>
                                                                 <div class="form-group">
                                                                     <label class="control-label">DESCRIPTION</label>
-                                                                    <asp:TextBox runat="server" CssClass="form-control" TextMode="MultiLine"></asp:TextBox>
+                                                                    <asp:TextBox runat="server" CssClass="form-control" TextMode="MultiLine" ID="AddTranxTypeDescriptionTextBox"></asp:TextBox>
                                                                 </div>
                                                                  <div class="form-group">
                                                                      <div class="row">
                                                                     <div class="col-lg-6 text-left">
-                                                                        <asp:Button runat="server" CssClass="btn btn-default btn-danger" Text="BACK" />
+                                                                        <asp:Button runat="server" CssClass="btn btn-default btn-danger" ID="AddTranxBackButton" Text="BACK" OnClick="AddTranxBackButton_Click" />
                                                                     </div>
                                                                      <div class="col-lg-6 text-right">
-                                                                         <asp:Button runat="server" CssClass="btn btn-default btn-primary" Text="PROCEED" />
+                                                                         <asp:Button runat="server" CssClass="btn btn-default btn-primary" ID="AddTranxProceedButton" Text="PROCEED" OnClick="AddTranxProceedButton_Click" />
                                                                     </div>                                                                    
                                                                 </div>
                                                                 </div>
@@ -301,55 +320,40 @@
                                                             </div>
                                                         </div>
                                                     </div>
-                                                    <hr />
-                                                    <div class="form-group" id="ViewTransactionTypeListDiv">                                                      
+                                                    <%--<hr />--%>
+                                                    <div class="form-group" id="ViewTransactionTypeListDiv" runat="server">                                                      
                                                            <div class="form-group">
                                                             <div class="row form-group">
                                                                 <div class="col-md-6 text-left">
                                                                     <h4 class="text-left">TRANSACTION TYPE LIST</h4>
                                                                 </div>
                                                                 <div class="col-md-6 text-right">
-                                                                    <asp:Button runat="server" CssClass="btn btn-default btn-primary text-right" Text="ADD NEW TRANSACTION TYPE" /></div>
+                                                                    <asp:Button runat="server" CssClass="btn btn-default btn-primary text-right" ID="ViewListAddtranxbutton" OnClick="ViewListAddtranxbutton_Click" Text="ADD NEW TRANSACTION TYPE" /></div>
                                                             </div>
                                                         </div>
                                                         <div class="table-responsive">                                                           
-                                                            <asp:GridView ID="transactiontypeListGridView" runat="server" AutoGenerateColumns="false" CssClass="table  table-bordered " DataKeyNames="ID" EmptyDataText="There are no data records to display.">
+                                                            <asp:GridView ID="transactiontypeListGridView" runat="server" AutoGenerateColumns="false" CssClass="table  table-bordered text-center" DataKeyNames="TransactionTypeID" EmptyDataText="There are no data records to display.">
                                                                 <Columns>
-                                                                    <asp:BoundField DataField="ID" HeaderText="Order ID" SortExpression="ID">
+                                                                    <asp:BoundField DataField="TransactionTypeID" HeaderText="Transaction Type ID" SortExpression="ID">
                                                                         <HeaderStyle CssClass="hide" HorizontalAlign="Left" />
                                                                         <ItemStyle CssClass="hide" HorizontalAlign="Left" />
                                                                     </asp:BoundField>
-                                                                    <asp:BoundField DataField="Name" HeaderText="Order Name" SortExpression="Name">
+                                                                    <asp:BoundField DataField="TransactionTypeName" HeaderText="Transaction Type" SortExpression="TransactionTypeName">
                                                                         <HeaderStyle HorizontalAlign="Left" />
                                                                         <ItemStyle HorizontalAlign="Left" />
                                                                     </asp:BoundField>
-                                                                    <asp:BoundField DataField="Price" HeaderText="Price" SortExpression="Price">
+                                                                    <asp:BoundField DataField="Description" HeaderText="Description" SortExpression="Description">
                                                                         <HeaderStyle HorizontalAlign="Left" />
                                                                         <ItemStyle HorizontalAlign="Left" />
                                                                     </asp:BoundField>
 
-                                                                    <asp:TemplateField HeaderText="Process Status">
-                                                                        <ItemTemplate>
-                                                                            <asp:Label runat="server" Text='<%#GetIsProcessStatus(Convert.ToBoolean(Eval("IsProcessing")))%>'></asp:Label>
-                                                                        </ItemTemplate>
-                                                                    </asp:TemplateField>
-                                                                    <asp:TemplateField HeaderText="Delivered Status">
-                                                                        <ItemTemplate>
-                                                                            <asp:Label runat="server" Text='<%#GetIsDeliveredStatus(Convert.ToBoolean(Eval("IsDelivered")))%>'></asp:Label>
-                                                                        </ItemTemplate>
-                                                                    </asp:TemplateField>
-                                                                    <asp:TemplateField HeaderText="Canceled Status">
-                                                                        <ItemTemplate>
-                                                                            <asp:Label runat="server" Text='<%#GetIsCancelledStatus(Convert.ToBoolean(Eval("IsCancelled")))%>'></asp:Label>
-                                                                        </ItemTemplate>
-                                                                    </asp:TemplateField>
+                                                                   
                                                                     <asp:TemplateField HeaderText="Actions" HeaderStyle-CssClass="center text-center" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center" ItemStyle-VerticalAlign="Middle">
                                                                         <ItemTemplate>
                                                                             <div class="form-actions text-center">
-                                                                                <%--<asp:Button runat="server" Text="Processing" ID="lnkView" Enabled='<%#Eval("IsProcessing") %>' CssClass="btn btn-xs btn-success" />--%>
-                                                                                <asp:Button runat="server" Text="View" ID="CancelRoleBtn" Enabled='<%# (((Convert.ToBoolean(Eval("IsProcessing")) == true || Convert.ToBoolean(Eval("IsDelivered")) == true)|| Convert.ToBoolean(Eval("IsCancelled")) == true) ? false : true) %>' CssClass="btn btn-md btn-success" />
-                                                                                <asp:Button runat="server" Text="Edit" ID="EditRoleBtn" Enabled='<%# (((Convert.ToBoolean(Eval("IsProcessing")) == true || Convert.ToBoolean(Eval("IsDelivered")) == true)|| Convert.ToBoolean(Eval("IsCancelled")) == true) ? false : true) %>' CssClass="btn btn-md btn-warning" />
-                                                                                <asp:Button runat="server" Text="Delete" ID="DeleteRoleBtn" Enabled='<%# (((Convert.ToBoolean(Eval("IsProcessing")) == true || Convert.ToBoolean(Eval("IsDelivered")) == true)|| Convert.ToBoolean(Eval("IsCancelled")) == true) ? false : true) %>' CssClass="btn btn-md btn-danger" />
+                                                                                <asp:Button runat="server" Text="View" CommandArgument='<%# Eval("TransactionTypeID") %>' ID="ViewTranxTypeBtn" CssClass="btn btn-md btn-primary" OnClick="ViewTranxTypeBtn_Click" />
+                                                                                <asp:Button runat="server" Text="Edit" CommandArgument='<%# Eval("TransactionTypeID") %>' ID="EditTranxTypeBtn" CssClass="btn btn-md btn-warning" OnClick="EditTranxTypeBtn_Click" />
+                                                                                <asp:Button runat="server" Text="Delete" CommandArgument='<%# Eval("TransactionTypeID") %>' ID="DeleteTranxTypeBtn" CssClass="btn btn-md btn-danger" OnClick="DeleteTranxTypeBtn_Click" />
                                                                             </div>
                                                                         </ItemTemplate>
                                                                     </asp:TemplateField>
@@ -361,7 +365,7 @@
                                                         </div>
                                                     </div>
                                                     <hr />
-                                                    <div class="form-group" id="EditTransactionTypeDiv">
+                                                    <div class="form-group" id="EditTransactionTypeDiv" runat="server">
                                                         <h4>EDIT TRANSACTION TYPE</h4>
                                                         <div class="row">
                                                             <div class="col-lg-3">
@@ -369,19 +373,19 @@
                                                             <div class="col-lg-6">
                                                                 <div class="form-group">
                                                                     <label class="control-label">TRANSACTION TYPE</label>
-                                                                    <asp:TextBox runat="server" CssClass="form-control"></asp:TextBox>
+                                                                    <asp:TextBox runat="server" CssClass="form-control" ID="EditTranxTypeTextbox"></asp:TextBox>
                                                                 </div>
                                                                 <div class="form-group">
                                                                     <label class="control-label">DESCRIPTION</label>
-                                                                    <asp:TextBox runat="server" CssClass="form-control" TextMode="MultiLine"></asp:TextBox>
+                                                                    <asp:TextBox runat="server" CssClass="form-control" TextMode="MultiLine" ID="EditTranxTypeDescriptionTextBox"></asp:TextBox>
                                                                 </div>
                                                                  <div class="form-group">
                                                                      <div class="row">
                                                                     <div class="col-lg-6 text-left">
-                                                                        <asp:Button runat="server" CssClass="btn btn-default btn-danger" Text="BACK" />
+                                                                        <asp:Button runat="server" CssClass="btn btn-default btn-danger" ID="EditTranxBackButton" Text="BACK" OnClick="EditTranxBackButton_Click" />
                                                                     </div>
                                                                      <div class="col-lg-6 text-right">
-                                                                         <asp:Button runat="server" CssClass="btn btn-default btn-primary" Text="UPDATE" />
+                                                                         <asp:Button runat="server" CssClass="btn btn-default btn-primary" ID="EditTranxUpdateButton" Text="UPDATE" OnClick="EditTranxUpdateButton_Click" />
                                                                     </div>                                                                    
                                                                 </div>
                                                                 </div>
@@ -391,7 +395,7 @@
                                                         </div>
                                                     </div>
                                                     <hr />
-                                                    <div class="form-group" id="ViewTransactionTypeDiv">
+                                                    <div class="form-group" id="ViewTransactionTypeDiv" runat="server">
                                                         <h4>VIEW TRANSACTION TYPE</h4>
                                                         <div class="row">
                                                             <div class="col-lg-3">
@@ -399,16 +403,16 @@
                                                             <div class="col-lg-6">
                                                                 <div class="form-group">
                                                                     <label class="control-label">TRANSACTION TYPE</label>
-                                                                    <asp:TextBox runat="server" CssClass="form-control" ReadOnly="true"></asp:TextBox>
+                                                                    <asp:TextBox runat="server" CssClass="form-control" ReadOnly="true" ID="ViewTranxtypeTextBox"></asp:TextBox>
                                                                 </div>
                                                                 <div class="form-group">
                                                                     <label class="control-label">DESCRIPTION</label>
-                                                                    <asp:TextBox runat="server" CssClass="form-control" TextMode="MultiLine" ReadOnly="true"></asp:TextBox>
+                                                                    <asp:TextBox runat="server" CssClass="form-control" TextMode="MultiLine" ReadOnly="true" ID="ViewTranxTypeDescriptionTextBox"></asp:TextBox>
                                                                 </div>
                                                                  <div class="form-group">
                                                                      <div class="row">
                                                                     <div class="col-lg-12 text-left">
-                                                                        <asp:Button runat="server" CssClass="btn btn-default btn-danger" Text="BACK" />
+                                                                        <asp:Button runat="server" CssClass="btn btn-default btn-danger" ID="ViewTranxBackbutton" Text="BACK" OnClick="ViewTranxBackbutton_Click" />
                                                                     </div>
                                                                                                                                          
                                                                 </div>
@@ -428,20 +432,20 @@
                                         <div class="col-md-12">
                                             <div class="panel panel-default">
                                                 <div class="panel-body">
-                                                    <hr />
-                                                    <h4>ADD NEW ROLE</h4>
-                                                    <div class="form-group" id="AddRolesDiv">
+                                                    <hr />                                                    
+                                                    <div class="form-group" id="AddRolesDiv" runat="server">
+                                                        <h4>ADD NEW ROLE</h4>
                                                         <div class="row">
                                                             <div class="col-lg-3">
                                                             </div>
                                                             <div class="col-lg-6">
                                                                 <div class="form-group">
                                                                     <label class="control-label">ROLE NAME</label>
-                                                                    <asp:TextBox runat="server" ID="RoleNameTxtbox" CssClass="form-control"></asp:TextBox>
+                                                                    <asp:TextBox runat="server" ID="AddRoleNameTxtbox" CssClass="form-control"></asp:TextBox>
                                                                 </div>
                                                                 <div class="form-group">
                                                                     <label class="control-label">DESCRIPTION</label>
-                                                                    <asp:TextBox runat="server" CssClass="form-control" ID="RoleDescriptionTxtbox" TextMode="MultiLine"></asp:TextBox>
+                                                                    <asp:TextBox runat="server" CssClass="form-control" ID="AddRoleDescriptionTxtbox" TextMode="MultiLine"></asp:TextBox>
                                                                 </div>
                                                                  <div class="form-group">
                                                                      <div class="row">
@@ -458,58 +462,39 @@
                                                             </div>
                                                         </div>
                                                     </div>
-                                                    <hr />
-                                                    <div class="form-group" id="ViewRolesDiv">
+                                                    <%--<hr />--%>
+                                                    <div class="form-group" id="ViewRolesListDiv" runat="server">
                                                         <div class="form-group">
                                                             <div class="row form-group">
                                                                 <div class="col-md-6 text-left">
                                                                     <h4 class="text-left">ROLE LIST</h4>
                                                                 </div>
                                                                 <div class="col-md-6 text-right">
-                                                                    <asp:Button runat="server" CssClass="btn btn-default btn-primary text-right" Text="ADD NEW ROLE" /></div>
+                                                                    <asp:Button runat="server" CssClass="btn btn-default btn-primary text-right" Text="ADD NEW ROLE" ID="ViewRolelistAddnewButton" OnClick="ViewRolelistAddnewButton_Click" /></div>
                                                             </div>
                                                         </div>
                                                         <div class="table-responsive">
-                                                            <asp:GridView ID="RoleListGrid" runat="server" AutoGenerateColumns="false" CssClass="table  table-bordered " DataKeyNames="ID" EmptyDataText="There are no data records to display.">
+                                                            <asp:GridView ID="RoleListGrid" runat="server" AutoGenerateColumns="false" CssClass="table  table-bordered table-condensed text-center" DataKeyNames="RoleID" EmptyDataText="There are no data records to display.">
                                                                 <Columns>
-                                                                    <asp:BoundField DataField="ID" HeaderText="Order ID" SortExpression="ID">
+                                                                    <asp:BoundField DataField="RoleID" HeaderText="Role ID" SortExpression="RoleID">
                                                                         <HeaderStyle CssClass="hide" HorizontalAlign="Left" />
                                                                         <ItemStyle CssClass="hide" HorizontalAlign="Left" />
                                                                     </asp:BoundField>
-                                                                    <asp:BoundField DataField="Name" HeaderText="Order Name" SortExpression="Name">
+                                                                    <asp:BoundField DataField="RoleName" HeaderText="Role Name" SortExpression="RoleName">
                                                                         <HeaderStyle HorizontalAlign="Left" />
                                                                         <ItemStyle HorizontalAlign="Left" />
                                                                     </asp:BoundField>
-                                                                    <asp:BoundField DataField="Price" HeaderText="Price" SortExpression="Price">
+                                                                    <asp:BoundField DataField="RoleDescription" HeaderText="Role Description" SortExpression="RoleDescription">
                                                                         <HeaderStyle HorizontalAlign="Left" />
                                                                         <ItemStyle HorizontalAlign="Left" />
-                                                                    </asp:BoundField>
-                                                                    <%-- <asp:BoundField DataField="ISProcessStatus" HeaderText="ProcessStatus" SortExpression="ISProcessStatus">
-                                <HeaderStyle CssClass="show" HorizontalAlign="Left" />
-                                <ItemStyle CssClass="show" HorizontalAlign="Left" />
-                            </asp:BoundField>--%>
-                                                                    <asp:TemplateField HeaderText="Process Status">
-                                                                        <ItemTemplate>
-                                                                            <asp:Label runat="server" Text='<%#GetIsProcessStatus(Convert.ToBoolean(Eval("IsProcessing")))%>'></asp:Label>
-                                                                        </ItemTemplate>
-                                                                    </asp:TemplateField>
-                                                                    <asp:TemplateField HeaderText="Delivered Status">
-                                                                        <ItemTemplate>
-                                                                            <asp:Label runat="server" Text='<%#GetIsDeliveredStatus(Convert.ToBoolean(Eval("IsDelivered")))%>'></asp:Label>
-                                                                        </ItemTemplate>
-                                                                    </asp:TemplateField>
-                                                                    <asp:TemplateField HeaderText="Canceled Status">
-                                                                        <ItemTemplate>
-                                                                            <asp:Label runat="server" Text='<%#GetIsCancelledStatus(Convert.ToBoolean(Eval("IsCancelled")))%>'></asp:Label>
-                                                                        </ItemTemplate>
-                                                                    </asp:TemplateField>
+                                                                    </asp:BoundField>                                                                   
                                                                     <asp:TemplateField HeaderText="Actions" HeaderStyle-CssClass="center text-center" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center" ItemStyle-VerticalAlign="Middle">
                                                                         <ItemTemplate>
                                                                             <div class="form-actions text-center">
                                                                                 <%--<asp:Button runat="server" Text="Processing" ID="lnkView" Enabled='<%#Eval("IsProcessing") %>' CssClass="btn btn-xs btn-success" />--%>
-                                                                                <asp:Button runat="server" Text="View" ID="CancelRoleBtn" Enabled='<%# (((Convert.ToBoolean(Eval("IsProcessing")) == true || Convert.ToBoolean(Eval("IsDelivered")) == true)|| Convert.ToBoolean(Eval("IsCancelled")) == true) ? false : true) %>' CssClass="btn btn-md btn-success" />
-                                                                                <asp:Button runat="server" Text="Edit" ID="EditRoleBtn" Enabled='<%# (((Convert.ToBoolean(Eval("IsProcessing")) == true || Convert.ToBoolean(Eval("IsDelivered")) == true)|| Convert.ToBoolean(Eval("IsCancelled")) == true) ? false : true) %>' CssClass="btn btn-md btn-warning" />
-                                                                                <asp:Button runat="server" Text="Delete" ID="DeleteRoleBtn" Enabled='<%# (((Convert.ToBoolean(Eval("IsProcessing")) == true || Convert.ToBoolean(Eval("IsDelivered")) == true)|| Convert.ToBoolean(Eval("IsCancelled")) == true) ? false : true) %>' CssClass="btn btn-md btn-danger" />
+                                                                                <asp:Button runat="server" CommandArgument='<%# Eval("RoleID") %>' Text="View" ID="ViewRoleBtn" OnClick="ViewRoleBtn_Click"  CssClass="btn btn-md btn-primary" />
+                                                                                <asp:Button runat="server" CommandArgument='<%# Eval("RoleID") %>' Text="Edit" ID="EditRoleBtn" OnClick="EditRoleBtn_Click"  CssClass="btn btn-md btn-warning" />
+                                                                                <asp:Button runat="server" CommandArgument='<%# Eval("RoleID") %>' Text="Delete" ID="DeleteRoleBtn" OnClick="DeleteRoleBtn_Click" CssClass="btn btn-md btn-danger" />
                                                                             </div>
                                                                         </ItemTemplate>
                                                                     </asp:TemplateField>
@@ -520,8 +505,8 @@
 
                                                         </div>
                                                     </div>
-                                                    <hr />
-                                                    <div class="form-group" id="EditRoleDiv">
+                                                    <%--<hr />--%>
+                                                    <div class="form-group" id="EditRoleDiv" runat="server">
                                                         <h4>EDIT ROLE</h4>
                                                         <div class="row">
                                                             <div class="col-lg-3">
@@ -529,19 +514,19 @@
                                                             <div class="col-lg-6">
                                                                 <div class="form-group">
                                                                     <label class="control-label">ROLE NAME</label>
-                                                                    <asp:TextBox runat="server" CssClass="form-control"></asp:TextBox>
+                                                                    <asp:TextBox runat="server" CssClass="form-control" ID ="EditRoleNameTextBox"></asp:TextBox>
                                                                 </div>
                                                                 <div class="form-group">
                                                                     <label class="control-label">DESCRIPTION</label>
-                                                                    <asp:TextBox runat="server" CssClass="form-control" TextMode="MultiLine"></asp:TextBox>
+                                                                    <asp:TextBox runat="server" CssClass="form-control" ID="EditRoleDescriptionTextBox" TextMode="MultiLine"></asp:TextBox>
                                                                 </div>
                                                                  <div class="form-group">
                                                                      <div class="row">
                                                                     <div class="col-lg-6 text-left">
-                                                                        <asp:Button runat="server" CssClass="btn btn-default btn-danger" Text="BACK" />
+                                                                        <asp:Button runat="server" CssClass="btn btn-default btn-danger" Text="BACK" ID="EditRoleBackButton" OnClick="EditRoleBackButton_Click"/>
                                                                     </div>
                                                                      <div class="col-lg-6 text-right">
-                                                                         <asp:Button runat="server" CssClass="btn btn-default btn-primary" Text="UPDATE" />
+                                                                         <asp:Button runat="server" CssClass="btn btn-default btn-primary" Text="UPDATE" ID="EditRoleUpdateButton" OnClick="EditRoleUpdateButton_Click" />
                                                                     </div>                                                                    
                                                                 </div>
                                                                 </div>
@@ -550,8 +535,8 @@
                                                             </div>
                                                         </div>
                                                     </div>
-                                                    <hr />
-                                                    <div class="form-group" id="ViewRoleDiv">
+                                                    <%--<hr />--%>
+                                                    <div class="form-group" id="ViewRoleDiv" runat="server">
                                                         <h4>VIEW ROLE</h4>
                                                         <div class="row">
                                                             <div class="col-lg-3">
@@ -559,16 +544,16 @@
                                                             <div class="col-lg-6">
                                                                 <div class="form-group">
                                                                     <label class="control-label">ROLE NAME</label>
-                                                                    <asp:TextBox runat="server" CssClass="form-control" ReadOnly="true"></asp:TextBox>
+                                                                    <asp:TextBox runat="server" CssClass="form-control" ID="ViewRoleNameTextBox" ReadOnly="true"></asp:TextBox>
                                                                 </div>
                                                                 <div class="form-group">
                                                                     <label class="control-label">DESCRIPTION</label>
-                                                                    <asp:TextBox runat="server" CssClass="form-control" TextMode="MultiLine" ReadOnly="true"></asp:TextBox>
+                                                                    <asp:TextBox runat="server" CssClass="form-control" ID="ViewRoleDecriptionTextBox" TextMode="MultiLine" ReadOnly="true"></asp:TextBox>
                                                                 </div>
                                                                  <div class="form-group">
                                                                      <div class="row">
                                                                     <div class="col-lg-12 text-left">
-                                                                        <asp:Button runat="server" CssClass="btn btn-default btn-danger" Text="BACK" />
+                                                                        <asp:Button runat="server" CssClass="btn btn-default btn-danger" ID="ViewRoleBackButton" OnClick="ViewRoleBackButton_Click" Text="BACK" />
                                                                     </div>
                                                                                                                                         
                                                                 </div>
@@ -589,35 +574,35 @@
                                             <div class="panel panel-default">
                                                 <div class="panel-body">
                                                     <hr />
-                                                    <h4>ADD NEW DUTY TYPE</h4>
-                                                    <div class="form-group" id="AddDutyTypeDiv">
+                                                    <div class="form-group" id="AddDutyTypeDiv" runat="server">
+                                                        <h4>ADD NEW DUTY TYPE</h4>
                                                         <div class="row">
                                                             <div class="col-lg-3">
                                                             </div>
                                                             <div class="col-lg-6">
                                                                 <div class="form-group">
                                                                     <label class="control-label">DUTY TYPE NAME</label>
-                                                                    <asp:TextBox runat="server" CssClass="form-control"></asp:TextBox>
+                                                                    <asp:TextBox runat="server" CssClass="form-control" ID="AddDutyTypeNameTextBox"></asp:TextBox>
                                                                 </div>
                                                                 <div class="form-group">
                                                                     <label class="control-label">START TIME (HH:MM AM/PM)</label>
-                                                                    <asp:TextBox runat="server" TextMode="Time" CssClass="form-control"></asp:TextBox>
+                                                                    <asp:TextBox runat="server" TextMode="Time" CssClass="form-control" ID="AddDutyTypeStarttimeTextBox"></asp:TextBox>
                                                                 </div>
                                                                 <div class="form-group">
                                                                     <label class="control-label">END TIME (HH:MM AM/PM)</label>
-                                                                    <asp:TextBox runat="server" TextMode="Time" CssClass="form-control"></asp:TextBox>
+                                                                    <asp:TextBox runat="server" TextMode="Time" CssClass="form-control" ID="AddDutyTypeEndtimeTextBox"></asp:TextBox>
                                                                 </div>
                                                                 <div class="form-group">
                                                                     <label class="control-label">DESCRIPTION</label>
-                                                                    <asp:TextBox runat="server" CssClass="form-control" TextMode="MultiLine"></asp:TextBox>
+                                                                    <asp:TextBox runat="server" CssClass="form-control" TextMode="MultiLine" ID="AddDutyTypeDescriptionTextBox"></asp:TextBox>
                                                                 </div>
                                                                  <div class="form-group">
                                                                      <div class="row">
                                                                     <div class="col-lg-6 text-left">
-                                                                        <asp:Button runat="server" CssClass="btn btn-default btn-danger" Text="BACK" />
+                                                                        <asp:Button runat="server" CssClass="btn btn-default btn-danger" Text="BACK" ID="AddDutyTypeBackButton" OnClick="AddDutyTypeBackButton_Click" />
                                                                     </div>
                                                                      <div class="col-lg-6 text-right">
-                                                                         <asp:Button runat="server" CssClass="btn btn-default btn-primary" Text="PROCEED" />
+                                                                         <asp:Button runat="server" CssClass="btn btn-default btn-primary" Text="PROCEED" ID="AddDutyTypeProceedButton" OnClick="AddDutyTypeProceedButton_Click" />
                                                                     </div>                                                                    
                                                                 </div>
                                                                 </div>
@@ -626,58 +611,48 @@
                                                             </div>
                                                         </div>
                                                     </div>
-                                                    <hr />
-                                                    <div class="form-group" id="ViewDutyTypeListDiv">                                                        
+                                                    <%--<hr />--%>
+                                                    <div class="form-group" id="ViewDutyTypeListDiv" runat="server">                                                        
                                                            <div class="form-group">
                                                             <div class="row form-group">
                                                                 <div class="col-md-6 text-left">
                                                                     <h4 class="text-left">DUTY TYPE LIST</h4>
                                                                 </div>
                                                                 <div class="col-md-6 text-right">
-                                                                    <asp:Button runat="server" CssClass="btn btn-default btn-primary text-right" Text="ADD DUTY TYPE" /></div>
+                                                                    <asp:Button runat="server" CssClass="btn btn-default btn-primary text-right" Text="ADD DUTY TYPE" ID="ViewDutyTypeListAddButton" OnClick="ViewDutyTypeListAddButton_Click"  /></div>
                                                             </div>
                                                         </div>
                                                         <div class="table-responsive">                                                          
-                                                            <asp:GridView ID="DutyTypeListGridView" runat="server" AutoGenerateColumns="false" CssClass="table  table-bordered " DataKeyNames="ID" EmptyDataText="There are no data records to display.">
+                                                            <asp:GridView ID="DutyTypeListGridView" runat="server" AutoGenerateColumns="false" CssClass="table  table-bordered text-center" DataKeyNames="DutyTypeID" EmptyDataText="There are no data records to display.">
                                                                 <Columns>
-                                                                    <asp:BoundField DataField="ID" HeaderText="Order ID" SortExpression="ID">
+                                                                    <asp:BoundField DataField="DutyTypeID" HeaderText="DutyType ID" SortExpression="DutyTypeID">
                                                                         <HeaderStyle CssClass="hide" HorizontalAlign="Left" />
                                                                         <ItemStyle CssClass="hide" HorizontalAlign="Left" />
                                                                     </asp:BoundField>
-                                                                    <asp:BoundField DataField="Name" HeaderText="Order Name" SortExpression="Name">
+                                                                    <asp:BoundField DataField="DutyTypeName" HeaderText="Name" SortExpression="DutyTypeName">
                                                                         <HeaderStyle HorizontalAlign="Left" />
                                                                         <ItemStyle HorizontalAlign="Left" />
                                                                     </asp:BoundField>
-                                                                    <asp:BoundField DataField="Price" HeaderText="Price" SortExpression="Price">
+                                                                    <asp:BoundField DataField="Description" HeaderText="Description" SortExpression="Description">
                                                                         <HeaderStyle HorizontalAlign="Left" />
                                                                         <ItemStyle HorizontalAlign="Left" />
                                                                     </asp:BoundField>
-                                                                    <%-- <asp:BoundField DataField="ISProcessStatus" HeaderText="ProcessStatus" SortExpression="ISProcessStatus">
-                                <HeaderStyle CssClass="show" HorizontalAlign="Left" />
-                                <ItemStyle CssClass="show" HorizontalAlign="Left" />
-                            </asp:BoundField>--%>
-                                                                    <asp:TemplateField HeaderText="Process Status">
-                                                                        <ItemTemplate>
-                                                                            <asp:Label runat="server" Text='<%#GetIsProcessStatus(Convert.ToBoolean(Eval("IsProcessing")))%>'></asp:Label>
-                                                                        </ItemTemplate>
-                                                                    </asp:TemplateField>
-                                                                    <asp:TemplateField HeaderText="Delivered Status">
-                                                                        <ItemTemplate>
-                                                                            <asp:Label runat="server" Text='<%#GetIsDeliveredStatus(Convert.ToBoolean(Eval("IsDelivered")))%>'></asp:Label>
-                                                                        </ItemTemplate>
-                                                                    </asp:TemplateField>
-                                                                    <asp:TemplateField HeaderText="Canceled Status">
-                                                                        <ItemTemplate>
-                                                                            <asp:Label runat="server" Text='<%#GetIsCancelledStatus(Convert.ToBoolean(Eval("IsCancelled")))%>'></asp:Label>
-                                                                        </ItemTemplate>
-                                                                    </asp:TemplateField>
+                                                                     <asp:BoundField DataField="StartTime" HeaderText="StartTime" SortExpression="StartTime">
+                                                                        <HeaderStyle HorizontalAlign="Left" />
+                                                                        <ItemStyle HorizontalAlign="Left" />
+                                                                    </asp:BoundField>
+                                                                     <asp:BoundField DataField="EndTime" HeaderText="EndTime" SortExpression="EndTime">
+                                                                        <HeaderStyle HorizontalAlign="Left" />
+                                                                        <ItemStyle HorizontalAlign="Left" />
+                                                                    </asp:BoundField>
+                                                                    
                                                                     <asp:TemplateField HeaderText="Actions" HeaderStyle-CssClass="center text-center" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center" ItemStyle-VerticalAlign="Middle">
                                                                         <ItemTemplate>
                                                                             <div class="form-actions text-center">
                                                                                 <%--<asp:Button runat="server" Text="Processing" ID="lnkView" Enabled='<%#Eval("IsProcessing") %>' CssClass="btn btn-xs btn-success" />--%>
-                                                                                <asp:Button runat="server" Text="View" ID="CancelRoleBtn" Enabled='<%# (((Convert.ToBoolean(Eval("IsProcessing")) == true || Convert.ToBoolean(Eval("IsDelivered")) == true)|| Convert.ToBoolean(Eval("IsCancelled")) == true) ? false : true) %>' CssClass="btn btn-md btn-success" />
-                                                                                <asp:Button runat="server" Text="Edit" ID="EditRoleBtn" Enabled='<%# (((Convert.ToBoolean(Eval("IsProcessing")) == true || Convert.ToBoolean(Eval("IsDelivered")) == true)|| Convert.ToBoolean(Eval("IsCancelled")) == true) ? false : true) %>' CssClass="btn btn-md btn-warning" />
-                                                                                <asp:Button runat="server" Text="Delete" ID="DeleteRoleBtn" Enabled='<%# (((Convert.ToBoolean(Eval("IsProcessing")) == true || Convert.ToBoolean(Eval("IsDelivered")) == true)|| Convert.ToBoolean(Eval("IsCancelled")) == true) ? false : true) %>' CssClass="btn btn-md btn-danger" />
+                                                                                <asp:Button runat="server" CommandArgument='<%# Eval("DutyTypeID") %>' Text="View" ID="ViewDutyTypeBtn"  OnClick="ViewDutyTypeBtn_Click"  CssClass="btn btn-md btn-primary" />
+                                                                                <asp:Button runat="server" CommandArgument='<%# Eval("DutyTypeID") %>' Text="Edit" ID="EditDutyTypeBtn" OnClick="EditDutyTypeBtn_Click" CssClass="btn btn-md btn-warning" />
+                                                                                <asp:Button runat="server" CommandArgument='<%# Eval("DutyTypeID") %>' Text="Delete" ID="DeleteDutyTypeBtn" OnClick="DeleteDutyTypeBtn_Click"  CssClass="btn btn-md btn-danger" />
                                                                             </div>
                                                                         </ItemTemplate>
                                                                     </asp:TemplateField>
@@ -688,8 +663,8 @@
 
                                                         </div>
                                                     </div>
-                                                    <hr />
-                                                    <div class="form-group" id="EditDutyTypeDiv">
+                                                    <%--<hr />--%>
+                                                    <div class="form-group" id="EditDutyTypeDiv" runat="server">
                                                         <h4>EDIT DUTY TYPE</h4>
                                                         <div class="row">
                                                             <div class="col-lg-3">
@@ -697,27 +672,27 @@
                                                             <div class="col-lg-6">
                                                                 <div class="form-group">
                                                                     <label class="control-label">DUTY TYPE NAME</label>
-                                                                    <asp:TextBox runat="server" CssClass="form-control"></asp:TextBox>
+                                                                    <asp:TextBox runat="server" CssClass="form-control" ID="EditDutyTypeNameTextBox"></asp:TextBox>
                                                                 </div>
                                                                 <div class="form-group">
                                                                     <label class="control-label">START TIME (HH:MM AM/PM)</label>
-                                                                    <asp:TextBox runat="server" TextMode="Time" CssClass="form-control"></asp:TextBox>
+                                                                    <asp:TextBox runat="server" TextMode="Time" CssClass="form-control" ID="EditDutyTypeStarttimeTextBox"></asp:TextBox>
                                                                 </div>
                                                                 <div class="form-group">
                                                                     <label class="control-label">END TIME (HH:MM AM/PM)</label>
-                                                                    <asp:TextBox runat="server" TextMode="Time" CssClass="form-control"></asp:TextBox>
+                                                                    <asp:TextBox runat="server" TextMode="Time" CssClass="form-control" ID="EditDutyTypeEndtimeTextbox"></asp:TextBox>
                                                                 </div>
                                                                 <div class="form-group">
                                                                     <label class="control-label">DESCRIPTION</label>
-                                                                    <asp:TextBox runat="server" CssClass="form-control" TextMode="MultiLine"></asp:TextBox>
+                                                                    <asp:TextBox runat="server" CssClass="form-control" TextMode="MultiLine" ID="EditDutyTypeDescriptionTextBox"></asp:TextBox>
                                                                 </div>
                                                                  <div class="form-group">
                                                                      <div class="row">
                                                                     <div class="col-lg-6 text-left">
-                                                                        <asp:Button runat="server" CssClass="btn btn-default btn-danger" Text="BACK" />
+                                                                        <asp:Button runat="server" CssClass="btn btn-default btn-danger" Text="BACK" ID="EditDutyTypeBackButton" OnClick="EditDutyTypeBackButton_Click" />
                                                                     </div>
                                                                      <div class="col-lg-6 text-right">
-                                                                         <asp:Button runat="server" CssClass="btn btn-default btn-primary" Text="UPDATE" />
+                                                                         <asp:Button runat="server" CssClass="btn btn-default btn-primary" Text="UPDATE" ID="EditDutyTypeUpdatebutton" OnClick="EditDutyTypeUpdatebutton_Click" />
                                                                     </div>                                                                    
                                                                 </div>
                                                                 </div>
@@ -726,8 +701,8 @@
                                                             </div>
                                                         </div>
                                                     </div>
-                                                    <hr />
-                                                    <div class="form-group" id="ViewDutyTypeDiv">
+                                                    <%--<hr />--%>
+                                                    <div class="form-group" id="ViewDutyTypeDiv" runat="server">
                                                         <h4>VIEW DUTY TYPE</h4>
                                                         <div class="row">
                                                             <div class="col-lg-3">
@@ -735,24 +710,24 @@
                                                             <div class="col-lg-6">
                                                                 <div class="form-group">
                                                                     <label class="control-label">DUTY TYPE NAME</label>
-                                                                    <asp:TextBox runat="server" CssClass="form-control" ReadOnly="true"></asp:TextBox>
+                                                                    <asp:TextBox runat="server" CssClass="form-control" ID="ViewDutyTypeNameTextbox" ReadOnly="true"></asp:TextBox>
                                                                 </div>
                                                                 <div class="form-group">
                                                                     <label class="control-label">START TIME (HH:MM AM/PM)</label>
-                                                                    <asp:TextBox runat="server" TextMode="Time" CssClass="form-control" ReadOnly="true"></asp:TextBox>
+                                                                    <asp:TextBox runat="server" TextMode="Time" CssClass="form-control" ID="ViewDutyTypeStarttimeTextbox" ReadOnly="true"></asp:TextBox>
                                                                 </div>
                                                                 <div class="form-group">
                                                                     <label class="control-label">END TIME (HH:MM AM/PM)</label>
-                                                                    <asp:TextBox runat="server" TextMode="Time" CssClass="form-control" ReadOnly="true"></asp:TextBox>
+                                                                    <asp:TextBox runat="server" TextMode="Time" CssClass="form-control" ID="ViewDutyTypeEndtimeTextbox" ReadOnly="true"></asp:TextBox>
                                                                 </div>
                                                                 <div class="form-group">
                                                                     <label class="control-label">DESCRIPTION</label>
-                                                                    <asp:TextBox runat="server" CssClass="form-control" TextMode="MultiLine" ReadOnly="true"></asp:TextBox>
+                                                                    <asp:TextBox runat="server" CssClass="form-control" TextMode="MultiLine" ID="ViewDutyTypeDescriptionTextBox" ReadOnly="true"></asp:TextBox>
                                                                 </div>
                                                                  <div class="form-group">
                                                                      <div class="row">
                                                                     <div class="col-lg-12 text-left">
-                                                                        <asp:Button runat="server" CssClass="btn btn-default btn-danger" Text="BACK" />
+                                                                        <asp:Button runat="server" CssClass="btn btn-default btn-danger" Text="BACK" ID="ViewDutyTypeBackButton" OnClick="ViewDutyTypeBackButton_Click" />
                                                                     </div>
                                                                                                                                          
                                                                 </div>
@@ -772,32 +747,32 @@
                                         <div class="col-md-12">
                                             <div class="panel panel-default">
                                                 <div class="panel-body">
-                                                    <hr />
-                                                    <h4>ADD NEW PATIENT PLAN</h4>
-                                                    <div class="form-group" id="AddPatientPlanDiv">
+                                                    <hr />                                                    
+                                                    <div class="form-group" id="AddPatientPlanDiv" runat="server">
+                                                        <h4>ADD NEW PATIENT PLAN</h4>
                                                         <div class="row">
                                                             <div class="col-lg-3">
                                                             </div>
                                                             <div class="col-lg-6">
                                                                 <div class="form-group">
                                                                     <label class="control-label">PATIENT PLAN</label>
-                                                                    <asp:TextBox runat="server" CssClass="form-control"></asp:TextBox>
+                                                                    <asp:TextBox runat="server" CssClass="form-control" ID="AddPatientPlanNameTextBox"></asp:TextBox>
                                                                 </div>
                                                                 <div class="form-group">
                                                                     <label class="control-label">PLAN MAXIMUM MEMBER</label>
-                                                                    <asp:TextBox runat="server" TextMode="Number" CssClass="form-control"></asp:TextBox>
+                                                                    <asp:TextBox runat="server" TextMode="Number" CssClass="form-control" ID="AddPatientPlanMaxNumberTextbox"></asp:TextBox>
                                                                 </div>
                                                                 <div class="form-group">
                                                                     <label class="control-label">DESCRIPTION</label>
-                                                                    <asp:TextBox runat="server" CssClass="form-control" TextMode="MultiLine"></asp:TextBox>
+                                                                    <asp:TextBox runat="server" CssClass="form-control" TextMode="MultiLine" ID="AddPatientPlanDescriptionTextBox"></asp:TextBox>
                                                                 </div>
                                                                  <div class="form-group">
                                                                      <div class="row">
                                                                     <div class="col-lg-6 text-left">
-                                                                        <asp:Button runat="server" CssClass="btn btn-default btn-danger" Text="BACK" />
+                                                                        <asp:Button runat="server" CssClass="btn btn-default btn-danger" Text="BACK" ID="AddPatientPlanBackButton" OnClick="AddPatientPlanBackButton_Click" />
                                                                     </div>
                                                                      <div class="col-lg-6 text-right">
-                                                                         <asp:Button runat="server" CssClass="btn btn-default btn-primary" Text="PROCEED" />
+                                                                         <asp:Button runat="server" CssClass="btn btn-default btn-primary" Text="PROCEED" ID="AddPatientPlanProceedButton" OnClick="AddPatientPlanProceedButton_Click" />
                                                                     </div>                                                                    
                                                                 </div>
                                                                 </div>
@@ -806,56 +781,40 @@
                                                             </div>
                                                         </div>
                                                     </div>
-                                                    <hr />
-                                                    <div class="form-group" id="ViewPatientPlanListDiv">                                                       
+                                                    <%--<hr />--%>
+                                                    <div class="form-group" id="ViewPatientPlanListDiv" runat="server">                                                       
                                                            <div class="form-group">
                                                             <div class="row form-group">
                                                                 <div class="col-md-6 text-left">
                                                                     <h4 class="text-left">PATIENT PLAN LIST</h4>
                                                                 </div>
                                                                 <div class="col-md-6 text-right">
-                                                                    <asp:Button runat="server" CssClass="btn btn-default btn-primary text-right" Text="ADD NEW PATIENT PLAN" /></div>
+                                                                    <asp:Button runat="server" CssClass="btn btn-default btn-primary text-right" Text="ADD NEW PATIENT PLAN" ID="ViewPatientPlanListAddNewPatientButton" OnClick="ViewPatientPlanListAddNewPatientButton_Click" /></div>
                                                             </div>
                                                         </div>
                                                         <div class="table-responsive">
                                                            
-                                                            <asp:GridView ID="PatientPlanListGridView" runat="server" AutoGenerateColumns="false" CssClass="table  table-bordered " DataKeyNames="ID" EmptyDataText="There are no data records to display.">
+                                                            <asp:GridView ID="PatientPlanListGridView" runat="server" AutoGenerateColumns="false" CssClass="table  table-bordered text-center" DataKeyNames="PlanTypeID" EmptyDataText="There are no data records to display.">
                                                                 <Columns>
-                                                                    <asp:BoundField DataField="ID" HeaderText="Order ID" SortExpression="ID">
+                                                                    <asp:BoundField DataField="PlanTypeID" HeaderText="PlanType ID" SortExpression="PlanTypeID">
                                                                         <HeaderStyle CssClass="hide" HorizontalAlign="Left" />
                                                                         <ItemStyle CssClass="hide" HorizontalAlign="Left" />
                                                                     </asp:BoundField>
-                                                                    <asp:BoundField DataField="Name" HeaderText="Order Name" SortExpression="Name">
+                                                                    <asp:BoundField DataField="PlanTypeName" HeaderText="Plan Type" SortExpression="PlanTypeName">
                                                                         <HeaderStyle HorizontalAlign="Left" />
                                                                         <ItemStyle HorizontalAlign="Left" />
                                                                     </asp:BoundField>
-                                                                    <asp:BoundField DataField="Price" HeaderText="Price" SortExpression="Price">
+                                                                    <asp:BoundField DataField="PlanTypeDescription" HeaderText="PlanTypeDescription" SortExpression="PlanTypeDescription">
                                                                         <HeaderStyle HorizontalAlign="Left" />
                                                                         <ItemStyle HorizontalAlign="Left" />
                                                                     </asp:BoundField>
-
-                                                                    <asp:TemplateField HeaderText="Process Status">
-                                                                        <ItemTemplate>
-                                                                            <asp:Label runat="server" Text='<%#GetIsProcessStatus(Convert.ToBoolean(Eval("IsProcessing")))%>'></asp:Label>
-                                                                        </ItemTemplate>
-                                                                    </asp:TemplateField>
-                                                                    <asp:TemplateField HeaderText="Delivered Status">
-                                                                        <ItemTemplate>
-                                                                            <asp:Label runat="server" Text='<%#GetIsDeliveredStatus(Convert.ToBoolean(Eval("IsDelivered")))%>'></asp:Label>
-                                                                        </ItemTemplate>
-                                                                    </asp:TemplateField>
-                                                                    <asp:TemplateField HeaderText="Canceled Status">
-                                                                        <ItemTemplate>
-                                                                            <asp:Label runat="server" Text='<%#GetIsCancelledStatus(Convert.ToBoolean(Eval("IsCancelled")))%>'></asp:Label>
-                                                                        </ItemTemplate>
-                                                                    </asp:TemplateField>
+                                                                    
                                                                     <asp:TemplateField HeaderText="Actions" HeaderStyle-CssClass="center text-center" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center" ItemStyle-VerticalAlign="Middle">
                                                                         <ItemTemplate>
                                                                             <div class="form-actions text-center">
-                                                                                <%--<asp:Button runat="server" Text="Processing" ID="lnkView" Enabled='<%#Eval("IsProcessing") %>' CssClass="btn btn-xs btn-success" />--%>
-                                                                                <asp:Button runat="server" Text="View" ID="CancelRoleBtn" Enabled='<%# (((Convert.ToBoolean(Eval("IsProcessing")) == true || Convert.ToBoolean(Eval("IsDelivered")) == true)|| Convert.ToBoolean(Eval("IsCancelled")) == true) ? false : true) %>' CssClass="btn btn-md btn-success" />
-                                                                                <asp:Button runat="server" Text="Edit" ID="EditRoleBtn" Enabled='<%# (((Convert.ToBoolean(Eval("IsProcessing")) == true || Convert.ToBoolean(Eval("IsDelivered")) == true)|| Convert.ToBoolean(Eval("IsCancelled")) == true) ? false : true) %>' CssClass="btn btn-md btn-warning" />
-                                                                                <asp:Button runat="server" Text="Delete" ID="DeleteRoleBtn" Enabled='<%# (((Convert.ToBoolean(Eval("IsProcessing")) == true || Convert.ToBoolean(Eval("IsDelivered")) == true)|| Convert.ToBoolean(Eval("IsCancelled")) == true) ? false : true) %>' CssClass="btn btn-md btn-danger" />
+                                                                                <asp:Button runat="server" CommandArgument='<%# Eval("PlanTypeID") %>' Text="View" ID="ViewPlanTypeBtn" CssClass="btn btn-md btn-primary" OnClick="ViewPlanTypeBtn_Click" />
+                                                                                <asp:Button runat="server" CommandArgument='<%# Eval("PlanTypeID") %>' Text="Edit" ID="EditPlanTypeBtn" CssClass="btn btn-md btn-warning" OnClick="EditPlanTypeBtn_Click" />
+                                                                                <asp:Button runat="server" CommandArgument='<%# Eval("PlanTypeID") %>' Text="Delete" ID="DeletePlanTypeBtn" CssClass="btn btn-md btn-danger" OnClick="DeletePlanTypeBtn_Click" />
                                                                             </div>
                                                                         </ItemTemplate>
                                                                     </asp:TemplateField>
@@ -866,8 +825,8 @@
 
                                                         </div>
                                                     </div>
-                                                    <hr />
-                                                    <div class="form-group" id="EditPatientPlanDiv">
+                                                    <%--<hr />--%>
+                                                    <div class="form-group" id="EditPatientPlanDiv" runat="server">
                                                         <h4>EDIT PATIENT PLAN</h4>
                                                         <div class="row">
                                                             <div class="col-lg-3">
@@ -875,23 +834,23 @@
                                                             <div class="col-lg-6">
                                                                 <div class="form-group">
                                                                     <label class="control-label">PATIENT PLAN</label>
-                                                                    <asp:TextBox runat="server" CssClass="form-control"></asp:TextBox>
+                                                                    <asp:TextBox runat="server" CssClass="form-control" ID="EditPatientPlanNameTextBox"></asp:TextBox>
                                                                 </div>
                                                                 <div class="form-group">
                                                                     <label class="control-label">PLAN MAXIMUM MEMBER</label>
-                                                                    <asp:TextBox runat="server" TextMode="Number" CssClass="form-control"></asp:TextBox>
+                                                                    <asp:TextBox runat="server" TextMode="Number" CssClass="form-control" ID="EditPatientPlanMaxNumTextBox" ></asp:TextBox>
                                                                 </div>
                                                                 <div class="form-group">
                                                                     <label class="control-label">DESCRIPTION</label>
-                                                                    <asp:TextBox runat="server" CssClass="form-control" TextMode="MultiLine"></asp:TextBox>
+                                                                    <asp:TextBox runat="server" CssClass="form-control" TextMode="MultiLine" ID="EditPatientPlanDescriptionTextBox"></asp:TextBox>
                                                                 </div>
                                                                  <div class="form-group">
                                                                      <div class="row">
                                                                     <div class="col-lg-6 text-left">
-                                                                        <asp:Button runat="server" CssClass="btn btn-default btn-danger" Text="BACK" />
+                                                                        <asp:Button runat="server" CssClass="btn btn-default btn-danger" Text="BACK" ID="EditPatientPlanBackButton" OnClick="EditPatientPlanBackButton_Click" />
                                                                     </div>
                                                                      <div class="col-lg-6 text-right">
-                                                                         <asp:Button runat="server" CssClass="btn btn-default btn-primary" Text="UPDATE" />
+                                                                         <asp:Button runat="server" CssClass="btn btn-default btn-primary" Text="UPDATE" ID="EditPatientPlanUpdateButton" OnClick="EditPatientPlanUpdateButton_Click" />
                                                                     </div>                                                                    
                                                                 </div>
                                                                 </div>
@@ -900,8 +859,8 @@
                                                             </div>
                                                         </div>
                                                     </div>
-                                                    <hr />
-                                                    <div class="form-group" id="ViewPatientPlanDiv">
+                                                    <%--<hr />--%>
+                                                    <div class="form-group" id="ViewPatientPlanDiv" runat="server">
                                                         <h4>VIEW PATIENT PLAN</h4>
                                                         <div class="row">
                                                             <div class="col-lg-3">
@@ -909,20 +868,20 @@
                                                             <div class="col-lg-6">
                                                                 <div class="form-group">
                                                                     <label class="control-label">PATIENT PLAN</label>
-                                                                    <asp:TextBox runat="server" CssClass="form-control" ReadOnly="true"></asp:TextBox>
+                                                                    <asp:TextBox runat="server" CssClass="form-control" ID="ViewPatientPlanTextbox" ReadOnly="true"></asp:TextBox>
                                                                 </div>
                                                                 <div class="form-group">
                                                                     <label class="control-label">PLAN MAXIMUM MEMBER</label>
-                                                                    <asp:TextBox runat="server" TextMode="Number" CssClass="form-control" ReadOnly="true"></asp:TextBox>
+                                                                    <asp:TextBox runat="server" TextMode="Number" CssClass="form-control" ID="ViewPatientPlanMaxNumberTextBox" ReadOnly="true"></asp:TextBox>
                                                                 </div>
                                                                 <div class="form-group">
                                                                     <label class="control-label">DESCRIPTION</label>
-                                                                    <asp:TextBox runat="server" CssClass="form-control" TextMode="MultiLine" ReadOnly="true"></asp:TextBox>
+                                                                    <asp:TextBox runat="server" CssClass="form-control" TextMode="MultiLine" ID="ViewPatientPlanDescriptionTextBox" ReadOnly="true"></asp:TextBox>
                                                                 </div>
                                                                  <div class="form-group">
                                                                      <div class="row">
                                                                     <div class="col-lg-12 text-left">
-                                                                        <asp:Button runat="server" CssClass="btn btn-default btn-danger" Text="BACK" />
+                                                                        <asp:Button runat="server" CssClass="btn btn-default btn-danger" ID="ViewPatientPlanBackButton" Text="BACK"  OnClick="ViewPatientPlanBackButton_Click" />
                                                                     </div>
                                                                                                                                        
                                                                 </div>
@@ -943,36 +902,36 @@
                                         <div class="col-md-12">
                                             <div class="panel panel-default">
                                                 <div class="panel-body">
-                                                    <hr />
-                                                    <h4>ASSIGN NURSE DUTY</h4>
-                                                    <div class="form-group" id="AssignNurseDutyDiv">
+                                                    <hr />                                                    
+                                                    <div class="form-group" id="AssignNurseDutyDiv" runat="server">
+                                                        <h4>ASSIGN NURSE DUTY</h4>
                                                         <div class="row">
                                                             <div class="col-lg-3">
                                                             </div>
                                                             <div class="col-lg-6">
                                                                 <div class="form-group">
                                                                     <label class="control-label">SELECT NURSE</label>
-                                                                    <asp:DropDownList runat="server" CssClass="form-control"></asp:DropDownList>
+                                                                    <asp:DropDownList runat="server" CssClass="form-control" ID="AssignNurseDutyNurseDdl"></asp:DropDownList>
                                                                 </div>
                                                                 <div class="form-group">
                                                                     <label class="control-label">SELECT DUTY TYPE</label>
-                                                                    <asp:DropDownList runat="server" CssClass="form-control"></asp:DropDownList>
+                                                                    <asp:DropDownList runat="server" CssClass="form-control" ID="AssignNurseDutyTypeDdl"></asp:DropDownList>
                                                                 </div>
                                                                 <div class="form-group">
-                                                                    <label class="control-label">DESCRIPTION</label>
-                                                                    <asp:TextBox runat="server" CssClass="form-control" TextMode="MultiLine"></asp:TextBox>
+                                                                    <label class="control-label">START DATE</label>
+                                                                    <asp:TextBox runat="server" CssClass="form-control" TextMode="Date" ID="AssignNurseDutyStartdateTextbox"></asp:TextBox>
                                                                 </div>
                                                                 <div class="form-group">
-                                                                    <label class="control-label">COMMENT</label>
-                                                                    <asp:TextBox runat="server" CssClass="form-control" TextMode="MultiLine"></asp:TextBox>
+                                                                    <label class="control-label">END DATE</label>
+                                                                    <asp:TextBox runat="server" CssClass="form-control" TextMode="Date" ID="AssignNurseDutyEnddateTextBox"></asp:TextBox>
                                                                 </div>
                                                                  <div class="form-group">
                                                                      <div class="row">
                                                                     <div class="col-lg-6 text-left">
-                                                                        <asp:Button runat="server" CssClass="btn btn-default btn-danger" Text="BACK" />
+                                                                        <asp:Button runat="server" CssClass="btn btn-default btn-danger" Text="BACK" ID="AssignNurseDutyBackButton" OnClick="AssignNurseDutyBackButton_Click" />
                                                                     </div>
                                                                      <div class="col-lg-6 text-right">
-                                                                         <asp:Button runat="server" CssClass="btn btn-default btn-primary" Text="PROCEED" />
+                                                                         <asp:Button runat="server" CssClass="btn btn-default btn-primary" Text="PROCEED" ID="AssignNurseDutyProceedButton" OnClick="AssignNurseDutyProceedButton_Click" />
                                                                     </div>                                                                    
                                                                 </div>
                                                                 </div>
@@ -981,56 +940,51 @@
                                                             </div>
                                                         </div>
                                                     </div>
-                                                    <hr />
-                                                    <div class="form-group" id="ViewNurseDutyListDiv">                                                      
+                                                   
+                                                    <div class="form-group" id="ViewNurseDutyListDiv" runat="server">                                                      
                                                          <div class="form-group">
                                                             <div class="row form-group">
                                                                 <div class="col-md-6 text-left">
                                                                     <h4 class="text-left">ASSIGNED NURSE DUTY LIST</h4>
                                                                 </div>
                                                                 <div class="col-md-6 text-right">
-                                                                    <asp:Button runat="server" CssClass="btn btn-default btn-primary text-right" Text="ASSIGN NEW NURSE DUTY" /></div>
+                                                                    <asp:Button runat="server" CssClass="btn btn-default btn-primary text-right" Text="ASSIGN NEW NURSE DUTY" ID="ViewNurseDutyListAddDutyButton" OnClick="ViewNurseDutyListAddDutyButton_Click" /></div>
                                                             </div>
                                                         </div>
                                                         <div class="table-responsive">
                                                             
-                                                            <asp:GridView ID="NurseDutyListGridView" runat="server" AutoGenerateColumns="false" CssClass="table  table-bordered " DataKeyNames="ID" EmptyDataText="There are no data records to display.">
+                                                            <asp:GridView ID="NurseDutyListGridView" runat="server" AutoGenerateColumns="false" CssClass="table  table-bordered text-center" DataKeyNames="NurseDutyID" EmptyDataText="There are no data records to display.">
                                                                 <Columns>
-                                                                    <asp:BoundField DataField="ID" HeaderText="Order ID" SortExpression="ID">
+                                                                    <asp:BoundField DataField="NurseDutyID" HeaderText="NurseDutyID" SortExpression="NurseDutyID">
                                                                         <HeaderStyle CssClass="hide" HorizontalAlign="Left" />
                                                                         <ItemStyle CssClass="hide" HorizontalAlign="Left" />
                                                                     </asp:BoundField>
-                                                                    <asp:BoundField DataField="Name" HeaderText="Order Name" SortExpression="Name">
-                                                                        <HeaderStyle HorizontalAlign="Left" />
-                                                                        <ItemStyle HorizontalAlign="Left" />
-                                                                    </asp:BoundField>
-                                                                    <asp:BoundField DataField="Price" HeaderText="Price" SortExpression="Price">
+                                                                     <asp:TemplateField HeaderText="Nurse">
+                                                                        <ItemTemplate>
+                                                                            <asp:Label runat="server" Text='<%#Pasture.GetEmployeeFullNameById(Convert.ToInt32(Eval("NurseID")))%>'></asp:Label>
+                                                                        </ItemTemplate>
+                                                                    </asp:TemplateField>
+                                                                    <asp:TemplateField HeaderText="DutyType">
+                                                                        <ItemTemplate>
+                                                                            <asp:Label runat="server" Text='<%#Pasture.GetDutyTypeNameByID(Convert.ToInt32(Eval("DutyTypeID")))%>'></asp:Label>
+                                                                        </ItemTemplate>
+                                                                    </asp:TemplateField>
+                                                                    <asp:BoundField DataField="StartDate" HeaderText="StartDate" SortExpression="StartDate">
                                                                         <HeaderStyle HorizontalAlign="Left" />
                                                                         <ItemStyle HorizontalAlign="Left" />
                                                                     </asp:BoundField>
 
-                                                                    <asp:TemplateField HeaderText="Process Status">
-                                                                        <ItemTemplate>
-                                                                            <asp:Label runat="server" Text='<%#GetIsProcessStatus(Convert.ToBoolean(Eval("IsProcessing")))%>'></asp:Label>
-                                                                        </ItemTemplate>
-                                                                    </asp:TemplateField>
-                                                                    <asp:TemplateField HeaderText="Delivered Status">
-                                                                        <ItemTemplate>
-                                                                            <asp:Label runat="server" Text='<%#GetIsDeliveredStatus(Convert.ToBoolean(Eval("IsDelivered")))%>'></asp:Label>
-                                                                        </ItemTemplate>
-                                                                    </asp:TemplateField>
-                                                                    <asp:TemplateField HeaderText="Canceled Status">
-                                                                        <ItemTemplate>
-                                                                            <asp:Label runat="server" Text='<%#GetIsCancelledStatus(Convert.ToBoolean(Eval("IsCancelled")))%>'></asp:Label>
-                                                                        </ItemTemplate>
-                                                                    </asp:TemplateField>
+                                                                    <asp:BoundField DataField="EndDate" HeaderText="EndDate" SortExpression="EndDate">
+                                                                        <HeaderStyle HorizontalAlign="Left" />
+                                                                        <ItemStyle HorizontalAlign="Left" />
+                                                                    </asp:BoundField>
                                                                     <asp:TemplateField HeaderText="Actions" HeaderStyle-CssClass="center text-center" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center" ItemStyle-VerticalAlign="Middle">
                                                                         <ItemTemplate>
                                                                             <div class="form-actions text-center">
                                                                                 <%--<asp:Button runat="server" Text="Processing" ID="lnkView" Enabled='<%#Eval("IsProcessing") %>' CssClass="btn btn-xs btn-success" />--%>
-                                                                                <asp:Button runat="server" Text="View" ID="CancelRoleBtn" Enabled='<%# (((Convert.ToBoolean(Eval("IsProcessing")) == true || Convert.ToBoolean(Eval("IsDelivered")) == true)|| Convert.ToBoolean(Eval("IsCancelled")) == true) ? false : true) %>' CssClass="btn btn-md btn-success" />
-                                                                                <asp:Button runat="server" Text="Edit" ID="EditRoleBtn" Enabled='<%# (((Convert.ToBoolean(Eval("IsProcessing")) == true || Convert.ToBoolean(Eval("IsDelivered")) == true)|| Convert.ToBoolean(Eval("IsCancelled")) == true) ? false : true) %>' CssClass="btn btn-md btn-warning" />
-                                                                                <asp:Button runat="server" Text="Delete" ID="DeleteRoleBtn" Enabled='<%# (((Convert.ToBoolean(Eval("IsProcessing")) == true || Convert.ToBoolean(Eval("IsDelivered")) == true)|| Convert.ToBoolean(Eval("IsCancelled")) == true) ? false : true) %>' CssClass="btn btn-md btn-danger" />
+                                                                                <asp:Button runat="server" CommandArgument='<%# Eval("NurseDutyID") %>' Text="View" ID="ViewNurseDutyBtn" CssClass="btn btn-md btn-success" OnClick="ViewNurseDutyBtn_Click" />
+                                                                                <asp:Button runat="server" CommandArgument='<%# Eval("NurseDutyID") %>' Text="Edit" ID="EditNurseDutyBtn" CssClass="btn btn-md btn-warning" OnClick="EditNurseDutyBtn_Click"/>
+                                                                                <%--<asp:Button runat="server" CommandArgument='<%# Eval("NurseDutyID") %>' Text="Delete" ID="DeleteNurseDutyBtn" CssClass="btn btn-md btn-danger" OnClick="DeleteNurseDutyBtn_Click" />--%>
                                                                             </div>
                                                                         </ItemTemplate>
                                                                     </asp:TemplateField>
@@ -1041,8 +995,8 @@
 
                                                         </div>
                                                     </div>
-                                                    <hr />
-                                                    <div class="form-group" id="EditNurseDutyDiv">
+                                                  
+                                                    <div class="form-group" id="EditNurseDutyDiv" runat="server">
                                                         <h4>EDIT NURSE DUTY</h4>
                                                         <div class="row">
                                                             <div class="col-lg-3">
@@ -1050,27 +1004,27 @@
                                                             <div class="col-lg-6">
                                                                 <div class="form-group">
                                                                     <label class="control-label">NURSE NAME</label>
-                                                                    <asp:TextBox runat="server" CssClass="form-control" ReadOnly="true"></asp:TextBox>
+                                                                    <asp:TextBox runat="server" CssClass="form-control" ReadOnly="true" ID="EditNurseDutyNursenameTextBox"></asp:TextBox>
                                                                 </div>
                                                                 <div class="form-group">
                                                                     <label class="control-label">DUTY TYPE</label>
-                                                                    <asp:DropDownList runat="server" CssClass="form-control"></asp:DropDownList>
+                                                                    <asp:DropDownList runat="server" CssClass="form-control" ID="EditNurseDutyTypeDdl"></asp:DropDownList>
+                                                                </div>
+                                                               <div class="form-group">
+                                                                    <label class="control-label">START DATE</label>
+                                                                    <asp:TextBox runat="server" CssClass="form-control" TextMode="Date" ID="EditNurseDutyStartdateTextBox"></asp:TextBox>
                                                                 </div>
                                                                 <div class="form-group">
-                                                                    <label class="control-label">DESCRIPTION</label>
-                                                                    <asp:TextBox runat="server" CssClass="form-control" TextMode="MultiLine"></asp:TextBox>
-                                                                </div>
-                                                                <div class="form-group">
-                                                                    <label class="control-label">COMMENT</label>
-                                                                    <asp:TextBox runat="server" CssClass="form-control" TextMode="MultiLine"></asp:TextBox>
+                                                                    <label class="control-label">END DATE</label>
+                                                                    <asp:TextBox runat="server" CssClass="form-control" TextMode="Date" ID="EditNurseDutyEnddateTextBox"></asp:TextBox>
                                                                 </div>
                                                                 <div class="form-group">
                                                                      <div class="row">
                                                                     <div class="col-lg-6 text-left">
-                                                                        <asp:Button runat="server" CssClass="btn btn-default btn-danger" Text="BACK" />
+                                                                        <asp:Button runat="server" CssClass="btn btn-default btn-danger" Text="BACK" ID="EditNurseDutyBackButton" OnClick="EditNurseDutyBackButton_Click" />
                                                                     </div>
                                                                      <div class="col-lg-6 text-right">
-                                                                         <asp:Button runat="server" CssClass="btn btn-default btn-primary" Text="UPDATE" />
+                                                                         <asp:Button runat="server" CssClass="btn btn-default btn-primary" Text="UPDATE" ID="EditNurseDutyUpdateButton" OnClick="EditNurseDutyUpdateButton_Click" />
                                                                     </div>                                                                    
                                                                 </div>
                                                                 </div>
@@ -1079,8 +1033,8 @@
                                                             </div>
                                                         </div>
                                                     </div>
-                                                    <hr />
-                                                    <div class="form-group" id="ViewNurseDutyDiv">
+                                                   
+                                                    <div class="form-group" id="ViewNurseDutyDiv" runat="server">
                                                         <h4>VIEW ASSIGNED NURSE DUTY</h4>
                                                         <div class="row">
                                                             <div class="col-lg-3">
@@ -1088,24 +1042,24 @@
                                                             <div class="col-lg-6">
                                                                 <div class="form-group">
                                                                     <label class="control-label">NURSE NAME</label>
-                                                                    <asp:TextBox runat="server" CssClass="form-control" ReadOnly="true"></asp:TextBox>
+                                                                    <asp:TextBox runat="server" CssClass="form-control" ReadOnly="true" ID="ViewNurseDutyNurseNameTextBox"></asp:TextBox>
                                                                 </div>
                                                                 <div class="form-group">
                                                                     <label class="control-label">DUTY TYPE</label>
-                                                                    <asp:TextBox runat="server" CssClass="form-control" ReadOnly="true"></asp:TextBox>
+                                                                    <asp:TextBox runat="server" CssClass="form-control" ReadOnly="true" ID="ViewNurseDutyTypeTextBox" ></asp:TextBox>
                                                                 </div>
                                                                 <div class="form-group">
-                                                                    <label class="control-label">DESCRIPTION</label>
-                                                                    <asp:TextBox runat="server" CssClass="form-control" TextMode="MultiLine" ReadOnly="true"></asp:TextBox>
+                                                                    <label class="control-label">START DATE</label>
+                                                                    <asp:TextBox runat="server" CssClass="form-control" TextMode="Date" ReadOnly="true" ID="ViewNurseDutyStartdateTextBox"></asp:TextBox>
                                                                 </div>
                                                                 <div class="form-group">
-                                                                    <label class="control-label">COMMENT</label>
-                                                                    <asp:TextBox runat="server" CssClass="form-control" TextMode="MultiLine" ReadOnly="true"></asp:TextBox>
+                                                                    <label class="control-label">END DATE</label>
+                                                                    <asp:TextBox runat="server" CssClass="form-control" TextMode="Date" ReadOnly="true" ID="ViewNurseDutyEnddateTextBox"></asp:TextBox>
                                                                 </div>
                                                                  <div class="form-group">
                                                                      <div class="row">
                                                                     <div class="col-lg-12 text-left">
-                                                                        <asp:Button runat="server" CssClass="btn btn-default btn-danger" Text="BACK" />
+                                                                        <asp:Button runat="server" CssClass="btn btn-default btn-danger" Text="BACK" ID="ViewNurseDutyBackButton" OnClick="ViewNurseDutyBackButton_Click" />
                                                                     </div>
                                                                                                                                         
                                                                 </div>
@@ -1121,6 +1075,77 @@
                                         </div>
                                     </div>
 
+                                    <div class="tab-pane fade" id="attendancelog" runat="server">
+                                        <div class="col-md-12">
+                                            <div class="panel panel-default">
+                                                <div class="panel-body">
+                                                    <hr /> 
+                                                    <div class="form-group" id="ViewAttendanceLogListDiv" runat="server">                                                      
+                                                         <div class="form-group">
+                                                            <div class="row form-group">
+                                                                <div class="col-md-6 text-left">
+                                                                    <h4 class="text-left">ATTENDANCE LOG LIST</h4>
+                                                                </div>
+                                                                <div class="col-md-6 text-right">
+                                                                   
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                         <div class="form-group">
+                                                            <div class="row form-group">
+                                                                <div class="col-sm-2 form-group text-right"><h4 class="text-right"></h4> </div>
+                                                                <div class="col-sm-3 form-group text-left"> <asp:DropDownList runat="server" ID="AttendanceSearchEmployeeNameddl" CssClass="form-control"></asp:DropDownList></div>
+                                                                <div class="col-sm-2 form-group text-left"> <asp:Button runat="server" CssClass="btn btn-default btn-primary text-right" ID="AttendanceSearchButton" Text="SEARCH" OnClick="AttendanceSearchButton_Click" /></div> 
+                                                                <div class="col-sm-2 form-group text-right"> </div>
+                                                                <div class="col-sm-3 form-group text-left"></div>
+                                                                                                                             
+                                                            </div>
+                                                        </div>
+                                                        <div class="table-responsive">                                                            
+                                                            <asp:GridView ID="AttendanceLogListGridView" runat="server" AutoGenerateColumns="false" CssClass="table  table-bordered text-center" DataKeyNames="AttendanceID" EmptyDataText="There are no data records to display.">
+                                                                <Columns>
+                                                                    <asp:BoundField DataField="AttendanceID" HeaderText="AttendanceID" SortExpression="AttendanceID">
+                                                                        <HeaderStyle CssClass="hide" HorizontalAlign="Left" />
+                                                                        <ItemStyle CssClass="hide" HorizontalAlign="Left" />
+                                                                    </asp:BoundField>
+                                                                     <asp:TemplateField HeaderText="Employee">
+                                                                        <ItemTemplate>
+                                                                            <asp:Label runat="server" Text='<%#Pasture.GetEmployeeFullNameById(Convert.ToInt32(Eval("StaffID")))%>'></asp:Label>
+                                                                        </ItemTemplate>
+                                                                    </asp:TemplateField>
+                                                                    <asp:TemplateField HeaderText="DutyType">
+                                                                        <ItemTemplate>
+                                                                            <asp:Label runat="server" Text='<%#Pasture.GetDutyTypeNameByID(Convert.ToInt32(Eval("DutyID")))%>'></asp:Label>
+                                                                        </ItemTemplate>
+                                                                    </asp:TemplateField>
+                                                                    <asp:BoundField DataField="ClockInTime" HeaderText="ClockIn Time" SortExpression="ClockInTime" DataFormatString="{0:T}">
+                                                                        <HeaderStyle HorizontalAlign="Left" />
+                                                                        <ItemStyle HorizontalAlign="Left" />
+                                                                    </asp:BoundField>
+
+                                                                    <asp:BoundField DataField="ClockOutTime" HeaderText="ClockOut Time" SortExpression="ClockOutTime" DataFormatString="{0:T}">
+                                                                        <HeaderStyle HorizontalAlign="Left" />
+                                                                        <ItemStyle HorizontalAlign="Left" />
+                                                                    </asp:BoundField>
+
+                                                                    <asp:BoundField DataField="AttendanceDate" HeaderText="Attendance Date" SortExpression="AttendanceDate" DataFormatString="{0:d}">
+                                                                        <HeaderStyle HorizontalAlign="Left" />
+                                                                        <ItemStyle HorizontalAlign="Left" />
+                                                                    </asp:BoundField>
+                                                                    
+                                                                </Columns>
+
+
+                                                            </asp:GridView>
+
+                                                        </div>
+                                                    </div>                                                  
+                                                    <hr />
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
 
                                 </div>
                             </div>
@@ -1129,7 +1154,7 @@
                 </div>
                 <div class="row">
 
-                    <div class="col-md-12">
+                  <%--  <div class="col-md-12">
 
                         <div class="alert alert-info">
                             <asp:Button runat="server" ID="ShowAlertClick" Text="Show Note" CssClass="btn btn-default btn-primary" OnClick="ShowAlertClick_Click" />
@@ -1139,7 +1164,7 @@
                             <strong>ALERT EXAMPLE :</strong> This is an alert example . You can use differnt classes like alert-success, alert-warning,etc.
                         </div>
 
-                    </div>
+                    </div>--%>
                 </div>
             </div>
         </div>

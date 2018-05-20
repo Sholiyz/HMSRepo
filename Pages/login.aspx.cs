@@ -24,12 +24,9 @@ public partial class Pages_login : System.Web.UI.Page
             int valresponse = Pasture.VefiryLoginDetail(Username, Password);
             if (valresponse == 100)
             {
-                Pasture.CreateUserSession(Username);
-                //int useid = Pasture.GetCurrentUserSessionID();
-                string userrole= Pasture.GetCurrentUserSessionRole();
-                //AuthUser CurrentUser = Pasture.GetCurrentUserSessionDetail();
-                GetNavigateToPage(userrole);
-                //PastureAlert.PopSuccessAlert("Login Successful!!");
+                Pasture.CreateUserSession(Username);                
+                string userrole= Pasture.GetCurrentUserSessionRole();                
+                GetNavigateToPage(userrole);                
                 return;
             }
             if (valresponse == 101)

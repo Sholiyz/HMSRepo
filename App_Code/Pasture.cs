@@ -339,6 +339,21 @@ public partial class Pasture
         UserList = DBContext.AuthUsers.Where(u => u.IsDeleted == false).ToList();
         return UserList;
     }
+
+    public static List<AuthUser> GetUsersByEmpIDandUsername(int employeeid,string username)
+    {
+        DBContext = new HSMModelDataContext();
+        List<AuthUser> UserList = new List<AuthUser>();
+        UserList = DBContext.AuthUsers.Where(u => u.StaffID==employeeid && u.UserName.Contains(username) && u.IsDeleted == false).ToList();
+        return UserList;
+    }
+    public static List<AuthUser> GetUsersByUsername(string username)
+    {
+        DBContext = new HSMModelDataContext();
+        List<AuthUser> UserList = new List<AuthUser>();
+        UserList = DBContext.AuthUsers.Where(u => u.UserName.Contains(username) && u.IsDeleted == false).ToList();
+        return UserList;
+    }
     public static AuthUser GetUserByID(int userID)
     {
         DBContext = new HSMModelDataContext();
@@ -354,6 +369,8 @@ public partial class Pasture
        
         return EmployeeList.OrderBy(emp=> emp.FullName).ToList();
     }
+
+
     public static AuthUser GetUserByUsername(string username)
     {
         DBContext = new HSMModelDataContext();
@@ -602,7 +619,7 @@ public partial class Pasture
             DBContext = new HSMModelDataContext();
             int responce;
             newNurseDuty.CreatedByID = GetCurrentUserSessionID();
-            newNurseDuty.CreatedByDate = DateTime.Now;
+            newNurseDuty.CreatedByDate = DateTime.Now;            
             DBContext.NurseDuties.Add(newNurseDuty);
             responce = DBContext.SaveChanges();
             return responce;
@@ -752,6 +769,27 @@ public partial class Pasture
         DutyType dutyType = new DutyType();
         dutyType = DBContext.DutyTypes.Where(dt => dt.DutyTypeID == DutyTypeID).FirstOrDefault();
         return dutyType;
+    }
+    public static string GetDutyTypeNameByID(int DutyTypeID)
+    {
+        DBContext = new HSMModelDataContext();
+        string dutyTypename = "";// new DutyType();
+        dutyTypename = DBContext.DutyTypes.Where(dt => dt.DutyTypeID == DutyTypeID).FirstOrDefault().DutyTypeName;
+        return dutyTypename;
+    }
+    public static TimeSpan GetDutyTypeStartTimeByID(int DutyTypeID)
+    {
+        DBContext = new HSMModelDataContext();
+        TimeSpan dutyTypestarttime;//= "";// new DutyType();
+        dutyTypestarttime = (TimeSpan)DBContext.DutyTypes.Where(dt => dt.DutyTypeID == DutyTypeID).FirstOrDefault().StartTime;
+        return dutyTypestarttime;
+    }
+    public static TimeSpan GetDutyTypeEndTimeByID(int DutyTypeID)
+    {
+        DBContext = new HSMModelDataContext();
+        TimeSpan dutyTypeendtime;// = "";// new DutyType();
+        dutyTypeendtime =(TimeSpan) DBContext.DutyTypes.Where(dt => dt.DutyTypeID == DutyTypeID).FirstOrDefault().EndTime;
+        return dutyTypeendtime;
     }
     public static int AddNewDutyType(DutyType newDutyType)
     {
@@ -913,6 +951,13 @@ public partial class Pasture
         DBContext = new HSMModelDataContext();
         List<AttendanceLog> AttendanceLogList = new List<AttendanceLog>();
         AttendanceLogList = DBContext.AttendanceLogs.ToList();
+        return AttendanceLogList;
+    }
+    public static List<AttendanceLog> GetAttendanceLogByUserIDList(int userid)
+    {
+        DBContext = new HSMModelDataContext();
+        List<AttendanceLog> AttendanceLogList = new List<AttendanceLog>();
+        AttendanceLogList = DBContext.AttendanceLogs.Where(log=>log.StaffID==userid).OrderByDescending(atlog=> atlog.AttendanceDate).ToList();
         return AttendanceLogList;
     }
     public static int AddAttendanceLog(AttendanceLog newAttendanceLog)
