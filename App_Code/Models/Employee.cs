@@ -1,74 +1,65 @@
-﻿
-using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.Data.Entity.Spatial;
 
-[Table("Employee")]
-public partial class Employee
-{
-    public int EmployeeID { get; set; }
+    using System;
+    using System.Collections.Generic;
+    using System.ComponentModel.DataAnnotations;
+    using System.ComponentModel.DataAnnotations.Schema;
+    using System.Data.Entity.Spatial;
 
-    public int StaffTypeID { get; set; }
+    [Table("Employee")]
+    public partial class Employee
+    {
+        public int EmployeeID { get; set; }
 
-    [Required]
-    [StringLength(50)]
-    public string FirstName { get; set; }
+        public int StaffTypeID { get; set; }
 
-    [Required]
-    [StringLength(50)]
-    public string LastName { get; set; }
+        [Required]
+        [StringLength(50)]
+        public string FirstName { get; set; }
 
-    [StringLength(50)]
-    public string OtherNames { get; set; }
+        [Required]
+        [StringLength(50)]
+        public string LastName { get; set; }
 
-    [Required]
-    [StringLength(150)]
-    public string FullName { get; set; }
+        [StringLength(50)]
+        public string OtherNames { get; set; }
 
-    //private string _fullName;
+        [Required]
+        [StringLength(150)]
+        public string FullName { get; set; }
 
-    //public string FullName
-    //{
-    //    get { return FirstName + " " + LastName + " " + OtherNames; }
-    //    set { _fullName = value; }
-    //}
+        [StringLength(10)]
+        public string Gender { get; set; }
 
+        [StringLength(10)]
+        public string MaritalStatus { get; set; }
 
-    [StringLength(10)]
-    public string Gender { get; set; }
+        [StringLength(18)]
+        public string PhoneNumber { get; set; }
 
-    [StringLength(10)]
-    public string MaritalStatus { get; set; }
+        [StringLength(50)]
+        public string Address { get; set; }
 
-    [StringLength(18)]
-    public string PhoneNumber { get; set; }
+        [Column(TypeName = "image")]
+        public byte[] Picture { get; set; }
 
-    [StringLength(50)]
-    public string Address { get; set; }
+        [Column(TypeName = "date")]
+        public DateTime DOB { get; set; }
 
-    [Column(TypeName = "image")]
-    public byte[] Picture { get; set; }
+        [Column(TypeName = "date")]
+        public DateTime? DateEmployed { get; set; }
 
-    [Column(TypeName = "date")]
-    public DateTime DOB { get; set; }
+        public int CreatedByID { get; set; }
 
-    [Column(TypeName = "date")]
-    public DateTime? DateEmployed { get; set; }
+        public int? ModifiedByID { get; set; }
 
-    public int CreatedByID { get; set; }
+        [Column(TypeName = "date")]
+        public DateTime CreatedDate { get; set; }
 
-    public int? ModifiedByID { get; set; }
+        [Column(TypeName = "date")]
+        public DateTime? ModifiedDate { get; set; }
 
-    [Column(TypeName = "date")]
-    public DateTime CreatedDate { get; set; }
+        public bool IsActive { get; set; }
 
-    [Column(TypeName = "date")]
-    public DateTime? ModifiedDate { get; set; }
-
-    public bool IsActive { get; set; }
-
-    public bool IsDeleted { get; set; }
-}
+        public bool IsDeleted { get; set; }
+    }
 

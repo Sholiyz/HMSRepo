@@ -12,7 +12,7 @@ public partial class Pages_admin_portal : System.Web.UI.Page
         if (!IsPostBack)
         {
             string role = Pasture.GetCurrentUserSessionRole();
-            ManageRoleView("admin");
+            ManageRoleView(role);
             SetDefualtView();
         }
         
@@ -32,7 +32,6 @@ public partial class Pages_admin_portal : System.Web.UI.Page
 
 
     }
-
     protected void ShowPopAlert_Click(object sender, EventArgs e)
     {
         //Call Pop up Alert
@@ -41,8 +40,6 @@ public partial class Pages_admin_portal : System.Web.UI.Page
         //Alert.CallAlert(Alert.Alerttype.error.ToString(), "Operation can not be done.");
         return;
     }
-
-
 
     #region Manage Page Nav
 
@@ -191,9 +188,11 @@ public partial class Pages_admin_portal : System.Web.UI.Page
         BindAttendanceLogList();
         PopulateEmployeelist(AttendanceSearchEmployeeNameddl);
     }
+
     #endregion
 
     #region Manage MenuNav
+
     private void ManageRoleView(string rolename)
     {
 
@@ -233,7 +232,6 @@ public partial class Pages_admin_portal : System.Web.UI.Page
         }
 
     }
-
     private void HideAllMenuNav()
     {
         dashboard.Visible = false;
@@ -246,6 +244,7 @@ public partial class Pages_admin_portal : System.Web.UI.Page
     #endregion
 
     #region Populate DroupDownlist
+
     private void PopulateRolelist(DropDownList ddlistname)
     {
         //AuthRole role = new AuthRole();        
@@ -669,6 +668,7 @@ public partial class Pages_admin_portal : System.Web.UI.Page
         ViewUserCreationDiv.Visible = false;
         EditUserDiv.Visible = false;
     }
+
     #endregion
 
     #region TranxType
@@ -1601,6 +1601,7 @@ public partial class Pages_admin_portal : System.Web.UI.Page
     #endregion
 
     #region Assign Nurse Duty
+
     protected void AssignNurseDutyBackButton_Click(object sender, EventArgs e)
     {
         HideNurseDutyViews();
@@ -1819,7 +1820,10 @@ public partial class Pages_admin_portal : System.Web.UI.Page
         EditNurseDutyDiv.Visible = false;
         ViewNurseDutyDiv.Visible = false;
     }
+
     #endregion
+
+    #region Page Search Event
 
     protected void UserSearchButton_Click(object sender, EventArgs e)
     {
@@ -1833,25 +1837,27 @@ public partial class Pages_admin_portal : System.Web.UI.Page
         {
             UserListGridView.DataSource = Pasture.GetUsersByUsername(Hmsuserid);
         }
-        
-       
-        UserListGridView.DataBind();
-        PopulateEmployeelist(UserSearchEmployeeNameddl);
-    }
 
+
+        UserListGridView.DataBind();
+        //PopulateEmployeelist(UserSearchEmployeeNameddl);
+    }
     protected void AttendanceSearchButton_Click(object sender, EventArgs e)
     {
         int userid = Convert.ToInt32(AttendanceSearchEmployeeNameddl.SelectedValue.ToString());
         if (userid > 0)
         {
-AttendanceLogListGridView.DataSource= Pasture.GetAttendanceLogByUserIDList(userid);
-        AttendanceLogListGridView.DataBind();
-        PopulateEmployeelist(AttendanceSearchEmployeeNameddl);
+            AttendanceLogListGridView.DataSource = Pasture.GetAttendanceLogByUserIDList(userid);
+            AttendanceLogListGridView.DataBind();
+            //PopulateEmployeelist(AttendanceSearchEmployeeNameddl);
         }
         else
         {
             BindAttendanceLogList();
         }
-        
+
     }
+
+    #endregion
+
 }

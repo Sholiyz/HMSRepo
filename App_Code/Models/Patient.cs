@@ -39,6 +39,8 @@
         [StringLength(50)]
         public string Address { get; set; }
 
+        public int PlanTypeID { get; set; }
+
         [Column(TypeName = "image")]
         public byte[] Picture { get; set; }
 

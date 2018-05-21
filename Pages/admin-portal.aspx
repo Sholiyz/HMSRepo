@@ -13,11 +13,11 @@
                 <div class="col-md-12">
                     <div class="navbar-collapse collapse ">
                         <ul id="menu-top" class="nav navbar-nav navbar-right">
-                            <li runat="server" id="dashboard" ><a href="./dashboard.aspx">Dashboard</a></li>
-                            <li runat="server" id="patientsportal"><a href="./patient-portal.aspx">Patient's Portal</a></li>
-                            <li runat="server" id="nursesportal"><a href="./nurse-portal.aspx">Nurse's Portal</a></li>
-                            <li runat="server" id="doctorsportal"><a href="./doctors-portal.aspx">Doctor's Portal</a></li>
-                            <li runat="server" id="adminportal"><a class="menu-top-active" href="./admin-portal.aspx">Admin Portal</a></li>
+                            <li runat="server" id="dashboard"      ><a href="./dashboard.aspx">Dashboard</a></li>
+                            <li runat="server" id="patientsportal" ><a href="./patient-portal.aspx">Patient's Portal</a></li>
+                            <li runat="server" id="nursesportal"  ><a href="./nurse-portal.aspx">Nurse's Portal</a></li>
+                            <li runat="server" id="doctorsportal" ><a href="./doctors-portal.aspx">Doctor's Portal</a></li>
+                            <li runat="server" id="adminportal"   ><a class="menu-top-active" href="./admin-portal.aspx">Admin Portal</a></li>
                         </ul>
                     </div>
                 </div>
@@ -191,10 +191,7 @@
                                                                         </ItemTemplate>
                                                                     </asp:TemplateField>
                                                                 </Columns>
-
-
                                                             </asp:GridView>
-
                                                         </div>
                                                     </div>
                                                     <%--<hr />--%>

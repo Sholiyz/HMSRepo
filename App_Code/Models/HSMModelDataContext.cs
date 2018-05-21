@@ -58,6 +58,10 @@
                 .Property(e => e.Gender)
                 .IsUnicode(false);
 
+            modelBuilder.Entity<Employee>()
+                .Property(e => e.MaritalStatus)
+                .IsUnicode(false);
+
             modelBuilder.Entity<FamilyMember>()
                 .Property(e => e.Gender)
                 .IsUnicode(false);

@@ -532,6 +532,13 @@ public partial class Pasture
         PatientList = DBContext.Patients.Where(p => p.IsDeleted == false).ToList();
         return PatientList;
     }
+    public static List<Patient> GetPatientsWithFamilyPlan()
+    {
+        DBContext = new HSMModelDataContext();
+        List<Patient> PatientList = new List<Patient>();
+        PatientList = DBContext.Patients.Where(p => p.PlanTypeID > 1 && p.IsDeleted == false).ToList();
+        return PatientList;
+    }
     public static Patient GetPatientListByID(int patientID)
     {
         DBContext = new HSMModelDataContext();
