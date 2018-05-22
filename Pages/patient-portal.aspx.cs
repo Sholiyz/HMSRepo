@@ -12,8 +12,18 @@ public partial class Pages_patient_portal : System.Web.UI.Page
         if (!IsPostBack)
         {
             string role = Pasture.GetCurrentUserSessionRole();
-            ManageRoleView(role);
-            SetDefualtView();
+            if(role != null)
+            {
+                ManageRoleView(role);
+                SetDefualtView();
+            }
+            else
+            {
+                Response.Redirect("./login.aspx");
+                return;
+            }
+
+            
         }
         
     }
@@ -118,7 +128,15 @@ public partial class Pages_patient_portal : System.Web.UI.Page
             consultation.Visible = true;
             consultation.Attributes["class"] = "tab-pane fade active in";
             return;
-        }        
+        }
+        if (NavtabName.ToLower() == "vitalsign")
+        {
+            HideContentView();
+            vitalsignli.Attributes["class"] = "active";
+            vitalsign.Visible = true;
+            vitalsign.Attributes["class"] = "tab-pane fade active in";
+            return;
+        }
 
     }
     private void HideContentView()
@@ -131,6 +149,9 @@ public partial class Pages_patient_portal : System.Web.UI.Page
 
         consultation.Visible = false;
         consultationli.Attributes["class"] = "";
+
+        vitalsign.Visible = false;
+        vitalsignli.Attributes["class"] = "";
 
     }
     private void ManageRoleView(string rolename)
@@ -204,7 +225,15 @@ public partial class Pages_patient_portal : System.Web.UI.Page
     protected void ConsultationDivNav_Click(object sender, EventArgs e)
     {
         SetActiveContainerVisible("consultation");
-        HidePatientViews();        
+        HideConsultationViews();
+        AddNewConsultationDiv.Visible = true;     
+    }
+
+    protected void VitalSignDivNav_Click(object sender, EventArgs e)
+    {
+        SetActiveContainerVisible("vitalsign");
+        HideVitalSignViews();
+        AddNewVitalSignDiv.Visible = true;
     }
     private void HideAllMenuNav()
     {
@@ -216,6 +245,7 @@ public partial class Pages_patient_portal : System.Web.UI.Page
     }
 
     #endregion
+
     #region Populate DroupDownList
     //Addpatientplantypelistddl
     private void PopulatePatientPlanTypelist(DropDownList ddlistname)
@@ -267,5 +297,28 @@ public partial class Pages_patient_portal : System.Web.UI.Page
     }
     #endregion
 
-    
+    #region Consultation
+    private void HideConsultationViews()
+    {
+        AddNewConsultationDiv.Visible = false;
+        ViewConsultaionListDiv.Visible = false;
+        ViewConsultationDiv.Visible = false;
+        EditConsultationDiv.Visible = false;
+    }
+
+    #endregion
+
+    #region Vital Sign
+    private void HideVitalSignViews()
+    {
+        AddNewVitalSignDiv.Visible = false;
+        ViewVitalSignListDiv.Visible = false;
+        ViewVitalSignDiv.Visible = false;
+        EditVitalSignDiv.Visible = false;
+    }
+    #endregion Vital Sign
+
+
+
+
 }

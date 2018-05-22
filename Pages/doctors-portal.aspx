@@ -478,19 +478,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="row">
-                       <div class="col-md-12">
-
-                        <div class="alert alert-info">
-                            <asp:Button runat="server" ID="ShowAlertClick" Text="Show Note" CssClass="btn btn-default btn-primary" OnClick="ShowAlertClick_Click" />
-                            <asp:Button runat="server" ID="ShowPopAlert" Text="Show pop Note" CssClass="btn btn-default btn-primary" OnClick="ShowPopAlert_Click" />
-                            Click to test Notification Message
-                            <br />
-                            <strong>ALERT EXAMPLE :</strong> This is an alert example . You can use differnt classes like alert-success, alert-warning,etc.
-                        </div>
-
-                    </div>
-                    </div>
+                   
                 </div>
             </div>
         </div>

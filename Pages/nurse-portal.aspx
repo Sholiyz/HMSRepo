@@ -46,7 +46,7 @@
                                     <ul class="nav nav-tabs">
                                         <li class="active"><a href="#nurse" data-toggle="tab">Add Nurse</a>
                                         </li>
-                                        <li class=""><a href="#profile" data-toggle="tab">View Nurse</a>
+                                        <li class=""><a href="#attendance" data-toggle="tab">ATTENDANCE</a>
                                         </li>
                                         <li class=""><a href="#messages" data-toggle="tab">Messages</a>
                                         </li>
@@ -338,6 +338,63 @@
                                                 </div>
                                             </div>
                                         </div>
+                                        <div class="tab-pane fade" id="attendance" >
+                                          
+                                            <div class="col-md-12">
+                                                <div class="panel panel-default">
+                                                    
+                                                    <div class="panel-body">
+                                                        <hr />
+                                                       <div class="form-group" id="DorctorAttendanceDiv" runat="server">
+                                                         <div class="form-group">
+                                                            <div class="row form-group">
+                                                                <div class="col-md-6 text-left">
+                                                                    <h4>ATTENDANCE</h4>
+                                                                </div>
+                                                                <div class="col-md-6 text-right">
+                                                                    
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col-lg-3">
+                                                            </div>
+                                                            <div class="col-lg-6">                                                         
+                                                               <div class="form-group">
+                                                                    <label class="control-label">WELCOME CLICK SIGN IN FOR TODAY'S DUTY</label>                                                                   
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <label class="control-label">EMPLOYEE NAME</label>
+                                                                    <asp:TextBox runat="server" CssClass="form-control" ReadOnly="true"></asp:TextBox>
+                                                                </div>                                                                
+                                                                <div class="form-group">
+                                                                    <label class="control-label">TIME</label>
+                                                                    <asp:TextBox runat="server" Text="" ID="AttendanceCurrentTime" CssClass="form-control" ReadOnly="true"></asp:TextBox>
+                                                                    
+                                                                </div>                                                                                                                               
+                                                                 <div class="form-group">
+                                                                     <div class="row">
+                                                                    <div class="col-lg-6 text-left">
+                                                                       
+                                                                    </div>
+                                                                     <div class="col-lg-6 text-right">
+                                                                         <asp:Button runat="server" CssClass="btn btn-default btn-primary" ID="AttendanceSigninButton" Text="SIGN IN" />
+                                                                    </div>                                                                    
+                                                                </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-lg-3">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                         
+                                                        <hr />
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+
                                         <div class="tab-pane fade" id="profile">
                                             <h4>Profile Tab</h4>
                                             <div class="col-md-12">
