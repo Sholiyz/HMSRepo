@@ -471,9 +471,9 @@
                                                             </div>
                                                         </div>
                                                         <div class="table-responsive">
-                                                            <asp:GridView ID="RoleListGrid" runat="server" AutoGenerateColumns="false" CssClass="table  table-bordered table-condensed text-center" DataKeyNames="RoleID" EmptyDataText="There are no data records to display.">
+                                                            <asp:GridView ID="RoleListGrid" runat="server" AutoGenerateColumns="false" CssClass="table  table-bordered table-condensed text-center pager" DataKeyNames="RoleID" EmptyDataText="There are no data records to display.">
                                                                 <Columns>
-                                                                    <asp:BoundField DataField="RoleID" HeaderText="Role ID" SortExpression="RoleID">
+                                                                    <asp:BoundField DataField="RoleID" HeaderText="Role ID" SortExpression="RoleID" ItemStyle-BackColor="#00000A">
                                                                         <HeaderStyle CssClass="hide" HorizontalAlign="Left" />
                                                                         <ItemStyle CssClass="hide" HorizontalAlign="Left" />
                                                                     </asp:BoundField>

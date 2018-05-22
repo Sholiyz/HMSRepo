@@ -11,9 +11,22 @@ public partial class Pages_admin_portal : System.Web.UI.Page
     {
         if (!IsPostBack)
         {
+           if (!IsPostBack)
+        {
             string role = Pasture.GetCurrentUserSessionRole();
-            ManageRoleView(role);
-            SetDefualtView();
+            if(role != null)
+            {
+                ManageRoleView(role);
+                SetDefualtView();
+            }
+            else
+            {
+                Response.Redirect("./login.aspx");
+                return;
+            }
+
+            
+        }
         }
         
     }
