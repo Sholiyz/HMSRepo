@@ -905,8 +905,291 @@
 
                                     </div>
                                     <div class="tab-pane fade" id="consultation" runat="server">
-                                        <h4>Messages Tab</h4>
-                                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+                                        <div class="col-md-12">
+                                            <div class="panel panel-default">
+                                                <%--<div class="panel-heading">
+                                                    CONSULTATION MANAGEMENT
+                                                </div>--%>
+                                                <div class="panel-body">
+                                                    <hr />
+                                                    <div class="form-group" id="ViewConsultaionListDiv" runat="server">                                                       
+                                                           <div class="form-group">
+                                                            <div class="row form-group">
+                                                                <div class="col-md-4 text-left">
+                                                                    <h4 class="text-left">CONSULTATION LIST</h4>
+                                                                </div>
+                                                                <div class="col-md-4 text-right">
+                                                                    <asp:Button runat="server" CssClass="btn btn-default btn-primary text-right" Text="ADD NEW CONSULTATION" />
+                                                                </div>
+                                                                <div class="col-md-4 text-right">
+                                                                    <asp:Button runat="server" CssClass="btn btn-default btn-primary text-right" Text="ADD NEW VITAL SIGN" />
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="table-responsive">                                                           
+                                                            <asp:GridView ID="ConsultationListGridView" runat="server" AutoGenerateColumns="false" CssClass="table  table-bordered text-center text-center" DataKeyNames="ID" EmptyDataText="There are no data records to display.">
+                                                                <Columns>
+                                                                    <asp:BoundField DataField="ID" HeaderText="Order ID" SortExpression="ID">
+                                                                        <HeaderStyle CssClass="hide" HorizontalAlign="Left" />
+                                                                        <ItemStyle CssClass="hide" HorizontalAlign="Left" />
+                                                                    </asp:BoundField>
+                                                                    <asp:BoundField DataField="FULLNAME" HeaderText="Order Name" SortExpression="Name">
+                                                                        <HeaderStyle HorizontalAlign="Left" />
+                                                                        <ItemStyle HorizontalAlign="Left" />
+                                                                    </asp:BoundField>
+                                                                    <asp:BoundField DataField="PLAN" HeaderText="Price" SortExpression="Price">
+                                                                        <HeaderStyle HorizontalAlign="Left" />
+                                                                        <ItemStyle HorizontalAlign="Left" />
+                                                                    </asp:BoundField>
+
+                                                                    <asp:TemplateField HeaderText="CURRENT MEMBER">
+                                                                        <ItemTemplate>
+                                                                            <asp:Label runat="server" Text='<%#GetIsProcessStatus(Convert.ToBoolean(Eval("IsProcessing")))%>'></asp:Label>
+                                                                        </ItemTemplate>
+                                                                    </asp:TemplateField>
+                                                                    <asp:TemplateField HeaderText="MAXIMUM MEMBER">
+                                                                        <ItemTemplate>
+                                                                            <asp:Label runat="server" Text='<%#GetIsDeliveredStatus(Convert.ToBoolean(Eval("IsDelivered")))%>'></asp:Label>
+                                                                        </ItemTemplate>
+                                                                    </asp:TemplateField>
+                                                                    <asp:TemplateField HeaderText="Canceled Status">
+                                                                        <ItemTemplate>
+                                                                            <asp:Label runat="server" Text='<%#GetIsCancelledStatus(Convert.ToBoolean(Eval("IsCancelled")))%>'></asp:Label>
+                                                                        </ItemTemplate>
+                                                                    </asp:TemplateField>
+                                                                    <asp:TemplateField HeaderText="Actions" HeaderStyle-CssClass="center text-center" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center" ItemStyle-VerticalAlign="Middle">
+                                                                        <ItemTemplate>
+                                                                            <div class="form-actions text-center">
+                                                                                <%--<asp:Button runat="server" Text="Processing" ID="lnkView" Enabled='<%#Eval("IsProcessing") %>' CssClass="btn btn-xs btn-success" />--%>
+                                                                                <asp:Button runat="server" Text="ADD MEMBER" ID="CancelRoleBtn" Enabled='<%# (((Convert.ToBoolean(Eval("IsProcessing")) == true || Convert.ToBoolean(Eval("IsDelivered")) == true)|| Convert.ToBoolean(Eval("IsCancelled")) == true) ? false : true) %>' CssClass="btn btn-md btn-success" />
+                                                                                <asp:Button runat="server" Text="VIEW MEMBER" ID="EditRoleBtn" Enabled='<%# (((Convert.ToBoolean(Eval("IsProcessing")) == true || Convert.ToBoolean(Eval("IsDelivered")) == true)|| Convert.ToBoolean(Eval("IsCancelled")) == true) ? false : true) %>' CssClass="btn btn-md btn-warning" />
+                                                                            </div>
+                                                                        </ItemTemplate>
+                                                                    </asp:TemplateField>
+                                                                </Columns>
+                                                            </asp:GridView>
+                                                        </div>
+                                                    </div>                                                    
+                                                    <%--<hr /> --%>
+                                                                                                    
+                                                    <div class="form-group" id="AddNewConsultationDiv" runat="server">
+                                                        <div class="form-group">
+                                                            <div class="row form-group">
+                                                                <div class="col-md-6 text-left">
+                                                                    <h4 class="text-left">ADD NEW CONSULTATION</h4>
+                                                                </div>
+                                                                <div class="col-md-6 text-right">
+                                                                    
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col-lg-3">
+                                                            </div>
+                                                            <div class="col-lg-6">                                                            
+                                                               
+                                                                <div class="form-group">
+                                                                    <label class="control-label">SELECT PATIENT</label>
+                                                                    <asp:DropDownList runat="server" ID="AddConsultationPatientlistddl" CssClass="form-control"></asp:DropDownList>
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <label class="control-label">SYMPTUMS</label>
+                                                                    <asp:TextBox runat="server" CssClass="form-control"></asp:TextBox>
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <label class="control-label">DIAGNOSIS</label>
+                                                                    <asp:TextBox runat="server" CssClass="form-control"></asp:TextBox>
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <label class="control-label">PRESCRIPTION</label>
+                                                                    <asp:DropDownList runat="server" CssClass="form-control"></asp:DropDownList>
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <label class="control-label">NOTE</label>
+                                                                    <asp:TextBox runat="server" TextMode="Phone" CssClass="form-control"></asp:TextBox>
+                                                                </div>                                                                
+                                                                 <div class="form-group">
+                                                                     <div class="row">
+                                                                    <div class="col-lg-6 text-left">
+                                                                        <asp:Button runat="server" CssClass="btn btn-default btn-danger" Text="BACK" />
+                                                                    </div>
+                                                                     <div class="col-lg-6 text-right">
+                                                                         <asp:Button runat="server" CssClass="btn btn-default btn-primary" Text="UPDATE" />
+                                                                    </div>                                                                    
+                                                                </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-lg-3">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    
+                                                    <div class="form-group" id="EditConsultationDiv" runat="server">
+                                                         <div class="form-group">
+                                                            <div class="row form-group">
+                                                                <div class="col-md-6 text-left">
+                                                                    <h4>EDIT CONSULTATION</h4> 
+                                                                </div>
+                                                                <div class="col-md-6 text-right">
+                                                                   
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col-lg-3">
+                                                            </div>
+                                                            <div class="col-lg-6">                                                            
+                                                               
+                                                                <div class="form-group">
+                                                                    <label class="control-label">PATIENT NAME</label>
+                                                                     <asp:TextBox runat="server" CssClass="form-control"></asp:TextBox>
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <label class="control-label">SYMPTUMS</label>
+                                                                    <asp:TextBox runat="server" CssClass="form-control"></asp:TextBox>
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <label class="control-label">DIAGNOSIS</label>
+                                                                    <asp:TextBox runat="server" CssClass="form-control"></asp:TextBox>
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <label class="control-label">PRESCRIPTION</label>
+                                                                    <asp:DropDownList runat="server" CssClass="form-control"></asp:DropDownList>
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <label class="control-label">NOTE</label>
+                                                                    <asp:TextBox runat="server" TextMode="Phone" CssClass="form-control"></asp:TextBox>
+                                                                </div>                                                                
+                                                                 <div class="form-group">
+                                                                     <div class="row">
+                                                                    <div class="col-lg-6 text-left">
+                                                                        <asp:Button runat="server" CssClass="btn btn-default btn-danger" Text="BACK" />
+                                                                    </div>
+                                                                     <div class="col-lg-6 text-right">
+                                                                         <asp:Button runat="server" CssClass="btn btn-default btn-primary" Text="UPDATE" />
+                                                                    </div>                                                                    
+                                                                </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-lg-3">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    
+                                                    <div class="form-group" id="ViewConsultationDiv" runat="server">
+                                                         <div class="form-group">
+                                                            <div class="row form-group">
+                                                                <div class="col-md-6 text-left">
+                                                                    <h4>VIEW CONSULTATION</h4>
+                                                                </div>
+                                                                <div class="col-md-6 text-right">
+                                                                    
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col-lg-3">
+                                                            </div>
+                                                            <div class="col-lg-6">                                                            
+                                                               
+                                                               <div class="form-group">
+                                                                    <label class="control-label">PATIENT NAME</label>
+                                                                     <asp:TextBox runat="server" CssClass="form-control"></asp:TextBox>
+                                                                </div> 
+                                                                <div class="form-group">
+                                                                    <label class="control-label">SYMPTUMS</label>
+                                                                    <asp:TextBox runat="server" CssClass="form-control"></asp:TextBox>
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <label class="control-label">DIAGNOSIS</label>
+                                                                    <asp:TextBox runat="server" CssClass="form-control"></asp:TextBox>
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <label class="control-label">PRESCRIPTION</label>
+                                                                    <asp:DropDownList runat="server" CssClass="form-control"></asp:DropDownList>
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <label class="control-label">NOTE</label>
+                                                                    <asp:TextBox runat="server" TextMode="Phone" CssClass="form-control"></asp:TextBox>
+                                                                </div>                                                                
+                                                                 <div class="form-group">
+                                                                     <div class="row">
+                                                                    <div class="col-lg-6 text-left">
+                                                                        <asp:Button runat="server" CssClass="btn btn-default btn-danger" Text="BACK" />
+                                                                    </div>
+                                                                     <div class="col-lg-6 text-right">
+                                                                         <asp:Button runat="server" CssClass="btn btn-default btn-primary" Text="UPDATE" />
+                                                                    </div>                                                                    
+                                                                </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-lg-3">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="form-group" id="AddCosultationVitalSignDiv" runat="server">
+                                                         <div class="form-group">
+                                                            <div class="row form-group">
+                                                                <div class="col-md-6 text-left">
+                                                                    <h4>ADD PATIENT VITAL SIGN</h4>
+                                                                </div>
+                                                                <div class="col-md-6 text-right">
+                                                                    
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col-lg-3">
+                                                            </div>
+                                                            <div class="col-lg-6">
+
+                                                                <div class="form-group">
+                                                                    <label class="control-label">SELECT PATIENT</label>
+                                                                    <asp:DropDownList runat="server" ID="AddVitalConsultationPatientddl" CssClass="form-control"></asp:DropDownList>
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <label class="control-label">Temprature</label>
+                                                                    <asp:TextBox runat="server" TextMode="Number" CssClass="form-control"></asp:TextBox>
+                                                                </div> 
+                                                                <div class="form-group">
+                                                                    <label class="control-label">Pulse</label>
+                                                                    <asp:TextBox runat="server" TextMode="Number" CssClass="form-control"></asp:TextBox>
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <label class="control-label">Respiration</label>
+                                                                    <asp:TextBox runat="server" TextMode="Number" CssClass="form-control"></asp:TextBox>
+                                                                </div> 
+                                                                <div class="form-group">
+                                                                    <label class="control-label">BloodPressure</label>
+                                                                    <asp:TextBox runat="server" TextMode="Number" CssClass="form-control"></asp:TextBox>
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <label class="control-label">Weight</label>
+                                                                    <asp:TextBox runat="server" TextMode="Number" CssClass="form-control"></asp:TextBox>
+                                                                </div>  
+                                                                <div class="form-group">
+                                                                    <label class="control-label">Height</label>
+                                                                    <asp:TextBox runat="server" TextMode="Number" CssClass="form-control"></asp:TextBox>
+                                                                </div>  
+                                                                <div class="form-group">
+                                                                     <div class="row">
+                                                                    <div class="col-lg-12 text-left">
+                                                                        <asp:Button runat="server" CssClass="btn btn-default btn-danger" Text="BACK" />
+                                                                    </div>
+                                                                                                                                        
+                                                                </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-lg-3">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <hr />
+                                                     
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                     
                                 </div>

@@ -245,8 +245,7 @@
                                                             </asp:GridView>
 
                                                         </div>
-                                                    </div>
-                                                    
+                                                    </div>                                                   
 
                                                         <%-- =====================================EDIT DOCTOR PROFILE======================================= --%>
                                                     <div class="form-group" id="EditDoctorDiv" runat="server">
@@ -411,49 +410,53 @@
                                           
                                             <div class="col-md-12">
                                                 <div class="panel panel-default">
-                                                    <div class="panel-heading">
-                                                        NURSE FORM
-                                                    </div>
+                                                    
                                                     <div class="panel-body">
-                                                        <div role="form">
-                                                            <div class="form-group has-success">
-                                                                <label class="control-label" for="success">SUCCESS EXAMPLE</label>
-                                                                <input type="text" class="form-control" id="success" />
-                                                            </div>
-                                                            <div class="form-group has-warning">
-                                                                <label class="control-label" for="warning">WARNING EXAMPLE</label>
-                                                                <input type="text" class="form-control" id="warning" />
-                                                            </div>
-                                                            <div class="form-group has-error">
-                                                                <label class="control-label" for="error">ERROR EXAMPLE</label>
-                                                                <input type="text" class="form-control" id="error" />
+                                                        <hr />
+                                                       <div class="form-group" id="DorctorAttendanceDiv" runat="server">
+                                                         <div class="form-group">
+                                                            <div class="row form-group">
+                                                                <div class="col-md-6 text-left">
+                                                                    <h4>ATTENDANCE</h4>
+                                                                </div>
+                                                                <div class="col-md-6 text-right">
+                                                                    
+                                                                </div>
                                                             </div>
                                                         </div>
-                                                        <hr />
-                                                        <div class="form-group">
-                                                            <label>Select Example</label>
-                                                            <select class="form-control">
-                                                                <option>One Vale</option>
-                                                                <option>Two Vale</option>
-                                                                <option>Three Vale</option>
-                                                                <option>Four Vale</option>
-                                                            </select>
+                                                        <div class="row">
+                                                            <div class="col-lg-3">
+                                                            </div>
+                                                            <div class="col-lg-6">                                                         
+                                                               <div class="form-group">
+                                                                    <label class="control-label">WELCOME CLICK SIGN IN FOR TODAY'S DUTY</label>                                                                   
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <label class="control-label">EMPLOYEE NAME</label>
+                                                                    <asp:TextBox runat="server" CssClass="form-control" ReadOnly="true"></asp:TextBox>
+                                                                </div>                                                                
+                                                                <div class="form-group">
+                                                                    <label class="control-label">TIME</label>
+                                                                    <asp:TextBox runat="server" Text="" ID="AttendanceCurrentTime" CssClass="form-control" ReadOnly="true"></asp:TextBox>
+                                                                    
+                                                                </div>                                                                                                                               
+                                                                 <div class="form-group">
+                                                                     <div class="row">
+                                                                    <div class="col-lg-6 text-left">
+                                                                       
+                                                                    </div>
+                                                                     <div class="col-lg-6 text-right">
+                                                                         <asp:Button runat="server" CssClass="btn btn-default btn-primary" ID="AttendanceSigninButton" Text="SIGN IN" />
+                                                                    </div>                                                                    
+                                                                </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-lg-3">
+                                                            </div>
                                                         </div>
+                                                    </div>
+                         
                                                         <hr />
-                                                        <div class="form-group">
-                                                            <label>Multiple Select Example</label>
-                                                            <select multiple="" class="form-control">
-                                                                <option>One Vale</option>
-                                                                <option>Two Vale</option>
-                                                                <option>Three Vale</option>
-                                                                <option>Four Vale</option>
-                                                            </select>
-                                                        </div>
-                                                        <hr />
-                                                        For more customization for this template or its components please
-                             visit official bootstrap website i.e <strong>getbootstrap.com </strong>or
-                            <a href="http://getbootstrap.com/css/#forms" target="_blank">click here</a>
-
                                                     </div>
                                                 </div>
                                             </div>

@@ -983,6 +983,14 @@ public partial class Pasture
         AttendanceLogList = DBContext.AttendanceLogs.Where(log=>log.StaffID==userid).OrderByDescending(atlog=> atlog.AttendanceDate).ToList();
         return AttendanceLogList;
     }
+
+    public static int GetUnlockedAttendanceLogByUserIDList(int userid)
+    {
+        DBContext = new HSMModelDataContext();
+        int UnlockedAttendance = 0; 
+        UnlockedAttendance = DBContext.AttendanceLogs.Where(log => log.StaffID == userid && log.IsLocked==false).Count();
+        return UnlockedAttendance;
+    }
     public static int AddAttendanceLog(AttendanceLog newAttendanceLog)
     {
         try
@@ -1053,6 +1061,7 @@ public partial class Pasture
         }
 
     }
+
 
     #endregion
 
@@ -1615,6 +1624,11 @@ public partial class Pasture
             }
 
         }
+    }
+
+    public static string GetAttendanceDateTime()
+    {
+        return DateTime.Now.ToString("hh:mm:ss tt");
     }
     private static string ProtectPassword(string input)
     {

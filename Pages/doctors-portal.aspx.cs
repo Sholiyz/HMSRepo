@@ -12,6 +12,26 @@ public partial class Pages_doctors_portal : System.Web.UI.Page
     bool IsPageRefresh = false;
     protected void Page_Load(object sender, EventArgs e)
     {
+        AuthUser CurrentUser = Pasture.GetCurrentUserSessionDetail();
+
+        if(CurrentUser != null)
+        {
+            int haveopenedattendance =Pasture.GetUnlockedAttendanceLogByUserIDList(CurrentUser.StaffID);
+            if (haveopenedattendance > 0)
+            {
+                //open doctors portal
+                AttendanceSigninButton.Text = "SIGN OUT";
+            }
+            else
+            {
+                //open attendace sheet
+                SetAttendanceContainerVisible();
+                AttendanceCurrentTime.Text = Pasture.GetAttendanceDateTime();
+            }
+        }
+
+
+
         if (!Page.IsPostBack)
         {
             ViewState["ViewStateId"] = System.Guid.NewGuid().ToString();
