@@ -985,19 +985,19 @@
                                                                 </div>
                                                                 <div class="form-group">
                                                                     <label class="control-label">SYMPTUMS</label>
-                                                                    <asp:TextBox runat="server" CssClass="form-control"></asp:TextBox>
+                                                                    <asp:TextBox runat="server" TextMode="MultiLine" CssClass="form-control"></asp:TextBox>
                                                                 </div>
                                                                 <div class="form-group">
                                                                     <label class="control-label">DIAGNOSIS</label>
-                                                                    <asp:TextBox runat="server" CssClass="form-control"></asp:TextBox>
+                                                                    <asp:TextBox runat="server" TextMode="MultiLine"  CssClass="form-control"></asp:TextBox>
                                                                 </div>
                                                                 <div class="form-group">
                                                                     <label class="control-label">PRESCRIPTION</label>
-                                                                    <asp:DropDownList runat="server" CssClass="form-control"></asp:DropDownList>
+                                                                    <asp:TextBox runat="server" TextMode="MultiLine"  CssClass="form-control"></asp:TextBox>
                                                                 </div>
                                                                 <div class="form-group">
                                                                     <label class="control-label">NOTE</label>
-                                                                    <asp:TextBox runat="server" TextMode="Phone" CssClass="form-control"></asp:TextBox>
+                                                                    <asp:TextBox runat="server" TextMode="MultiLine"  CssClass="form-control"></asp:TextBox>
                                                                 </div>
                                                                 <div class="form-group">
                                                                     <div class="row">
@@ -1036,19 +1036,19 @@
                                                                 </div>
                                                                 <div class="form-group">
                                                                     <label class="control-label">SYMPTUMS</label>
-                                                                    <asp:TextBox runat="server" CssClass="form-control"></asp:TextBox>
+                                                                    <asp:TextBox runat="server" TextMode="MultiLine"  CssClass="form-control"></asp:TextBox>
                                                                 </div>
                                                                 <div class="form-group">
                                                                     <label class="control-label">DIAGNOSIS</label>
-                                                                    <asp:TextBox runat="server" CssClass="form-control"></asp:TextBox>
+                                                                    <asp:TextBox runat="server" TextMode="MultiLine"  CssClass="form-control"></asp:TextBox>
                                                                 </div>
                                                                 <div class="form-group">
                                                                     <label class="control-label">PRESCRIPTION</label>
-                                                                    <asp:DropDownList runat="server" CssClass="form-control"></asp:DropDownList>
+                                                                    <asp:TextBox runat="server" TextMode="MultiLine"  CssClass="form-control"></asp:TextBox>
                                                                 </div>
                                                                 <div class="form-group">
                                                                     <label class="control-label">NOTE</label>
-                                                                    <asp:TextBox runat="server" TextMode="Phone" CssClass="form-control"></asp:TextBox>
+                                                                    <asp:TextBox runat="server" TextMode="MultiLine"  CssClass="form-control"></asp:TextBox>
                                                                 </div>
                                                                 <div class="form-group">
                                                                     <div class="row">
@@ -1087,19 +1087,19 @@
                                                                 </div>
                                                                 <div class="form-group">
                                                                     <label class="control-label">SYMPTUMS</label>
-                                                                    <asp:TextBox runat="server" CssClass="form-control"></asp:TextBox>
+                                                                    <asp:TextBox runat="server" TextMode="MultiLine"  CssClass="form-control"></asp:TextBox>
                                                                 </div>
                                                                 <div class="form-group">
                                                                     <label class="control-label">DIAGNOSIS</label>
-                                                                    <asp:TextBox runat="server" CssClass="form-control"></asp:TextBox>
+                                                                    <asp:TextBox runat="server" TextMode="MultiLine"  CssClass="form-control"></asp:TextBox>
                                                                 </div>
                                                                 <div class="form-group">
                                                                     <label class="control-label">PRESCRIPTION</label>
-                                                                    <asp:DropDownList runat="server" CssClass="form-control"></asp:DropDownList>
+                                                                    <asp:TextBox runat="server" TextMode="MultiLine"  CssClass="form-control"></asp:TextBox>
                                                                 </div>
                                                                 <div class="form-group">
                                                                     <label class="control-label">NOTE</label>
-                                                                    <asp:TextBox runat="server" TextMode="Phone" CssClass="form-control"></asp:TextBox>
+                                                                    <asp:TextBox runat="server" TextMode="MultiLine"  CssClass="form-control"></asp:TextBox>
                                                                 </div>
                                                                 <div class="form-group">
                                                                     <div class="row">
