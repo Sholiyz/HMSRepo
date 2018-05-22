@@ -1352,6 +1352,101 @@ public partial class Pasture
 
     #endregion
 
+    #region Vital Management
+
+    public static List<VitalSign> GetVitalSigns()
+    {
+        DBContext = new HSMModelDataContext();
+        List<VitalSign> VitalSignList = new List<VitalSign>();
+        VitalSignList = DBContext.VitalSigns.ToList();
+        return VitalSignList;
+    }
+    public static List<VitalSign> GetVitalSignListByPatientID(int PatientID)
+    {
+        DBContext = new HSMModelDataContext();
+        List<VitalSign> VitalSignList = new List<VitalSign>();
+        VitalSignList = DBContext.VitalSigns.Where(b => b.PatientID == PatientID).ToList();
+        return VitalSignList;
+    }
+    public static VitalSign GetVitalSignByID(int VitalSignID)
+    {
+        DBContext = new HSMModelDataContext();
+        VitalSign _VitalSign = new VitalSign();
+        _VitalSign = DBContext.VitalSigns.Where(b => b.ID == VitalSignID).FirstOrDefault();
+        return _VitalSign;
+    }
+    public static int AddNewVitalSign(VitalSign newVitalSign)
+    {
+        try
+        {
+            DBContext = new HSMModelDataContext();
+            int responce;
+            newVitalSign.ID = GetCurrentUserSessionID();
+            newVitalSign.CreatedByID = GetCurrentUserSessionID();
+            newVitalSign.CreatedDate = DateTime.Now;
+            DBContext.VitalSigns.Add(newVitalSign);
+            responce = DBContext.SaveChanges();
+            return responce;
+        }
+        catch (Exception ex)
+        {
+            return 0;
+            //log ex.Message;
+            throw;
+        }
+
+    }
+    public static int UpdateVitalSign(VitalSign UpdateVitalSign)
+    {
+        try
+        {
+            DBContext = new HSMModelDataContext();
+            int responce;
+            VitalSign _VitalSign = DBContext.VitalSigns.Where(v => v.ID == UpdateVitalSign.ID).FirstOrDefault();
+
+            
+            //_VitalSign.ConsultationID = UpdateConsultation.ConsultationName;
+            //_VitalSign.ConsultantID= GetCurrentUserSessionID();
+            _VitalSign.ModifiedByID = GetCurrentUserSessionID();
+            _VitalSign.ModifiedDate = DateTime.Now;
+            responce = DBContext.SaveChanges();
+            return responce;
+        }
+        catch (Exception ex)
+        {
+            return 0;
+            //log ex.Message;
+            throw;
+        }
+
+    }
+    public static int DeleteVitalSignByID(int DeleteVitalSignID)
+    {
+        try
+        {
+            //DBContext = new HSMModelDataContext();
+            //int responce;
+            //Consultation Consultation = DBContext.Consultations.Where(r => r.ConsultationID == DeleteConsultationID).FirstOrDefault();
+            //Consultation.ModifiedByID = GetCurrentUserSessionID();
+            //Consultation.ModifiedDate = DateTime.Now;
+            //Consultation.IsDeleted = true;
+            //responce = DBContext.SaveChanges();
+            //return responce;
+            return 0;
+        }
+        catch (Exception ex)
+        {
+            return 0;
+            //log ex.Message;
+            throw;
+        }
+
+    }
+
+    #endregion
+
+
+
     #region Authentication
 
     public static bool VefiryNewCreateUserName(string Username)
@@ -1489,59 +1584,6 @@ public partial class Pasture
 
     #region Utility
 
-    //private static void EmployeeAddNurse(List<Employee> Employeelist,Nurse nurse)
-    //{
-    //    Employee newEmployee = new Employee()
-    //    {
-    //        StaffID = nurse.NurseID,
-    //        StaffType = "Nurse",
-    //        FirstName = nurse.FirstName,
-    //        LastName = nurse.LastName,
-    //        OtherNames = nurse.OtherNames,
-    //        FullName = nurse.FullName,
-    //        Gender = nurse.Gender,
-    //        PhoneNumber = nurse.PhoneNumber,
-    //        Address = nurse.Address,
-    //        DOB = nurse.DOB,
-    //        DateEmployed = nurse.DateEmployed,
-    //        CreatedByID = nurse.CreatedByID,
-    //        ModifiedByID = nurse.ModifiedByID,
-    //        CreatedDate = nurse.CreatedDate,
-    //        ModifiedDate = nurse.ModifiedDate,
-    //        IsActive = nurse.IsActive,
-    //        IsDeleted = nurse.IsDeleted
-    //    };
-
-    //    Employeelist.Add(newEmployee);
-    //}
-
-    //private static void EmployeeAddDoctor(List<Employee> Employeelist, Doctor doctor)
-    //{
-    //    Employee newEmployee = new Employee()
-    //    {
-    //        StaffID = doctor.DoctorID,
-    //        StaffType = "doctor",
-    //        FirstName = doctor.FirstName,
-    //        LastName = doctor.LastName,
-    //        OtherNames = doctor.OtherNames,
-    //        FullName = doctor.FullName,
-    //        Gender = doctor.Gender,
-    //        PhoneNumber = doctor.PhoneNumber,
-    //        Address = doctor.Address,
-    //        DOB = doctor.DOB,
-    //        DateEmployed = doctor.DateEmployed,
-    //        CreatedByID = doctor.CreatedByID,
-    //        ModifiedByID = doctor.ModifiedByID,
-    //        CreatedDate = doctor.CreatedDate,
-    //        ModifiedDate = doctor.ModifiedDate,
-    //        IsActive = doctor.IsActive,
-    //        IsDeleted = doctor.IsDeleted
-    //    };
-
-    //    Employeelist.Add(newEmployee);
-    //}
-
-
     public static int GetStaffLastAttendanceID(int currentstaffid)
     {
         DBContext = new HSMModelDataContext();
@@ -1625,7 +1667,6 @@ public partial class Pasture
 
         }
     }
-
     public static string GetAttendanceDateTime()
     {
         return DateTime.Now.ToString("hh:mm:ss tt");

@@ -27,10 +27,10 @@
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
         <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+     style=" background-image: url('../img/background.jpg');"   <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
 </head>
-<body>
+<body >
     <form id="form1" runat="server">
         <header>
         <div class="container">
@@ -94,14 +94,17 @@
                 </div>
                 <div class="col-md-6">
                    <hr />
-                     <h4> Login with <strong>HMS Portal Account  :</strong></h4>
+                     <h4 style="color:white"> Login with <strong>HMS Portal Account  :</strong></h4>
                     <br />
-                     <label>Enter UserName : </label>
-                        <input type="text" class="form-control" runat="server" id="usernametextbox" />
-                        <label>Enter Password :  </label>
-                        <input type="password" class="form-control" runat="server" id="passwordtextbox" />
+                     <label style="color:white">Enter UserName : </label>
+                        <input type="text" class="form-control"  runat="server" id="usernametextbox" />
+                        <label style="color:white">Enter Password :  </label>
+                        <input type="password" class="form-control"  runat="server" id="passwordtextbox" />
                         <hr />
-                   <asp:Button runat="server" ID="LoginButton" OnClick="LoginButton_Click" CssClass="btn btn-info" Text="Log Me In" />
+                    <div class="row text-center">
+ <asp:Button runat="server" ID="LoginButton" OnClick="LoginButton_Click" CssClass="btn btn-info" Text="Log Me In" />
+                  
+                    </div>
                        <%-- <a href="./dashboard.aspx" class="btn btn-info"><span class="glyphicon glyphicon-user"></span> &nbsp; </a>&nbsp;--%>
                     <hr />
                    </div>

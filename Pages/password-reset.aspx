@@ -77,13 +77,13 @@
                         <hr />
                         <%-- <h4> Reset <strong> HMS Account  :</strong></h4>
                     <br />--%>
-                        <label>Enter Email ID : </label>
+                        <label style="color:white">Enter Email ID : </label>
                         <input type="text" class="form-control" runat="server" id="userid" />
-                        <label>Enter Current Password :  </label>
+                        <label style="color:white">Enter Current Password :  </label>
                         <input type="password" class="form-control" runat="server" id="currentpassword" />
-                        <label>Enter New Password :  </label>
+                        <label style="color:white">Enter New Password :  </label>
                         <input type="password" class="form-control" runat="server" id="newpassword" />
-                        <label>Confirm New Password :  </label>
+                        <label style="color:white">Confirm New Password :  </label>
                         <input type="password" class="form-control" runat="server" id="confirmnewpassword"/>
                         <hr />
 

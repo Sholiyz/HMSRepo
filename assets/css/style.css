@@ -36,6 +36,7 @@ body {
     margin-top: 40px;
     min-height: 600px;
     padding-bottom: 60px;
+    background-image: url('../img/background1.gif');
 }
 
 .page-head-line {
