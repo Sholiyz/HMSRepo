@@ -44,9 +44,11 @@
                                 </div>--%>
                                 <div class="panel-body">
                                     <ul class="nav nav-tabs">
-                                        <li class="active"><a href="#nurse" data-toggle="tab">Add Nurse</a>
+                                        <li class="active" id="nurseli" runat="server">
+                                            <asp:LinkButton runat="server" ID="NurseDivNav"  Text="NURSE MANAGEMENT" OnClick="NurseDivNav_Click"></asp:LinkButton>
                                         </li>
-                                        <li class=""><a href="#attendance" data-toggle="tab">ATTENDANCE</a>
+                                        <li class="" runat="server" id="attendanceli"><%--<a href="#attendance" data-toggle="tab">ATTENDANCE</a>--%>
+                                            <asp:LinkButton  runat="server" ID="AttendanceDivNav" Text="ATTENDANCE" OnClick="AttendanceDivNav_Click"> </asp:LinkButton>
                                         </li>
                                         <li class=""><a href="#messages" data-toggle="tab">Messages</a>
                                         </li>
@@ -59,14 +61,14 @@
                                     </ul>
 
                                     <div class="tab-content">
-                                        <div class="tab-pane fade active in" id="nurse">
+                                        <div class="tab-pane fade active in" id="nurse" runat="server">
                                            <%-- <h4>Add New Nurse</h4>--%>
                                             <div class="col-md-12">
                                                 <div class="panel panel-default">
-                                                    <<div class="panel-body">
-                                                    <hr />
-                                                    <h4>ADD NEW NURSE</h4>
-                                                    <div class="form-group" id="AddNewNurseDiv">
+                                                    <div class="panel-body">
+                                                    <%-- ==============================ADD NURSE LIST ===================================== --%>     
+                                                    <div class="form-group" id="AddNewNurseDiv" runat="server">
+                                                        <h4>ADD NEW NURSE</h4>
                                                         <div class="row">
                                                             <div class="col-lg-3">
                                                             </div>
@@ -84,51 +86,60 @@
                                                                 </div>
                                                                 <div class="form-group">
                                                                     <label class="control-label">FIRSTNAME</label>
-                                                                    <asp:TextBox runat="server" CssClass="form-control"></asp:TextBox>
+                                                                    <asp:TextBox runat="server" CssClass="form-control"  ID="txtFirstname"></asp:TextBox>
                                                                 </div>
                                                                 <div class="form-group">
                                                                     <label class="control-label">LASTNAME</label>
-                                                                    <asp:TextBox runat="server" CssClass="form-control"></asp:TextBox>
+                                                                    <asp:TextBox runat="server" CssClass="form-control" required ID="txtLastname"></asp:TextBox>
                                                                 </div>
                                                                 <div class="form-group">
                                                                     <label class="control-label">OTHERNAMES</label>
-                                                                    <asp:TextBox runat="server" CssClass="form-control"></asp:TextBox>
+                                                                    <asp:TextBox runat="server" CssClass="form-control" ID="txtOthername"></asp:TextBox>
                                                                 </div>                                                              
                                                                 <div class="form-group">
                                                                     <label class="control-label">GENDER</label>
-                                                                    <asp:TextBox runat="server" CssClass="form-control"></asp:TextBox>
+                                                                    <asp:DropDownList runat="server" CssClass="form-control" required ID="ddlGender">
+                                                                        <asp:ListItem Value="0" Text="--Select Gender--" Selected="True">Select Gender....</asp:ListItem>
+                                                                        <asp:ListItem Value="1" Text="Female">Female</asp:ListItem>
+                                                                        <asp:ListItem Value="2" Text="Male">Male</asp:ListItem>
+                                                                    </asp:DropDownList>
                                                                 </div>                                                                
                                                                 <div class="form-group">
                                                                     <label class="control-label">MARITAL STATUS</label>
-                                                                    <asp:DropDownList runat="server" CssClass="form-control"></asp:DropDownList>
+                                                                    <asp:DropDownList runat="server" CssClass="form-control" required ID="ddlMaritalStatus">
+                                                                        <asp:ListItem Value="0" Text="Select Marital Status..." Selected="True">Select Marital Status...</asp:ListItem>
+                                                                        <asp:ListItem Value="1" Text="Single">Single</asp:ListItem>
+                                                                        <asp:ListItem Value="2" Text="Married">Married</asp:ListItem>
+                                                                        <asp:ListItem Value="3" Text="Divorced">Divorced</asp:ListItem>
+                                                                    </asp:DropDownList>
                                                                 </div>
                                                                 <div class="form-group">
                                                                     <label class="control-label">PHONE NUMBER</label>
-                                                                    <asp:TextBox runat="server" TextMode="Phone" CssClass="form-control"></asp:TextBox>
+                                                                    <asp:TextBox runat="server" TextMode="Phone" CssClass="form-control" required ID="txtPhone"></asp:TextBox>
                                                                 </div>
                                                                 <div class="form-group">
                                                                     <label class="control-label">ADDRESS</label>
-                                                                    <asp:TextBox runat="server" CssClass="form-control"></asp:TextBox>
+                                                                    <asp:TextBox runat="server" CssClass="form-control"  TextMode="MultiLine" Rows="3"  ID="txtAddress"></asp:TextBox>
                                                                 </div>
                                                                 <div class="form-group">
                                                                     <label class="control-label">DATE OF BIRTH (MM/DD/YYYY)</label>
-                                                                    <asp:TextBox runat="server" TextMode="Date" CssClass="form-control"></asp:TextBox>
+                                                                    <asp:TextBox runat="server" TextMode="Date" CssClass="form-control" required ID="txtDOB"></asp:TextBox>
                                                                 </div> 
-                                                                 <div class="form-group">
+                                                                <%-- <div class="form-group">
                                                                     <label class="control-label">NEXT OF KIN FULLNAME</label>
                                                                     <asp:TextBox runat="server" CssClass="form-control"></asp:TextBox>
                                                                 </div>
                                                                 <div class="form-group">
                                                                     <label class="control-label">NEXT OF KIN PHONE NUMBER</label>
                                                                     <asp:TextBox runat="server" TextMode="Phone" CssClass="form-control"></asp:TextBox>
-                                                                </div>                                                              
+                                                                </div>--%>                                                              
                                                                  <div class="form-group">
                                                                      <div class="row">
                                                                     <div class="col-lg-6 text-left">
-                                                                        <asp:Button runat="server" CssClass="btn btn-default btn-danger" Text="BACK" />
+                                                                        <asp:Button runat="server" CssClass="btn btn-default btn-danger" Text="BACK" UseSubmitBehavior="false"  ID="btnAddNewBack" OnClick="btnAddNewBack_Click" />
                                                                     </div>
                                                                      <div class="col-lg-6 text-right">
-                                                                         <asp:Button runat="server" CssClass="btn btn-default btn-primary" Text="PROCEED" />
+                                                                         <asp:Button runat="server" CssClass="btn btn-default btn-primary" Text="PROCEED"  ID="btnProceed" OnClick="btnProceed_Click"/>
                                                                     </div>                                                                    
                                                                 </div>
                                                                 </div>
@@ -137,21 +148,57 @@
                                                             </div>
                                                         </div>
                                                     </div>
-                                                    <hr />                                                   
-                                                    <div class="form-group" id="ViewNurseListDiv">                                                       
+                                                      <%-- ==============================VIEW NURSE LIST ===================================== --%>                                                       
+                                                    <div class="form-group" id="ViewNurseListDiv" runat="server">                                                       
                                                            <div class="form-group">
                                                             <div class="row form-group">
                                                                 <div class="col-md-6 text-left">
                                                                     <h4 class="text-left">NURSE LIST</h4>
                                                                 </div>
                                                                 <div class="col-md-6 text-right">
-                                                                    <asp:Button runat="server" CssClass="btn btn-default btn-primary text-right" Text="ADD NEW PATIENT" /></div>
+                                                                    <asp:Button runat="server" CssClass="btn btn-default btn-primary text-right" Text="ADD NEW NURSE" ID="btnAddNewNurse" OnClick="btnAddNewDoc_Click"/></div>
                                                             </div>
                                                         </div>
                                                         <div class="table-responsive">                                                           
-                                                            <asp:GridView ID="NurseListGridView" runat="server" AutoGenerateColumns="false" CssClass="table  table-bordered " DataKeyNames="ID" EmptyDataText="There are no data records to display.">
+                                                            <asp:GridView ID="NurseListGridView" runat="server" AutoGenerateColumns="false" CssClass="table table-condensed table-bordered " DataKeyNames="EmployeeID" EmptyDataText="There are no data records to display." OnRowCommand="NurseListGridView_RowCommand">
                                                                 <Columns>
-                                                                    <asp:BoundField DataField="ID" HeaderText="Order ID" SortExpression="ID">
+                                                                    <asp:TemplateField HeaderText="Name">
+                                                                        <ItemTemplate>
+                                                                            <asp:Label ID="lblFullName" runat="server" Text='<%#Eval("FullName")%>'></asp:Label>
+                                                                            <asp:Label ID="lblFirstName" runat="server" Text='<%#Eval("FirstName")%>' Visible="false"></asp:Label>
+                                                                            <asp:Label ID="lblLastName" runat="server" Text='<%#Eval("LastName")%>' Visible="false"></asp:Label>
+                                                                            <asp:Label ID="lblEmployeeID" runat="server" Text='<%#Eval("EmployeeID")%>' Visible="false"></asp:Label>
+                                                                            <asp:Label ID="lblStaffTypeID" runat="server" Text='<%#Eval("StaffTypeID")%>' Visible="false"></asp:Label>
+                                                                            <asp:Label ID="lblDOB" runat="server" Text='<%#Eval("DOB")%>' Visible="false"></asp:Label>
+                                                                            <asp:Label runat="server"></asp:Label>
+                                                                        </ItemTemplate>
+                                                                    </asp:TemplateField>
+                                                                    <asp:TemplateField HeaderText="Gender">
+                                                                        <ItemTemplate>
+                                                                            <asp:Label ID="lblGender" runat="server" Text='<%#Eval("Gender")%>'></asp:Label>
+                                                                            <asp:Label runat="server"></asp:Label>
+                                                                        </ItemTemplate>
+                                                                    </asp:TemplateField>
+                                                                    <asp:TemplateField HeaderText="Mar. Status">
+                                                                        <ItemTemplate>
+                                                                            <asp:Label ID="lblMaritalStatus" runat="server" Text='<%#Eval("MaritalStatus")%>'></asp:Label>
+                                                                            <asp:Label runat="server"></asp:Label>
+                                                                        </ItemTemplate>
+                                                                    </asp:TemplateField>
+                                                                    <asp:TemplateField HeaderText="Telephone">
+                                                                        <ItemTemplate>
+                                                                            <asp:Label ID="lblPhoneNumber" runat="server" Text='<%#Eval("PhoneNumber")%>'></asp:Label>
+                                                                            <asp:Label runat="server"></asp:Label>
+                                                                        </ItemTemplate>
+                                                                    </asp:TemplateField>
+                                                                    <asp:TemplateField HeaderText="Address">
+                                                                        <ItemTemplate>
+                                                                            <asp:Label ID="lblAddress" runat="server" Text='<%#Eval("Address")%>'></asp:Label>
+                                                                            <asp:Label runat="server"></asp:Label>
+                                                                        </ItemTemplate>
+                                                                    </asp:TemplateField>
+
+                                                                    <%--<asp:BoundField DataField="ID" HeaderText="Order ID" SortExpression="ID">
                                                                         <HeaderStyle CssClass="hide" HorizontalAlign="Left" />
                                                                         <ItemStyle CssClass="hide" HorizontalAlign="Left" />
                                                                     </asp:BoundField>
@@ -162,9 +209,9 @@
                                                                     <asp:BoundField DataField="Price" HeaderText="Price" SortExpression="Price">
                                                                         <HeaderStyle HorizontalAlign="Left" />
                                                                         <ItemStyle HorizontalAlign="Left" />
-                                                                    </asp:BoundField>
+                                                                    </asp:BoundField>--%>
 
-                                                                    <asp:TemplateField HeaderText="Process Status">
+                                                                   <%-- <asp:TemplateField HeaderText="Process Status">
                                                                         <ItemTemplate>
                                                                             <asp:Label runat="server" Text='<%#GetIsProcessStatus(Convert.ToBoolean(Eval("IsProcessing")))%>'></asp:Label>
                                                                         </ItemTemplate>
@@ -178,14 +225,15 @@
                                                                         <ItemTemplate>
                                                                             <asp:Label runat="server" Text='<%#GetIsCancelledStatus(Convert.ToBoolean(Eval("IsCancelled")))%>'></asp:Label>
                                                                         </ItemTemplate>
-                                                                    </asp:TemplateField>
-                                                                    <asp:TemplateField HeaderText="Actions" HeaderStyle-CssClass="center text-center" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center" ItemStyle-VerticalAlign="Middle">
+                                                                    </asp:TemplateField>--%>
+                                                                    <asp:TemplateField HeaderText="Actions" HeaderStyle-CssClass="center text-center" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left" ItemStyle-VerticalAlign="Middle">
                                                                         <ItemTemplate>
                                                                             <div class="form-actions text-center">
                                                                                 <%--<asp:Button runat="server" Text="Processing" ID="lnkView" Enabled='<%#Eval("IsProcessing") %>' CssClass="btn btn-xs btn-success" />--%>
-                                                                                <asp:Button runat="server" Text="View" ID="CancelRoleBtn" Enabled='<%# (((Convert.ToBoolean(Eval("IsProcessing")) == true || Convert.ToBoolean(Eval("IsDelivered")) == true)|| Convert.ToBoolean(Eval("IsCancelled")) == true) ? false : true) %>' CssClass="btn btn-md btn-success" />
-                                                                                <asp:Button runat="server" Text="Edit" ID="EditRoleBtn" Enabled='<%# (((Convert.ToBoolean(Eval("IsProcessing")) == true || Convert.ToBoolean(Eval("IsDelivered")) == true)|| Convert.ToBoolean(Eval("IsCancelled")) == true) ? false : true) %>' CssClass="btn btn-md btn-warning" />
-                                                                                <asp:Button runat="server" Text="Delete" ID="DeleteRoleBtn" Enabled='<%# (((Convert.ToBoolean(Eval("IsProcessing")) == true || Convert.ToBoolean(Eval("IsDelivered")) == true)|| Convert.ToBoolean(Eval("IsCancelled")) == true) ? false : true) %>' CssClass="btn btn-md btn-danger" />
+                                                                                <asp:Button CommandArgument="View" runat="server" Text="View" ID="btnView" CssClass='<%# (Convert.ToBoolean(Eval("IsActive")) == true  ? "btn btn-sm btn-primary" : "btn btn-sm btn-primary disabled") %>' />
+                                                                                <asp:Button CommandArgument="Edit" runat="server" Text="Edit" ID="btnEdit" CssClass='<%# (Convert.ToBoolean(Eval("IsActive")) == true  ? "btn btn-sm btn-warning" : "btn btn-sm btn-warning disabled") %>'  />
+                                                                                <asp:Button CommandArgument="Deactivate" runat="server" Text='<%# (Convert.ToBoolean(Eval("IsActive")) == true  ? "Deactivate" : "Activate") %>' ID="btnDeactivate"  CssClass='<%# (Convert.ToBoolean(Eval("IsActive")) == true  ? "btn btn-sm btn-danger" : "btn btn-sm btn-success") %>' />
+                                                                                <asp:Button CommandArgument="Delete" runat="server" Text="Delete" ID="btnDelete"  CssClass='<%# (Convert.ToBoolean(Eval("IsActive")) == true  ? "btn btn-sm btn-danger" : "btn btn-sm btn-danger disabled") %>' />
                                                                             </div>
                                                                         </ItemTemplate>
                                                                     </asp:TemplateField>
@@ -194,9 +242,10 @@
 
                                                         </div>
                                                     </div>
-                                                    <hr />
-                                                    <h4>EDIT NURSE PROFILE</h4>
-                                                    <div class="form-group" id="EditNurseDiv">
+                                                    
+                                                        <%-- =====================================EDIT NURSE PROFILE======================================= --%>
+                                                    <div class="form-group" id="EditNurseDiv" runat="server">
+                                                        <h4>EDIT NURSE PROFILE</h4>
                                                         <div class="row">
                                                             <div class="col-lg-3">
                                                             </div>
@@ -214,51 +263,60 @@
                                                                 </div>
                                                                 <div class="form-group">
                                                                     <label class="control-label">FIRSTNAME</label>
-                                                                    <asp:TextBox runat="server" CssClass="form-control"></asp:TextBox>
+                                                                    <asp:TextBox runat="server" CssClass="form-control" ID="txtFirstnameE"></asp:TextBox>
                                                                 </div>
                                                                 <div class="form-group">
                                                                     <label class="control-label">LASTNAME</label>
-                                                                    <asp:TextBox runat="server" CssClass="form-control"></asp:TextBox>
+                                                                    <asp:TextBox runat="server" CssClass="form-control"  ID="txtLastnameE"></asp:TextBox>
                                                                 </div>
                                                                 <div class="form-group">
                                                                     <label class="control-label">OTHERNAMES</label>
-                                                                    <asp:TextBox runat="server" CssClass="form-control"></asp:TextBox>
+                                                                    <asp:TextBox runat="server" CssClass="form-control"  ID="txtOthernamesE"></asp:TextBox>
                                                                 </div>                                                                
                                                                 <div class="form-group">
                                                                     <label class="control-label">GENDER</label>
-                                                                    <asp:TextBox runat="server" CssClass="form-control"></asp:TextBox>
+                                                                     <asp:DropDownList ID="ddlGenderE" runat="server" CssClass="form-control">
+                                                                        <%--<asp:ListItem Value="0" Text="Select Gender..." Selected="True">Select Gender....</asp:ListItem>--%>
+                                                                        <asp:ListItem Value="1" Text="Female">Female</asp:ListItem>
+                                                                        <asp:ListItem Value="2" Text="Male">Male</asp:ListItem>
+                                                                    </asp:DropDownList>
                                                                 </div>
                                                                 <div class="form-group">
-                                                                    <label class="control-label">MARITAL STATUS</label>
-                                                                    <asp:DropDownList runat="server" CssClass="form-control"></asp:DropDownList>
+                                                                    <label class="control-label">MARITAL STATUS</label> 
+                                                                    <asp:DropDownList ID="ddlMaritalStatusE" runat="server" CssClass="form-control">
+                                                                        <%--<asp:ListItem Value="0" Text="Select Marital Status..." Selected="True">Select Marital Status....</asp:ListItem>--%>
+                                                                        <asp:ListItem Value="1" Text="Single">Single</asp:ListItem>
+                                                                        <asp:ListItem Value="2" Text="Married">Married</asp:ListItem>
+                                                                        <asp:ListItem Value="3" Text="Divorced">Divorced</asp:ListItem>
+                                                                    </asp:DropDownList>
                                                                 </div>
                                                                 <div class="form-group">
                                                                     <label class="control-label">PHONE NUMBER</label>
-                                                                    <asp:TextBox runat="server" TextMode="Phone" CssClass="form-control"></asp:TextBox>
+                                                                    <asp:TextBox runat="server" TextMode="Phone" CssClass="form-control" ID="txtPhoneE"></asp:TextBox>
                                                                 </div>
                                                                 <div class="form-group">
                                                                     <label class="control-label">ADDRESS</label>
-                                                                    <asp:TextBox runat="server" CssClass="form-control"></asp:TextBox>
+                                                                    <asp:TextBox runat="server" CssClass="form-control" ID="txtAddressE"></asp:TextBox>
                                                                 </div>
                                                                 <div class="form-group">
                                                                     <label class="control-label">DATE OF BIRTH (MM/DD/YYYY)</label>
-                                                                    <asp:TextBox runat="server" TextMode="Date" CssClass="form-control"></asp:TextBox>
+                                                                    <asp:TextBox runat="server" TextMode="Date" CssClass="form-control" ID="txtDOBE"></asp:TextBox>
                                                                 </div> 
-                                                                 <div class="form-group">
+                                                                 <%--<div class="form-group">
                                                                     <label class="control-label">NEXT OF KIN FULLNAME</label>
                                                                     <asp:TextBox runat="server" CssClass="form-control"></asp:TextBox>
                                                                 </div>
                                                                 <div class="form-group">
                                                                     <label class="control-label">NEXT OF KIN PHONE NUMBER</label>
                                                                     <asp:TextBox runat="server" TextMode="Phone" CssClass="form-control"></asp:TextBox>
-                                                                </div>
+                                                                </div>--%>
                                                                  <div class="form-group">
                                                                      <div class="row">
                                                                     <div class="col-lg-6 text-left">
-                                                                        <asp:Button runat="server" CssClass="btn btn-default btn-danger" Text="BACK" />
+                                                                        <asp:Button runat="server" CssClass="btn btn-default btn-danger" Text="BACK" UseSubmitBehavior="false"  ID="btnEditBack" OnClick="btnEditBack_Click"/>
                                                                     </div>
                                                                      <div class="col-lg-6 text-right">
-                                                                         <asp:Button runat="server" CssClass="btn btn-default btn-primary" Text="UPDATE" />
+                                                                         <asp:Button runat="server" CssClass="btn btn-default btn-primary" Text="UPDATE"  ID="btnUpdate" OnClick="btnUpdate_Click"/>
                                                                     </div>                                                                    
                                                                 </div>
                                                                 </div>
@@ -267,9 +325,9 @@
                                                             </div>
                                                         </div>
                                                     </div>
-                                                    <hr />
-                                                    <h4>VIEW NURSE PROFILE</h4>
-                                                    <div class="form-group" id="ViewNurseDiv">
+                                                    <%-- ============================= VIEW DOCTOR PROFILE ==================================== --%>
+                                                    <div class="form-group" id="ViewNurseDiv" runat="server">
+                                                        <h4>VIEW NURSE PROFILE</h4>
                                                         <div class="row">
                                                             <div class="col-lg-3">
                                                             </div>
@@ -283,48 +341,48 @@
                                                                 </div>
                                                                 <div class="form-group">
                                                                     <label class="control-label">FIRSTNAME</label>
-                                                                    <asp:TextBox runat="server" CssClass="form-control" ReadOnly="true"></asp:TextBox>
+                                                                    <asp:TextBox runat="server" CssClass="form-control" ReadOnly="true" ID="txtFirstnameV"></asp:TextBox>
                                                                 </div>
                                                                 <div class="form-group">
                                                                     <label class="control-label">LASTNAME</label>
-                                                                    <asp:TextBox runat="server" CssClass="form-control" ReadOnly="true"></asp:TextBox>
+                                                                    <asp:TextBox runat="server" CssClass="form-control" ReadOnly="true"  ID="txtLastnameV"></asp:TextBox>
                                                                 </div>
                                                                 <div class="form-group">
                                                                     <label class="control-label">OTHERNAMES</label>
-                                                                    <asp:TextBox runat="server" CssClass="form-control" ReadOnly="true"></asp:TextBox>
+                                                                    <asp:TextBox runat="server" CssClass="form-control" ReadOnly="true"  ID="txtOthernamesV"></asp:TextBox>
                                                                 </div>
                                                                 <div class="form-group">
                                                                     <label class="control-label">GENDER</label>
-                                                                    <asp:TextBox runat="server" CssClass="form-control" ReadOnly="true"></asp:TextBox>
+                                                                    <asp:TextBox runat="server" CssClass="form-control" ReadOnly="true"  ID="txtGenderV"></asp:TextBox>
                                                                 </div>                                                                
                                                                 <div class="form-group">
                                                                     <label class="control-label">MARITAL STATUS</label>
-                                                                    <asp:TextBox runat="server" CssClass="form-control" ReadOnly="true"></asp:TextBox>
+                                                                    <asp:TextBox runat="server" CssClass="form-control" ReadOnly="true"  ID="txtMaritalStatusV"></asp:TextBox>
                                                                 </div>
                                                                 <div class="form-group">
                                                                     <label class="control-label">PHONE NUMBER</label>
-                                                                    <asp:TextBox runat="server" TextMode="Phone" CssClass="form-control" ReadOnly="true"></asp:TextBox>
+                                                                    <asp:TextBox runat="server" TextMode="Phone" CssClass="form-control" ReadOnly="true" ID="txtPhoneV"></asp:TextBox>
                                                                 </div>
                                                                 <div class="form-group">
                                                                     <label class="control-label">ADDRESS</label>
-                                                                    <asp:TextBox runat="server" CssClass="form-control" ReadOnly="true"></asp:TextBox>
+                                                                    <asp:TextBox runat="server" CssClass="form-control" ReadOnly="true"  ID="txtAddressV"></asp:TextBox>
                                                                 </div>
                                                                 <div class="form-group">
                                                                     <label class="control-label">DATE OF BIRTH (MM/DD/YYYY)</label>
-                                                                    <asp:TextBox runat="server" TextMode="Date" CssClass="form-control" ReadOnly="true"></asp:TextBox>
+                                                                    <asp:TextBox runat="server" TextMode="Date" CssClass="form-control" ReadOnly="true"  ID="txtDOBV"></asp:TextBox>
                                                                 </div> 
-                                                                 <div class="form-group">
+                                                                 <%--<div class="form-group">
                                                                     <label class="control-label">NEXT OF KIN FULLNAME</label>
                                                                     <asp:TextBox runat="server" CssClass="form-control" ReadOnly="true"></asp:TextBox>
                                                                 </div>
                                                                 <div class="form-group">
                                                                     <label class="control-label">NEXT OF KIN PHONE NUMBER</label>
                                                                     <asp:TextBox runat="server" TextMode="Phone" CssClass="form-control" ReadOnly="true"></asp:TextBox>
-                                                                </div>                                                          
+                                                                </div>               --%>                                           
                                                                 <div class="form-group">
                                                                      <div class="row">
                                                                     <div class="col-lg-12 text-left">
-                                                                        <asp:Button runat="server" CssClass="btn btn-default btn-danger" Text="BACK" />
+                                                                        <asp:Button runat="server" CssClass="btn btn-default btn-danger" Text="BACK" ID="btnBackView" OnClick="btnBackView_Click"/>
                                                                     </div>                                                                                                                                       
                                                                 </div>
                                                                 </div>
@@ -338,7 +396,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="tab-pane fade" id="attendance" >
+                                        <div class="tab-pane fade" id="attendance"  runat="server">
                                           
                                             <div class="col-md-12">
                                                 <div class="panel panel-default">
@@ -421,21 +479,21 @@
                                                         <div class="form-group">
                                                             <label>Select Example</label>
                                                             <select class="form-control">
-                                                                <option>One Vale</option>
-                                                                <option>Two Vale</option>
-                                                                <option>Three Vale</option>
-                                                                <option>Four Vale</option>
-                                                            </select>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <option>One Vale</option>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <option>Two Vale</option>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <option>Three Vale</option>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <option>Four Vale</option>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </select>
                                                         </div>
                                                         <hr />
                                                         <div class="form-group">
                                                             <label>Multiple Select Example</label>
                                                             <select multiple="" class="form-control">
-                                                                <option>One Vale</option>
-                                                                <option>Two Vale</option>
-                                                                <option>Three Vale</option>
-                                                                <option>Four Vale</option>
-                                                            </select>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <option>One Vale</option>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <option>Two Vale</option>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <option>Three Vale</option>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <option>Four Vale</option>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </select>
                                                         </div>
                                                         <hr />
                                                         For more customization for this template or its components please
@@ -506,5 +564,6 @@
             </div>
         </div>
         <!-- CONTENT-WRAPPER SECTION END-->
+    </div>
 </asp:Content>
 

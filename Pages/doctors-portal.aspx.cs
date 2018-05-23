@@ -92,7 +92,7 @@ public partial class Pages_doctors_portal : System.Web.UI.Page
     }
     #endregion
 
-    private static HSMModelDataContext context = new HSMModelDataContext();
+    //private static HSMModelDataContext context = new HSMModelDataContext();
     protected void btnAddNewDoc_Click(object sender, EventArgs e)
     {
         //Redirect to Add New Page
@@ -179,7 +179,7 @@ public partial class Pages_doctors_portal : System.Web.UI.Page
             else if (e.CommandArgument.Equals("Deactivate"))
             {
                 bool result;
-                string btnValue = (row.FindControl("DeleteRoleBtn") as Button).Text;
+                string btnValue = (row.FindControl("btnDeactivate") as Button).Text;
                 switch (btnValue)
                 {
                     case "Deactivate":
