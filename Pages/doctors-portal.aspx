@@ -230,13 +230,13 @@
                                                                             <asp:Label runat="server" ></asp:Label>
                                                                         </ItemTemplate>
                                                                     </asp:TemplateField>--%>
-                                                                    <asp:TemplateField HeaderText="Actions" HeaderStyle-CssClass="center text-center" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center" ItemStyle-VerticalAlign="Middle">
+                                                                    <asp:TemplateField HeaderText="Actions" HeaderStyle-CssClass="center text-center" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left" ItemStyle-VerticalAlign="Middle">
                                                                         <ItemTemplate>
                                                                             <div class="form-actions text-center">
                                                                                 <%--<asp:Button runat="server" Text="Processing" ID="lnkView" Enabled='<%#Eval("IsProcessing") %>' CssClass="btn btn-xs btn-success" />--%>
                                                                                 <asp:Button CommandArgument="View" runat="server" Text="View" ID="btnView" CssClass='<%# (Convert.ToBoolean(Eval("IsActive")) == true  ? "btn btn-sm btn-primary" : "btn btn-sm btn-primary disabled") %>' />
                                                                                 <asp:Button CommandArgument="Edit" runat="server" Text="Edit" ID="btnEdit" CssClass='<%# (Convert.ToBoolean(Eval("IsActive")) == true  ? "btn btn-sm btn-warning" : "btn btn-sm btn-warning disabled") %>'  />
-                                                                                <asp:Button CommandArgument="Deactivate" runat="server" Text='<%# (Convert.ToBoolean(Eval("IsActive")) == true  ? "Deactivate" : "Activate") %>' ID="DeleteRoleBtn"  CssClass='<%# (Convert.ToBoolean(Eval("IsActive")) == true  ? "btn btn-sm btn-danger" : "btn btn-sm btn-success") %>' />   <%--Enabled='<%# (Convert.ToBoolean(Eval("IsActive")) == true  ? false : true) %>' --%>
+                                                                                <asp:Button CommandArgument="Deactivate" runat="server" Text='<%# (Convert.ToBoolean(Eval("IsActive")) == true  ? "Deactivate" : "Activate") %>' ID="btnDeactivate"  CssClass='<%# (Convert.ToBoolean(Eval("IsActive")) == true  ? "btn btn-sm btn-danger" : "btn btn-sm btn-success") %>' />   <%--Enabled='<%# (Convert.ToBoolean(Eval("IsActive")) == true  ? false : true) %>' --%>
                                                                                 <asp:Button CommandArgument="Delete" runat="server" Text="Delete" ID="btnDelete"  CssClass='<%# (Convert.ToBoolean(Eval("IsActive")) == true  ? "btn btn-sm btn-danger" : "btn btn-sm btn-danger disabled") %>' />
                                                                             </div>
                                                                         </ItemTemplate>
@@ -280,7 +280,7 @@
                                                                 <div class="form-group">
                                                                     <label class="control-label">GENDER</label>
                                                                     <asp:DropDownList ID="ddlGenderE" runat="server" CssClass="form-control">
-                                                                        <asp:ListItem Value="0" Text="Select Gender..." Selected="True">Select Gender....</asp:ListItem>
+                                                                        <%--<asp:ListItem Value="0" Text="Select Gender..." Selected="True">Select Gender....</asp:ListItem>--%>
                                                                         <asp:ListItem Value="1" Text="Female">Female</asp:ListItem>
                                                                         <asp:ListItem Value="2" Text="Male">Male</asp:ListItem>
                                                                     </asp:DropDownList>
@@ -288,7 +288,7 @@
                                                                 <div class="form-group">
                                                                     <label class="control-label">MARITAL STATUS</label>
                                                                     <asp:DropDownList ID="ddlMaritalStatusE" runat="server" CssClass="form-control">
-                                                                        <asp:ListItem Value="0" Text="Select Marital Status..." Selected="True">Select Marital Status....</asp:ListItem>
+                                                                        <%--<asp:ListItem Value="0" Text="Select Marital Status..." Selected="True">Select Marital Status....</asp:ListItem>--%>
                                                                         <asp:ListItem Value="1" Text="Single">Single</asp:ListItem>
                                                                         <asp:ListItem Value="2" Text="Married">Married</asp:ListItem>
                                                                         <asp:ListItem Value="3" Text="Divorced">Divorced</asp:ListItem>
