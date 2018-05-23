@@ -52,13 +52,13 @@
                                     </li>--%>
 
                                     <li class="active" runat="server" id="usercreationli"><%--<a href="#usercreation" data-toggle="tab">USER MANAGEMENT</a>--%>
-                                        <asp:LinkButton runat="server" ID="UsercreationDivNav" Text="USER MANAGEMENT" OnClick="UsercreationDivNav_Click"></asp:LinkButton>
+                                        <asp:LinkButton runat="server" ID="UsercreationDivNav" Text="USER MGMT." OnClick="UsercreationDivNav_Click"></asp:LinkButton>
                                     </li>
                                     <li class="" id="transactiontypeli" runat="server"><%--<a href="#transactiontype" data-toggle="tab">TRANSACTION TYPE</a>--%>
                                         <asp:LinkButton runat="server" ID="TransactionTypeDivNav" Text="TRANSACTION TYPE" OnClick="TransactionTypeDivNav_Click"></asp:LinkButton>
                                     </li>
                                     <li class="" id="roleli" runat="server"><%--<a href="#role" data-toggle="tab">ROLE MANAGEMENT</a>--%>
-                                        <asp:LinkButton runat="server" ID="RoleDivNav" Text="ROLE MANAGEMENT" OnClick="RoleDivNav_Click"></asp:LinkButton>
+                                        <asp:LinkButton runat="server" ID="RoleDivNav" Text="ROLE MGMT." OnClick="RoleDivNav_Click"></asp:LinkButton>
                                     </li>
                                     <li class="" id="patientplanli" runat="server"><%--<a href="#patientplan" data-toggle="tab">PATIENT PLAN</a>--%>
                                         <asp:LinkButton runat="server" ID="PatientPlanDivNav" Text="PATIENT PLAN" OnClick="PatientPlanDivNav_Click"></asp:LinkButton>

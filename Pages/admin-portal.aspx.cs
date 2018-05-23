@@ -1907,7 +1907,7 @@ public partial class Pages_admin_portal : System.Web.UI.Page
         //add
         HospitalInfo HospInfo = Pasture.GetHospitalInfo();
 
-        if (HospInfo != null)
+        if (HospInfo == null)
         {
             HospInfo = new HospitalInfo();
             HospInfo.HospitalName = AddHospitalNameTextBox.Text;
@@ -1921,6 +1921,9 @@ public partial class Pages_admin_portal : System.Web.UI.Page
             if (responce > 0)
             {
                 PastureAlert.PopSuccessAlert("Hospital Detail successfly added!!");
+                HideHospitalDetailDivs();
+                LoadHospitalDetail();
+                ViewHospitalDetailDiv.Visible = true;
             }
             else
             {
@@ -1930,7 +1933,8 @@ public partial class Pages_admin_portal : System.Web.UI.Page
         else
         {
             HideHospitalDetailDivs();
-            EditHospitalDetailDiv.Visible = true;
+            LoadHospitalDetail();
+            ViewHospitalDetailDiv.Visible = true;
         }
     }
     protected void EditHospitalDetailBackButton_Click(object sender, EventArgs e)
