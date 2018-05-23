@@ -982,12 +982,12 @@
                                                                             <asp:Label runat="server" Text='<%#Pasture.GetDutyTypeNameByID(Convert.ToInt32(Eval("DutyTypeID")))%>'></asp:Label>
                                                                         </ItemTemplate>
                                                                     </asp:TemplateField>
-                                                                    <asp:BoundField DataField="StartDate" HeaderText="StartDate" SortExpression="StartDate">
+                                                                    <asp:BoundField DataField="StartDate" HeaderText="StartDate" SortExpression="StartDate" DataFormatString="{0:d}">
                                                                         <HeaderStyle HorizontalAlign="Left" />
                                                                         <ItemStyle HorizontalAlign="Left" />
                                                                     </asp:BoundField>
 
-                                                                    <asp:BoundField DataField="EndDate" HeaderText="EndDate" SortExpression="EndDate">
+                                                                    <asp:BoundField DataField="EndDate" HeaderText="EndDate" SortExpression="EndDate" DataFormatString="{0:d}">
                                                                         <HeaderStyle HorizontalAlign="Left" />
                                                                         <ItemStyle HorizontalAlign="Left" />
                                                                     </asp:BoundField>
