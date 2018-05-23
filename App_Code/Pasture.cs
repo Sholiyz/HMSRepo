@@ -233,11 +233,15 @@ public partial class Pasture
         {
             DBContext = new HSMModelDataContext();
             int responce;
-            HospitalInfo HospitalInfo = DBContext.HospitalInfoes.FirstOrDefault();
+            HospitalInfo nHospitalInfo = DBContext.HospitalInfoes.FirstOrDefault();
             //DBContext.AuthRoles.Add(newRole);
-            
-            HospitalInfo.ModifiedByID = GetCurrentUserSessionID();
-            HospitalInfo.ModifiedDate = DateTime.Now;
+            nHospitalInfo.Address = UpdateHospitalInfo.Address;
+            nHospitalInfo.Email = UpdateHospitalInfo.Email;
+            nHospitalInfo.PhoneNumber = UpdateHospitalInfo.PhoneNumber;
+            nHospitalInfo.Wedsite = UpdateHospitalInfo.Wedsite;
+            nHospitalInfo.HospitalName = UpdateHospitalInfo.HospitalName;
+            nHospitalInfo.ModifiedByID = GetCurrentUserSessionID();
+            nHospitalInfo.ModifiedDate = DateTime.Now;
             responce = DBContext.SaveChanges();
             return responce;
         }
