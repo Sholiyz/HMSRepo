@@ -1986,11 +1986,13 @@ public partial class Pages_admin_portal : System.Web.UI.Page
             EditHospitalAddressTextbox.Text = HospInfo.Address;
             EditHospitalWedsiteTextBox.Text = HospInfo.Wedsite;
             EditHospitalPhoneNumberTextbox.Text = HospInfo.PhoneNumber;
+            HideHospitalDetailDivs();
+            EditHospitalDetailDiv.Visible = true;
         }
         else
         {
             HideHospitalDetailDivs();
-            EditHospitalDetailDiv.Visible = true;
+            AddHospitalDetailDiv.Visible = true;
         }
     }
     private void HideHospitalDetailDivs()

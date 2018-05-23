@@ -1261,28 +1261,28 @@
                                                             <div class="col-lg-6">
                                                                 <div class="form-group">
                                                                     <label class="control-label">HOSPITAL NAME</label>
-                                                                    <asp:TextBox runat="server" CssClass="form-control" ID="ViewHospitalNameTextBox"></asp:TextBox>
+                                                                    <asp:TextBox runat="server" CssClass="form-control" ID="ViewHospitalNameTextBox" ReadOnly="true"></asp:TextBox>
                                                                 </div>
                                                                 <div class="form-group">
                                                                     <label class="control-label">ADDRESS</label>
-                                                                    <asp:TextBox runat="server" CssClass="form-control" ID="ViewHospitalAddressTextbox"></asp:TextBox>
+                                                                    <asp:TextBox runat="server" CssClass="form-control" ID="ViewHospitalAddressTextbox" ReadOnly="true"></asp:TextBox>
                                                                 </div>
                                                                 <div class="form-group">
                                                                     <label class="control-label">EMAIL</label>
-                                                                    <asp:TextBox runat="server" CssClass="form-control" TextMode="Email" ID="ViewHospitalEmailTextBox"></asp:TextBox>
+                                                                    <asp:TextBox runat="server" CssClass="form-control" TextMode="Email" ID="ViewHospitalEmailTextBox" ReadOnly="true"></asp:TextBox>
                                                                 </div>
                                                                 <div class="form-group">
                                                                     <label class="control-label">PHONE NUMBER</label>
-                                                                    <asp:TextBox runat="server" TextMode="Phone" CssClass="form-control" ID="ViewHospitalPhoneNumberTextbox"></asp:TextBox>
+                                                                    <asp:TextBox runat="server" TextMode="Phone" CssClass="form-control" ID="ViewHospitalPhoneNumberTextbox" ReadOnly="true"></asp:TextBox>
                                                                 </div>
                                                                 <div class="form-group">
                                                                     <label class="control-label">WEBSITE</label>
-                                                                    <asp:TextBox runat="server" CssClass="form-control" ID="ViewHospitalWedsiteTextBox"></asp:TextBox>
+                                                                    <asp:TextBox runat="server" CssClass="form-control" ID="ViewHospitalWedsiteTextBox" ReadOnly="true"></asp:TextBox>
                                                                 </div>
                                                                 <div class="form-group">
                                                                     <div class="row">
-                                                                        <div class="col-lg-12 text-left">
-                                                                            <asp:Button runat="server" CssClass="btn btn-default btn-danger" ID="ViewHospitalDetailEditButton" Text="EDIT" OnClick="ViewHospitalDetailEditButton_Click" />
+                                                                        <div class="col-lg-12 text-right">
+                                                                            <asp:Button runat="server" CssClass="btn btn-default btn-primary" ID="ViewHospitalDetailEditButton" Text="EDIT" OnClick="ViewHospitalDetailEditButton_Click" />
                                                                         </div>
 
                                                                     </div>
