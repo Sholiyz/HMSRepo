@@ -113,6 +113,13 @@ public partial class Pages_admin_portal : System.Web.UI.Page
             attendancelog.Visible = true;
             attendancelog.Attributes["class"] = "tab-pane fade active in";
         }
+        if (NavtabName.ToLower() == "hospitaldetail")
+        {
+            HideContentView();
+            hospitaldetailli.Attributes["class"] = "active";
+            hospitaldetail.Visible = true;
+            hospitaldetail.Attributes["class"] = "tab-pane fade active in";
+        }
 
 
 
@@ -142,6 +149,9 @@ public partial class Pages_admin_portal : System.Web.UI.Page
 
         attendancelogli.Attributes["class"] = "";
         attendancelog.Visible = false;
+
+        hospitaldetailli.Attributes["class"] = "";
+        hospitaldetail.Visible = false;
 
     }
     protected void UsercreationDivNav_Click(object sender, EventArgs e)
@@ -200,6 +210,23 @@ public partial class Pages_admin_portal : System.Web.UI.Page
         ViewAttendanceLogListDiv.Visible = true;
         BindAttendanceLogList();
         PopulateEmployeelist(AttendanceSearchEmployeeNameddl);
+    }
+    protected void HospitalDetailDivNav_Click(object sender, EventArgs e)
+    {
+        SetActiveContainerVisible("HospitalDetail");
+        HospitalInfo HospitalInfo = Pasture.GetHospitalInfo();
+        HideHospitalDetailDivs();
+        if (HospitalInfo != null)
+        {
+            //Load Hospital Info 
+            LoadHospitalDetail();
+            ViewHospitalDetailDiv.Visible = true;
+        }
+        else
+        {
+            AddHospitalDetailDiv.Visible = true;
+        }
+       
     }
 
     #endregion
@@ -1872,5 +1899,128 @@ public partial class Pages_admin_portal : System.Web.UI.Page
     }
 
     #endregion
+
+    #region Hospital Detail
+
+    protected void AddHospitalDetailProceedButton_Click(object sender, EventArgs e)
+    {
+        //add
+        HospitalInfo HospInfo = Pasture.GetHospitalInfo();
+
+        if (HospInfo == null)
+        {
+            HospInfo = new HospitalInfo();
+            HospInfo.HospitalName = AddHospitalNameTextBox.Text;
+            HospInfo.Email = AddHospitalEmailTextBox.Text;
+            HospInfo.Address = AddHospitalAddressTextbox.Text;
+            HospInfo.Wedsite = AddHospitalWedsiteTextBox.Text;
+            HospInfo.PhoneNumber = AddHospitalPhoneNumberTextbox.Text;
+
+            int responce = Pasture.AddHospitalInfo(HospInfo);
+
+            if (responce > 0)
+            {
+                PastureAlert.PopSuccessAlert("Hospital Detail successfly added!!");
+                HideHospitalDetailDivs();
+                LoadHospitalDetail();
+                ViewHospitalDetailDiv.Visible = true;
+            }
+            else
+            {
+                ShowErrorResponse("Hospital Detail not added kindly try again!!");
+            }
+        }
+        else
+        {
+            HideHospitalDetailDivs();
+            LoadHospitalDetail();
+            ViewHospitalDetailDiv.Visible = true;
+        }
+    }
+    protected void EditHospitalDetailBackButton_Click(object sender, EventArgs e)
+    {
+        //Back to view
+        HideHospitalDetailDivs();
+        LoadHospitalDetail();
+        ViewHospitalDetailDiv.Visible = true;
+    }
+    protected void EdiHospitalDetailUpdateButton_Click(object sender, EventArgs e)
+    {
+        HospitalInfo HospInfo = Pasture.GetHospitalInfo();
+
+        if (HospInfo != null)
+        {
+            HospInfo.HospitalName =  EditHospitalNameTextBox.Text ;
+            HospInfo.Email = EditHospitalEmailTextBox.Text  ;
+            HospInfo.Address  =EditHospitalAddressTextbox.Text  ;
+            HospInfo.Wedsite = EditHospitalWedsiteTextBox.Text ;  
+            HospInfo.PhoneNumber = EditHospitalPhoneNumberTextbox.Text ;
+
+            int responce = Pasture.UpdateHospitalInfo(HospInfo);
+
+            if (responce > 0)
+            {
+                PastureAlert.PopSuccessAlert("Hospital Detail successfly updated!!");
+            }
+            else
+            {
+                ShowErrorResponse("Hospital Detail not updated kindly try again!!");
+            }
+        }
+        else
+        {
+            HideHospitalDetailDivs();
+            EditHospitalDetailDiv.Visible = true;
+        }
+        //update
+    }
+    protected void ViewHospitalDetailEditButton_Click(object sender, EventArgs e)
+    {
+        //goto edit
+        HospitalInfo HospInfo = Pasture.GetHospitalInfo();
+
+        if (HospInfo != null)
+        {
+            EditHospitalNameTextBox.Text = HospInfo.HospitalName;
+            EditHospitalEmailTextBox.Text = HospInfo.Email;
+            EditHospitalAddressTextbox.Text = HospInfo.Address;
+            EditHospitalWedsiteTextBox.Text = HospInfo.Wedsite;
+            EditHospitalPhoneNumberTextbox.Text = HospInfo.PhoneNumber;
+            HideHospitalDetailDivs();
+            EditHospitalDetailDiv.Visible = true;
+        }
+        else
+        {
+            HideHospitalDetailDivs();
+            AddHospitalDetailDiv.Visible = true;
+        }
+    }
+    private void HideHospitalDetailDivs()
+    {
+        AddHospitalDetailDiv.Visible = false;
+        EditHospitalDetailDiv.Visible = false;
+        ViewHospitalDetailDiv.Visible = false;
+    }
+    private void LoadHospitalDetail()
+    {
+        HospitalInfo HospInfo = Pasture.GetHospitalInfo();
+
+        if (HospInfo != null)
+        {
+            ViewHospitalNameTextBox.Text = HospInfo.HospitalName;
+            ViewHospitalEmailTextBox.Text = HospInfo.Email;
+            ViewHospitalAddressTextbox.Text = HospInfo.Address;
+            ViewHospitalWedsiteTextBox.Text = HospInfo.Wedsite;
+            ViewHospitalPhoneNumberTextbox.Text = HospInfo.PhoneNumber;
+        }
+        else
+        {
+            HideHospitalDetailDivs();
+            AddHospitalDetailDiv.Visible = true;
+        }
+    }
+
+    #endregion
+
 
 }

@@ -12,7 +12,7 @@ public partial class Pages_patient_portal : System.Web.UI.Page
         if (!IsPostBack)
         {
             string role = Pasture.GetCurrentUserSessionRole();
-            if(role != null)
+            if (role != null)
             {
                 ManageRoleView(role);
                 SetDefualtView();
@@ -23,9 +23,9 @@ public partial class Pages_patient_portal : System.Web.UI.Page
                 return;
             }
 
-            
+
         }
-        
+
     }
     public string GetIsProcessStatus(bool value)
     {
@@ -56,11 +56,11 @@ public partial class Pages_patient_portal : System.Web.UI.Page
     }
     protected void ShowPopAlert_Click(object sender, EventArgs e)
     {
-        
+
         //Call Pop up Alert
 
         Alert.CallAlert(Alert.Alerttype.warning.ToString(), "Check and try again.");
-        
+
         //Alert.CallAlert(Alert.Alerttype.error.ToString(), "Operation can not be done.");
         //return;
     }
@@ -226,7 +226,7 @@ public partial class Pages_patient_portal : System.Web.UI.Page
     {
         SetActiveContainerVisible("consultation");
         HideConsultationViews();
-        AddNewConsultationDiv.Visible = true;     
+        AddNewConsultationDiv.Visible = true;
     }
 
     protected void VitalSignDivNav_Click(object sender, EventArgs e)
@@ -257,6 +257,24 @@ public partial class Pages_patient_portal : System.Web.UI.Page
         ddlistname.DataBind();
         ddlistname.Items.Insert(0, new ListItem("Select Patient Plan type...", "-1"));
     }
+    private void PopulatePatientList(DropDownList ddlistname)
+    {
+        //Employee role = new Employee();
+        ddlistname.DataSource = Pasture.GetPatientPlans();
+        ddlistname.DataTextField = "FullName";
+        ddlistname.DataValueField = "PatientID";
+        ddlistname.DataBind();
+        ddlistname.Items.Insert(0, new ListItem("Select Patient ...", "-1"));
+    }
+    private void PopulatePatientFMList(DropDownList ddlistname,int PatientId)
+    {
+        //Employee role = new Employee();
+        ddlistname.DataSource = Pasture.GetFamilyMembersListByPatientID(PatientId);
+        ddlistname.DataTextField = "FullName";
+        ddlistname.DataValueField = "FamilyMemberID";
+        ddlistname.DataBind();
+        ddlistname.Items.Insert(0, new ListItem("Select Family Member...", "-1"));
+    }
 
     #endregion
 
@@ -264,7 +282,7 @@ public partial class Pages_patient_portal : System.Web.UI.Page
 
     private void BindPatientList()
     {
-        PatientListGridView.DataSource = Pasture.GetPatientPlans();
+        PatientListGridView.DataSource = Pasture.GetPatients();
         PatientListGridView.DataBind();
     }
     private void BindPatientsWithFamilyList()
@@ -272,7 +290,19 @@ public partial class Pages_patient_portal : System.Web.UI.Page
         PatientWithFamilyPlanListGridView.DataSource = Pasture.GetPatientsWithFamilyPlan();
         PatientWithFamilyPlanListGridView.DataBind();
     }
-    
+
+    private void BindConsultationList()
+    {
+        ConsultationListGridView.DataSource = Pasture.GetConsultations();
+        ConsultationListGridView.DataBind();
+    }
+
+    private void BindVitalSignList()
+    {
+        VitalSignListGridView.DataSource = Pasture.GetVitalSigns();
+        VitalSignListGridView.DataBind();
+    }
+
     #endregion
 
     #region Patient
@@ -285,6 +315,7 @@ public partial class Pages_patient_portal : System.Web.UI.Page
         AddPatientVitalSignDiv.Visible = false;
     }
     #endregion
+
     #region Family Member Plan
     private void HideFamilyPlanViews()
     {
@@ -293,7 +324,7 @@ public partial class Pages_patient_portal : System.Web.UI.Page
         ViewPatientFamilyMemberDiv.Visible = false;
         EditPatientFamilyMemberDiv.Visible = false;
         AddPatientFamilyMemberVitalSignDiv.Visible = false;
-        
+
     }
     #endregion
 
@@ -309,6 +340,169 @@ public partial class Pages_patient_portal : System.Web.UI.Page
     #endregion
 
     #region Vital Sign
+
+    protected void AddNewVitalSignViewlistButton_Click(object sender, EventArgs e)
+    {
+        HideVitalSignViews();
+        BindVitalSignList();
+        ViewVitalSignListDiv.Visible = true;
+    }
+    protected void AddNewVitalSignProceedButton_Click(object sender, EventArgs e)
+    {
+        try
+        {
+
+            if (AddNewVitalSignPatientDDL.SelectedValue != "-1")
+            {
+                ShowErrorResponse("Select patient try again!!");
+                return;
+            }
+
+                VitalSign newVitalSign = new VitalSign()
+            {
+                PatientID = Convert.ToInt32(AddNewVitalSignPatientDDL.SelectedValue.ToString()),
+                Temprature = Convert.ToDecimal(EditVitalSignTemprature.Text),
+                Pulse = Convert.ToDecimal(EditVitalSignPulse.Text),
+                Respiration = Convert.ToDecimal(EditVitalSignRespiration.Text),
+                BloodPressure = Convert.ToDecimal(EditVitalSignBloodPressure.Text),
+                Weight = Convert.ToDecimal(EditVitalSignWeight.Text),
+                Height = Convert.ToDecimal(EditVitalSignHeight.Text)
+
+            };
+            if (AddNewVitalSignPatientFamilyMemberDiv.Visible == true)
+            {
+                newVitalSign.FMPatientID = Convert.ToInt32(AddNewVitalSignPatientFamilyMemberDDL.SelectedValue.ToString());
+            }
+
+
+            int response = Pasture.AddNewVitalSign(newVitalSign);
+            if (response > 0)
+            {
+
+                PastureAlert.PopSuccessAlert("Vital Sign successfly submited!!");
+
+            }
+            else
+            {
+                ShowErrorResponse("Vital Sign not submited kindly try again!!");
+            }
+        }
+        catch (Exception ex)
+        {
+            ShowErrorResponse("Vital Sign not submited kindly contact admin.");
+        }
+    }
+    protected void ViewVitalSignAddNewVitalSignButton_Click(object sender, EventArgs e)
+    {
+        HideVitalSignViews();
+        BindVitalSignList();
+        AddNewVitalSignDiv.Visible = true;
+    }
+    protected void ViewVitalSignBtn_Click(object sender, EventArgs e)
+    {
+        try
+        {
+            Button btn = (Button)sender;
+            int vitalsignid = Convert.ToInt32((btn.CommandArgument.ToString()));
+            VitalSign vitalsign = Pasture.GetVitalSignByID(vitalsignid);
+            ViewVitalSignPatientFullname.Text = Pasture.GetVitalSignPatientByID(vitalsignid);
+            ViewVitalSignRespiration.Text = vitalsign.Temprature.ToString();
+            ViewVitalSignPulse.Text = vitalsign.Pulse.ToString();
+            ViewVitalSignRespiration.Text = vitalsign.Respiration.ToString();
+            ViewVitalSignBloodPressure.Text = vitalsign.BloodPressure.ToString();
+            ViewVitalSignWeight.Text = vitalsign.Weight.ToString();
+            ViewVitalSignHeight.Text = vitalsign.Height.ToString();
+
+            //SelectedValue = viewUser.StaffRoleID.ToString();
+
+            HideVitalSignViews();
+            ViewVitalSignDiv.Visible = true;
+
+
+
+        }
+        catch (Exception)
+        {
+
+            throw;
+        }
+    }
+    protected void EditVitalSignBtn_Click(object sender, EventArgs e)
+    {
+        try
+        {
+            Button btn = (Button)sender;
+            int vitalsignid = Convert.ToInt32((btn.CommandArgument.ToString()));
+            Session["CurrentEditVitalSignID"] = vitalsignid;
+            VitalSign vitalsign = Pasture.GetVitalSignByID(vitalsignid);
+            EditVitalSignPatientName.Text = Pasture.GetVitalSignPatientByID(vitalsignid);
+            EditVitalSignRespiration.Text = vitalsign.Temprature.ToString();
+            EditVitalSignPulse.Text = vitalsign.Pulse.ToString();
+            EditVitalSignRespiration.Text = vitalsign.Respiration.ToString();
+            EditVitalSignBloodPressure.Text = vitalsign.BloodPressure.ToString();
+            EditVitalSignWeight.Text = vitalsign.Weight.ToString();
+            EditVitalSignHeight.Text = vitalsign.Height.ToString();
+
+            //SelectedValue = viewUser.StaffRoleID.ToString();
+
+            HideVitalSignViews();
+            EditVitalSignDiv.Visible = true;
+
+
+
+        }
+        catch (Exception)
+        {
+
+            throw;
+        }
+    }
+    protected void EditVitalSignBackButton_Click(object sender, EventArgs e)
+    {
+        HideVitalSignViews();
+        BindVitalSignList();
+        ViewVitalSignListDiv.Visible = true;
+    }
+    protected void EditVitalSignUpdateButton_Click(object sender, EventArgs e)
+    {
+        try
+        {
+            VitalSign updateVitalSign = new VitalSign()
+            {
+                ID = (int)Session["CurrentEditVitalSignID"],
+                Temprature = Convert.ToDecimal(EditVitalSignTemprature.Text),
+                Pulse = Convert.ToDecimal(EditVitalSignPulse.Text),
+                Respiration = Convert.ToDecimal(EditVitalSignRespiration.Text),
+                BloodPressure = Convert.ToDecimal(EditVitalSignBloodPressure.Text),
+                Weight = Convert.ToDecimal(EditVitalSignWeight.Text),
+                Height = Convert.ToDecimal(EditVitalSignHeight.Text)
+
+            };
+
+
+            int response = Pasture.UpdateVitalSign(updateVitalSign);
+            if (response > 0)
+            {
+
+                PastureAlert.PopSuccessAlert("Vital Sign successfly updated!!");
+                Session["CurrentEditVitalSignID"] = null;
+            }
+            else
+            {
+                ShowErrorResponse("Vital Sign not updated kindly try again!!");
+            }
+        }
+        catch (Exception ex)
+        {
+            ShowErrorResponse("Vital Sign not updated kindly contact the admin.");
+        }
+    }
+    protected void ViewVitalSignBackButton_Click(object sender, EventArgs e)
+    {
+        HideVitalSignViews();
+        BindVitalSignList();
+        ViewVitalSignListDiv.Visible = true;
+    }
     private void HideVitalSignViews()
     {
         AddNewVitalSignDiv.Visible = false;
@@ -316,7 +510,23 @@ public partial class Pages_patient_portal : System.Web.UI.Page
         ViewVitalSignDiv.Visible = false;
         EditVitalSignDiv.Visible = false;
     }
+    protected void AddNewVitalSignPatientDDL_SelectedIndexChanged(object sender, EventArgs e)
+    {
+        if(AddNewVitalSignPatientDDL.SelectedValue != "-1")
+        {
+            int patientid = Convert.ToInt32(AddNewVitalSignPatientDDL.SelectedValue.ToString());
+            int VerifyPatientPlan = Pasture.VerifyPatientPlanByID(patientid);
+            if (VerifyPatientPlan > 1)
+            {
+                AddNewVitalSignPatientFamilyMemberDiv.Visible = true;
+                PopulatePatientFMList(AddNewVitalSignPatientFamilyMemberDDL, patientid);
+            }
+        }
+        
+    }
+
     #endregion Vital Sign
+
 
 
 

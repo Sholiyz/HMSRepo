@@ -14,7 +14,7 @@
         [StringLength(50)]
         public string HospitalName { get; set; }
 
-        [StringLength(50)]
+        [StringLength(150)]
         public string Address { get; set; }
 
         [Required]

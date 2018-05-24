@@ -233,11 +233,15 @@ public partial class Pasture
         {
             DBContext = new HSMModelDataContext();
             int responce;
-            HospitalInfo HospitalInfo = DBContext.HospitalInfoes.FirstOrDefault();
+            HospitalInfo nHospitalInfo = DBContext.HospitalInfoes.FirstOrDefault();
             //DBContext.AuthRoles.Add(newRole);
-            
-            HospitalInfo.ModifiedByID = GetCurrentUserSessionID();
-            HospitalInfo.ModifiedDate = DateTime.Now;
+            nHospitalInfo.Address = UpdateHospitalInfo.Address;
+            nHospitalInfo.Email = UpdateHospitalInfo.Email;
+            nHospitalInfo.PhoneNumber = UpdateHospitalInfo.PhoneNumber;
+            nHospitalInfo.Wedsite = UpdateHospitalInfo.Wedsite;
+            nHospitalInfo.HospitalName = UpdateHospitalInfo.HospitalName;
+            nHospitalInfo.ModifiedByID = GetCurrentUserSessionID();
+            nHospitalInfo.ModifiedDate = DateTime.Now;
             responce = DBContext.SaveChanges();
             return responce;
         }
@@ -708,6 +712,22 @@ public partial class Pasture
         PatientPlanType PatientPlan = new PatientPlanType();
         PatientPlan = DBContext.PatientPlanTypes.Where(ppt => ppt.PlanTypeID == PatientPlanTypeID).FirstOrDefault();
         return PatientPlan;
+    }
+    public static int VerifyPatientPlanByID(int PatientID)
+    {
+        DBContext = new HSMModelDataContext();
+        PatientPlanType PatientPlan = new PatientPlanType();
+        int PatientPlanTypeID = DBContext.Patients.Where(p => p.PatientID == PatientID).FirstOrDefault().PlanTypeID;
+        PatientPlan = DBContext.PatientPlanTypes.Where(ppt => ppt.PlanTypeID == PatientPlanTypeID).FirstOrDefault();
+        if(PatientPlan.PlanTypeID > 1)
+        {
+            return PatientPlan.PlanTypeID;
+        }
+        else
+        {
+            return PatientPlan.PlanTypeID;
+        }
+        
     }
     public static int AddNewPatientPlan(PatientPlanType newPatientPlan)
     {
@@ -1375,6 +1395,21 @@ public partial class Pasture
         _VitalSign = DBContext.VitalSigns.Where(b => b.ID == VitalSignID).FirstOrDefault();
         return _VitalSign;
     }
+    public static string GetVitalSignPatientByID(int VitalSignID)
+    {
+        DBContext = new HSMModelDataContext();
+        VitalSign _VitalSign = new VitalSign();
+        _VitalSign = DBContext.VitalSigns.Where(b => b.ID == VitalSignID).FirstOrDefault();
+        if (_VitalSign.FMPatientID == null)
+        {
+            return DBContext.Patients.Where(p => p.PatientID == _VitalSign.PatientID).FirstOrDefault().FullName;
+        }
+        else
+        {
+            return DBContext.FamilyMembers.Where(fm => fm.FamilyMemberID == _VitalSign.FMPatientID).FirstOrDefault().FullName;
+        }
+        //return _VitalSign;
+    }
     public static int AddNewVitalSign(VitalSign newVitalSign)
     {
         try
@@ -1403,10 +1438,8 @@ public partial class Pasture
             DBContext = new HSMModelDataContext();
             int responce;
             VitalSign _VitalSign = DBContext.VitalSigns.Where(v => v.ID == UpdateVitalSign.ID).FirstOrDefault();
-
             
-            //_VitalSign.ConsultationID = UpdateConsultation.ConsultationName;
-            //_VitalSign.ConsultantID= GetCurrentUserSessionID();
+            _VitalSign.StaffID = GetCurrentUserSessionID();
             _VitalSign.ModifiedByID = GetCurrentUserSessionID();
             _VitalSign.ModifiedDate = DateTime.Now;
             responce = DBContext.SaveChanges();
@@ -1444,8 +1477,6 @@ public partial class Pasture
     }
 
     #endregion
-
-
 
     #region Authentication
 
