@@ -79,7 +79,7 @@
                                                                 </div>--%>
                                                                 <div class="form-group">
                                                                     <label class="control-label">PASSPORT</label>
-                                                                    <asp:FileUpload runat="server" CssClass="form-control" />
+                                                                    <asp:FileUpload runat="server" CssClass="form-control"  ID="FileUploadNurse" />
                                                                 </div>
                                                                 <div class="form-group text-center">
                                                                     <asp:Image runat="server" CssClass="img-thumbnail" ImageUrl="../assets/img/dummypicture.png"/>
@@ -172,30 +172,35 @@
                                                                             <asp:Label ID="lblDOB" runat="server" Text='<%#Eval("DOB")%>' Visible="false"></asp:Label>
                                                                             <asp:Label runat="server"></asp:Label>
                                                                         </ItemTemplate>
+                                                                        <ItemStyle HorizontalAlign="Left"  />
                                                                     </asp:TemplateField>
                                                                     <asp:TemplateField HeaderText="Gender">
                                                                         <ItemTemplate>
                                                                             <asp:Label ID="lblGender" runat="server" Text='<%#Eval("Gender")%>'></asp:Label>
                                                                             <asp:Label runat="server"></asp:Label>
                                                                         </ItemTemplate>
+                                                                        <ItemStyle HorizontalAlign="Left"  />
                                                                     </asp:TemplateField>
                                                                     <asp:TemplateField HeaderText="Mar. Status">
                                                                         <ItemTemplate>
                                                                             <asp:Label ID="lblMaritalStatus" runat="server" Text='<%#Eval("MaritalStatus")%>'></asp:Label>
                                                                             <asp:Label runat="server"></asp:Label>
                                                                         </ItemTemplate>
+                                                                        <ItemStyle HorizontalAlign="Left"  />
                                                                     </asp:TemplateField>
                                                                     <asp:TemplateField HeaderText="Telephone">
                                                                         <ItemTemplate>
                                                                             <asp:Label ID="lblPhoneNumber" runat="server" Text='<%#Eval("PhoneNumber")%>'></asp:Label>
                                                                             <asp:Label runat="server"></asp:Label>
                                                                         </ItemTemplate>
+                                                                        <ItemStyle HorizontalAlign="Left"  />
                                                                     </asp:TemplateField>
                                                                     <asp:TemplateField HeaderText="Address">
                                                                         <ItemTemplate>
                                                                             <asp:Label ID="lblAddress" runat="server" Text='<%#Eval("Address")%>'></asp:Label>
                                                                             <asp:Label runat="server"></asp:Label>
                                                                         </ItemTemplate>
+                                                                        <ItemStyle HorizontalAlign="Left"  />
                                                                     </asp:TemplateField>
 
                                                                     <%--<asp:BoundField DataField="ID" HeaderText="Order ID" SortExpression="ID">
@@ -259,7 +264,7 @@
                                                                     <asp:FileUpload runat="server" CssClass="form-control" />
                                                                 </div>
                                                                 <div class="form-group text-center">
-                                                                    <asp:Image runat="server" CssClass="img-thumbnail" ImageUrl="../assets/img/dummypicture.png"/>
+                                                                    <asp:Image runat="server" Width="150" Height="150" ID="nurseEditImage" CssClass="img-thumbnail" ImageUrl="../assets/img/dummypicture.png"/>
                                                                 </div>
                                                                 <div class="form-group">
                                                                     <label class="control-label">FIRSTNAME</label>
@@ -337,7 +342,7 @@
                                                                     <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Enter email" />
                                                                 </div>--%>                                                                
                                                                 <div class="form-group text-center">
-                                                                    <asp:Image runat="server" CssClass="img-thumbnail" ImageUrl="../assets/img/dummypicture.png"/>
+                                                                    <asp:Image runat="server" Width="150" Height="150" CssClass="img-thumbnail" ImageUrl="../assets/img/dummypicture.png" ID="nurseViewImage"/>
                                                                 </div>
                                                                 <div class="form-group">
                                                                     <label class="control-label">FIRSTNAME</label>
@@ -436,7 +441,7 @@
                                                                        
                                                                     </div>
                                                                      <div class="col-lg-6 text-right">
-                                                                         <asp:Button runat="server" CssClass="btn btn-default btn-primary" ID="AttendanceSigninButton" Text="SIGN IN" />
+                                                                         <asp:Button runat="server"  CssClass="btn btn-default btn-primary" ID="AttendanceSigninButton" Text="SIGN IN" />
                                                                     </div>                                                                    
                                                                 </div>
                                                                 </div>

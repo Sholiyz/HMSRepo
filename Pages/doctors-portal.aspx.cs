@@ -13,10 +13,9 @@ public partial class Pages_doctors_portal : System.Web.UI.Page
     protected void Page_Load(object sender, EventArgs e)
     {
         AuthUser CurrentUser = Pasture.GetCurrentUserSessionDetail();
-
         if(CurrentUser != null)
         {
-            int haveopenedattendance =Pasture.GetUnlockedAttendanceLogByUserIDList(CurrentUser.StaffID);
+            int haveopenedattendance = Pasture.GetUnlockedAttendanceLogByUserIDList(CurrentUser.StaffID);
             if (haveopenedattendance > 0)
             {
                 //open doctors portal
@@ -55,6 +54,7 @@ public partial class Pages_doctors_portal : System.Web.UI.Page
         }
 
     }
+
     #region WrittenBy Ola
  
 
@@ -92,7 +92,118 @@ public partial class Pages_doctors_portal : System.Web.UI.Page
     }
     #endregion
 
-    //private static HSMModelDataContext context = new HSMModelDataContext();
+    #region HelperMethod
+
+    /// <summary>
+    /// Success message
+    /// </summary>
+    /// <param name="message"></param>
+    public void SxsMessage(string message)
+    {
+        ResponseAlert.NewMessage = message;
+        ResponseAlert.NoteType = PastureAlert.ResponseNotetype.success.ToString();//"Success";
+        ResponseAlert.NoteVisible = true;
+        ResponseAlert.ShowNotification();
+        return;
+    }
+
+    /// <summary>
+    /// Hide div in Doctor Tab
+    /// </summary>
+    public void HideDivsDocTab()
+    {
+        AddNewDoctorDiv.Visible = false;
+        ViewDoctorListDiv.Visible = false;
+        EditDoctorDiv.Visible = false;
+        ViewDoctorDiv.Visible = false;
+    }
+
+    /// <summary>
+    /// Bind Data to Grid:
+    /// TODO: filter by IsActive
+    /// </summary>
+    public void BindGrid()
+    {
+        try
+        {
+            var data = Pasture.GetDoctorsList();
+            if (!(data.Count < 1))
+            {
+                DoctorListGridView.DataSource = data;
+                DoctorListGridView.DataBind();
+            }
+            else
+            {
+                //DoctorListGridView.Caption = "You have no doctor yet";
+                DoctorListGridView.DataSource = data;
+                DoctorListGridView.DataBind();
+            }
+
+        }
+        catch (Exception ex)
+        {
+            throw new Exception(ex.Message);
+        }
+    }
+
+    public void EnableButton(GridViewCommandEventArgs e)
+    {
+        GridViewRow row = (GridViewRow)(((Button)e.CommandSource).NamingContainer);
+        Button btnEdit = ((Button)row.FindControl("btnEdit"));
+        Button btnDelete = ((Button)row.FindControl("btnDelete"));
+        btnEdit.Attributes["class"] = "enable";
+        btnDelete.Attributes["class"] = "enable";
+    }
+
+    public void DisableButton(GridViewCommandEventArgs e)
+    {
+        GridViewRow row = (GridViewRow)(((Button)e.CommandSource).NamingContainer);
+        Button btnEdit = ((Button)row.FindControl("btnEdit"));
+        Button btnDelete = ((Button)row.FindControl("btnDelete"));
+        btnEdit.Attributes["class"] = "disabled";
+        btnDelete.Attributes["class"] = "disabled";
+    }
+
+    public Byte[] InsertImage(FileUpload fileupload)
+    {
+        Byte[] imgbyte = null;
+        if (fileupload.HasFile)
+        {
+            HttpPostedFile file = fileupload.PostedFile;
+            imgbyte = new Byte[file.ContentLength];
+            file.InputStream.Read(imgbyte, 0, file.ContentLength);
+        }
+        return imgbyte;
+    }
+
+    public string GetImage(string staffID)
+    {
+        Employee Emp = Pasture.GetEmployeeByID(int.Parse(staffID));
+        string imageString = string.Empty;
+        byte[] bytes = (byte[])Emp.Picture;
+        if (bytes != null)
+        {
+            imageString = Convert.ToBase64String(bytes, 0, bytes.Length);
+        }
+        return imageString;
+    }
+
+    private void SetDoctorContainerVisible()
+    {
+        HideContentView();
+        doctorli.Attributes["class"] = "active";
+        doctor.Visible = true;
+    }
+    private void SetAttendanceContainerVisible()
+    {
+        HideContentView();
+        attendanceli.Attributes["class"] = "active";
+        attendance.Visible = true;
+        attendance.Attributes["class"] = "tab-pane fade active in";
+    }
+    #endregion
+
+    #region CRUD
     protected void btnAddNewDoc_Click(object sender, EventArgs e)
     {
         //Redirect to Add New Page
@@ -107,9 +218,13 @@ public partial class Pages_doctors_portal : System.Web.UI.Page
             if (IsPageRefresh == true)
                 return;
 
+            //Process Image
+            byte[] image = InsertImage(FileUploadDoc);
+
             //Save to DB
             int result = Pasture.AddNewEmployee(new Employee()
             {
+                Picture = image,
                 FirstName = txtFirstname.Text.Trim(),
                 LastName = txtLastname.Text.Trim(),
                 OtherNames = txtOthername.Text.Trim(),
@@ -120,7 +235,6 @@ public partial class Pages_doctors_portal : System.Web.UI.Page
                 Address = txtAddress.Text.Trim(),
                 DOB = Convert.ToDateTime(txtDOB.Text).Date,
             });
-
 
             if (result > 0)
             {
@@ -148,8 +262,12 @@ public partial class Pages_doctors_portal : System.Web.UI.Page
             ViewState["itemID"] = itemID;
             ViewState["StaffTypeID"] = StaffTypeID;
 
+            //GetImage
+            string imgurl = GetImage(itemID);
+           
+
             if (e.CommandArgument.Equals("View"))
-            {
+            {               
                 txtFirstnameV.Text = (row.FindControl("lblFirstName") as Label).Text;
                 txtLastnameV.Text = (row.FindControl("lblLastName") as Label).Text;
                 txtPhoneV.Text = (row.FindControl("lblPhoneNumber") as Label).Text;
@@ -157,6 +275,7 @@ public partial class Pages_doctors_portal : System.Web.UI.Page
                 txtAddressV.Text = (row.FindControl("lblAddress") as Label).Text;
                 txtMaritalStatusV.Text = (row.FindControl("lblMaritalStatus") as Label).Text;
                 txtDOBV.Text = Convert.ToDateTime((row.FindControl("lblDOB") as Label).Text).ToString("yyyy-MM-dd");
+                doctorviewimg.ImageUrl = "data:image/png;base64," + imgurl;
 
                 //HideDivs
                 HideDivsDocTab();
@@ -171,6 +290,7 @@ public partial class Pages_doctors_portal : System.Web.UI.Page
                 ddlMaritalStatusE.SelectedItem.Text = (row.FindControl("lblMaritalStatus") as Label).Text;
                 txtAddressE.Text = (row.FindControl("lblAddress") as Label).Text;
                 txtDOBE.Text = Convert.ToDateTime((row.FindControl("lblDOB") as Label).Text).ToString("yyyy-MM-dd");
+                doctorImage.ImageUrl = "data:image/png;base64," + imgurl;
 
                 //HideDivs
                 HideDivsDocTab();
@@ -262,105 +382,6 @@ public partial class Pages_doctors_portal : System.Web.UI.Page
         }
     }
 
-    #region HelperClasses
-
-    /// <summary>
-    /// Success message
-    /// </summary>
-    /// <param name="message"></param>
-    public void SxsMessage(string message)
-    {
-        ResponseAlert.NewMessage = message;
-        ResponseAlert.NoteType = PastureAlert.ResponseNotetype.success.ToString();//"Success";
-        ResponseAlert.NoteVisible = true;
-        ResponseAlert.ShowNotification();
-        return;
-    }
-
-    /// <summary>
-    /// Hide div in Doctor Tab
-    /// </summary>
-    public void HideDivsDocTab()
-    {
-        AddNewDoctorDiv.Visible = false;
-        ViewDoctorListDiv.Visible = false;
-        EditDoctorDiv.Visible = false;
-        ViewDoctorDiv.Visible = false;
-    }
-
-    /// <summary>
-    /// Bind Data to Grid:
-    /// TODO: filter by IsActive
-    /// </summary>
-    public void BindGrid()
-    {
-        try
-        {
-            var data = Pasture.GetDoctorsList();
-            if (!(data.Count < 1))
-            {
-                DoctorListGridView.DataSource = data;
-                DoctorListGridView.DataBind();
-            }
-            else
-            {
-                //DoctorListGridView.Caption = "You have no doctor yet";
-                DoctorListGridView.DataSource = data;
-                DoctorListGridView.DataBind();
-            }
-
-        }
-        catch (Exception ex)
-        {
-            throw new Exception(ex.Message);
-        }
-    }
-
-    public void EnableButton(GridViewCommandEventArgs e)
-    {
-        GridViewRow row = (GridViewRow)(((Button)e.CommandSource).NamingContainer);
-        Button btnEdit = ((Button)row.FindControl("btnEdit"));
-        Button btnDelete = ((Button)row.FindControl("btnDelete"));
-        btnEdit.Attributes["class"] = "enable";
-        btnDelete.Attributes["class"] = "enable";
-    }
-
-    public void DisableButton(GridViewCommandEventArgs e)
-    {
-        GridViewRow row = (GridViewRow)(((Button)e.CommandSource).NamingContainer);
-        Button btnEdit = ((Button)row.FindControl("btnEdit"));
-        Button btnDelete = ((Button)row.FindControl("btnDelete"));
-        btnEdit.Attributes["class"] = "disabled";
-        btnDelete.Attributes["class"] = "disabled";
-    }
-    #endregion
-
-
-    protected void DoctorDivNav_Click(object sender, EventArgs e)
-    {
-        SetDoctorContainerVisible();
-        BindGrid();
-    }
-
-    protected void AttendanceDivNav_Click(object sender, EventArgs e)
-    {
-        SetAttendanceContainerVisible();
-    }
-
-    private void SetDoctorContainerVisible()
-    {
-        HideContentView();
-        doctorli.Attributes["class"] = "active";
-        doctor.Visible = true;
-    }
-    private void SetAttendanceContainerVisible()
-    {
-        HideContentView();
-        attendanceli.Attributes["class"] = "active";
-        attendance.Visible = true;
-        attendance.Attributes["class"] = "tab-pane fade active in";
-    }
-
     protected void btnAddNewBack_Click(object sender, EventArgs e)
     {
         HideDivsDocTab();
@@ -372,4 +393,16 @@ public partial class Pages_doctors_portal : System.Web.UI.Page
         HideDivsDocTab();
         DoctorListGridView.Visible = true;
     }
+
+    protected void DoctorDivNav_Click(object sender, EventArgs e)
+    {
+        SetDoctorContainerVisible();
+        BindGrid();
+    }
+
+    protected void AttendanceDivNav_Click(object sender, EventArgs e)
+    {
+        SetAttendanceContainerVisible();
+    }
+    #endregion
 }

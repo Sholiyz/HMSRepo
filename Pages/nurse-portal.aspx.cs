@@ -10,6 +10,23 @@ public partial class Pages_nurse_portal : System.Web.UI.Page
     bool IsPageRefresh = false;
     protected void Page_Load(object sender, EventArgs e)
     {
+        AuthUser CurrentUser = Pasture.GetCurrentUserSessionDetail();
+        if (CurrentUser != null)
+        {
+            int haveopenedattendance = Pasture.GetUnlockedAttendanceLogByUserIDList(CurrentUser.StaffID);
+            if (haveopenedattendance > 0)
+            {
+                //open doctors portal
+                AttendanceSigninButton.Text = "SIGN OUT";
+            }
+            else
+            {
+                //open attendace sheet
+                SetAttendanceContainerVisible();
+                AttendanceCurrentTime.Text = Pasture.GetAttendanceDateTime();
+            }
+        }
+
         if (!Page.IsPostBack)
         {
             ViewState["ViewStateId"] = System.Guid.NewGuid().ToString();
@@ -215,9 +232,33 @@ public partial class Pages_nurse_portal : System.Web.UI.Page
         attendance.Visible = true;
         attendance.Attributes["class"] = "tab-pane fade active in";
     }
+
+    public Byte[] InsertImage(FileUpload fileupload)
+    {
+        Byte[] imgbyte = null;
+        if (fileupload.HasFile)
+        {
+            HttpPostedFile file = fileupload.PostedFile;
+            imgbyte = new Byte[file.ContentLength];
+            file.InputStream.Read(imgbyte, 0, file.ContentLength);
+        }
+        return imgbyte;
+    }
+
+    public string GetImage(string staffID)
+    {
+        Employee Emp = Pasture.GetEmployeeByID(int.Parse(staffID));
+        string imageString = string.Empty;
+        byte[] bytes = (byte[])Emp.Picture;
+        if (bytes != null)
+        {
+            imageString = Convert.ToBase64String(bytes, 0, bytes.Length);
+        }
+        return imageString;
+    }
     #endregion
 
-
+    #region CRUD
     protected void btnAddNewDoc_Click(object sender, EventArgs e)
     {
         //Redirect to Add New Page
@@ -231,10 +272,14 @@ public partial class Pages_nurse_portal : System.Web.UI.Page
         {
             if (IsPageRefresh == true)
                 return;
+            
+            //Process Image
+            byte[] image = InsertImage(FileUploadNurse);
 
             //Save to DB
             int result = Pasture.AddNewEmployee(new Employee()
             {
+                Picture = image,
                 FirstName = txtFirstname.Text.Trim(),
                 LastName = txtLastname.Text.Trim(),
                 OtherNames = txtOthername.Text.Trim(),
@@ -276,6 +321,9 @@ public partial class Pages_nurse_portal : System.Web.UI.Page
             ViewState["itemID"] = itemID;
             ViewState["StaffTypeID"] = StaffTypeID;
 
+            //GetImage
+            string imgurl = GetImage(itemID);
+
             if (e.CommandArgument.Equals("View"))
             {
                 txtFirstnameV.Text = (row.FindControl("lblFirstName") as Label).Text;
@@ -285,6 +333,7 @@ public partial class Pages_nurse_portal : System.Web.UI.Page
                 txtAddressV.Text = (row.FindControl("lblAddress") as Label).Text;
                 txtMaritalStatusV.Text = (row.FindControl("lblMaritalStatus") as Label).Text;
                 txtDOBV.Text = Convert.ToDateTime((row.FindControl("lblDOB") as Label).Text).ToString("yyyy-MM-dd");
+                nurseViewImage.ImageUrl = "data:image/png;base64," + imgurl;
 
                 //HideDivs
                 HideDivsNurseTab();
@@ -299,6 +348,7 @@ public partial class Pages_nurse_portal : System.Web.UI.Page
                 ddlMaritalStatusE.SelectedItem.Text = (row.FindControl("lblMaritalStatus") as Label).Text;
                 txtAddressE.Text = (row.FindControl("lblAddress") as Label).Text;
                 txtDOBE.Text = Convert.ToDateTime((row.FindControl("lblDOB") as Label).Text).ToString("yyyy-MM-dd");
+                nurseEditImage.ImageUrl = "data:image/png;base64," + imgurl;
 
                 //HideDivs
                 HideDivsNurseTab();
@@ -406,4 +456,5 @@ public partial class Pages_nurse_portal : System.Web.UI.Page
     {
         SetAttendanceContainerVisible();
     }
+    #endregion
 }
