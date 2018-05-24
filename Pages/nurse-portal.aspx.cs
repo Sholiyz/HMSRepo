@@ -31,10 +31,10 @@ public partial class Pages_nurse_portal : System.Web.UI.Page
         {
             ViewState["ViewStateId"] = System.Guid.NewGuid().ToString();
             Session["SessionId"] = ViewState["ViewStateId"].ToString();
-            HideDivsNurseTab();
-            ViewNurseListDiv.Visible = true;
 
             BindGrid();
+            HideDivsNurseTab();
+            ViewNurseListDiv.Visible = true;
         }
         else
         {
@@ -221,13 +221,13 @@ public partial class Pages_nurse_portal : System.Web.UI.Page
 
     private void SetNurseContainerVisible()
     {
-        HideDivsNurseTab();
+        HideContentView();
         nurseli.Attributes["class"] = "active";
         nurse.Visible = true;
     }
     private void SetAttendanceContainerVisible()
     {
-        HideDivsNurseTab();
+        HideContentView();
         attendanceli.Attributes["class"] = "active";
         attendance.Visible = true;
         attendance.Attributes["class"] = "tab-pane fade active in";
@@ -455,6 +455,13 @@ public partial class Pages_nurse_portal : System.Web.UI.Page
     protected void AttendanceDivNav_Click(object sender, EventArgs e)
     {
         SetAttendanceContainerVisible();
+    }
+    private void HideContentView()
+    {
+        nurse.Visible = false;
+        nurseli.Attributes["class"] = "";
+        attendance.Visible = false;
+        attendanceli.Attributes["class"] = "";
     }
     #endregion
 }

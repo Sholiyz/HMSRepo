@@ -84,7 +84,6 @@
                                         <div class="col-md-12">
                                             <div class="panel panel-default">
                                                 <div class="panel-body">
-                                                    <hr />
                                                     <div class="form-group" id="AddUserDiv" runat="server">
                                                         <div class="form-group">
                                                             <div class="row form-group">
@@ -136,8 +135,8 @@
                                                             </div>
                                                         </div>
                                                     </div>
-                                                    <%--<hr />--%>
                                                     <div class="form-group" id="ViewUserListDiv" runat="server">
+                                                       
                                                         <div class="form-group">
                                                             <div class="row form-group">
                                                                 <div class="col-md-6 text-left">
@@ -148,23 +147,27 @@
                                                                 </div>
                                                             </div>
                                                         </div>
+                                                        <hr style="border-top: 1px solid #232121;"/>
                                                         <div class="form-group">
                                                             <div class="row form-group">
-                                                                <div class="col-sm-2 form-group text-right">
-                                                                    <h4 class="text-right">Employee Name</h4>
+                                                                <div class="col-sm-2 col-md-2 form-group text-right">
+                                                                    <h4 class="text-right">Employee</h4>
                                                                 </div>
-                                                                <div class="col-sm-3 form-group text-left">
+                                                                <div class="col-sm-3 col-md-3 form-group text-left">
                                                                     <asp:DropDownList runat="server" ID="UserSearchEmployeeNameddl" CssClass="form-control"></asp:DropDownList>
                                                                 </div>
-                                                                <div class="col-sm-2 form-group text-right">
+                                                                <div class="col-sm-2 col-md-2 form-group text-right">
                                                                     <h4 class="text-right">HMS UserName</h4>
                                                                 </div>
-                                                                <div class="col-sm-3 form-group text-left">
+                                                                <div class="col-sm-3 col-md-2 form-group text-left">
                                                                     <asp:TextBox runat="server" ID="UserSearchEmployeeHMSID"></asp:TextBox>
                                                                 </div>
-                                                                <div class="col-sm-2 form-group text-left">
+                                                                <div class="col-sm-2 col-md-1 form-group text-left">
                                                                     <asp:Button runat="server" CssClass="btn btn-default btn-primary text-right" ID="UserSearchButton" Text="SEARCH" OnClick="UserSearchButton_Click" />
                                                                 </div>
+                                                               <%-- <div class="col-sm-2 col-md-2 form-group text-right">
+                                                                    <asp:Button runat="server" CssClass="btn btn-default btn-primary text-right" ID="Button1" OnClick="ViewUserlistAddUserButton_Click" Text="ADD NEW USER" />
+                                                                </div>--%>
                                                             </div>
                                                         </div>
                                                         <div class="table-responsive">
@@ -178,6 +181,7 @@
                                                                         <ItemTemplate>
                                                                             <asp:Label runat="server" Text='<%#Pasture.GetEmployeeFullNameById(int.Parse(Eval("StaffID").ToString()))%>'></asp:Label>
                                                                         </ItemTemplate>
+                                                                        <ItemStyle HorizontalAlign="Left"  />
                                                                     </asp:TemplateField>
 
                                                                     <asp:BoundField DataField="UserName" HeaderText="UserName" SortExpression="Name">
@@ -189,6 +193,7 @@
                                                                         <ItemTemplate>
                                                                             <asp:Label runat="server" Text='<%#Pasture.GetRoleNameByRoleID(int.Parse(Eval("StaffRoleID").ToString()))%>'></asp:Label>
                                                                         </ItemTemplate>
+                                                                        <ItemStyle HorizontalAlign="Left"  />
                                                                     </asp:TemplateField>
 
                                                                     <asp:TemplateField HeaderText="Actions" HeaderStyle-CssClass="center text-center" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center" ItemStyle-VerticalAlign="Middle">
@@ -206,7 +211,6 @@
                                                             </asp:GridView>
                                                         </div>
                                                     </div>
-                                                    <%--<hr />--%>
                                                     <div class="form-group" id="EditUserDiv" runat="server">
                                                         <h4>EDIT USER</h4>
                                                         <div class="row">
@@ -248,7 +252,7 @@
                                                             </div>
                                                         </div>
                                                     </div>
-                                                    <%-- <hr />--%>
+
                                                     <div class="form-group" id="ViewUserCreationDiv" runat="server">
                                                         <h4>VIEW USER DETAIL</h4>
                                                         <div class="row">

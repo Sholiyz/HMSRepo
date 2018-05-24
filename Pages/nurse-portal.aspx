@@ -50,17 +50,18 @@
                                         <li class="" runat="server" id="attendanceli"><%--<a href="#attendance" data-toggle="tab">ATTENDANCE</a>--%>
                                             <asp:LinkButton  runat="server" ID="AttendanceDivNav" Text="ATTENDANCE" OnClick="AttendanceDivNav_Click"> </asp:LinkButton>
                                         </li>
-                                        <li class=""><a href="#messages" data-toggle="tab">Messages</a>
+                                        <%--<li class=""><a href="#messages" data-toggle="tab">Messages</a>
                                         </li>
                                         <li class=""><a href="#settings" data-toggle="tab">Settings</a>
                                         </li> 
                                         <li class=""><a href="#messages" data-toggle="tab">Manage Nurse Shift</a>
                                         </li>
                                         <li class=""><a href="#settings" data-toggle="tab">Settings</a>
-                                        </li>
+                                        </li>--%>
                                     </ul>
 
                                     <div class="tab-content">
+                                        <%-- NURSE tab --%>
                                         <div class="tab-pane fade active in" id="nurse" runat="server">
                                            <%-- <h4>Add New Nurse</h4>--%>
                                             <div class="col-md-12">
@@ -401,14 +402,14 @@
                                                 </div>
                                             </div>
                                         </div>
+
+                                        <%-- ATTENDANCE TAB --%>
                                         <div class="tab-pane fade" id="attendance"  runat="server">
                                           
                                             <div class="col-md-12">
                                                 <div class="panel panel-default">
-                                                    
                                                     <div class="panel-body">
-                                                        <hr />
-                                                       <div class="form-group" id="DorctorAttendanceDiv" runat="server">
+                                                       <div class="form-group" id="NurseAttendanceDiv" runat="server">
                                                          <div class="form-group">
                                                             <div class="row form-group">
                                                                 <div class="col-md-6 text-left">
@@ -458,7 +459,7 @@
 
                                         </div>
 
-                                        <div class="tab-pane fade" id="profile">
+                                        <%--<div class="tab-pane fade" id="profile">
                                             <h4>Profile Tab</h4>
                                             <div class="col-md-12">
                                                 <div class="panel panel-default">
@@ -509,26 +510,26 @@
                                                 </div>
                                             </div>
 
-                                        </div>
-                                        <div class="tab-pane fade" id="messages">
+                                        </div>--%>
+                                        <%--<div class="tab-pane fade" id="messages">
                                             <h4>Messages Tab</h4>
                                             <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
                                         </div>
                                         <div class="tab-pane fade" id="settings">
                                             <h4>Settings Tab</h4>
                                             <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-                                        </div>
+                                        </div>--%>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class="row">
+                    <%--<div class="row">
                         <div class="col-md-6">
 
                         </div>
                         
-                    </div>
+                    </div>--%>
                 </div>
             </div>
         </div>

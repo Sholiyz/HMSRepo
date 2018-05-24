@@ -35,13 +35,12 @@ public partial class Pages_doctors_portal : System.Web.UI.Page
         {
             ViewState["ViewStateId"] = System.Guid.NewGuid().ToString();
             Session["SessionId"] = ViewState["ViewStateId"].ToString();
+
+            BindGrid();
             HideDivsDocTab();
             ViewDoctorListDiv.Visible = true;
             //DoctorListGridView.DataSource = LoadOrderItems();
             //DoctorListGridView.DataBind();
-
-            BindGrid();
-
         }
         else
         {
