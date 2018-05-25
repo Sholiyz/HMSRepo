@@ -27,18 +27,7 @@ public partial class Pages_patient_portal : System.Web.UI.Page
         }
 
     }
-    public string GetIsProcessStatus(bool value)
-    {
-        return (value == true) ? "Processing" : "Placed";
-    }
-    public string GetIsDeliveredStatus(bool value)
-    {
-        return (value == true) ? "Delivered" : "Pending"; ;
-    }
-    public string GetIsCancelledStatus(bool value)
-    {
-        return (value == true) ? "Cancelled" : "Not-Cancelled";
-    }
+    
     protected void ShowAlertClick_Click(object sender, EventArgs e)
     {
 
@@ -291,6 +280,12 @@ public partial class Pages_patient_portal : System.Web.UI.Page
         PatientWithFamilyPlanListGridView.DataBind();
     }
 
+    private void BindFamilyMemberList(int patientid)
+    {
+        PatientFamilyMemberListGridView.DataSource = Pasture.GetFamilyMembersListByPatientID(patientid);
+        PatientFamilyMemberListGridView.DataBind();
+    }
+   
     private void BindConsultationList()
     {
         ConsultationListGridView.DataSource = Pasture.GetConsultations();
@@ -305,40 +300,36 @@ public partial class Pages_patient_portal : System.Web.UI.Page
 
     #endregion
 
-    #region Patient
-    private void HidePatientViews()
+    #region ImageHelper
+    //Add Image
+    private byte[] GetImageForUpload(FileUpload FileUploader)
     {
-        AddNewPatientDiv.Visible = false;
-        ViewPatientListDiv.Visible = false;
-        ViewPatientDiv.Visible = false;
-        EditPatientDiv.Visible = false;
-        AddPatientVitalSignDiv.Visible = false;
+        Byte[] imgbyte=new byte[]{0};
+        if (FileUploader.HasFile)
+        {
+            HttpPostedFile file = FileUploader.PostedFile;
+            imgbyte = new Byte[file.ContentLength];
+            file.InputStream.Read(imgbyte, 0, file.ContentLength);
+            return imgbyte;
+        }
+        return imgbyte;   
     }
-    #endregion
 
-    #region Family Member Plan
-    private void HideFamilyPlanViews()
+    private string GetImageFileForView(byte[] image)
     {
-        AddNewPatientFamilyMemberDiv.Visible = false;
-        ViewPatientFamilyMemberListDiv.Visible = false;
-        ViewPatientFamilyMemberDiv.Visible = false;
-        EditPatientFamilyMemberDiv.Visible = false;
-        AddPatientFamilyMemberVitalSignDiv.Visible = false;
-
-    }
-    #endregion
-
-    #region Consultation
-    private void HideConsultationViews()
-    {
-        AddNewConsultationDiv.Visible = false;
-        ViewConsultaionListDiv.Visible = false;
-        ViewConsultationDiv.Visible = false;
-        EditConsultationDiv.Visible = false;
+        if(image != null)
+        {
+            byte[] bytes = (byte[])image;
+            string base64String = Convert.ToBase64String(bytes, 0, bytes.Length);
+            //string ImageString = "data:image/png;base64," + base64String;
+            return base64String;
+        }
+        return null;
     }
 
     #endregion
 
+  
     #region Vital Sign
 
     protected void AddNewVitalSignViewlistButton_Click(object sender, EventArgs e)
@@ -358,7 +349,7 @@ public partial class Pages_patient_portal : System.Web.UI.Page
                 return;
             }
 
-                VitalSign newVitalSign = new VitalSign()
+            VitalSign newVitalSign = new VitalSign()
             {
                 PatientID = Convert.ToInt32(AddNewVitalSignPatientDDL.SelectedValue.ToString()),
                 Temprature = Convert.ToDecimal(EditVitalSignTemprature.Text),
@@ -369,7 +360,7 @@ public partial class Pages_patient_portal : System.Web.UI.Page
                 Height = Convert.ToDecimal(EditVitalSignHeight.Text)
 
             };
-            if (AddNewVitalSignPatientFamilyMemberDiv.Visible == true)
+            if (AddNewVitalSignPatientFamilyMemberDiv.Visible == true && AddNewVitalSignPatientFamilyMemberDDL.SelectedValue.ToString()!="-1")
             {
                 newVitalSign.FMPatientID = Convert.ToInt32(AddNewVitalSignPatientFamilyMemberDDL.SelectedValue.ToString());
             }
@@ -512,7 +503,7 @@ public partial class Pages_patient_portal : System.Web.UI.Page
     }
     protected void AddNewVitalSignPatientDDL_SelectedIndexChanged(object sender, EventArgs e)
     {
-        if(AddNewVitalSignPatientDDL.SelectedValue != "-1")
+        if (AddNewVitalSignPatientDDL.SelectedValue != "-1")
         {
             int patientid = Convert.ToInt32(AddNewVitalSignPatientDDL.SelectedValue.ToString());
             int VerifyPatientPlan = Pasture.VerifyPatientPlanByID(patientid);
@@ -522,10 +513,913 @@ public partial class Pages_patient_portal : System.Web.UI.Page
                 PopulatePatientFMList(AddNewVitalSignPatientFamilyMemberDDL, patientid);
             }
         }
-        
+
     }
 
-    #endregion Vital Sign
+    #endregion
+        
+    #region Patient
+
+    protected void AddNewPatientProceedButton_Click(object sender, EventArgs e)
+    {
+        try
+        {
+
+            if (Addpatientplantypelistddl.SelectedValue != "-1")
+            {
+                ShowErrorResponse("Select Patient Plan try again!!");
+                return;
+            }
+            if (AddNewPatientGenderDDl.SelectedValue != "-1")
+            {
+                ShowErrorResponse("Select Gender try again!!");
+                return;
+            }
+            if (AddNewPatientMaritalStatusddl.SelectedValue != "-1")
+            {
+                ShowErrorResponse("Select MArital status try again!!");
+                return;
+            }
+
+            Patient newPatient = new Patient()
+            {
+                FirstName = AddNewPatientFirtnameTxtBox.Text,
+                LastName = AddNewPatientLastNameTxtBox.Text,
+                OtherNames = AddNewPatientOtherNamesTxtBox.Text,
+                PlanTypeID = Convert.ToInt32(Addpatientplantypelistddl.SelectedValue.ToString()),
+                Gender = AddNewPatientGenderDDl.SelectedItem.Text,
+                Occupation=AddNewPatientOccupationTxtBox.Text,
+                MaritalStatus = AddNewPatientMaritalStatusddl.SelectedItem.Text,
+                PhoneNumber = AddNewPatientPhoneNumberTxtBox.Text,
+                Address = AddNewPatientAddressTxtBox.Text,
+                DOB = Convert.ToDateTime(AddNewPatientDOBTxtBox.Text),
+                NextofKinFullName= AddNewPatientNOKFullNameTxtBox.Text,
+                NextofKinPhoneNumber= AddNewPatientNOKPhoneNumberTxtBox.Text,
+                Picture= GetImageForUpload(AddNewPatientPictureUpload)
+
+            };
+            
+
+
+            int response = Pasture.AddNewPatient(newPatient);
+            if (response > 0)
+            {
+
+                PastureAlert.PopSuccessAlert("Patient successfly created!!");
+                PatientIDforVitalSign.Value = newPatient.PatientID.ToString();
+                Session["PatientIDforVitalSign"] = newPatient.PatientID.ToString();
+                HidePatientViews();
+                BindPatientList();
+                AddPatientVitalSignDiv.Visible = true;
+            }
+            else
+            {
+                ShowErrorResponse("Patient not created kindly try again!!");
+            }
+        }
+        catch (Exception ex)
+        {
+            ShowErrorResponse("Patient not created kindly contact admin.");
+        }
+    }
+
+    protected void AddNewPatientBackButton_Click(object sender, EventArgs e)
+    {
+        HidePatientViews();
+        ViewPatientListDiv.Visible = true;
+    }
+
+    protected void ViewPatientListAddNewPatietButton_Click(object sender, EventArgs e)
+    {
+        HidePatientViews();
+        AddNewPatientDiv.Visible = true;
+    }
+
+    protected void ViewPatientListBtn_Click(object sender, EventArgs e)
+    {
+        try
+        {
+            Button btn = (Button)sender;
+            int patientid = Convert.ToInt32((btn.CommandArgument.ToString()));
+            Patient patient = Pasture.GetPatientByID(patientid);
+
+            ViewPatientFirstNameTxtBox.Text = patient.FirstName;
+            ViewPatientLastNameTxtBox.Text = patient.LastName;
+            ViewPatientOtherNamesTxtBox.Text = patient.OtherNames;
+            ViewPatientPlanTxtBox.Text =Pasture.GetPatientPlanNameByID( patient.PlanTypeID);
+            ViewPatientGenderTxtBox.Text = patient.Gender;
+            ViewPatientOccupationTxtBox.Text = patient.Occupation;
+            ViewPatientMaritalStatusTxtBox.Text = patient.MaritalStatus;
+            ViewPatientPhoneNumberTxtBox.Text = patient.PhoneNumber;
+            ViewPatientAddressTxtBox.Text = patient.Address;
+            ViewPatientDOBTxtBox.Text = patient.DOB.ToString();
+            ViewPatientNOKFullNAmeTxtBox.Text = patient.NextofKinFullName;
+            ViewPatientNOKPhoneNumberTxtBox.Text = patient.NextofKinPhoneNumber;
+
+
+            string ImageUrl = GetImageFileForView(patient.Picture);
+            ViewPatientmageViewer.ImageUrl = "data:image/png;base64," + ImageUrl;
+
+            HidePatientViews();
+            ViewPatientDiv.Visible = true;
+
+        }
+        catch (Exception)
+        {
+
+            throw;
+        }
+    }
+
+    protected void EditPatientListBtn_Click(object sender, EventArgs e)
+    {
+        try
+        {
+            Button btn = (Button)sender;
+            int patientid = Convert.ToInt32((btn.CommandArgument.ToString()));
+            Session["CurrentEditPatientID"] = patientid;
+            Patient patient = Pasture.GetPatientByID(patientid);
+            EditPatientFirstNameTxtBox.Text = patient.FirstName;
+            EditPatientLastNameTxtBox.Text = patient.LastName;
+            EditPatientOtherNamesTxtBox.Text = patient.OtherNames;
+            Editpatientplantypelistddl.SelectedValue = patient.PlanTypeID.ToString();
+            EditPatientGenderddl.SelectedItem.Text = patient.Gender;
+            EditPatientOccupationTxtBox.Text = patient.Occupation;
+            EditPatientMaritalStatusddl.SelectedItem.Text = patient.MaritalStatus;
+            EditPatientPhoneNumberTxtBox.Text = patient.PhoneNumber;
+            EditPatientAddressTxtBox.Text = patient.Address;
+            EditPatientDOBTxtBox.Text = patient.DOB.ToString();
+            EditPatientNOKFullNameTxtBox.Text = patient.NextofKinFullName;
+            EditPatientNOKPhoneNumberTxtBox.Text = patient.NextofKinPhoneNumber;
+
+            string ImageUrl = GetImageFileForView(patient.Picture);
+            EditPatientImageViewer.ImageUrl = "data:image/png;base64," + ImageUrl;
+
+            HidePatientViews();
+            EditPatientDiv.Visible = true;
+
+
+
+        }
+        catch (Exception)
+        {
+
+            throw;
+        }
+    }
+
+    protected void PatientActivatioButton_Click(object sender, EventArgs e)
+    {
+        try
+        {
+            Button btn = (Button)sender;
+            int patientid = Convert.ToInt32((btn.CommandArgument.ToString()));
+            bool ActivateState;
+            int response = Pasture.ActivateOrDeactivatePatient(patientid, out ActivateState);
+
+            if (response > 0)
+            {
+                if (ActivateState)
+                {
+                    PastureAlert.PopSuccessAlert("Patient Successfly Activated!!");
+                }
+                else
+                {
+                    PastureAlert.PopSuccessAlert("Patient Successfly Deactivated!!");
+                }
+                try
+                {
+                    HidePatientViews();
+                    ViewPatientListDiv.Visible = true;
+                    BindPatientList();
+
+                }
+                catch (Exception)
+                {
+
+                    throw;
+                }
+            }
+            else
+            {
+                ShowErrorResponse("Operation Failed Kindly try agian");
+            }
+
+
+
+        }
+        catch (Exception)
+        {
+
+            throw;
+        }
+    }
+
+    protected void EditPatientBackButton_Click(object sender, EventArgs e)
+    {
+        HidePatientViews();
+        BindPatientList();
+        ViewPatientListDiv.Visible = true;
+    }
+
+    protected void EditPatientUpdateButton_Click(object sender, EventArgs e)
+    {
+        try
+        {
+            
+           if (Editpatientplantypelistddl.SelectedValue != "-1")
+            {
+                ShowErrorResponse("Select Patient Plan try again!!");
+                return;
+            }
+            if (EditPatientGenderddl.SelectedValue != "-1")
+            {
+                ShowErrorResponse("Select Gender try again!!");
+                return;
+            }
+            if (EditPatientMaritalStatusddl.SelectedValue != "-1")
+            {
+                ShowErrorResponse("Select MArital status try again!!");
+                return;
+            }
+            int updatepatientid = (int)Session["CurrentEditPatientID"];
+            Patient updatePatient = new Patient()
+            {
+                PatientID = updatepatientid,
+                FirstName = EditPatientFirstNameTxtBox.Text,
+                LastName = EditPatientLastNameTxtBox.Text,
+                OtherNames = EditPatientOtherNamesTxtBox.Text,
+                PlanTypeID = Convert.ToInt32(Editpatientplantypelistddl.SelectedValue.ToString()),
+                Gender = EditPatientGenderddl.SelectedItem.Text,
+                Occupation= EditPatientOccupationTxtBox.Text,
+                MaritalStatus = EditPatientMaritalStatusddl.SelectedItem.Text,
+                PhoneNumber = EditPatientPhoneNumberTxtBox.Text,
+                Address = EditPatientAddressTxtBox.Text,
+                DOB = Convert.ToDateTime(EditPatientDOBTxtBox.Text),
+                NextofKinFullName = EditPatientNOKFullNameTxtBox.Text,
+                NextofKinPhoneNumber = EditPatientNOKPhoneNumberTxtBox.Text,
+                Picture = GetImageForUpload(EditPatientPassportFileupload)
+
+            };
+
+
+
+            int response = Pasture.UpdatePatient(updatePatient);
+            if (response > 0)
+            {
+
+                PastureAlert.PopSuccessAlert("Patient successfly updated!!");
+
+            }
+            else
+            {
+                ShowErrorResponse("Patient not updated kindly try again!!");
+            }
+        }
+        catch (Exception ex)
+        {
+            ShowErrorResponse("Patient not updated kindly contact admin.");
+        }
+    }
+
+    protected void AddPatientVitalSignProceedButton_Click(object sender, EventArgs e)
+    {
+
+        try
+        {
+            int patientid = (int)Session["PatientIDforVitalSign"];
+            if (patientid == 0 || patientid.ToString() == null)
+            {
+                PastureAlert.PopWarningAlert("This process has being delayed for too long, kindly add from vital sign section!!");
+                HidePatientViews();
+                BindPatientList();
+                ViewPatientListDiv.Visible = true;
+                return;
+            }
+            if (AddNewVitalSignPatientDDL.SelectedValue != "-1")
+            {
+                ShowErrorResponse("Select patient try again!!");
+                return;
+            }
+           // int patientid = Convert.ToInt32(PatientIDforVitalSign.Value);
+            //int patientid =(int) Session["PatientIDforVitalSign"];
+            VitalSign newVitalSign = new VitalSign()
+            {
+                PatientID = patientid,// Convert.ToInt32(AddNewVitalSignPatientDDL.SelectedValue.ToString()),
+                Temprature = Convert.ToDecimal(AddPatientVitalSignTemprature.Text),
+                Pulse = Convert.ToDecimal(AddPatientVitalSignPulse.Text),
+                Respiration = Convert.ToDecimal(AddPatientVitalSignRespiration.Text),
+                BloodPressure = Convert.ToDecimal(AddPatientVitalSignBloodPressure.Text),
+                Weight = Convert.ToDecimal(AddPatientVitalSignWeight.Text),
+                Height = Convert.ToDecimal(AddPatientVitalSignHeight.Text)
+
+            };           
+
+
+            int response = Pasture.AddNewVitalSign(newVitalSign);
+            if (response > 0)
+            {
+
+                PastureAlert.PopSuccessAlert("Vital Sign successfly submited!!");
+                HidePatientViews();
+                BindPatientList();
+                ViewPatientListDiv.Visible = true;
+            }
+            else
+            {
+                ShowErrorResponse("Vital Sign not submited kindly try again!!");
+            }
+        }
+        catch (Exception ex)
+        {
+            ShowErrorResponse("Vital Sign not submited kindly contact admin.");
+        }
+        
+    }
+    private void HidePatientViews()
+    {
+        AddNewPatientDiv.Visible = false;
+        ViewPatientListDiv.Visible = false;
+        ViewPatientDiv.Visible = false;
+        EditPatientDiv.Visible = false;
+        AddPatientVitalSignDiv.Visible = false;
+    }
+    #endregion
+
+    #region Family Member Plan
+    protected void ViewPatientWithFamilyPlanListBtn_Click(object sender, EventArgs e)
+    {
+        try
+        {
+            Button btn = (Button)sender;
+            int patientid = Convert.ToInt32((btn.CommandArgument.ToString()));
+            Patient patient = Pasture.GetPatientByID(patientid);
+            Session["CurrentPatientIDViewingMember"] = patientid;
+
+            HideFamilyPlanViews();
+            BindFamilyMemberList(patientid);
+            ViewPatientFamilyMemberListDiv.Visible = true;
+
+        }
+        catch (Exception)
+        {
+
+            throw;
+        }
+    }
+    protected void AddViewPatientWithFamilyPlanListBtn_Click(object sender, EventArgs e)
+    {
+        //Sends Patient ID to Add New FM
+
+        try
+        {
+            Button btn = (Button)sender;
+            int patientid = Convert.ToInt32((btn.CommandArgument.ToString()));
+            Patient patient = Pasture.GetPatientByID(patientid);
+            Session["CurrentPatientIDViewingMember"] = patientid;
+
+
+            HideFamilyPlanViews();
+            AddNewPatientFamilyMemberDiv.Visible = true;
+
+        }
+        catch (Exception)
+        {
+
+            throw;
+        }
+    }
+
+    protected void AddNewPatientFamilyMemberTxtBoxBackButton_Click(object sender, EventArgs e)
+    {
+        HideFamilyPlanViews();
+        BindPatientsWithFamilyList();
+        ViewPatientWithFamilyPlanListDiv.Visible = true;
+    }
+
+    protected void AddNewPatientFamilyMemberTxtBoxProceedButton_Click(object sender, EventArgs e)
+    {
+        try
+        {
+            int patientid = (int)Session["CurrentPatientIDViewingMember"];
+            if( patientid == 0 || patientid.ToString() == null)
+            {
+                PastureAlert.PopWarningAlert("This process has being delayed for too long, kindly select patient again!!");
+                HideFamilyPlanViews();
+                BindPatientsWithFamilyList();
+                ViewPatientWithFamilyPlanListDiv.Visible = true;
+                return;
+            }
+            if (AddNewPatientFamilyMemberGenderddl.SelectedValue != "-1")
+            {
+                ShowErrorResponse("Select Gender try again!!");
+                return;
+            }           
+
+            FamilyMember newFamilyMember = new FamilyMember()
+            {
+                PatientID= patientid,
+                FirstName = AddNewPatientFirtnameTxtBox.Text,
+                LastName = AddNewPatientLastNameTxtBox.Text,
+                OtherNames = AddNewPatientOtherNamesTxtBox.Text,                
+                Gender = AddNewPatientGenderDDl.SelectedItem.Text,
+                PhoneNumber = AddNewPatientPhoneNumberTxtBox.Text,
+                Address = AddNewPatientAddressTxtBox.Text,
+                DOB = Convert.ToDateTime(AddNewPatientDOBTxtBox.Text),                
+                Picture = GetImageForUpload(AddNewPatientPictureUpload)
+
+            };
+
+
+
+            int response = Pasture.AddNewFamilyMember(newFamilyMember);
+            if (response > 0)
+            {
+
+                PastureAlert.PopSuccessAlert("Patient Family Member successfly created!!");
+                //PatientIDforVitalSign.Value = newFamilyMember.PatientID.ToString();
+                Session["PatientFMIDforVitalSign"] = newFamilyMember.PatientID.ToString();
+                Session["PatientFMIDforVitalSignFamilyMembrID"] = newFamilyMember.FamilyMemberID.ToString();
+                HideFamilyPlanViews();
+                BindFamilyMemberList(patientid);
+                
+                AddPatientFamilyMemberVitalSignDiv.Visible = true;
+            }
+            else
+            {
+                ShowErrorResponse("Patient Family Member not created kindly try again!!");
+            }
+        }
+        catch (Exception ex)
+        {
+            ShowErrorResponse("Patient Family Member not created kindly contact admin.");
+        }
+    }
+
+    protected void ViewPatientFamilyMemberAddFamilyMemberButton_Click(object sender, EventArgs e)
+    {
+        try
+        {
+           
+            int patientid = (int)Session["CurrentPatientIDViewingMember"];
+            Session["CurrentPatientIDViewingMember"] = Session["CurrentPatientIDViewingMember"];
+
+            HideFamilyPlanViews();
+            AddNewPatientFamilyMemberDiv.Visible = true;
+
+        }
+        catch (Exception)
+        {
+
+            throw;
+        }
+    }
+
+    protected void PatientFamilyMemberListViewBtn_Click(object sender, EventArgs e)
+    {
+        try
+        {
+            Button btn = (Button)sender;
+            int patientid = Convert.ToInt32((btn.CommandArgument.ToString()));
+            FamilyMember patient = Pasture.GetFamilyMemberByID(patientid);
+
+            ViewPatientFamilyMemberRelatedPatientFullnameTxtBox.Text = Pasture.GetPatientFullNameByID(patient.PatientID);
+            ViewPatientFamilyMemberFirstNameTxtBox.Text = patient.FirstName;
+            ViewPatientFamilyMemberLastNameTxtBox.Text = patient.LastName;
+            ViewPatientFamilyMemberOthernamesTxtBox.Text = patient.OtherNames;
+
+            ViewPatientFamilyMemberGenderTxtBox.Text = patient.Gender;
+
+            ViewPatientFamilyMemberPhoneNumberTxtBox.Text = patient.PhoneNumber;
+            ViewPatientFamilyMemberAddressTxtBox.Text = patient.Address;
+            ViewPatientFamilyMemberDOBTxtBox.Text = patient.DOB.ToString();          
+
+
+            string ImageUrl = GetImageFileForView(patient.Picture);
+            ViewPatientFamilyMemberImageViewer.ImageUrl = "data:image/png;base64," + ImageUrl;
+
+            HideFamilyPlanViews();
+            ViewPatientFamilyMemberDiv.Visible = true;
+
+        }
+        catch (Exception)
+        {
+
+            throw;
+        }
+    }
+
+    protected void PatientFamilyMemberListEdittn_Click(object sender, EventArgs e)
+    {
+        try
+        {
+            Button btn = (Button)sender;
+            int patientid = Convert.ToInt32((btn.CommandArgument.ToString()));
+            FamilyMember patient = Pasture.GetFamilyMemberByID(patientid);
+            Session["EditFamilyMemderID"] = patientid;
+            EditPatientFamilyMemberRelatedPatientfullnameTxtBox.Text = Pasture.GetPatientFullNameByID(patient.PatientID);
+            EditPatientFamilyMemberFirstNameTxtBox.Text = patient.FirstName;
+            EditPatientFamilyMemberLastNameTxtBox.Text = patient.LastName;
+            EditPatientFamilyMemberOtherNameTxtBox.Text = patient.OtherNames;
+            EditPatientFamilyMemberGenderTxtBox.SelectedItem.Text = patient.Gender;
+            EditPatientFamilyMemberPhoneNumberTxtBox.Text = patient.PhoneNumber;
+            EditPatientFamilyMemberAddressTxtBox.Text = patient.Address;
+            EditPatientFamilyMemberDOBTxtBox.Text = patient.DOB.ToString();
+
+
+            string ImageUrl = GetImageFileForView(patient.Picture);
+            EditPatientFamilyMemberImageViewer.ImageUrl = "data:image/png;base64," + ImageUrl;
+
+            HideFamilyPlanViews();
+            ViewPatientFamilyMemberDiv.Visible = true;
+
+        }
+        catch (Exception)
+        {
+
+            throw;
+        }
+    }
+
+    protected void PatientFamilyMemberListDeleteBtn_Click(object sender, EventArgs e)
+    {
+        try
+        {
+            Button btn = (Button)sender;
+            int patientfmid = Convert.ToInt32((btn.CommandArgument.ToString()));
+            int response = Pasture.DeleteFamilyMemberByID(patientfmid);
+            if (response > 0)
+            {
+                PastureAlert.PopSuccessAlert("Patient Successfly Deleted!!");
+
+                try
+                {
+                    HideFamilyPlanViews();
+                    int patientid = (int) Session["CurrentPatientIDViewingMember"];
+                    BindFamilyMemberList(patientid);
+                    ViewPatientFamilyMemberListDiv.Visible = true;
+
+                }
+                catch (Exception)
+                {
+
+                    throw;
+                }
+            }
+            else
+            {
+                ShowErrorResponse("Operation Failed Kindly try agian");
+            }
+
+        }
+        catch (Exception)
+        {
+
+            throw;
+        }
+    }
+
+    protected void EditPatientFamilyMemberBackButton_Click(object sender, EventArgs e)
+    {
+        HideFamilyPlanViews();
+        int patientid = (int)Session["CurrentPatientIDViewingMember"];
+        if (patientid == 0 || patientid.ToString() == null)
+        {
+            
+            HideFamilyPlanViews();
+            BindPatientsWithFamilyList();
+            ViewPatientWithFamilyPlanListDiv.Visible = true;
+            return;
+        }
+        BindFamilyMemberList(patientid);
+        ViewPatientFamilyMemberListDiv.Visible = true;
+    }
+
+    protected void EditPatientFamilyMemberUpdateButton_Click(object sender, EventArgs e)
+    {
+        try
+        {
+            int patientid = (int)Session["EditFamilyMemderID"];
+            if (patientid == 0 || patientid.ToString() == null)
+            {
+                PastureAlert.PopWarningAlert("This process has being delayed for too long, kindly select patient again!!");
+                HideFamilyPlanViews();
+                BindPatientsWithFamilyList();
+                ViewPatientWithFamilyPlanListDiv.Visible = true;
+                return;
+            }
+            if (AddNewPatientFamilyMemberGenderddl.SelectedValue != "-1")
+            {
+                ShowErrorResponse("Select Gender try again!!");
+                return;
+            }
+            
+            FamilyMember updateFamilyMember = new FamilyMember()
+            {
+                FamilyMemberID = patientid,
+                FirstName = EditPatientFamilyMemberFirstNameTxtBox.Text,
+                LastName = EditPatientFamilyMemberLastNameTxtBox.Text,
+                OtherNames = EditPatientFamilyMemberOtherNameTxtBox.Text,
+                Gender = EditPatientFamilyMemberGenderTxtBox.SelectedItem.Text,
+                PhoneNumber = EditPatientFamilyMemberPhoneNumberTxtBox.Text,
+                Address = EditPatientFamilyMemberAddressTxtBox.Text,
+                DOB = Convert.ToDateTime(EditPatientFamilyMemberDOBTxtBox.Text),
+                Picture = GetImageForUpload(EditPatientFamilyMemberPassportFileupload)
+
+            };
+
+
+
+            int response = Pasture.UpdateFamilyMember(updateFamilyMember);
+            if (response > 0)
+            {
+
+                PastureAlert.PopSuccessAlert("Patient Family Member successfly updated!!");
+                //PatientIDforVitalSign.Value = newFamilyMember.PatientID.ToString();
+                Session["PatientFMIDforVitalSign"] = updateFamilyMember.PatientID.ToString();
+                HideFamilyPlanViews();
+                BindFamilyMemberList(updateFamilyMember.PatientID);
+
+                AddPatientFamilyMemberVitalSignDiv.Visible = true;
+            }
+            else
+            {
+                ShowErrorResponse("Patient Family Member not updated kindly try again!!");
+            }
+        }
+        catch (Exception ex)
+        {
+            ShowErrorResponse("Patient Family Member not updated kindly contact admin.");
+        }
+    }
+
+    protected void ViewPatientFamilyMemberBackButton_Click(object sender, EventArgs e)
+    {
+        HideFamilyPlanViews();
+        int patientid = (int)Session["CurrentPatientIDViewingMember"];
+        if (patientid == 0 || patientid.ToString() == null)
+        {
+
+            HideFamilyPlanViews();
+            BindPatientsWithFamilyList();
+            ViewPatientWithFamilyPlanListDiv.Visible = true;
+            return;
+        }
+        BindFamilyMemberList(patientid);
+        ViewPatientFamilyMemberListDiv.Visible = true;
+    }
+
+    protected void AddPatientFamilyMemberVitalSignProceedButton_Click(object sender, EventArgs e)
+    {
+        try
+        {
+            int patientid = (int)Session["PatientFMIDforVitalSign"];
+            int familyMemberid= (int)Session["PatientFMIDforVitalSignFamilyMembrID"];
+            if (patientid == 0 || patientid.ToString() == null)
+            {
+                PastureAlert.PopWarningAlert("This process has being delayed for too long, kindly add from vital sign section!!");
+                HidePatientViews();
+                BindPatientList();
+                ViewPatientListDiv.Visible = true;
+                return;
+            }
+            
+            // int patientid = Convert.ToInt32(PatientIDforVitalSign.Value);
+            //int patientid =(int) Session["PatientIDforVitalSign"];
+            VitalSign newVitalSign = new VitalSign()
+            {
+                PatientID = patientid,// Convert.ToInt32(AddNewVitalSignPatientDDL.SelectedValue.ToString()),
+                FMPatientID=familyMemberid,
+                Temprature = Convert.ToDecimal(AddPatientFamilyMemberVitalSignTempratureTxtBox.Text),
+                Pulse = Convert.ToDecimal(AddPatientFamilyMemberVitalSignPulseTxtBox.Text),
+                Respiration = Convert.ToDecimal(AddPatientFamilyMemberVitalSignRespirationTxtBox.Text),
+                BloodPressure = Convert.ToDecimal(AddPatientFamilyMemberVitalSignBloodPressureTxtBox.Text),
+                Weight = Convert.ToDecimal(AddPatientFamilyMemberVitalSignWeightTxtBox.Text),
+                Height = Convert.ToDecimal(AddPatientFamilyMemberVitalSignHeightTxtBox.Text)
+
+            };
+
+
+            int response = Pasture.AddNewVitalSign(newVitalSign);
+            if (response > 0)
+            {
+
+                PastureAlert.PopSuccessAlert("Vital Sign successfly submited!!");
+                HidePatientViews();
+                BindPatientList();
+                ViewPatientListDiv.Visible = true;
+            }
+            else
+            {
+                ShowErrorResponse("Vital Sign not submited kindly try again!!");
+            }
+        }
+        catch (Exception ex)
+        {
+            ShowErrorResponse("Vital Sign not submited kindly contact admin.");
+        }
+    }
+    private void HideFamilyPlanViews()
+    {
+        AddNewPatientFamilyMemberDiv.Visible = false;
+        ViewPatientFamilyMemberListDiv.Visible = false;
+        ViewPatientFamilyMemberDiv.Visible = false;
+        EditPatientFamilyMemberDiv.Visible = false;
+        AddPatientFamilyMemberVitalSignDiv.Visible = false;
+
+    }
+    #endregion
+
+    #region Consultation
+
+    protected void ViewConsultaionListAddNewConsultation_Click(object sender, EventArgs e)
+    {
+        HideConsultationViews();
+        AddNewConsultationDiv.Visible = true;
+    }
+    protected void EditConsultationBtn_Click(object sender, EventArgs e)
+    {
+        try
+        {
+            Button btn = (Button)sender;
+            int consultid = Convert.ToInt32((btn.CommandArgument.ToString()));
+            Session["EditConsultationId"] = consultid;
+            Consultation consultation = Pasture.GetConsultationByID(consultid);
+            EditConsultationPatientName.Text = Pasture.GetConsulteeFullNameByID(consultid);
+            EditConsultationSymptums.Text = consultation.Symptums.ToString();
+            EditConsultationDiagnosis.Text = consultation.Diagnosis.ToString();
+            EditConsultationPrescription.Text = consultation.Prescription.ToString();
+            EditConsultationNote.Text = consultation.Note.ToString();
+
+
+            HideConsultationViews();
+            EditConsultationDiv.Visible = true;
+
+
+
+        }
+        catch (Exception)
+        {
+
+            throw;
+        }
+    }
+    protected void ViewConsultationBtn_Click(object sender, EventArgs e)
+    {
+        try
+        {
+            Button btn = (Button)sender;
+            int consultid = Convert.ToInt32((btn.CommandArgument.ToString()));
+            Consultation consultation = Pasture.GetConsultationByID(consultid);
+            ViewConsultationPatientName.Text = Pasture.GetConsulteeFullNameByID(consultid);
+            ViewConsultationSymptums.Text = consultation.Symptums.ToString();
+            ViewConsultationDiagnosis.Text = consultation.Diagnosis.ToString();
+            ViewConsultationPrescription.Text = consultation.Prescription.ToString();
+            ViewConsultationNote.Text = consultation.Note.ToString();
+
+            
+            HideConsultationViews();
+            ViewConsultationDiv.Visible = true;
+
+
+
+        }
+        catch (Exception)
+        {
+
+            throw;
+        }
+    }
+    protected void AddNewConsultationBackButton_Click(object sender, EventArgs e)
+    {
+        HideConsultationViews();
+        BindConsultationList();
+        ViewConsultaionListDiv.Visible = true;
+    }
+    protected void AddNewConsultationProceedButton_Click(object sender, EventArgs e)
+    {
+        try
+        {
+
+            if (AddNewVitalSignPatientDDL.SelectedValue != "-1")
+            {
+                ShowErrorResponse("Select patient try again!!");
+                return;
+            }
+
+            Consultation newconsultation = new Consultation()
+            {
+                PatientID = Convert.ToInt32(AddNewVitalSignPatientDDL.SelectedValue.ToString()),
+                Symptums = AddNewConsultationSymptums.Text,
+                Diagnosis = AddNewConsultationDiagnosis.Text,
+                Prescription = AddNewConsultationPrescription.Text,
+                Note = AddNewConsultationNote.Text
+
+            };
+            if (AddNewConsultationPatientFamilyMemberDDL.Visible == true && AddNewConsultationPatientFamilyMemberDDL.SelectedValue.ToString() != "-1")
+            {
+                newconsultation.ConsultationForID = Convert.ToInt32(AddNewConsultationPatientFamilyMemberDDL.SelectedValue.ToString());
+            }
+
+
+            int response = Pasture.AddNewConsultation(newconsultation);
+            if (response > 0)
+            {
+
+                PastureAlert.PopSuccessAlert("Consultation successfly submited!!");
+
+            }
+            else
+            {
+                ShowErrorResponse("Consultation not submited kindly try again!!");
+            }
+        }
+        catch (Exception ex)
+        {
+            ShowErrorResponse("Consultation not submited kindly contact admin.");
+        }
+    }
+    protected void EditConsultationUpdateButton_Click(object sender, EventArgs e)
+    {
+        try
+        {
+
+            if (AddNewVitalSignPatientDDL.SelectedValue != "-1")
+            {
+                ShowErrorResponse("Select patient try again!!");
+                return;
+            }
+            int Consultationid = (int)Session["EditConsultationId"];
+            Consultation updateconsultation = new Consultation()
+            {
+                ConsultationForID = Consultationid,
+                //PatientID = Convert.ToInt32(AddNewVitalSignPatientDDL.SelectedValue.ToString()),
+                Symptums = EditConsultationSymptums.Text,
+                Diagnosis = EditConsultationDiagnosis.Text,
+                Prescription = EditConsultationPrescription.Text,
+                Note = EditConsultationNote.Text
+
+            };
+            if (AddNewConsultationPatientFamilyMemberDDL.Visible == true && AddNewConsultationPatientFamilyMemberDDL.SelectedValue.ToString() != "-1")
+            {
+                updateconsultation.ConsultationForID = Convert.ToInt32(AddNewConsultationPatientFamilyMemberDDL.SelectedValue.ToString());
+            }
+
+
+            int response = Pasture.UpdateConsultation(updateconsultation);
+            if (response > 0)
+            {
+
+                PastureAlert.PopSuccessAlert("Consultation successfly updated!!");
+
+            }
+            else
+            {
+                ShowErrorResponse("Consultation not updated kindly try again!!");
+            }
+        }
+        catch (Exception ex)
+        {
+            ShowErrorResponse("Consultation not updated kindly contact admin.");
+        }
+    }
+    protected void EditConsultationBackButton_Click(object sender, EventArgs e)
+    {
+        HideConsultationViews();
+        BindConsultationList();
+        ViewConsultaionListDiv.Visible = true;
+    }
+    protected void ViewConsultationBackButton_Click(object sender, EventArgs e)
+    {
+        HideConsultationViews();
+        BindConsultationList();
+        ViewConsultaionListDiv.Visible = true;
+    }
+    protected void AddConsultationPatientlistddl_SelectedIndexChanged(object sender, EventArgs e)
+    {
+        if (AddConsultationPatientlistddl.SelectedValue != "-1")
+        {
+            int patientid = Convert.ToInt32(AddConsultationPatientlistddl.SelectedValue.ToString());
+            int VerifyPatientPlan = Pasture.VerifyPatientPlanByID(patientid);
+            if (VerifyPatientPlan > 1)
+            {
+                AddNewConsultationPatientFamilyMemberDiv.Visible = true;
+                PopulatePatientFMList(AddNewConsultationPatientFamilyMemberDDL, patientid);
+            }
+        }
+    }
+    private void HideConsultationViews()
+    {
+        AddNewConsultationDiv.Visible = false;
+        ViewConsultaionListDiv.Visible = false;
+        ViewConsultationDiv.Visible = false;
+        EditConsultationDiv.Visible = false;
+    }
+
+    #endregion
+
+
+
 
 
 
