@@ -161,7 +161,7 @@
                                                             </div>
                                                         </div>
                                                         <div class="table-responsive">                                                           
-                                                            <asp:GridView ID="NurseListGridView" runat="server" AutoGenerateColumns="false" CssClass="table table-condensed table-bordered " DataKeyNames="EmployeeID" EmptyDataText="There are no data records to display." OnRowCommand="NurseListGridView_RowCommand">
+                                                            <asp:GridView ID="NurseListGridView" runat="server" AutoGenerateColumns="false" CssClass="table table-condensed table-bordered " DataKeyNames="EmployeeID" EmptyDataText="There are no data records to display." AllowPaging="True" PagerSettings-PageButtonCount="5" PagerStyle-CssClass="pagination-ys" RowStyle-HorizontalAlign="Right">
                                                                 <Columns>
                                                                     <asp:TemplateField HeaderText="Name">
                                                                         <ItemTemplate>
@@ -236,14 +236,24 @@
                                                                         <ItemTemplate>
                                                                             <div class="form-actions text-center">
                                                                                 <%--<asp:Button runat="server" Text="Processing" ID="lnkView" Enabled='<%#Eval("IsProcessing") %>' CssClass="btn btn-xs btn-success" />--%>
-                                                                                <asp:Button CommandArgument="View" runat="server" Text="View" ID="btnView" CssClass='<%# (Convert.ToBoolean(Eval("IsActive")) == true  ? "btn btn-sm btn-primary" : "btn btn-sm btn-primary disabled") %>' />
-                                                                                <asp:Button CommandArgument="Edit" runat="server" Text="Edit" ID="btnEdit" CssClass='<%# (Convert.ToBoolean(Eval("IsActive")) == true  ? "btn btn-sm btn-warning" : "btn btn-sm btn-warning disabled") %>'  />
-                                                                                <asp:Button CommandArgument="Deactivate" runat="server" Text='<%# (Convert.ToBoolean(Eval("IsActive")) == true  ? "Deactivate" : "Activate") %>' ID="btnDeactivate"  CssClass='<%# (Convert.ToBoolean(Eval("IsActive")) == true  ? "btn btn-sm btn-danger" : "btn btn-sm btn-success") %>' />
-                                                                                <asp:Button CommandArgument="Delete" runat="server" Text="Delete" ID="btnDelete"  CssClass='<%# (Convert.ToBoolean(Eval("IsActive")) == true  ? "btn btn-sm btn-danger" : "btn btn-sm btn-danger disabled") %>' />
+                                                                                <asp:Button CommandArgument='<%#Eval("EmployeeID")%>' OnClick="btnView_Click"  runat="server" Text="View" ID="btnView" CssClass='<%# (Convert.ToBoolean(Eval("IsActive")) == true  ? "btn btn-sm btn-primary" : "btn btn-sm btn-primary disabled") %>' />
+                                                                                <asp:Button CommandArgument='<%#Eval("EmployeeID")%>' OnClick="btnEdit_Click" runat="server" Text="Edit" ID="btnEdit" CssClass='<%# (Convert.ToBoolean(Eval("IsActive")) == true  ? "btn btn-sm btn-warning" : "btn btn-sm btn-warning disabled") %>'  />
+                                                                                <asp:Button CommandArgument='<%#Eval("EmployeeID")%>' OnClick="btnDeActivate_Click" runat="server" Text='<%# (Convert.ToBoolean(Eval("IsActive")) == true  ? "Deactivate" : "Activate") %>' ID="btnDeactivate"  CssClass='<%# (Convert.ToBoolean(Eval("IsActive")) == true  ? "btn btn-sm btn-danger" : "btn btn-sm btn-success") %>' />
+                                                                                <asp:Button CommandArgument='<%#Eval("EmployeeID")%>' OnClick="btnDelete_Click" runat="server" Text="Delete" ID="btnDelete"  CssClass='<%# (Convert.ToBoolean(Eval("IsActive")) == true  ? "btn btn-sm btn-danger" : "btn btn-sm btn-danger disabled") %>' />
                                                                             </div>
                                                                         </ItemTemplate>
+
+<HeaderStyle HorizontalAlign="Center" CssClass="center text-center"></HeaderStyle>
+
+<ItemStyle HorizontalAlign="Left" VerticalAlign="Middle"></ItemStyle>
                                                                     </asp:TemplateField>
                                                                 </Columns>
+
+<PagerSettings PageButtonCount="5"></PagerSettings>
+
+<PagerStyle CssClass="pagination-lg"></PagerStyle>
+
+<RowStyle HorizontalAlign="Right"></RowStyle>
                                                             </asp:GridView>
 
                                                         </div>
