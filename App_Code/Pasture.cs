@@ -137,6 +137,16 @@ public partial class Pasture
                 employee.ModifiedDate = DateTime.Now;
                 response = DBContext.SaveChanges();
             }
+            AuthUser user = DBContext.AuthUsers.Where(d => d.StaffID == delEmployeeId).FirstOrDefault();
+            if (user != null)
+            {
+                //update fields
+                //Employee.IsActive = false;
+                user.IsDeleted = true;// Convert.ToBoolean(1);
+                user.ModifiedByID = GetCurrentUserSessionID();
+                user.ModifiedDate = DateTime.Now;
+                response = DBContext.SaveChanges();
+            }
             return response;
         }
         catch (Exception)
@@ -359,7 +369,6 @@ public partial class Pasture
         UserList = DBContext.AuthUsers.Where(u => u.IsDeleted == false).ToList();
         return UserList;
     }
-
     public static List<AuthUser> GetUsersByEmpIDandUsername(int employeeid,string username)
     {
         DBContext = new HSMModelDataContext();
@@ -389,8 +398,6 @@ public partial class Pasture
        
         return EmployeeList.OrderBy(emp=> emp.FullName).ToList();
     }
-
-
     public static AuthUser GetUserByUsername(string username)
     {
         DBContext = new HSMModelDataContext();
@@ -543,11 +550,18 @@ public partial class Pasture
         PatientList = DBContext.Patients.Where(p => p.PlanTypeID > 1 && p.IsDeleted == false).ToList();
         return PatientList;
     }
-    public static Patient GetPatientListByID(int patientID)
+    public static Patient GetPatientByID(int patientID)
     {
         DBContext = new HSMModelDataContext();
         Patient Patient = new Patient();
         Patient = DBContext.Patients.Where(p => p.PatientID == patientID).FirstOrDefault();
+        return Patient;
+    }
+    public static string GetPatientFullNameByID(int patientID)
+    {
+        DBContext = new HSMModelDataContext();
+        string Patient = "";// string Patient();
+        Patient = DBContext.Patients.Where(p => p.PatientID == patientID).FirstOrDefault().FullName;
         return Patient;
     }
     public static int AddNewPatient(Patient newpatient)
@@ -593,6 +607,56 @@ public partial class Pasture
         catch (Exception ex)
         {
             return 0;
+            //log ex.Message;
+            throw;
+        }
+
+    }
+
+    public static bool MaxFamilyMemberReached(int patientID)
+    {
+        DBContext = new HSMModelDataContext();
+        Patient Patient = new Patient();
+        Patient = DBContext.Patients.Where(p => p.PatientID == patientID).FirstOrDefault();
+        int PatientPlanLimit = DBContext.PatientPlanTypes.Where(plt => plt.PlanTypeID == Patient.PlanTypeID).FirstOrDefault().PlanTypeMaximumMember;
+        int patientmembercount= DBContext.FamilyMembers.Where(fm => fm.PatientID == patientID).Count();
+        if (patientmembercount < PatientPlanLimit)
+        {
+            return false;
+        }
+        return true;
+    }
+
+    public static int ActivateOrDeactivatePatient(int patientid, out bool activatestate)
+    {
+        try
+        {
+            DBContext = new HSMModelDataContext();
+            int responce;
+            Patient _Patient = DBContext.Patients.Where(p => p.PatientID == patientid).FirstOrDefault();
+
+            //DBContext.AuthRoles.Add(newRole);
+            if (_Patient.IsActive == true)
+            {
+
+                _Patient.IsActive = false;
+                activatestate = false;
+            }
+            else
+            {
+                
+                _Patient.IsActive = true;
+                activatestate = true;
+            }
+
+            _Patient.ModifiedByID = GetCurrentUserSessionID();
+            _Patient.ModifiedDate = DateTime.Now;
+            responce = DBContext.SaveChanges();
+            return responce;
+        }
+        catch (Exception ex)
+        {
+            //return 0;
             //log ex.Message;
             throw;
         }
@@ -699,6 +763,7 @@ public partial class Pasture
     #endregion
 
     #region Patient Plan Management
+
     public static List<PatientPlanType> GetPatientPlans()
     {
         DBContext = new HSMModelDataContext();
@@ -712,6 +777,13 @@ public partial class Pasture
         PatientPlanType PatientPlan = new PatientPlanType();
         PatientPlan = DBContext.PatientPlanTypes.Where(ppt => ppt.PlanTypeID == PatientPlanTypeID).FirstOrDefault();
         return PatientPlan;
+    }
+    public static string GetPatientPlanNameByID(int PatientPlanTypeID)
+    {
+        DBContext = new HSMModelDataContext();
+        string PatientPlanName = "";
+        PatientPlanName = DBContext.PatientPlanTypes.Where(ppt => ppt.PlanTypeID == PatientPlanTypeID).FirstOrDefault().PlanTypeName;
+        return PatientPlanName;
     }
     public static int VerifyPatientPlanByID(int PatientID)
     {
@@ -1003,7 +1075,6 @@ public partial class Pasture
         AttendanceLogList = DBContext.AttendanceLogs.Where(log=>log.StaffID==userid).OrderByDescending(atlog=> atlog.AttendanceDate).ToList();
         return AttendanceLogList;
     }
-
     public static int GetUnlockedAttendanceLogByUserIDList(int userid)
     {
         DBContext = new HSMModelDataContext();
@@ -1033,7 +1104,49 @@ public partial class Pasture
         }
 
     }
+    public static int ClockUserInAttendanceLog(AttendanceLog newAttendanceLog)
+    {
+        try
+        {
+            DBContext = new HSMModelDataContext();
+            int responce;
+            newAttendanceLog.StaffID = GetCurrentUserSessionID();
+            newAttendanceLog.DutyID = GetStaffLastAttendanceID(GetCurrentUserSessionID());
+            newAttendanceLog.ClockInTime = DateTime.Now.TimeOfDay;
+            newAttendanceLog.AttendanceDate = DateTime.Now;
+            DBContext.AttendanceLogs.Add(newAttendanceLog);
+            responce = DBContext.SaveChanges();
+            return responce;
+        }
+        catch (Exception ex)
+        {
+            return 0;
+            //log ex.Message;
+            throw;
+        }
 
+    }
+    public static int ClockUserOutAttendanceLog(int userid)
+    {
+        try
+        {
+            DBContext = new HSMModelDataContext();
+            int responce;
+            //int UnlockedAttendance = 0;
+            AttendanceLog UnlockedAttendance = DBContext.AttendanceLogs.Where(log => log.StaffID == userid && log.IsLocked == false).FirstOrDefault();
+            UnlockedAttendance.IsLocked = true;
+            UnlockedAttendance.ClockOutTime = DateTime.Now.TimeOfDay;
+            responce = DBContext.SaveChanges();
+            return responce;
+        }
+        catch (Exception ex)
+        {
+            return 0;
+            //log ex.Message;
+            throw;
+        }
+
+    }
     public static int CheckActiveAttendanceLog(AttendanceLog UpdateAttendanceLog)
     {
         try
@@ -1057,7 +1170,6 @@ public partial class Pasture
         }
 
     }
-
     public static int UpdatenewAttendanceLog(AttendanceLog UpdateAttendanceLog)
     {
         try
@@ -1295,6 +1407,25 @@ public partial class Pasture
         Consultation Consultation = new Consultation();
         Consultation = DBContext.Consultations.Where(b => b.ConsultationID == ConsultationID).FirstOrDefault();
         return Consultation;
+    }
+
+    public static string GetConsulteeFullNameByID(int ConsultationID)
+    {
+        DBContext = new HSMModelDataContext();
+        Consultation Consultation = new Consultation();
+        string fullname = "";
+        Consultation = DBContext.Consultations.Where(b => b.ConsultationID == ConsultationID).FirstOrDefault();
+        if (Consultation.ConsultationForID.ToString() != null)
+        {
+            fullname= DBContext.FamilyMembers.Where(fm => fm.FamilyMemberID == Consultation.ConsultationForID && fm.PatientID == Consultation.PatientID).FirstOrDefault().FullName;
+
+        }
+        else
+        {
+            fullname= DBContext.Patients.Where(p => p.PatientID == Consultation.PatientID).FirstOrDefault().FullName;
+        }
+
+        return fullname;
     }
     public static List<Consultation> GetConsultationListByConsultantID(int ConsultantID)
     {

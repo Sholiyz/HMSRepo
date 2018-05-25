@@ -20,6 +20,7 @@ public partial class Pages_doctors_portal : System.Web.UI.Page
             if (haveopenedattendance > 0)
             {
                 //open doctors portal
+                attandancemsg.InnerText = "GOOD BYE CLICK SIGN OUT TO CLOSE TODAY'S DUTY";
                 AttendanceSigninButton.Text = "SIGN OUT";
             }
             else
@@ -371,5 +372,29 @@ public partial class Pages_doctors_portal : System.Web.UI.Page
     {
         HideDivsDocTab();
         DoctorListGridView.Visible = true;
+    }
+
+    protected void AttendanceSigninButton_Click(object sender, EventArgs e)
+    {
+        AuthUser CurrentUser = Pasture.GetCurrentUserSessionDetail();
+        int currentuserlog = Pasture.GetUnlockedAttendanceLogByUserIDList(CurrentUser.UserID);
+        if (currentuserlog>0)
+        {//false exist means there is a sign in not yet signed out sign out
+            AttendanceLog AttLog = new AttendanceLog();
+            int response = Pasture.ClockUserOutAttendanceLog(CurrentUser.UserID);
+            if (response > 0)
+            {
+                PastureAlert.PopSuccessAlert("You have successfully signed out.");
+            }
+        }
+        else
+        {//add new attendace sign in
+           AttendanceLog UserAttendance = new AttendanceLog();
+           int response= Pasture.ClockUserInAttendanceLog(UserAttendance);
+            if (response > 0)
+            {
+                PastureAlert.PopSuccessAlert("You have successfully signed in.");
+            }
+        }
     }
 }

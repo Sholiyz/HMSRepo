@@ -429,7 +429,7 @@
                                                             </div>
                                                             <div class="col-lg-6">                                                         
                                                                <div class="form-group">
-                                                                    <label class="control-label">WELCOME CLICK SIGN IN FOR TODAY'S DUTY</label>                                                                   
+                                                                    <label class="control-label" runat="server" id="attandancemsg">WELCOME CLICK SIGN IN FOR TODAY'S DUTY</label>                                                                   
                                                                 </div>
                                                                 <div class="form-group">
                                                                     <label class="control-label">EMPLOYEE NAME</label>
@@ -446,7 +446,7 @@
                                                                        
                                                                     </div>
                                                                      <div class="col-lg-6 text-right">
-                                                                         <asp:Button runat="server" CssClass="btn btn-default btn-primary" ID="AttendanceSigninButton" Text="SIGN IN" />
+                                                                         <asp:Button runat="server" CssClass="btn btn-default btn-primary" ID="AttendanceSigninButton" Text="SIGN IN" OnClick="AttendanceSigninButton_Click" />
                                                                     </div>                                                                    
                                                                 </div>
                                                                 </div>
