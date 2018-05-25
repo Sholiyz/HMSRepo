@@ -31,7 +31,7 @@
             <div class="container">
                 <div class="row">
                     <div class="col-md-12">
-                        <h1 class="page-head-line">Doctor'S PORTAL</h1>
+                        <h1 class="page-head-line">Doctor's PORTAL</h1>
                     </div>
                 </div>
                 <uc1:ResponseAlert runat="server" ID="ResponseAlert" />
@@ -50,18 +50,18 @@
                                         <li class="" runat="server" id="attendanceli"><%--<a href="#attendance" data-toggle="tab">ATTENDANCE</a>--%>
                                             <asp:LinkButton  runat="server" ID="AttendanceDivNav" OnClick="AttendanceDivNav_Click" Text="ATTENDANCE"> </asp:LinkButton>
                                         </li>
-                                        <li class=""><a href="#messages" data-toggle="tab">Messages</a>
+                                       <%-- <li class=""><a href="#messages" data-toggle="tab">Messages</a>
                                         </li>
                                         <li class=""><a href="#settings" data-toggle="tab">Settings</a>
                                         </li> 
                                         <li class=""><a href="#messages" data-toggle="tab">Manage Nurse Shift</a>
                                         </li>
                                         <li class=""><a href="#settings" data-toggle="tab">Settings</a>
-                                        </li>
+                                        </li>--%>
                                     </ul>
 
                                     <div class="tab-content">
-
+                                        <%-- DOCTOR TAB --%>
                                         <div class="tab-pane fade active in" id="doctor" runat="server">
                                            <%-- <h4>Add New Nurse</h4>--%>
                                             <div class="col-md-12">
@@ -80,7 +80,7 @@
                                                                 </div>--%>
                                                                 <div class="form-group">
                                                                     <label class="control-label">PASSPORT</label>
-                                                                    <asp:FileUpload runat="server" CssClass="form-control" />
+                                                                    <asp:FileUpload runat="server" CssClass="form-control"  ID="FileUploadDoc"/>
                                                                 </div>
                                                                 <div class="form-group text-center">
                                                                     <asp:Image runat="server" CssClass="img-thumbnail" ImageUrl="../assets/img/dummypicture.png"/>
@@ -187,30 +187,35 @@
                                                                             <asp:Label ID="lblDOB" runat="server" Text='<%#Eval("DOB")%>' Visible="false"></asp:Label>
                                                                             <asp:Label runat="server"></asp:Label>
                                                                         </ItemTemplate>
+                                                                        <ItemStyle HorizontalAlign="Left"  />
                                                                     </asp:TemplateField>
                                                                     <asp:TemplateField HeaderText="Gender">
                                                                         <ItemTemplate>
                                                                             <asp:Label ID="lblGender" runat="server" Text='<%#Eval("Gender")%>'></asp:Label>
                                                                             <asp:Label runat="server"></asp:Label>
                                                                         </ItemTemplate>
+                                                                        <ItemStyle HorizontalAlign="Left"  />
                                                                     </asp:TemplateField>
                                                                     <asp:TemplateField HeaderText="Mar. Status">
                                                                         <ItemTemplate>
                                                                             <asp:Label ID="lblMaritalStatus" runat="server" Text='<%#Eval("MaritalStatus")%>'></asp:Label>
                                                                             <asp:Label runat="server"></asp:Label>
                                                                         </ItemTemplate>
+                                                                        <ItemStyle HorizontalAlign="Left"  />
                                                                     </asp:TemplateField>
                                                                     <asp:TemplateField HeaderText="Telephone">
                                                                         <ItemTemplate>
                                                                             <asp:Label ID="lblPhoneNumber" runat="server" Text='<%#Eval("PhoneNumber")%>'></asp:Label>
                                                                             <asp:Label runat="server"></asp:Label>
                                                                         </ItemTemplate>
+                                                                        <ItemStyle HorizontalAlign="Left"  />
                                                                     </asp:TemplateField>
                                                                     <asp:TemplateField HeaderText="Address">
                                                                         <ItemTemplate>
                                                                             <asp:Label ID="lblAddress" runat="server" Text='<%#Eval("Address")%>'></asp:Label>
                                                                             <asp:Label runat="server"></asp:Label>
                                                                         </ItemTemplate>
+                                                                        <ItemStyle HorizontalAlign="Left"  />
                                                                     </asp:TemplateField>
                                                                     <%--<asp:TemplateField HeaderText="Process Status">
                                                                         <ItemTemplate>
@@ -260,10 +265,10 @@
                                                                 </div>--%>
                                                                 <div class="form-group">
                                                                     <label class="control-label">PASSPORT</label>
-                                                                    <asp:FileUpload runat="server" CssClass="form-control" />
+                                                                    <asp:FileUpload runat="server" CssClass="form-control"  />
                                                                 </div>
                                                                 <div class="form-group text-center">
-                                                                    <asp:Image runat="server" CssClass="img-thumbnail" ImageUrl="../assets/img/dummypicture.png"/>
+                                                                    <asp:Image  Width="150" Height="150" runat="server" CssClass="img-thumbnail"  ID="doctorImage" ImageUrl="../assets/img/dummypicture.png"/>
                                                                 </div>
                                                                 <div class="form-group">
                                                                     <label class="control-label">FIRSTNAME</label>
@@ -344,7 +349,7 @@
                                                                     <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Enter email" />
                                                                 </div>--%>                                                                
                                                                 <div class="form-group text-center">
-                                                                    <asp:Image runat="server" CssClass="img-thumbnail" ImageUrl="../assets/img/dummypicture.png"/>
+                                                                    <asp:Image runat="server"  Width="150" Height="150" CssClass="img-thumbnail" ID="doctorviewimg" ImageUrl="../assets/img/dummypicture.png"/>
                                                                 </div>
                                                                 <div class="form-group">
                                                                     <label class="control-label">FIRSTNAME</label>
@@ -406,13 +411,13 @@
                                             </div>
                                         </div>
 
+
+                                        <%-- ATTENDANCE TAB --%>
                                         <div class="tab-pane fade" id="attendance" runat="server">
                                           
                                             <div class="col-md-12">
                                                 <div class="panel panel-default">
-                                                    
                                                     <div class="panel-body">
-                                                        <hr />
                                                        <div class="form-group" id="DorctorAttendanceDiv" runat="server">
                                                          <div class="form-group">
                                                             <div class="row form-group">
@@ -455,15 +460,13 @@
                                                             </div>
                                                         </div>
                                                     </div>
-                         
-                                                        <hr />
                                                     </div>
                                                 </div>
                                             </div>
 
                                         </div>
 
-                                        <div class="tab-pane fade" id="messages">
+                                        <%--<div class="tab-pane fade" id="messages">
                                             <h4>Messages Tab</h4>
                                             <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
                                         </div>
@@ -471,7 +474,7 @@
                                         <div class="tab-pane fade" id="settings">
                                             <h4>Settings Tab</h4>
                                             <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-                                        </div>
+                                        </div>--%>
 
                                     </div>
                                 </div>

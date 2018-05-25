@@ -9,12 +9,12 @@ public partial class Pages_admin_portal : System.Web.UI.Page
 {
     protected void Page_Load(object sender, EventArgs e)
     {
+        //if (!IsPostBack)
+        //{
         if (!IsPostBack)
         {
-           if (!IsPostBack)
-        {
             string role = Pasture.GetCurrentUserSessionRole();
-            if(role != null)
+            if (role != null)
             {
                 ManageRoleView(role);
                 SetDefualtView();
@@ -24,11 +24,9 @@ public partial class Pages_admin_portal : System.Web.UI.Page
                 Response.Redirect("./login.aspx");
                 return;
             }
+        }
+        //}
 
-            
-        }
-        }
-        
     }
     protected void ShowAlertClick_Click(object sender, EventArgs e)
     {
@@ -36,10 +34,10 @@ public partial class Pages_admin_portal : System.Web.UI.Page
         //Response Alert Call Method
 
         ResponseAlert.NewMessage = "Show Alert Notification!";
-        ResponseAlert.NoteType = PastureAlert.ResponseNotetype.info.ToString() ;//"Success";
+        ResponseAlert.NoteType = PastureAlert.ResponseNotetype.info.ToString();//"Success";
         ResponseAlert.NoteVisible = true;
-        
-       
+
+
         ResponseAlert.ShowNotification();
         return;
 
@@ -158,7 +156,7 @@ public partial class Pages_admin_portal : System.Web.UI.Page
     {
         SetActiveContainerVisible("User");
         HideUserViews();
-        ViewUserListDiv.Visible = true;        
+        ViewUserListDiv.Visible = true;
         BindUserList();
 
     }
@@ -226,7 +224,7 @@ public partial class Pages_admin_portal : System.Web.UI.Page
         {
             AddHospitalDetailDiv.Visible = true;
         }
-       
+
     }
 
     #endregion
@@ -290,7 +288,7 @@ public partial class Pages_admin_portal : System.Web.UI.Page
         //AuthRole role = new AuthRole();        
         ddlistname.DataSource = Pasture.GetRoles();
         ddlistname.DataTextField = "RoleName";
-        ddlistname.DataValueField = "RoleID";     
+        ddlistname.DataValueField = "RoleID";
         ddlistname.DataBind();
         ddlistname.Items.Insert(0, new ListItem("Select Role...", "-1"));
     }
@@ -299,7 +297,7 @@ public partial class Pages_admin_portal : System.Web.UI.Page
         //Employee role = new Employee();
         ddlistname.DataSource = Pasture.GetEmployeeList();
         ddlistname.DataTextField = "FullName";
-        ddlistname.DataValueField = "EmployeeID";        
+        ddlistname.DataValueField = "EmployeeID";
         ddlistname.DataBind();
         ddlistname.Items.Insert(0, new ListItem("Select Employee...", "-1"));
     }
@@ -592,7 +590,7 @@ public partial class Pages_admin_portal : System.Web.UI.Page
 
             throw;
         }
-        
+
     }
     protected void EditUserBtn_Click(object sender, EventArgs e)
     {
@@ -628,8 +626,8 @@ public partial class Pages_admin_portal : System.Web.UI.Page
             int response = Pasture.DeleteUserByID(userid);
             if (response > 0)
             {
-               PastureAlert.PopSuccessAlert("User Successfly Deleted!!");
-                
+                PastureAlert.PopSuccessAlert("User Successfly Deleted!!");
+
                 try
                 {
                     HideUserViews();
@@ -662,7 +660,7 @@ public partial class Pages_admin_portal : System.Web.UI.Page
             Button btn = (Button)sender;
             int userid = Convert.ToInt32((btn.CommandArgument.ToString()));
             bool ActivateState;
-            int response = Pasture.ActivateOrDeactivateUser(userid,out ActivateState);
+            int response = Pasture.ActivateOrDeactivateUser(userid, out ActivateState);
 
             if (response > 0)
             {
@@ -934,7 +932,7 @@ public partial class Pages_admin_portal : System.Web.UI.Page
 
     protected void AddRoleProceedButton_Click(object sender, EventArgs e)
     {
-       
+
         try
         {
 
@@ -956,7 +954,7 @@ public partial class Pages_admin_portal : System.Web.UI.Page
 
             };
 
-            
+
             int response = Pasture.AddNewRole(newRole);
             if (response > 0)
             {
@@ -1679,7 +1677,7 @@ public partial class Pages_admin_portal : System.Web.UI.Page
             {
                 NurseID = Convert.ToInt32(AssignNurseDutyNurseDdl.SelectedValue.ToString()),
                 DutyTypeID = Convert.ToInt32(AssignNurseDutyTypeDdl.SelectedValue.ToString()),
-                StartDate = Convert.ToDateTime (AssignNurseDutyStartdateTextbox.Text.ToString()),
+                StartDate = Convert.ToDateTime(AssignNurseDutyStartdateTextbox.Text.ToString()),
                 EndDate = Convert.ToDateTime(AssignNurseDutyEnddateTextBox.Text.ToString())
 
             };
@@ -1715,7 +1713,7 @@ public partial class Pages_admin_portal : System.Web.UI.Page
             ViewNurseDutyNurseNameTextBox.Text = Pasture.GetEmployeeFullNameById(viewnurseduty.NurseID);
             ViewNurseDutyTypeTextBox.Text = Pasture.GetDutyTypeNameByID(viewnurseduty.DutyTypeID);
             ViewNurseDutyStartdateTextBox.Text = viewnurseduty.StartDate.ToString();
-            ViewNurseDutyEnddateTextBox.Text= viewnurseduty.EndDate.ToString();
+            ViewNurseDutyEnddateTextBox.Text = viewnurseduty.EndDate.ToString();
             HideNurseDutyViews();
             ViewNurseDutyDiv.Visible = true;
         }
@@ -1950,11 +1948,11 @@ public partial class Pages_admin_portal : System.Web.UI.Page
 
         if (HospInfo != null)
         {
-            HospInfo.HospitalName =  EditHospitalNameTextBox.Text ;
-            HospInfo.Email = EditHospitalEmailTextBox.Text  ;
-            HospInfo.Address  =EditHospitalAddressTextbox.Text  ;
-            HospInfo.Wedsite = EditHospitalWedsiteTextBox.Text ;  
-            HospInfo.PhoneNumber = EditHospitalPhoneNumberTextbox.Text ;
+            HospInfo.HospitalName = EditHospitalNameTextBox.Text;
+            HospInfo.Email = EditHospitalEmailTextBox.Text;
+            HospInfo.Address = EditHospitalAddressTextbox.Text;
+            HospInfo.Wedsite = EditHospitalWedsiteTextBox.Text;
+            HospInfo.PhoneNumber = EditHospitalPhoneNumberTextbox.Text;
 
             int responce = Pasture.UpdateHospitalInfo(HospInfo);
 
