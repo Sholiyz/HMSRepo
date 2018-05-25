@@ -153,7 +153,7 @@
                                                                 <div class="form-group">
                                                                     <div class="row">
                                                                         <div class="col-lg-6 text-left">
-                                                                            <asp:Button runat="server" CssClass="btn btn-default btn-danger" Text="BACK" ID="AddNewPatientBackButton" OnClick="AddNewPatientBackButton_Click" />
+                                                                            <asp:Button runat="server" CssClass="btn btn-default btn-danger" Text="BACK" ID="AddNewPatientBackButton" OnClick="AddNewPatientBackButton_Click" UseSubmitBehavior="false"  />
                                                                         </div>
                                                                         <div class="col-lg-6 text-right">
                                                                             <asp:Button runat="server" CssClass="btn btn-default btn-primary" Text="PROCEED" ID="AddNewPatientProceedButton" OnClick="AddNewPatientProceedButton_Click" />
@@ -389,7 +389,7 @@
                                                                 <div class="form-group">
                                                                     <div class="row">
                                                                         <div class="col-lg-12 text-left">
-                                                                            <asp:Button runat="server" CssClass="btn btn-default btn-danger" Text="BACK" ID="ViewPatientBackButton" />
+                                                                            <asp:Button runat="server" CssClass="btn btn-default btn-danger" Text="BACK" ID="ViewPatientBackButton" OnClick="ViewPatientBackButton_Click" />
                                                                         </div>
 
                                                                     </div>
@@ -500,7 +500,7 @@
                                                                         <HeaderStyle HorizontalAlign="Left" />
                                                                         <ItemStyle HorizontalAlign="Left" />
                                                                     </asp:BoundField>
-                                                                    <asp:TemplateField HeaderText="Patient Plan">
+                                                                    <asp:TemplateField HeaderText="Patient Plan" ItemStyle-CssClass="text-left">
                                                                         <ItemTemplate>
                                                                             <asp:Label runat="server" Text='<%#Pasture.GetPatientPlanNameByID(Convert.ToInt32(Eval("PlanTypeID")))%>'></asp:Label>
                                                                         </ItemTemplate>
@@ -508,7 +508,7 @@
                                                                     <asp:TemplateField HeaderText="Actions" HeaderStyle-CssClass="center text-center" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center" ItemStyle-VerticalAlign="Middle">
                                                                         <ItemTemplate>
                                                                             <div class="form-actions text-center">
-                                                                                <asp:Button runat="server" CommandArgument='<%# Eval("FamilyMemberID") %>' Text="View" ID="ViewPatientWithFamilyPlanListBtn" OnClick="ViewPatientWithFamilyPlanListBtn_Click" CssClass="btn btn-sm btn-primary" />
+                                                                                <asp:Button runat="server" CommandArgument='<%# Eval("PatientID") %>' Text="View" ID="ViewPatientWithFamilyPlanListBtn" OnClick="ViewPatientWithFamilyPlanListBtn_Click" CssClass="btn btn-sm btn-primary" />
                                                                                 <%-- <asp:Button runat="server" CommandArgument='<%# Eval("FamilyMemberID") %>' Text="Edit" ID="EditViewPatientWithFamilyPlanListBtn" CssClass="btn btn-sm btn-warning"/>--%>
                                                                                 <asp:Button runat="server" CommandArgument='<%# Eval("PatientID") %>' Enabled='<%# Pasture.MaxFamilyMemberReached(Convert.ToInt32( Eval("PatientID"))) == true ? false : true %>' ToolTip='<%# Pasture.MaxFamilyMemberReached(Convert.ToInt32( Eval("PatientID"))) == true ? "Maximum Plan Member Reached, You will not be able to add member again" : "" %>' Text="ADD NEW MEMBER" ID="AddViewPatientWithFamilyPlanListBtn" CssClass="btn btn-sm btn-primary" OnClick="AddViewPatientWithFamilyPlanListBtn_Click" />
                                                                             </div>
@@ -582,7 +582,7 @@
                                                                 <div class="form-group">
                                                                     <div class="row">
                                                                         <div class="col-lg-6 text-left">
-                                                                            <asp:Button runat="server" CssClass="btn btn-default btn-danger" Text="BACK" ID="AddNewPatientFamilyMemberTxtBoxBackButton" OnClick="AddNewPatientFamilyMemberTxtBoxBackButton_Click" />
+                                                                            <asp:Button runat="server" CssClass="btn btn-default btn-danger" Text="BACK" ID="AddNewPatientFamilyMemberTxtBoxBackButton" OnClick="AddNewPatientFamilyMemberTxtBoxBackButton_Click" UseSubmitBehavior="false"  />
                                                                         </div>
                                                                         <div class="col-lg-6 text-right">
                                                                             <asp:Button runat="server" CssClass="btn btn-default btn-primary" Text="PROCEED" ID="AddNewPatientFamilyMemberTxtBoxProceedButton" OnClick="AddNewPatientFamilyMemberTxtBoxProceedButton_Click" />
@@ -630,9 +630,9 @@
                                                                         <ItemTemplate>
                                                                             <div class="form-actions text-center">
                                                                                 <%--<asp:Button runat="server" Text="Processing" ID="lnkView" Enabled='<%#Eval("IsProcessing") %>' CssClass="btn btn-xs btn-success" />--%>
-                                                                                <asp:Button runat="server" CommandArgument='<%# Eval("FamilyMemberID") %>' Text="View" ID="PatientFamilyMemberListViewBtn" CssClass="btn btn-md btn-success" OnClick="PatientFamilyMemberListViewBtn_Click" />
-                                                                                <asp:Button runat="server" CommandArgument='<%# Eval("FamilyMemberID") %>' Text="Edit" ID="PatientFamilyMemberListEdittn" CssClass="btn btn-md btn-warning" OnClick="PatientFamilyMemberListEdittn_Click" />
-                                                                                <asp:Button runat="server" CommandArgument='<%# Eval("FamilyMemberID") %>' Text="Delete" ID="PatientFamilyMemberListDeleteBtn" CssClass="btn btn-md btn-danger" OnClick="PatientFamilyMemberListDeleteBtn_Click" />
+                                                                                <asp:Button runat="server" CommandArgument='<%# Eval("FamilyMemberID") %>' Text="View" ID="PatientFamilyMemberListViewBtn" CssClass="btn btn-sm btn-success" OnClick="PatientFamilyMemberListViewBtn_Click" />
+                                                                                <asp:Button runat="server" CommandArgument='<%# Eval("FamilyMemberID") %>' Text="Edit" ID="PatientFamilyMemberListEdittn" CssClass="btn btn-sm btn-warning" OnClick="PatientFamilyMemberListEdittn_Click" />
+                                                                                <asp:Button runat="server" CommandArgument='<%# Eval("FamilyMemberID") %>' Text="Delete" ID="PatientFamilyMemberListDeleteBtn" CssClass="btn btn-sm btn-danger" OnClick="PatientFamilyMemberListDeleteBtn_Click" />
                                                                             </div>
                                                                         </ItemTemplate>
                                                                     </asp:TemplateField>
@@ -686,7 +686,7 @@
                                                                 <div class="form-group">
                                                                     <label class="control-label">GENDER</label>
                                                                     <asp:DropDownList runat="server" CssClass="form-control" ID="EditPatientFamilyMemberGenderTxtBox">
-                                                                        <asp:ListItem Text="Select Gender..." Value="-1"></asp:ListItem>
+                                                                        <asp:ListItem Text="Select Gender..." Value="-1" Selected="True"></asp:ListItem>
                                                                         <asp:ListItem Text="FEMALE" Value="1"></asp:ListItem>
                                                                         <asp:ListItem Text="MALE" Value="2"></asp:ListItem>
                                                                     </asp:DropDownList>
@@ -875,7 +875,7 @@
                                                                         <HeaderStyle CssClass="hide" HorizontalAlign="Left" />
                                                                         <ItemStyle CssClass="hide" HorizontalAlign="Left" />
                                                                     </asp:BoundField>
-                                                                    <asp:TemplateField HeaderText="Patient Name">
+                                                                    <asp:TemplateField HeaderText="Patient Name" ItemStyle-CssClass="text-left">
                                                                         <ItemTemplate>
                                                                             <asp:Label runat="server" Text='<%#Pasture.GetConsulteeFullNameByID(Convert.ToInt32(Eval("ConsultationID")))%>'></asp:Label>
                                                                         </ItemTemplate>
@@ -945,7 +945,7 @@
                                                                 <div class="form-group">
                                                                     <div class="row">
                                                                         <div class="col-lg-6 text-left">
-                                                                            <asp:Button runat="server" CssClass="btn btn-default btn-danger" Text="BACK" ID="AddNewConsultationBackButton" OnClick="AddNewConsultationBackButton_Click"/>
+                                                                            <asp:Button runat="server" CssClass="btn btn-default btn-danger" Text="BACK" ID="AddNewConsultationBackButton" OnClick="AddNewConsultationBackButton_Click" UseSubmitBehavior="false" />
                                                                         </div>
                                                                         <div class="col-lg-6 text-right">
                                                                             <asp:Button runat="server" CssClass="btn btn-default btn-primary" Text="PROCEED" ID="AddNewConsultationProceedButton" OnClick="AddNewConsultationProceedButton_Click" />
@@ -1079,7 +1079,7 @@
                                                                     <h4 class="text-left">VITAL SIGN LIST</h4>
                                                                 </div>
                                                                 <div class="col-md-6 text-right">
-                                                                    <asp:Button runat="server" CssClass="btn btn-default btn-primary text-right" Text="ADD NEW VITAL SIGN" ID="ViewVitalSignAddNewVitalSignButton" OnClick="ViewVitalSignAddNewVitalSignButton_Click" />
+                                                                    <asp:Button runat="server" CssClass="btn btn-default btn-primary text-right" Text="ADD NEW VITAL SIGN" ID="ViewVitalSignAddNewVitalSignButton" OnClick="ViewVitalSignAddNewVitalSignButton_Click" UseSubmitBehavior="false" />
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -1091,19 +1091,19 @@
                                                                         <ItemStyle CssClass="hide" HorizontalAlign="Left" />
                                                                     </asp:BoundField>
 
-                                                                    <asp:TemplateField HeaderText="PATIENT FULLNAME">
+                                                                    <asp:TemplateField HeaderText="PATIENT FULLNAME" ItemStyle-CssClass="text-left" HeaderStyle-CssClass="text-center">
                                                                         <ItemTemplate>
                                                                             <asp:Label runat="server" Text='<%#Pasture.GetVitalSignPatientByID(Convert.ToInt32(Eval("ID")))%>'></asp:Label>
                                                                         </ItemTemplate>
                                                                     </asp:TemplateField>
-                                                                    <asp:BoundField DataField="CreatedDate" HeaderText="Order Name" SortExpression="Name" DataFormatString="{0:d}">
+                                                                    <asp:BoundField DataField="CreatedDate" HeaderText="Date" SortExpression="CreatedDate" DataFormatString="{0:d}">
                                                                         <HeaderStyle HorizontalAlign="Left" />
                                                                         <ItemStyle HorizontalAlign="Left" />
                                                                     </asp:BoundField>
 
-                                                                    <asp:TemplateField HeaderText="CURRENT MEMBER">
+                                                                    <asp:TemplateField HeaderText="Staff Name" ItemStyle-CssClass="text-left" HeaderStyle-CssClass="text-center">
                                                                         <ItemTemplate>
-                                                                            <asp:Label runat="server" Text='<%#Pasture.GetEmployeeFullNameById(Convert.ToInt32(Eval("StaffID")))%>'></asp:Label>
+                                                                            <asp:Label runat="server" Text='<%#Pasture.GetEmployeeFullNameById(Convert.ToInt32(Eval("PatientID")))%>'></asp:Label>
                                                                         </ItemTemplate>
                                                                     </asp:TemplateField>
 
@@ -1130,7 +1130,7 @@
                                                                     <h4 class="text-left">ADD NEW VITAL SIGN</h4>
                                                                 </div>
                                                                 <div class="col-md-6 text-right">
-                                                                    <asp:Button runat="server" CssClass="btn btn-default btn-primary" ID="AddNewVitalSignViewlistButton" OnClick="AddNewVitalSignViewlistButton_Click" Text="VITAL SIGN LIST" />
+                                                                    <asp:Button runat="server" CssClass="btn btn-default btn-primary" ID="AddNewVitalSignViewlistButton" OnClick="AddNewVitalSignViewlistButton_Click" Text="VITAL SIGN LIST" UseSubmitBehavior="false" />
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -1148,27 +1148,27 @@
                                                                 </div>
                                                                 <div class="form-group">
                                                                     <label class="control-label">Temprature</label>
-                                                                    <asp:TextBox runat="server" TextMode="Number" ID="AddNewVitalSignTemprature" CssClass="form-control" required></asp:TextBox>
+                                                                    <asp:TextBox runat="server" ID="AddNewVitalSignTemprature" CssClass="form-control" required></asp:TextBox>
                                                                 </div>
                                                                 <div class="form-group">
                                                                     <label class="control-label">Pulse</label>
-                                                                    <asp:TextBox runat="server" TextMode="Number" ID="AddNewVitalSignPulse" CssClass="form-control" required></asp:TextBox>
+                                                                    <asp:TextBox runat="server" ID="AddNewVitalSignPulse" CssClass="form-control" required></asp:TextBox>
                                                                 </div>
                                                                 <div class="form-group">
                                                                     <label class="control-label">Respiration</label>
-                                                                    <asp:TextBox runat="server" TextMode="Number" ID="AddNewVitalSignRespiration" CssClass="form-control" required></asp:TextBox>
+                                                                    <asp:TextBox runat="server" ID="AddNewVitalSignRespiration" CssClass="form-control" required></asp:TextBox>
                                                                 </div>
                                                                 <div class="form-group">
                                                                     <label class="control-label">BloodPressure</label>
-                                                                    <asp:TextBox runat="server" TextMode="Number" ID="AddNewVitalSignBloodPressure" CssClass="form-control" required></asp:TextBox>
+                                                                    <asp:TextBox runat="server" ID="AddNewVitalSignBloodPressure" CssClass="form-control" required></asp:TextBox>
                                                                 </div>
                                                                 <div class="form-group">
                                                                     <label class="control-label">Weight</label>
-                                                                    <asp:TextBox runat="server" TextMode="Number" ID="AddNewVitalSignWeight" CssClass="form-control" required></asp:TextBox>
+                                                                    <asp:TextBox runat="server" ID="AddNewVitalSignWeight" CssClass="form-control" required></asp:TextBox>
                                                                 </div>
                                                                 <div class="form-group">
                                                                     <label class="control-label">Height</label>
-                                                                    <asp:TextBox runat="server" TextMode="Number" ID="AddNewVitalSignHeight" CssClass="form-control" required></asp:TextBox>
+                                                                    <asp:TextBox runat="server" ID="AddNewVitalSignHeight" CssClass="form-control" required></asp:TextBox>
                                                                 </div>
                                                                 <div class="form-group">
                                                                     <div class="row">
@@ -1206,32 +1206,32 @@
                                                                 </div>
                                                                 <div class="form-group">
                                                                     <label class="control-label">Temprature</label>
-                                                                    <asp:TextBox runat="server" TextMode="Number" ID="EditVitalSignTemprature" CssClass="form-control" required></asp:TextBox>
+                                                                    <asp:TextBox runat="server" ID="EditVitalSignTemprature" CssClass="form-control" required></asp:TextBox>
                                                                 </div>
                                                                 <div class="form-group">
                                                                     <label class="control-label">Pulse</label>
-                                                                    <asp:TextBox runat="server" TextMode="Number" ID="EditVitalSignPulse" CssClass="form-control" required></asp:TextBox>
+                                                                    <asp:TextBox runat="server" ID="EditVitalSignPulse" CssClass="form-control" required></asp:TextBox>
                                                                 </div>
                                                                 <div class="form-group">
                                                                     <label class="control-label">Respiration</label>
-                                                                    <asp:TextBox runat="server" TextMode="Number" ID="EditVitalSignRespiration" CssClass="form-control" required></asp:TextBox>
+                                                                    <asp:TextBox runat="server" ID="EditVitalSignRespiration" CssClass="form-control" required></asp:TextBox>
                                                                 </div>
                                                                 <div class="form-group">
                                                                     <label class="control-label">BloodPressure</label>
-                                                                    <asp:TextBox runat="server" TextMode="Number" ID="EditVitalSignBloodPressure" CssClass="form-control" required></asp:TextBox>
+                                                                    <asp:TextBox runat="server" ID="EditVitalSignBloodPressure" CssClass="form-control" required></asp:TextBox>
                                                                 </div>
                                                                 <div class="form-group">
                                                                     <label class="control-label">Weight</label>
-                                                                    <asp:TextBox runat="server" TextMode="Number" ID="EditVitalSignWeight" CssClass="form-control" required></asp:TextBox>
+                                                                    <asp:TextBox runat="server" ID="EditVitalSignWeight" CssClass="form-control" required></asp:TextBox>
                                                                 </div>
                                                                 <div class="form-group">
                                                                     <label class="control-label">Height</label>
-                                                                    <asp:TextBox runat="server" TextMode="Number" ID="EditVitalSignHeight" CssClass="form-control" required></asp:TextBox>
+                                                                    <asp:TextBox runat="server" ID="EditVitalSignHeight" CssClass="form-control" required></asp:TextBox>
                                                                 </div>
                                                                 <div class="form-group">
                                                                     <div class="row">
                                                                         <div class="col-lg-6 text-left">
-                                                                            <asp:Button runat="server" CssClass="btn btn-default btn-danger" ID="EditVitalSignBackButton" Text="BACK" OnClick="EditVitalSignBackButton_Click" />
+                                                                            <asp:Button runat="server" CssClass="btn btn-default btn-danger" ID="EditVitalSignBackButton" Text="BACK" OnClick="EditVitalSignBackButton_Click" UseSubmitBehavior="false"  />
                                                                         </div>
                                                                         <div class="col-lg-6 text-right">
                                                                             <asp:Button runat="server" CssClass="btn btn-default btn-primary" ID="EditVitalSignUpdateButton" Text="UPDATE" OnClick="EditVitalSignUpdateButton_Click" />

@@ -173,6 +173,7 @@ public partial class Pages_patient_portal : System.Web.UI.Page
             HideAllMenuNav();
             patientsportal.Visible = true;
             doctorsportal.Visible = true;
+            dashboard.Visible = true;
             SetActiveContainerVisible("patient");
             return;
         }
@@ -215,13 +216,15 @@ public partial class Pages_patient_portal : System.Web.UI.Page
     {
         SetActiveContainerVisible("consultation");
         HideConsultationViews();
-        AddNewConsultationDiv.Visible = true;
+        BindConsultationList();
+        ViewConsultaionListDiv.Visible = true;
     }
 
     protected void VitalSignDivNav_Click(object sender, EventArgs e)
     {
         SetActiveContainerVisible("vitalsign");
         HideVitalSignViews();
+        PopulatePatientList(AddNewVitalSignPatientDDL);
         AddNewVitalSignDiv.Visible = true;
     }
     private void HideAllMenuNav()
@@ -249,7 +252,7 @@ public partial class Pages_patient_portal : System.Web.UI.Page
     private void PopulatePatientList(DropDownList ddlistname)
     {
         //Employee role = new Employee();
-        ddlistname.DataSource = Pasture.GetPatientPlans();
+        ddlistname.DataSource = Pasture.GetPatients();
         ddlistname.DataTextField = "FullName";
         ddlistname.DataValueField = "PatientID";
         ddlistname.DataBind();
@@ -331,19 +334,36 @@ public partial class Pages_patient_portal : System.Web.UI.Page
 
   
     #region Vital Sign
-
+    private void ClearVitalSignFields()
+    { 
+       AddNewVitalSignPatientDDL.SelectedValue="-1";
+               AddNewVitalSignTemprature.Text =string.Empty;
+               AddNewVitalSignPulse.Text =string.Empty;
+                AddNewVitalSignRespiration.Text =string.Empty;
+                AddNewVitalSignBloodPressure.Text =string.Empty;
+                AddNewVitalSignWeight.Text=string.Empty;
+             AddNewVitalSignHeight.Text=string.Empty;
+        EditVitalSignTemprature.Text =string.Empty;
+              EditVitalSignPulse.Text =string.Empty;
+               EditVitalSignRespiration.Text =string.Empty;
+               EditVitalSignBloodPressure.Text =string.Empty;
+               EditVitalSignWeight.Text =string.Empty;
+                EditVitalSignHeight.Text =string.Empty;
+    }
     protected void AddNewVitalSignViewlistButton_Click(object sender, EventArgs e)
     {
         HideVitalSignViews();
+        PopulatePatientList(AddNewVitalSignPatientDDL);
         BindVitalSignList();
         ViewVitalSignListDiv.Visible = true;
     }
+
     protected void AddNewVitalSignProceedButton_Click(object sender, EventArgs e)
     {
         try
         {
 
-            if (AddNewVitalSignPatientDDL.SelectedValue != "-1")
+            if (AddNewVitalSignPatientDDL.SelectedValue == "-1")
             {
                 ShowErrorResponse("Select patient try again!!");
                 return;
@@ -352,12 +372,12 @@ public partial class Pages_patient_portal : System.Web.UI.Page
             VitalSign newVitalSign = new VitalSign()
             {
                 PatientID = Convert.ToInt32(AddNewVitalSignPatientDDL.SelectedValue.ToString()),
-                Temprature = Convert.ToDecimal(EditVitalSignTemprature.Text),
-                Pulse = Convert.ToDecimal(EditVitalSignPulse.Text),
-                Respiration = Convert.ToDecimal(EditVitalSignRespiration.Text),
-                BloodPressure = Convert.ToDecimal(EditVitalSignBloodPressure.Text),
-                Weight = Convert.ToDecimal(EditVitalSignWeight.Text),
-                Height = Convert.ToDecimal(EditVitalSignHeight.Text)
+                Temprature = Convert.ToDecimal(AddNewVitalSignTemprature.Text.ToString()),
+                Pulse = Convert.ToDecimal(AddNewVitalSignPulse.Text.ToString()),
+                Respiration = Convert.ToDecimal(AddNewVitalSignRespiration.Text.ToString()),
+                BloodPressure = Convert.ToDecimal(AddNewVitalSignBloodPressure.Text.ToString()),
+                Weight = Convert.ToDecimal(AddNewVitalSignWeight.Text.ToString()),
+                Height = Convert.ToDecimal(AddNewVitalSignHeight.Text.ToString())
 
             };
             if (AddNewVitalSignPatientFamilyMemberDiv.Visible == true && AddNewVitalSignPatientFamilyMemberDDL.SelectedValue.ToString()!="-1")
@@ -371,7 +391,7 @@ public partial class Pages_patient_portal : System.Web.UI.Page
             {
 
                 PastureAlert.PopSuccessAlert("Vital Sign successfly submited!!");
-
+                ClearVitalSignFields();
             }
             else
             {
@@ -397,7 +417,7 @@ public partial class Pages_patient_portal : System.Web.UI.Page
             int vitalsignid = Convert.ToInt32((btn.CommandArgument.ToString()));
             VitalSign vitalsign = Pasture.GetVitalSignByID(vitalsignid);
             ViewVitalSignPatientFullname.Text = Pasture.GetVitalSignPatientByID(vitalsignid);
-            ViewVitalSignRespiration.Text = vitalsign.Temprature.ToString();
+            ViewVitalSignTemprature.Text = vitalsign.Temprature.ToString();
             ViewVitalSignPulse.Text = vitalsign.Pulse.ToString();
             ViewVitalSignRespiration.Text = vitalsign.Respiration.ToString();
             ViewVitalSignBloodPressure.Text = vitalsign.BloodPressure.ToString();
@@ -427,7 +447,7 @@ public partial class Pages_patient_portal : System.Web.UI.Page
             Session["CurrentEditVitalSignID"] = vitalsignid;
             VitalSign vitalsign = Pasture.GetVitalSignByID(vitalsignid);
             EditVitalSignPatientName.Text = Pasture.GetVitalSignPatientByID(vitalsignid);
-            EditVitalSignRespiration.Text = vitalsign.Temprature.ToString();
+            EditVitalSignTemprature.Text = vitalsign.Temprature.ToString();
             EditVitalSignPulse.Text = vitalsign.Pulse.ToString();
             EditVitalSignRespiration.Text = vitalsign.Respiration.ToString();
             EditVitalSignBloodPressure.Text = vitalsign.BloodPressure.ToString();
@@ -477,6 +497,7 @@ public partial class Pages_patient_portal : System.Web.UI.Page
 
                 PastureAlert.PopSuccessAlert("Vital Sign successfly updated!!");
                 Session["CurrentEditVitalSignID"] = null;
+                ClearVitalSignFields();
             }
             else
             {
@@ -525,19 +546,19 @@ public partial class Pages_patient_portal : System.Web.UI.Page
         try
         {
 
-            if (Addpatientplantypelistddl.SelectedValue != "-1")
+            if (Addpatientplantypelistddl.SelectedValue == "-1")
             {
                 ShowErrorResponse("Select Patient Plan try again!!");
                 return;
             }
-            if (AddNewPatientGenderDDl.SelectedValue != "-1")
+            if (AddNewPatientGenderDDl.SelectedValue == "-1")
             {
                 ShowErrorResponse("Select Gender try again!!");
                 return;
             }
-            if (AddNewPatientMaritalStatusddl.SelectedValue != "-1")
+            if (AddNewPatientMaritalStatusddl.SelectedValue == "-1")
             {
-                ShowErrorResponse("Select MArital status try again!!");
+                ShowErrorResponse("Select Marital status try again!!");
                 return;
             }
 
@@ -592,6 +613,7 @@ public partial class Pages_patient_portal : System.Web.UI.Page
     protected void ViewPatientListAddNewPatietButton_Click(object sender, EventArgs e)
     {
         HidePatientViews();
+        PopulatePatientPlanTypelist(Addpatientplantypelistddl);
         AddNewPatientDiv.Visible = true;
     }
 
@@ -635,6 +657,7 @@ public partial class Pages_patient_portal : System.Web.UI.Page
     {
         try
         {
+            PopulatePatientPlanTypelist(Editpatientplantypelistddl);
             Button btn = (Button)sender;
             int patientid = Convert.ToInt32((btn.CommandArgument.ToString()));
             Session["CurrentEditPatientID"] = patientid;
@@ -643,9 +666,9 @@ public partial class Pages_patient_portal : System.Web.UI.Page
             EditPatientLastNameTxtBox.Text = patient.LastName;
             EditPatientOtherNamesTxtBox.Text = patient.OtherNames;
             Editpatientplantypelistddl.SelectedValue = patient.PlanTypeID.ToString();
-            EditPatientGenderddl.SelectedItem.Text = patient.Gender;
+            //EditPatientGenderddl.SelectedItem.Text = patient.Gender;
             EditPatientOccupationTxtBox.Text = patient.Occupation;
-            EditPatientMaritalStatusddl.SelectedItem.Text = patient.MaritalStatus;
+            //EditPatientMaritalStatusddl.SelectedItem.Text = patient.MaritalStatus;
             EditPatientPhoneNumberTxtBox.Text = patient.PhoneNumber;
             EditPatientAddressTxtBox.Text = patient.Address;
             EditPatientDOBTxtBox.Text = patient.DOB.ToString();
@@ -656,6 +679,7 @@ public partial class Pages_patient_portal : System.Web.UI.Page
             EditPatientImageViewer.ImageUrl = "data:image/png;base64," + ImageUrl;
 
             HidePatientViews();
+            
             EditPatientDiv.Visible = true;
 
 
@@ -714,7 +738,12 @@ public partial class Pages_patient_portal : System.Web.UI.Page
             throw;
         }
     }
-
+    protected void ViewPatientBackButton_Click(object sender, EventArgs e)
+    {
+        HidePatientViews();
+        BindPatientList();
+        ViewPatientListDiv.Visible = true;
+    }
     protected void EditPatientBackButton_Click(object sender, EventArgs e)
     {
         HidePatientViews();
@@ -727,17 +756,22 @@ public partial class Pages_patient_portal : System.Web.UI.Page
         try
         {
             
-           if (Editpatientplantypelistddl.SelectedValue != "-1")
+           if (Editpatientplantypelistddl.SelectedValue == "-1")
             {
                 ShowErrorResponse("Select Patient Plan try again!!");
                 return;
             }
-            if (EditPatientGenderddl.SelectedValue != "-1")
+            if (EditPatientGenderddl.SelectedValue == "-1")
             {
                 ShowErrorResponse("Select Gender try again!!");
                 return;
             }
-            if (EditPatientMaritalStatusddl.SelectedValue != "-1")
+            if (EditPatientDOBTxtBox.Text == string.Empty)
+            {
+                ShowErrorResponse("Birth Date not selected, try again!!");
+                return;
+            }
+            if (EditPatientMaritalStatusddl.SelectedValue == "-1")
             {
                 ShowErrorResponse("Select MArital status try again!!");
                 return;
@@ -847,6 +881,28 @@ public partial class Pages_patient_portal : System.Web.UI.Page
     #endregion
 
     #region Family Member Plan
+
+
+    private void AddFMClearVitalSignFields()
+    {
+        AddPatientFamilyMemberVitalSignTempratureTxtBox.Text = string.Empty;
+         AddPatientFamilyMemberVitalSignPulseTxtBox.Text = string.Empty;
+       AddPatientFamilyMemberVitalSignRespirationTxtBox.Text = string.Empty;
+        AddPatientFamilyMemberVitalSignBloodPressureTxtBox.Text = string.Empty;
+       AddPatientFamilyMemberVitalSignWeightTxtBox.Text = string.Empty;
+        AddPatientFamilyMemberVitalSignHeightTxtBox.Text = string.Empty;
+    }
+
+    private void ClearAddFMFields()
+    {
+        AddNewPatientFamilyMemberFirstNametxtBox.Text = string.Empty;
+        AddNewPatientFamilyMemberLastNameTxtBox.Text = string.Empty;
+        AddNewPatientFamilyMemberOTHERNAMESTxtBox.Text = string.Empty;
+        AddNewPatientFamilyMemberGenderddl.SelectedItem.Text = string.Empty;
+        AddNewPatientFamilyMemberPhoneNumberTxtBox.Text = string.Empty;
+        AddNewPatientFamilyMemberAddressTxtBox.Text = string.Empty;
+        AddNewPatientFamilyMemberDOBTxtBox.Text = string.Empty;
+    }
     protected void ViewPatientWithFamilyPlanListBtn_Click(object sender, EventArgs e)
     {
         try
@@ -878,7 +934,7 @@ public partial class Pages_patient_portal : System.Web.UI.Page
             Patient patient = Pasture.GetPatientByID(patientid);
             Session["CurrentPatientIDViewingMember"] = patientid;
 
-
+            AddNewPatientFamilyMemberRelatedPatientFullNameTxtBox.Text=Pasture.GetPatientFullNameByID(patientid);
             HideFamilyPlanViews();
             AddNewPatientFamilyMemberDiv.Visible = true;
 
@@ -889,11 +945,12 @@ public partial class Pages_patient_portal : System.Web.UI.Page
             throw;
         }
     }
-
     protected void AddNewPatientFamilyMemberTxtBoxBackButton_Click(object sender, EventArgs e)
     {
         HideFamilyPlanViews();
         BindPatientsWithFamilyList();
+        int patientRLtVID = (int)Session["CurrentPatientIDViewingMember"];
+        AddNewPatientFamilyMemberRelatedPatientFullNameTxtBox.Text = Pasture.GetPatientFullNameByID(patientRLtVID);
         ViewPatientWithFamilyPlanListDiv.Visible = true;
     }
 
@@ -910,7 +967,7 @@ public partial class Pages_patient_portal : System.Web.UI.Page
                 ViewPatientWithFamilyPlanListDiv.Visible = true;
                 return;
             }
-            if (AddNewPatientFamilyMemberGenderddl.SelectedValue != "-1")
+            if (AddNewPatientFamilyMemberGenderddl.SelectedValue == "-1")
             {
                 ShowErrorResponse("Select Gender try again!!");
                 return;
@@ -919,14 +976,14 @@ public partial class Pages_patient_portal : System.Web.UI.Page
             FamilyMember newFamilyMember = new FamilyMember()
             {
                 PatientID= patientid,
-                FirstName = AddNewPatientFirtnameTxtBox.Text,
-                LastName = AddNewPatientLastNameTxtBox.Text,
-                OtherNames = AddNewPatientOtherNamesTxtBox.Text,                
-                Gender = AddNewPatientGenderDDl.SelectedItem.Text,
-                PhoneNumber = AddNewPatientPhoneNumberTxtBox.Text,
-                Address = AddNewPatientAddressTxtBox.Text,
-                DOB = Convert.ToDateTime(AddNewPatientDOBTxtBox.Text),                
-                Picture = GetImageForUpload(AddNewPatientPictureUpload)
+                FirstName = AddNewPatientFamilyMemberFirstNametxtBox.Text,
+                LastName = AddNewPatientFamilyMemberLastNameTxtBox.Text,
+                OtherNames = AddNewPatientFamilyMemberOTHERNAMESTxtBox.Text,                
+                Gender = AddNewPatientFamilyMemberGenderddl.SelectedItem.Text,
+                PhoneNumber = AddNewPatientFamilyMemberPhoneNumberTxtBox.Text,
+                Address = AddNewPatientFamilyMemberAddressTxtBox.Text,
+                DOB = Convert.ToDateTime(AddNewPatientFamilyMemberDOBTxtBox.Text),                
+                Picture = GetImageForUpload(AddNewPatientFamilyMemberPassportFileUpload)
 
             };
 
@@ -938,8 +995,8 @@ public partial class Pages_patient_portal : System.Web.UI.Page
 
                 PastureAlert.PopSuccessAlert("Patient Family Member successfly created!!");
                 //PatientIDforVitalSign.Value = newFamilyMember.PatientID.ToString();
-                Session["PatientFMIDforVitalSign"] = newFamilyMember.PatientID.ToString();
-                Session["PatientFMIDforVitalSignFamilyMembrID"] = newFamilyMember.FamilyMemberID.ToString();
+                Session["PatientFMIDforVitalSign"] = newFamilyMember.PatientID;
+                Session["PatientFMIDforVitalSignFamilyMembrID"] = newFamilyMember.FamilyMemberID;
                 HideFamilyPlanViews();
                 BindFamilyMemberList(patientid);
                 
@@ -963,7 +1020,8 @@ public partial class Pages_patient_portal : System.Web.UI.Page
            
             int patientid = (int)Session["CurrentPatientIDViewingMember"];
             Session["CurrentPatientIDViewingMember"] = Session["CurrentPatientIDViewingMember"];
-
+            int patientRLtVID = (int)Session["CurrentPatientIDViewingMember"];
+            AddNewPatientFamilyMemberRelatedPatientFullNameTxtBox.Text = Pasture.GetPatientFullNameByID(patientRLtVID);
             HideFamilyPlanViews();
             AddNewPatientFamilyMemberDiv.Visible = true;
 
@@ -1031,7 +1089,7 @@ public partial class Pages_patient_portal : System.Web.UI.Page
             EditPatientFamilyMemberImageViewer.ImageUrl = "data:image/png;base64," + ImageUrl;
 
             HideFamilyPlanViews();
-            ViewPatientFamilyMemberDiv.Visible = true;
+            EditPatientFamilyMemberDiv.Visible = true;
 
         }
         catch (Exception)
@@ -1099,6 +1157,11 @@ public partial class Pages_patient_portal : System.Web.UI.Page
     {
         try
         {
+            if (EditPatientFamilyMemberDOBTxtBox.Text == string.Empty)
+            {
+                ShowErrorResponse("Birth Date not selected, try again!!");
+                return;
+            }
             int patientid = (int)Session["EditFamilyMemderID"];
             if (patientid == 0 || patientid.ToString() == null)
             {
@@ -1129,18 +1192,18 @@ public partial class Pages_patient_portal : System.Web.UI.Page
             };
 
 
-
-            int response = Pasture.UpdateFamilyMember(updateFamilyMember);
+            int relatedpatientid = 0;
+            int response = Pasture.UpdateFamilyMember(updateFamilyMember,out relatedpatientid);
             if (response > 0)
             {
 
                 PastureAlert.PopSuccessAlert("Patient Family Member successfly updated!!");
                 //PatientIDforVitalSign.Value = newFamilyMember.PatientID.ToString();
-                Session["PatientFMIDforVitalSign"] = updateFamilyMember.PatientID.ToString();
+                Session["PatientFMIDforVitalSign"] = updateFamilyMember.PatientID;
                 HideFamilyPlanViews();
-                BindFamilyMemberList(updateFamilyMember.PatientID);
+                BindFamilyMemberList(relatedpatientid);
 
-                AddPatientFamilyMemberVitalSignDiv.Visible = true;
+                ViewPatientFamilyMemberListDiv.Visible = true;
             }
             else
             {
@@ -1173,8 +1236,8 @@ public partial class Pages_patient_portal : System.Web.UI.Page
     {
         try
         {
-            int patientid = (int)Session["PatientFMIDforVitalSign"];
-            int familyMemberid= (int)Session["PatientFMIDforVitalSignFamilyMembrID"];
+            int patientid = (int) Session["PatientFMIDforVitalSign"];
+            int familyMemberid= (int) Session["PatientFMIDforVitalSignFamilyMembrID"];
             if (patientid == 0 || patientid.ToString() == null)
             {
                 PastureAlert.PopWarningAlert("This process has being delayed for too long, kindly add from vital sign section!!");
@@ -1205,9 +1268,11 @@ public partial class Pages_patient_portal : System.Web.UI.Page
             {
 
                 PastureAlert.PopSuccessAlert("Vital Sign successfly submited!!");
-                HidePatientViews();
-                BindPatientList();
-                ViewPatientListDiv.Visible = true;
+                AddFMClearVitalSignFields();
+                HideFamilyPlanViews();
+                ViewPatientFamilyMemberListDiv.Visible = true;
+                BindFamilyMemberList(patientid);
+
             }
             else
             {
@@ -1223,6 +1288,7 @@ public partial class Pages_patient_portal : System.Web.UI.Page
     {
         AddNewPatientFamilyMemberDiv.Visible = false;
         ViewPatientFamilyMemberListDiv.Visible = false;
+        ViewPatientWithFamilyPlanListDiv.Visible = false;
         ViewPatientFamilyMemberDiv.Visible = false;
         EditPatientFamilyMemberDiv.Visible = false;
         AddPatientFamilyMemberVitalSignDiv.Visible = false;
@@ -1232,9 +1298,23 @@ public partial class Pages_patient_portal : System.Web.UI.Page
 
     #region Consultation
 
+    private  void ClearConsultationFields()
+    {
+        AddNewConsultationSymptums.Text = string.Empty;
+        AddNewConsultationDiagnosis.Text=string.Empty;
+        AddNewConsultationPrescription.Text = string.Empty;
+        AddNewConsultationNote.Text = string.Empty;
+        EditConsultationSymptums.Text = string.Empty;
+        EditConsultationDiagnosis.Text = string.Empty;
+        EditConsultationPrescription.Text = string.Empty;
+        EditConsultationNote.Text = string.Empty;
+
+    }
+
     protected void ViewConsultaionListAddNewConsultation_Click(object sender, EventArgs e)
     {
         HideConsultationViews();
+        PopulatePatientList(AddConsultationPatientlistddl);
         AddNewConsultationDiv.Visible = true;
     }
     protected void EditConsultationBtn_Click(object sender, EventArgs e)
@@ -1301,7 +1381,7 @@ public partial class Pages_patient_portal : System.Web.UI.Page
         try
         {
 
-            if (AddNewVitalSignPatientDDL.SelectedValue != "-1")
+            if (AddConsultationPatientlistddl.SelectedValue == "-1")
             {
                 ShowErrorResponse("Select patient try again!!");
                 return;
@@ -1309,7 +1389,7 @@ public partial class Pages_patient_portal : System.Web.UI.Page
 
             Consultation newconsultation = new Consultation()
             {
-                PatientID = Convert.ToInt32(AddNewVitalSignPatientDDL.SelectedValue.ToString()),
+                PatientID = Convert.ToInt32(AddConsultationPatientlistddl.SelectedValue.ToString()),
                 Symptums = AddNewConsultationSymptums.Text,
                 Diagnosis = AddNewConsultationDiagnosis.Text,
                 Prescription = AddNewConsultationPrescription.Text,
@@ -1327,7 +1407,7 @@ public partial class Pages_patient_portal : System.Web.UI.Page
             {
 
                 PastureAlert.PopSuccessAlert("Consultation successfly submited!!");
-
+                ClearConsultationFields();
             }
             else
             {
@@ -1344,15 +1424,11 @@ public partial class Pages_patient_portal : System.Web.UI.Page
         try
         {
 
-            if (AddNewVitalSignPatientDDL.SelectedValue != "-1")
-            {
-                ShowErrorResponse("Select patient try again!!");
-                return;
-            }
+           
             int Consultationid = (int)Session["EditConsultationId"];
             Consultation updateconsultation = new Consultation()
             {
-                ConsultationForID = Consultationid,
+                ConsultationID = Consultationid,
                 //PatientID = Convert.ToInt32(AddNewVitalSignPatientDDL.SelectedValue.ToString()),
                 Symptums = EditConsultationSymptums.Text,
                 Diagnosis = EditConsultationDiagnosis.Text,
@@ -1360,10 +1436,10 @@ public partial class Pages_patient_portal : System.Web.UI.Page
                 Note = EditConsultationNote.Text
 
             };
-            if (AddNewConsultationPatientFamilyMemberDDL.Visible == true && AddNewConsultationPatientFamilyMemberDDL.SelectedValue.ToString() != "-1")
-            {
-                updateconsultation.ConsultationForID = Convert.ToInt32(AddNewConsultationPatientFamilyMemberDDL.SelectedValue.ToString());
-            }
+            //if (AddNewConsultationPatientFamilyMemberDDL.Visible == true && AddNewConsultationPatientFamilyMemberDDL.SelectedValue.ToString() != "-1")
+            //{
+            //    updateconsultation.ConsultationForID = Convert.ToInt32(AddNewConsultationPatientFamilyMemberDDL.SelectedValue.ToString());
+            //}
 
 
             int response = Pasture.UpdateConsultation(updateconsultation);
@@ -1371,7 +1447,7 @@ public partial class Pages_patient_portal : System.Web.UI.Page
             {
 
                 PastureAlert.PopSuccessAlert("Consultation successfly updated!!");
-
+                ClearConsultationFields();
             }
             else
             {
@@ -1397,7 +1473,7 @@ public partial class Pages_patient_portal : System.Web.UI.Page
     }
     protected void AddConsultationPatientlistddl_SelectedIndexChanged(object sender, EventArgs e)
     {
-        if (AddConsultationPatientlistddl.SelectedValue != "-1")
+        if (AddConsultationPatientlistddl.SelectedValue == "-1")
         {
             int patientid = Convert.ToInt32(AddConsultationPatientlistddl.SelectedValue.ToString());
             int VerifyPatientPlan = Pasture.VerifyPatientPlanByID(patientid);
@@ -1425,4 +1501,6 @@ public partial class Pages_patient_portal : System.Web.UI.Page
 
 
 
+
+    
 }

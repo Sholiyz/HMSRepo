@@ -13,38 +13,55 @@ public partial class Pages_nurse_portal : System.Web.UI.Page
         AuthUser CurrentUser = Pasture.GetCurrentUserSessionDetail();
         if (CurrentUser != null)
         {
-            int haveopenedattendance = Pasture.GetUnlockedAttendanceLogByUserIDList(CurrentUser.StaffID);
+            string role = Pasture.GetCurrentUserSessionRole();
+            ManageRoleView(role);
+            int haveopenedattendance = Pasture.GetUnlockedAttendanceLogByUserIDList(CurrentUser.UserID);
             if (haveopenedattendance > 0)
             {
                 //open doctors portal
+                //open doctors portal
+                EmployeeNameFullName.Text = Pasture.GetEmployeeFullNameById(CurrentUser.StaffID);
+                AttendanceCurrentTime.Text = Pasture.GetAttendanceDateTime();
+                attandancemsg.InnerText = "GOOD BYE CLICK SIGN OUT TO CLOSE TODAY'S DUTY";
                 AttendanceSigninButton.Text = "SIGN OUT";
             }
             else
             {
                 //open attendace sheet
                 SetAttendanceContainerVisible();
+                EmployeeNameFullName.Text = Pasture.GetEmployeeFullNameById(CurrentUser.StaffID);
                 AttendanceCurrentTime.Text = Pasture.GetAttendanceDateTime();
+                Response.Redirect("./patient-portal.aspx");
+                return;
             }
         }
 
         if (!Page.IsPostBack)
         {
-            ViewState["ViewStateId"] = System.Guid.NewGuid().ToString();
-            Session["SessionId"] = ViewState["ViewStateId"].ToString();
-
-            BindGrid();
-            HideDivsNurseTab();
-            ViewNurseListDiv.Visible = true;
-        }
-        else
-        {
-            if (ViewState["ViewStateId"].ToString() != Session["SessionId"].ToString())
+            //ViewState["ViewStateId"] = System.Guid.NewGuid().ToString();
+            //Session["SessionId"] = ViewState["ViewStateId"].ToString();
+            string role = Pasture.GetCurrentUserSessionRole();
+            if (role != null)
             {
-                IsPageRefresh = true;
+                ManageRoleView(role);
+                
             }
-            Session["SessionId"] = System.Guid.NewGuid().ToString();
-            ViewState["ViewStateId"] = Session["SessionId"].ToString();
+            else
+            {
+                Response.Redirect("./login.aspx");
+                return;
+            }
+           
         }
+        //else
+        //{
+        //    if (ViewState["ViewStateId"].ToString() != Session["SessionId"].ToString())
+        //    {
+        //        IsPageRefresh = true;
+        //    }
+        //    Session["SessionId"] = System.Guid.NewGuid().ToString();
+        //    ViewState["ViewStateId"] = Session["SessionId"].ToString();
+        //}
     }
 
     #region Written By Ola
@@ -224,6 +241,7 @@ public partial class Pages_nurse_portal : System.Web.UI.Page
         HideContentView();
         nurseli.Attributes["class"] = "active";
         nurse.Visible = true;
+      
     }
     private void SetAttendanceContainerVisible()
     {
@@ -256,6 +274,19 @@ public partial class Pages_nurse_portal : System.Web.UI.Page
         }
         return imageString;
     }
+
+    //protected void PictureViewButton_Click(object sender, EventArgs e)
+    //{
+    //    byte[] imagesinsert = InsertImage(FileUploadNurse);
+    //    HttpPostedFile file = FileUploadNurse.PostedFile;
+    //    string imageString = "";
+    //    if (imagesinsert != null)
+    //    {
+    //        imageString = Convert.ToBase64String(imagesinsert, 0, imagesinsert.Length);
+    //    }
+    //    FileUploadNurse.Equals(file);
+    //    Addnurseimage.ImageUrl = "data:image/png;base64," + imageString;
+    //}
     #endregion
 
     #region CRUD
@@ -328,6 +359,7 @@ public partial class Pages_nurse_portal : System.Web.UI.Page
             {
                 txtFirstnameV.Text = (row.FindControl("lblFirstName") as Label).Text;
                 txtLastnameV.Text = (row.FindControl("lblLastName") as Label).Text;
+                txtOthernamesV.Text= (row.FindControl("lblOtherName") as Label).Text; 
                 txtPhoneV.Text = (row.FindControl("lblPhoneNumber") as Label).Text;
                 txtGenderV.Text = (row.FindControl("lblGender") as Label).Text;
                 txtAddressV.Text = (row.FindControl("lblAddress") as Label).Text;
@@ -344,6 +376,7 @@ public partial class Pages_nurse_portal : System.Web.UI.Page
                 txtFirstnameE.Text = (row.FindControl("lblFirstName") as Label).Text;
                 txtLastnameE.Text = (row.FindControl("lblLastName") as Label).Text;
                 txtPhoneE.Text = (row.FindControl("lblPhoneNumber") as Label).Text;
+                txtOthernamesE.Text = (row.FindControl("lblOtherName") as Label).Text;
                 ddlGenderE.SelectedItem.Text = (row.FindControl("lblGender") as Label).Text;
                 ddlMaritalStatusE.SelectedItem.Text = (row.FindControl("lblMaritalStatus") as Label).Text;
                 txtAddressE.Text = (row.FindControl("lblAddress") as Label).Text;
@@ -464,4 +497,87 @@ public partial class Pages_nurse_portal : System.Web.UI.Page
         attendanceli.Attributes["class"] = "";
     }
     #endregion
+
+    #region Attendance
+    protected void AttendanceSigninButton_Click(object sender, EventArgs e)
+    {
+        AuthUser CurrentUser = Pasture.GetCurrentUserSessionDetail();
+        int currentuserlog = Pasture.GetUnlockedAttendanceLogByUserIDList(CurrentUser.UserID);
+        TimeSpan AttendanceTime = Convert.ToDateTime(AttendanceCurrentTime.Text.ToString()).TimeOfDay;
+        if (currentuserlog > 0)
+        {//false exist means there is a sign in not yet signed out sign out
+
+
+            AttendanceLog AttLog = new AttendanceLog();
+            int response = Pasture.ClockUserOutAttendanceLog(CurrentUser.UserID, AttendanceTime);
+            if (response > 0)
+            {
+                PastureAlert.PopSuccessAlert("You have successfully signed out.");
+                Response.Redirect("./patient-portal.aspx");
+            }
+        }
+        else
+        {//add new attendace sign in
+            AttendanceLog UserAttendance = new AttendanceLog();
+            UserAttendance.ClockInTime = AttendanceTime;
+            int response = Pasture.ClockUserInAttendanceLog(UserAttendance);
+            if (response > 0)
+            {
+
+                PastureAlert.PopSuccessAlert("You have successfully signed in.");
+                Response.Redirect("./patient-portal.aspx");
+                return;
+            }
+        }
+    }
+
+    private void ManageRoleView(string rolename)
+    {
+
+        //string role = "edmin"; //Pasture.GetCurrentUserSessionRole();
+        if (rolename.ToLower() == "admin")
+        {
+            dashboard.Visible = true;
+            patientsportal.Visible = true;
+            nursesportal.Visible = true;
+            doctorsportal.Visible = true;
+            adminportal.Visible = true;
+            SetNurseContainerVisible();
+            BindGrid();
+            HideDivsNurseTab();
+            ViewNurseListDiv.Visible = true;
+            return;
+        }
+        if (rolename.ToLower().Contains("nurse"))
+        {
+            dashboard.Visible = false;
+            patientsportal.Visible = true;
+            nursesportal.Visible = true;
+            doctorsportal.Visible = false;
+            adminportal.Visible = false;
+            nurseli.Visible = false;
+            NurseDivNav.Visible = false;
+            SetAttendanceContainerVisible();
+            return;
+            
+        }
+        if (rolename.ToLower().Contains("doctor"))
+        {
+            
+            patientsportal.Visible = true;
+            doctorsportal.Visible = true;
+            SetAttendanceContainerVisible();
+            return;
+        }
+        else
+        {
+           
+        }
+
+    }
+
+    #endregion
+
+
+
 }

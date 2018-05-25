@@ -29,10 +29,10 @@
         [StringLength(10)]
         public string Gender { get; set; }
 
-        [StringLength(10)]
+        [StringLength(20)]
         public string PhoneNumber { get; set; }
 
-        [StringLength(10)]
+        [StringLength(120)]
         public string Address { get; set; }
 
         [Column(TypeName = "image")]

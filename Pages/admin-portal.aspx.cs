@@ -119,11 +119,6 @@ public partial class Pages_admin_portal : System.Web.UI.Page
             hospitaldetail.Attributes["class"] = "tab-pane fade active in";
         }
 
-
-
-
-
-
     }
     private void HideContentView()
     {
@@ -471,7 +466,7 @@ public partial class Pages_admin_portal : System.Web.UI.Page
                 ShowErrorResponse("User Role Not Selected!!");
                 return;
             }
-            if (AddUserPasswordTxtBox.Text == AddUserConfirmPasswordTxtBox.Text)
+            if (AddUserPasswordTxtBox.Text != AddUserConfirmPasswordTxtBox.Text)
             {
                 ShowErrorResponse("Password Not match!!");
                 return;
@@ -561,21 +556,21 @@ public partial class Pages_admin_portal : System.Web.UI.Page
                 return;
             }
 
-            AuthUser newUser = new AuthUser
+            AuthUser updateUser = new AuthUser
             {
 
                 //UserName = AddUsernameTxtBox.Text,
                 UserID = (int)Session["CurrentEditUserID"],
-                Password = AddUserPasswordTxtBox.Text,
-                StaffRoleID = Convert.ToInt32(Adduserrolelistddl.SelectedValue.ToString()),
-                StaffID = Convert.ToInt32(AddUserEmployeelistddl.SelectedValue.ToString())
+                Password = EditUserPasswordTextbox.Text,
+                StaffRoleID = Convert.ToInt32(EditUserUserRoleddl.SelectedValue.ToString()),
+                //StaffID = Convert.ToInt32(AddUserEmployeelistddl.SelectedValue.ToString())
 
             };
 
-            int response = Pasture.UpdateUser(newUser);
+            int response = Pasture.UpdateUser(updateUser);
             if (response > 0)
             {
-                PopulateRolelist(Adduserrolelistddl);
+                //PopulateRolelist(Adduserrolelistddl);
                 //ShowSxsResponse("User Successfly Added!!");
                 Session["CurrentEditUserID"] = null;
                 PastureAlert.PopSuccessAlert("User account successfly updated!!");
@@ -588,7 +583,7 @@ public partial class Pages_admin_portal : System.Web.UI.Page
         catch (Exception)
         {
 
-            throw;
+            ShowErrorResponse("User Account not updated kindly try again!!");
         }
 
     }
@@ -711,6 +706,13 @@ public partial class Pages_admin_portal : System.Web.UI.Page
 
     #region TranxType
 
+    private void ClearTranxField()
+    {
+        AddTranxTypeTextBox.Text = string.Empty;
+        AddTranxTypeDescriptionTextBox.Text = string.Empty;
+        EditTranxTypeTextbox.Text = string.Empty;
+        EditTranxTypeDescriptionTextBox.Text = string.Empty;
+    }
     protected void AddTranxBackButton_Click(object sender, EventArgs e)
     {
         try
@@ -755,6 +757,8 @@ public partial class Pages_admin_portal : System.Web.UI.Page
             {
 
                 PastureAlert.PopSuccessAlert("Transaction type successfly created!!");
+                ClearTranxField();
+
             }
             else
             {
@@ -771,7 +775,7 @@ public partial class Pages_admin_portal : System.Web.UI.Page
     }
     protected void ViewListAddtranxbutton_Click(object sender, EventArgs e)
     {
-        HideUserViews();
+        HideTranxTypeViews();
         AddTransactionTypeDiv.Visible = true;
     }
     protected void ViewTranxTypeBtn_Click(object sender, EventArgs e)
@@ -904,6 +908,7 @@ public partial class Pages_admin_portal : System.Web.UI.Page
             {
 
                 PastureAlert.PopSuccessAlert("Transaction type successfly updated!!");
+                ClearTranxField();
             }
             else
             {
@@ -929,7 +934,13 @@ public partial class Pages_admin_portal : System.Web.UI.Page
     #endregion
 
     #region Role Management
-
+    private void Clearrolefields()
+    {
+        AddRoleNameTxtbox.Text = string.Empty;
+        AddRoleDescriptionTxtbox.Text = string.Empty;
+        EditRoleNameTextBox.Text = string.Empty;
+        EditRoleDescriptionTextBox.Text = string.Empty;
+    }
     protected void AddRoleProceedButton_Click(object sender, EventArgs e)
     {
 
@@ -958,7 +969,7 @@ public partial class Pages_admin_portal : System.Web.UI.Page
             int response = Pasture.AddNewRole(newRole);
             if (response > 0)
             {
-
+                Clearrolefields();
                 PastureAlert.PopSuccessAlert("Role successfly created!!");
             }
             else
@@ -1110,7 +1121,7 @@ public partial class Pages_admin_portal : System.Web.UI.Page
             int response = Pasture.UpdateRole(updateRole);
             if (response > 0)
             {
-
+                Clearrolefields();
                 PastureAlert.PopSuccessAlert("Role successfly updated!!");
                 Session["CurrentEditRoleID"] = null;
             }
@@ -1152,14 +1163,21 @@ public partial class Pages_admin_portal : System.Web.UI.Page
     #endregion
 
     #region Duty Type Management
-
+    private void ClearDuty()
+    {
+        AddDutyTypeNameTextBox.Text = string.Empty;
+        AddDutyTypeDescriptionTextBox.Text = string.Empty;
+        EditDutyTypeNameTextBox.Text = string.Empty;
+        EditDutyTypeDescriptionTextBox.Text = string.Empty;
+    }
     protected void AddDutyTypeBackButton_Click(object sender, EventArgs e)
     {
         try
         {
             HideDutyTypeViews();
+            BindDutyTyepList();
             ViewDutyTypeListDiv.Visible = true;
-            BindRoleList();
+            
         }
         catch (Exception)
         {
@@ -1209,7 +1227,7 @@ public partial class Pages_admin_portal : System.Web.UI.Page
             int response = Pasture.AddNewDutyType(newDutyType);
             if (response > 0)
             {
-
+                ClearDuty();
                 PastureAlert.PopSuccessAlert("Duty type successfly created!!");
             }
             else
@@ -1317,7 +1335,7 @@ public partial class Pages_admin_portal : System.Web.UI.Page
         {
             HideDutyTypeViews();
             ViewDutyTypeListDiv.Visible = true;
-            BindRoleList();
+            BindDutyTyepList();
         }
         catch (Exception)
         {
@@ -1368,7 +1386,7 @@ public partial class Pages_admin_portal : System.Web.UI.Page
             int response = Pasture.UpdateDutyType(updateDutyType);
             if (response > 0)
             {
-
+                ClearDuty();
                 PastureAlert.PopSuccessAlert("Duty type successfly updated!!");
             }
             else
@@ -1414,7 +1432,7 @@ public partial class Pages_admin_portal : System.Web.UI.Page
     protected void AddPatientPlanBackButton_Click(object sender, EventArgs e)
     {
         HidePatientPlanViews();
-        ViewPatientPlanDiv.Visible = true;
+        ViewPatientPlanListDiv.Visible = true;
         BindPatientPlanList();
     }
 
@@ -1564,7 +1582,7 @@ public partial class Pages_admin_portal : System.Web.UI.Page
     protected void EditPatientPlanBackButton_Click(object sender, EventArgs e)
     {
         HidePatientPlanViews();
-        ViewPatientPlanDiv.Visible = true;
+        ViewPatientPlanListDiv.Visible = true;
         BindPatientPlanList();
     }
 
@@ -1625,7 +1643,7 @@ public partial class Pages_admin_portal : System.Web.UI.Page
     protected void ViewPatientPlanBackButton_Click(object sender, EventArgs e)
     {
         HidePatientPlanViews();
-        ViewPatientPlanDiv.Visible = true;
+        ViewPatientPlanListDiv.Visible = true;
         BindPatientPlanList();
     }
 
@@ -1640,6 +1658,11 @@ public partial class Pages_admin_portal : System.Web.UI.Page
 
     #region Assign Nurse Duty
 
+    private void ClearNurseDutyFields()
+    {
+        AssignNurseDutyStartdateTextbox.Text = string.Empty;
+        EditNurseDutyStartdateTextBox.Text = string.Empty;
+    }
     protected void AssignNurseDutyBackButton_Click(object sender, EventArgs e)
     {
         HideNurseDutyViews();
@@ -1686,7 +1709,8 @@ public partial class Pages_admin_portal : System.Web.UI.Page
             int response = Pasture.AddNewNurseDuty(newNurseDuty);
             if (response > 0)
             {
-
+                ClearNurseDutyFields();
+                PopulateDutyTypelist(AssignNurseDutyTypeDdl);
                 PastureAlert.PopSuccessAlert("Nurse duty Assigned successfly created!!");
             }
             else
@@ -1707,6 +1731,7 @@ public partial class Pages_admin_portal : System.Web.UI.Page
 
         try
         {
+           
             Button btn = (Button)sender;
             int nursedutyid = Convert.ToInt32((btn.CommandArgument.ToString()));
             NurseDuty viewnurseduty = Pasture.GetNurseDutyByID(nursedutyid);
@@ -1727,14 +1752,15 @@ public partial class Pages_admin_portal : System.Web.UI.Page
     {
         try
         {
+            PopulateDutyTypelist(EditNurseDutyTypeDdl);
             Button btn = (Button)sender;
             int nursedutyid = Convert.ToInt32((btn.CommandArgument.ToString()));
             Session["CurrentEditNurseDutyD"] = nursedutyid;
             NurseDuty editnurseduty = Pasture.GetNurseDutyByID(nursedutyid);
             EditNurseDutyNursenameTextBox.Text = Pasture.GetEmployeeFullNameById(editnurseduty.NurseID);
             EditNurseDutyTypeDdl.SelectedValue = editnurseduty.DutyTypeID.ToString();
-            EditNurseDutyStartdateTextBox.Text = editnurseduty.StartDate.ToString();
-            EditNurseDutyEnddateTextBox.Text = editnurseduty.EndDate.ToString();
+            EditNurseDutyStartdateTextBox.Text = editnurseduty.StartDate.Date.ToString("mm/dd/yyyy");
+            EditNurseDutyEnddateTextBox.Text = editnurseduty.EndDate.Date.ToString("mm/dd/yyyy");
             HideNurseDutyViews();
             EditNurseDutyDiv.Visible = true;
         }
@@ -1818,7 +1844,7 @@ public partial class Pages_admin_portal : System.Web.UI.Page
             NurseDuty newNurseDuty = new NurseDuty()
             {
                 //NurseID = Convert.ToInt32(Ed.SelectedValue.ToString()),
-                NurseDutyID = 0,//from session
+                NurseDutyID =(int) Session["CurrentEditNurseDutyD"],//from session
                 DutyTypeID = Convert.ToInt32(EditNurseDutyTypeDdl.SelectedValue.ToString()),
                 StartDate = Convert.ToDateTime(EditNurseDutyStartdateTextBox.Text.ToString()),
                 EndDate = Convert.ToDateTime(EditNurseDutyEnddateTextBox.Text.ToString())
@@ -1829,6 +1855,7 @@ public partial class Pages_admin_portal : System.Web.UI.Page
             int response = Pasture.UpdateNurseDuty(newNurseDuty);
             if (response > 0)
             {
+                ClearNurseDutyFields();
                 PopulateDutyTypelist(AssignNurseDutyTypeDdl);
                 PastureAlert.PopSuccessAlert("Nurse duty updated successfly created!!");
             }
@@ -1856,7 +1883,7 @@ public partial class Pages_admin_portal : System.Web.UI.Page
         AssignNurseDutyDiv.Visible = false;
         ViewNurseDutyDiv.Visible = false;
         EditNurseDutyDiv.Visible = false;
-        ViewNurseDutyDiv.Visible = false;
+        ViewNurseDutyListDiv.Visible = false;
     }
 
     #endregion

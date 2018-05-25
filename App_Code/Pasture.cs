@@ -104,6 +104,10 @@ public partial class Pasture
                 employee.DOB = updEmployee.DOB;
                 employee.Gender = updEmployee.Gender;
                 employee.MaritalStatus = updEmployee.MaritalStatus;
+                //if (updEmployee.Picture.Length > 10)
+                //{
+                //    employee.Picture = updEmployee.Picture;
+                //}
                 employee.FullName = updEmployee.FirstName + " " + updEmployee.LastName + " " + updEmployee.OtherNames;
                 employee.ModifiedByID = GetCurrentUserSessionID();
                 employee.ModifiedDate = DateTime.Now;
@@ -457,10 +461,9 @@ public partial class Pasture
             AuthUser User = DBContext.AuthUsers.Where(u => u.UserID == UpdateUser.UserID).FirstOrDefault();
             
             //DBContext.AuthRoles.Add(newRole);
-            User.UserName = UpdateUser.UserName;
+            
             User.Password = ProtectPassword(UpdateUser.Password).ToUpper();
             User.StaffRoleID = UpdateUser.StaffRoleID;
-            User.IsActive = UpdateUser.IsActive;
             User.ModifiedByID = GetCurrentUserSessionID();
             User.ModifiedDate = DateTime.Now;
             responce = DBContext.SaveChanges();
@@ -543,6 +546,14 @@ public partial class Pasture
         PatientList = DBContext.Patients.Where(p => p.IsDeleted == false).ToList();
         return PatientList;
     }
+
+    public static int GetPatientsCount()
+    {
+        DBContext = new HSMModelDataContext();
+        int Patientcount=0;// = new List<Patient>();
+        Patientcount = DBContext.Patients.Where(p => p.IsDeleted == false).Count();
+        return Patientcount;
+    }
     public static List<Patient> GetPatientsWithFamilyPlan()
     {
         DBContext = new HSMModelDataContext();
@@ -573,6 +584,7 @@ public partial class Pasture
             newpatient.CreatedByID = GetCurrentUserSessionID();
             newpatient.FullName = newpatient.FirstName + " " + newpatient.LastName + " " + newpatient.OtherNames;
             newpatient.CreatedDate = DateTime.Now;
+            newpatient.IsActive = true;
             DBContext.Patients.Add(newpatient);
             responce = DBContext.SaveChanges();
             return responce;
@@ -596,6 +608,22 @@ public partial class Pasture
             //DBContext.AuthRoles.Add(newRole);         
             //patient.IsActive = UpdatePatient.IsActive;
 
+            patient.FirstName = UpdatePatient.FirstName;
+            patient.LastName = UpdatePatient.LastName;
+            patient.OtherNames = UpdatePatient.OtherNames;
+            patient.PlanTypeID = UpdatePatient.PlanTypeID;
+            patient.Gender = UpdatePatient.Gender;
+            patient.Occupation = UpdatePatient.Occupation;
+            patient.MaritalStatus = UpdatePatient.MaritalStatus;
+            patient.PhoneNumber = UpdatePatient.PhoneNumber;
+            patient.Address = UpdatePatient.Address;
+            patient.DOB = UpdatePatient.DOB;
+            patient.NextofKinFullName = UpdatePatient.NextofKinFullName;
+            patient.NextofKinPhoneNumber = UpdatePatient.NextofKinPhoneNumber;
+            if (UpdatePatient.Picture.Length > 10)
+            {
+                patient.Picture = UpdatePatient.Picture;
+            }
 
             patient.OtherNames = UpdatePatient.OtherNames;
             patient.FullName = UpdatePatient.FirstName + " " + UpdatePatient.LastName + " " + UpdatePatient.OtherNames;
@@ -731,7 +759,9 @@ public partial class Pasture
             int responce;
             NurseDuty NurseDuty = DBContext.NurseDuties.Where(nd => nd.NurseDutyID == updateNurseDuty.NurseDutyID).FirstOrDefault();
             //DBContext.AuthRoles.Add(newRole);
-            
+            NurseDuty.DutyTypeID = updateNurseDuty.DutyTypeID;
+            NurseDuty.StartDate = updateNurseDuty.StartDate;
+            NurseDuty.EndDate = updateNurseDuty.EndDate;
             NurseDuty.ModifiedByID = GetCurrentUserSessionID();
             NurseDuty.ModifiedByDate = DateTime.Now;
             responce = DBContext.SaveChanges();
@@ -829,7 +859,10 @@ public partial class Pasture
             int responce;
             PatientPlanType PatientPlan = DBContext.PatientPlanTypes.Where(ppt => ppt.PlanTypeID == updatePatientPlan.PlanTypeID).FirstOrDefault();
             //DBContext.AuthRoles.Add(newRole);
-
+            //PatientPlan = updatePatientPlan;
+            PatientPlan.PlanTypeName = updatePatientPlan.PlanTypeName;
+            PatientPlan.PlanTypeMaximumMember = updatePatientPlan.PlanTypeMaximumMember;
+            PatientPlan.PlanTypeDescription = updatePatientPlan.PlanTypeDescription;
             PatientPlan.ModifiedByID = GetCurrentUserSessionID();
             PatientPlan.ModifiedDate = DateTime.Now;
             responce = DBContext.SaveChanges();
@@ -914,7 +947,8 @@ public partial class Pasture
             int responce;
             newDutyType.CreatedByID = GetCurrentUserSessionID();
             newDutyType.CreatedDate = DateTime.Now;
-            newDutyType.Duration = int.Parse(((Convert.ToDateTime(newDutyType.EndTime) - Convert.ToDateTime(newDutyType.StartTime)).TotalHours).ToString());
+            TimeSpan timediff = ((TimeSpan)newDutyType.EndTime).Subtract((TimeSpan)newDutyType.StartTime);
+            newDutyType.Duration = int.Parse(timediff.TotalHours.ToString());
             DBContext.DutyTypes.Add(newDutyType);
             responce = DBContext.SaveChanges();
             return responce;
@@ -934,8 +968,14 @@ public partial class Pasture
             DBContext = new HSMModelDataContext();
             int responce;
             DutyType dutyType = DBContext.DutyTypes.Where(dt => dt.DutyTypeID == updateDutyType.DutyTypeID).FirstOrDefault();
-          
 
+     
+            TimeSpan timediff = ((TimeSpan)updateDutyType.EndTime).Subtract((TimeSpan)updateDutyType.StartTime);
+            dutyType.DutyTypeName = updateDutyType.DutyTypeName;
+            dutyType.Description = updateDutyType.Description;
+            dutyType.StartTime = updateDutyType.StartTime;
+            dutyType.EndTime = updateDutyType.EndTime;
+            dutyType.Duration = int.Parse(timediff.TotalHours.ToString());
             dutyType.ModifiedByID = GetCurrentUserSessionID();
             dutyType.ModifiesDate = DateTime.Now;
             responce = DBContext.SaveChanges();
@@ -1019,7 +1059,8 @@ public partial class Pasture
             int responce;
             TransactionType TransactionType = DBContext.TransactionTypes.Where(tranx => tranx.TransactionTypeID == updateTransactionType.TransactionTypeID).FirstOrDefault();
             //DBContext.AuthRoles.Add(newRole);
-
+            TransactionType.TransactionTypeName = updateTransactionType.TransactionTypeName;
+            TransactionType.Description = updateTransactionType.Description;
             TransactionType.ModifiedByID = GetCurrentUserSessionID();
             TransactionType.ModifiedDate = DateTime.Now;
             responce = DBContext.SaveChanges();
@@ -1111,8 +1152,8 @@ public partial class Pasture
             DBContext = new HSMModelDataContext();
             int responce;
             newAttendanceLog.StaffID = GetCurrentUserSessionID();
-            newAttendanceLog.DutyID = GetStaffLastAttendanceID(GetCurrentUserSessionID());
-            newAttendanceLog.ClockInTime = DateTime.Now.TimeOfDay;
+            newAttendanceLog.DutyID = GetStaffLastAttendanceID(GetCurrentUserSessionStaffID());
+            newAttendanceLog.ClockInTime = newAttendanceLog.ClockInTime;
             newAttendanceLog.AttendanceDate = DateTime.Now;
             DBContext.AttendanceLogs.Add(newAttendanceLog);
             responce = DBContext.SaveChanges();
@@ -1126,7 +1167,7 @@ public partial class Pasture
         }
 
     }
-    public static int ClockUserOutAttendanceLog(int userid)
+    public static int ClockUserOutAttendanceLog(int userid,TimeSpan logtime)
     {
         try
         {
@@ -1226,6 +1267,7 @@ public partial class Pasture
             DBContext = new HSMModelDataContext();
             int responce;
             newFamilyMember.CreatedByID = GetCurrentUserSessionID();
+            newFamilyMember.FullName = newFamilyMember.FirstName + " " + newFamilyMember.LastName + " " + newFamilyMember.OtherNames;
             newFamilyMember.CreatedDate = DateTime.Now;
             DBContext.FamilyMembers.Add(newFamilyMember);
             responce = DBContext.SaveChanges();
@@ -1239,7 +1281,7 @@ public partial class Pasture
         }
 
     }
-    public static int UpdateFamilyMember(FamilyMember UpdateFamilyMember)
+    public static int UpdateFamilyMember(FamilyMember UpdateFamilyMember,out int Patientid)
     {
         try
         {
@@ -1247,8 +1289,20 @@ public partial class Pasture
             int responce;
             FamilyMember familyMember = DBContext.FamilyMembers.Where(fm => fm.FamilyMemberID == UpdateFamilyMember.FamilyMemberID).FirstOrDefault();
 
-            //DBContext.AuthRoles.Add(newRole);         
-            
+            //DBContext.AuthRoles.Add(newRole);   
+            Patientid = familyMember.PatientID;
+            familyMember.FirstName = UpdateFamilyMember.FirstName;
+            familyMember.LastName = UpdateFamilyMember.LastName;
+            familyMember.OtherNames = UpdateFamilyMember.OtherNames;
+            familyMember.Gender = UpdateFamilyMember.Gender;
+            familyMember.PhoneNumber = UpdateFamilyMember.PhoneNumber;
+            familyMember.Address = UpdateFamilyMember.Address;
+            familyMember.DOB = UpdateFamilyMember.DOB;            
+            if (UpdateFamilyMember.Picture.Length > 10)
+            {
+                familyMember.Picture = UpdateFamilyMember.Picture;
+            }
+            familyMember.FullName = UpdateFamilyMember.FirstName + " " + UpdateFamilyMember.LastName + " " + UpdateFamilyMember.OtherNames;
             familyMember.ModifiedByID = GetCurrentUserSessionID();
             familyMember.ModifiedDate = DateTime.Now;
             responce = DBContext.SaveChanges();
@@ -1256,7 +1310,9 @@ public partial class Pasture
         }
         catch (Exception ex)
         {
+            Patientid = 0;
             return 0;
+            
             //log ex.Message;
             throw;
         }
@@ -1415,7 +1471,7 @@ public partial class Pasture
         Consultation Consultation = new Consultation();
         string fullname = "";
         Consultation = DBContext.Consultations.Where(b => b.ConsultationID == ConsultationID).FirstOrDefault();
-        if (Consultation.ConsultationForID.ToString() != null)
+        if (Consultation.ConsultationForID !=0)
         {
             fullname= DBContext.FamilyMembers.Where(fm => fm.FamilyMemberID == Consultation.ConsultationForID && fm.PatientID == Consultation.PatientID).FirstOrDefault().FullName;
 
@@ -1466,6 +1522,10 @@ public partial class Pasture
             //DBContext.Roles.Add(newRole);
             //Consultation.ConsultationID = UpdateConsultation.ConsultationName;
             //Consultation.ConsultantID= GetCurrentUserSessionID();
+            Consultation.Symptums = UpdateConsultation.Symptums;
+            Consultation.Diagnosis = UpdateConsultation.Diagnosis;
+            Consultation.Prescription = UpdateConsultation.Prescription;
+            Consultation.Note = UpdateConsultation.Note;
             Consultation.ModifiedByID = GetCurrentUserSessionID();
             Consultation.ModifiedDate = DateTime.Now;
             responce = DBContext.SaveChanges();
@@ -1547,7 +1607,7 @@ public partial class Pasture
         {
             DBContext = new HSMModelDataContext();
             int responce;
-            newVitalSign.ID = GetCurrentUserSessionID();
+            newVitalSign.StaffID = GetCurrentUserSessionID();
             newVitalSign.CreatedByID = GetCurrentUserSessionID();
             newVitalSign.CreatedDate = DateTime.Now;
             DBContext.VitalSigns.Add(newVitalSign);
@@ -1569,7 +1629,13 @@ public partial class Pasture
             DBContext = new HSMModelDataContext();
             int responce;
             VitalSign _VitalSign = DBContext.VitalSigns.Where(v => v.ID == UpdateVitalSign.ID).FirstOrDefault();
-            
+
+            _VitalSign.Temprature = UpdateVitalSign.Temprature;
+            _VitalSign.Pulse = UpdateVitalSign.Pulse;
+            _VitalSign.Respiration = UpdateVitalSign.Respiration;
+            _VitalSign.BloodPressure = UpdateVitalSign.BloodPressure;
+            _VitalSign.Weight = UpdateVitalSign.Weight;
+            _VitalSign.Height = UpdateVitalSign.Height;
             _VitalSign.StaffID = GetCurrentUserSessionID();
             _VitalSign.ModifiedByID = GetCurrentUserSessionID();
             _VitalSign.ModifiedDate = DateTime.Now;
@@ -1694,6 +1760,20 @@ public partial class Pasture
             return 0;
         }    
     }
+    public static int GetCurrentUserSessionStaffID()
+    {
+        HttpContext context = HttpContext.Current;
+        AuthUser CurrentUser = new AuthUser();
+        CurrentUser = (AuthUser)(context.Session["UserDetail"]);
+        if (!(CurrentUser == null))
+        {
+            return CurrentUser.StaffID;
+        }
+        else
+        {
+            return 0;
+        }
+    }
     public static AuthUser GetCurrentUserSessionDetail()
     {
         HttpContext context = HttpContext.Current;
@@ -1749,7 +1829,8 @@ public partial class Pasture
     public static int GetStaffLastAttendanceID(int currentstaffid)
     {
         DBContext = new HSMModelDataContext();
-        NurseDuty Nurseduty= DBContext.NurseDuties.Where(nd => nd.NurseID == currentstaffid).LastOrDefault();
+        //AuthUser user = DBContext.AuthUsers.Where(u => u.UserID == currentstaffid).FirstOrDefault();
+        NurseDuty Nurseduty= DBContext.NurseDuties.Where(nd => nd.NurseID == currentstaffid).OrderByDescending(n=>n.CreatedByDate).FirstOrDefault();
 
         if(Nurseduty != null)
         {

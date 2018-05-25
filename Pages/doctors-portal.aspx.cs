@@ -15,10 +15,15 @@ public partial class Pages_doctors_portal : System.Web.UI.Page
         AuthUser CurrentUser = Pasture.GetCurrentUserSessionDetail();
         if(CurrentUser != null)
         {
-            int haveopenedattendance = Pasture.GetUnlockedAttendanceLogByUserIDList(CurrentUser.StaffID);
+            string role = Pasture.GetCurrentUserSessionRole();
+            ManageRoleView(role);
+            int haveopenedattendance = Pasture.GetUnlockedAttendanceLogByUserIDList(CurrentUser.UserID);
             if (haveopenedattendance > 0)
             {
                 //open doctors portal
+                //open doctors portal
+                EmployeeNameFullName.Text = Pasture.GetEmployeeFullNameById(CurrentUser.StaffID);
+                AttendanceCurrentTime.Text = Pasture.GetAttendanceDateTime();
                 attandancemsg.InnerText = "GOOD BYE CLICK SIGN OUT TO CLOSE TODAY'S DUTY";
                 AttendanceSigninButton.Text = "SIGN OUT";
             }
@@ -26,7 +31,10 @@ public partial class Pages_doctors_portal : System.Web.UI.Page
             {
                 //open attendace sheet
                 SetAttendanceContainerVisible();
+                EmployeeNameFullName.Text = Pasture.GetEmployeeFullNameById(CurrentUser.StaffID);
                 AttendanceCurrentTime.Text = Pasture.GetAttendanceDateTime();
+               // Response.Redirect("./patient-portal.aspx");
+                return;
             }
         }
 
@@ -188,19 +196,19 @@ public partial class Pages_doctors_portal : System.Web.UI.Page
         return imageString;
     }
 
-    private void SetDoctorContainerVisible()
-    {
-        HideContentView();
-        doctorli.Attributes["class"] = "active";
-        doctor.Visible = true;
-    }
-    private void SetAttendanceContainerVisible()
-    {
-        HideContentView();
-        attendanceli.Attributes["class"] = "active";
-        attendance.Visible = true;
-        attendance.Attributes["class"] = "tab-pane fade active in";
-    }
+    //private void SetDoctorContainerVisible()
+    //{
+    //    HideContentView();
+    //    doctorli.Attributes["class"] = "active";
+    //    doctor.Visible = true;
+    //}
+    //private void SetAttendanceContainerVisible()
+    //{
+    //    HideContentView();
+    //    attendanceli.Attributes["class"] = "active";
+    //    attendance.Visible = true;
+    //    attendance.Attributes["class"] = "tab-pane fade active in";
+    //}
     #endregion
 
     #region CRUD
@@ -270,6 +278,7 @@ public partial class Pages_doctors_portal : System.Web.UI.Page
             {               
                 txtFirstnameV.Text = (row.FindControl("lblFirstName") as Label).Text;
                 txtLastnameV.Text = (row.FindControl("lblLastName") as Label).Text;
+                txtOthernamesV.Text = (row.FindControl("lblOtherName") as Label).Text;
                 txtPhoneV.Text = (row.FindControl("lblPhoneNumber") as Label).Text;
                 txtGenderV.Text = (row.FindControl("lblGender") as Label).Text;
                 txtAddressV.Text = (row.FindControl("lblAddress") as Label).Text;
@@ -285,7 +294,8 @@ public partial class Pages_doctors_portal : System.Web.UI.Page
             {
                 txtFirstnameE.Text = (row.FindControl("lblFirstName") as Label).Text;
                 txtLastnameE.Text = (row.FindControl("lblLastName") as Label).Text;
-                txtPhoneE.Text = (row.FindControl("lblPhoneNumber") as Label).Text;
+                txtOthernamesE.Text = (row.FindControl("lblOtherName") as Label).Text;
+                txtPhoneE.Text = (row.FindControl("lblPhoneNumber") as Label).Text;                
                 ddlGenderE.SelectedItem.Text = (row.FindControl("lblGender") as Label).Text;
                 ddlMaritalStatusE.SelectedItem.Text = (row.FindControl("lblMaritalStatus") as Label).Text;
                 txtAddressE.Text = (row.FindControl("lblAddress") as Label).Text;
@@ -385,13 +395,15 @@ public partial class Pages_doctors_portal : System.Web.UI.Page
     protected void btnAddNewBack_Click(object sender, EventArgs e)
     {
         HideDivsDocTab();
+        BindGrid();
         ViewDoctorListDiv.Visible = true;
     }
 
     protected void btnEditBack_Click(object sender, EventArgs e)
     {
         HideDivsDocTab();
-        DoctorListGridView.Visible = true;
+        BindGrid();
+        ViewDoctorListDiv.Visible = true;
     }
 
     protected void DoctorDivNav_Click(object sender, EventArgs e)
@@ -404,13 +416,14 @@ public partial class Pages_doctors_portal : System.Web.UI.Page
     {
         SetAttendanceContainerVisible();
     }
-<<<<<<< HEAD
+
 
     private void SetDoctorContainerVisible()
     {
         HideContentView();
         doctorli.Attributes["class"] = "active";
         doctor.Visible = true;
+        doctor.Attributes["class"] = "tab-pane fade active in";
     }
     private void SetAttendanceContainerVisible()
     {
@@ -420,42 +433,98 @@ public partial class Pages_doctors_portal : System.Web.UI.Page
         attendance.Attributes["class"] = "tab-pane fade active in";
     }
 
-    protected void btnAddNewBack_Click(object sender, EventArgs e)
-    {
-        HideDivsDocTab();
-        ViewDoctorListDiv.Visible = true;
-    }
+    //protected void btnAddNewBack_Click(object sender, EventArgs e)
+    //{
+    //    HideDivsDocTab();
+    //    ViewDoctorListDiv.Visible = true;
+    //}
 
-    protected void btnEditBack_Click(object sender, EventArgs e)
-    {
-        HideDivsDocTab();
-        DoctorListGridView.Visible = true;
-    }
+    //protected void btnEditBack_Click(object sender, EventArgs e)
+    //{
+    //    HideDivsDocTab();
+    //    DoctorListGridView.Visible = true;
+    //}
 
     protected void AttendanceSigninButton_Click(object sender, EventArgs e)
     {
         AuthUser CurrentUser = Pasture.GetCurrentUserSessionDetail();
         int currentuserlog = Pasture.GetUnlockedAttendanceLogByUserIDList(CurrentUser.UserID);
+        TimeSpan AttendanceTime = Convert.ToDateTime(AttendanceCurrentTime.Text.ToString()).TimeOfDay;
         if (currentuserlog>0)
         {//false exist means there is a sign in not yet signed out sign out
+
+           
             AttendanceLog AttLog = new AttendanceLog();
-            int response = Pasture.ClockUserOutAttendanceLog(CurrentUser.UserID);
+            int response = Pasture.ClockUserOutAttendanceLog(CurrentUser.UserID,AttendanceTime);
             if (response > 0)
             {
                 PastureAlert.PopSuccessAlert("You have successfully signed out.");
+                Response.Redirect("./patient-portal.aspx");
             }
         }
         else
         {//add new attendace sign in
            AttendanceLog UserAttendance = new AttendanceLog();
+            UserAttendance.ClockInTime = AttendanceTime;
            int response= Pasture.ClockUserInAttendanceLog(UserAttendance);
             if (response > 0)
             {
+
                 PastureAlert.PopSuccessAlert("You have successfully signed in.");
+                Response.Redirect("./patient-portal.aspx");
+                return;
             }
         }
     }
-=======
+    private void ManageRoleView(string rolename)
+    {
+
+        //string role = "edmin"; //Pasture.GetCurrentUserSessionRole();
+        if (rolename.ToLower() == "admin")
+        {
+            dashboard.Visible = true;
+            patientsportal.Visible = true;
+            nursesportal.Visible = true;
+            doctorsportal.Visible = true;
+            adminportal.Visible = true;
+            SetDoctorContainerVisible();
+            BindGrid();
+            HideContentView();
+            ViewDoctorListDiv.Visible = true;
+            return;
+        }
+        if (rolename.ToLower().Contains("nurse"))
+        {
+            dashboard.Visible = false;
+            patientsportal.Visible = true;
+            nursesportal.Visible = true;
+            doctorsportal.Visible = false;
+            adminportal.Visible = false;
+            doctorli.Visible = false;
+            DoctorDivNav.Visible = false;
+            SetAttendanceContainerVisible();
+            return;
+
+        }
+        if (rolename.ToLower().Contains("doctor"))
+        {
+
+            patientsportal.Visible = true;
+            doctorsportal.Visible = true;
+            doctorsportal.Visible = true;
+            nursesportal.Visible = false;
+            adminportal.Visible = false;
+            doctorli.Visible = false;
+            DoctorDivNav.Visible = false;
+            SetAttendanceContainerVisible();
+            return;
+        }
+        else
+        {
+
+        }
+
+    }
     #endregion
->>>>>>> 6e4b4b7c9ecc5b85893ecf6619f4688e207cd2b2
+
 }

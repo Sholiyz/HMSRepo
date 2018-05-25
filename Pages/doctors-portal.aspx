@@ -12,11 +12,11 @@
                     <div class="col-md-12">
                         <div class="navbar-collapse collapse ">
                             <ul id="menu-top" class="nav navbar-nav navbar-right">
-                                <li><a href="./dashboard.aspx">Dashboard</a></li>
-                                <li><a href="./patient-portal.aspx">Patient's Portal</a></li>
-                                <li><a href="./nurse-portal.aspx">Nurse's Portal</a></li>
-                                <li><a class="menu-top-active" href="./doctors-portal.aspx">Doctor's Portal</a></li>
-                                <li><a href="./admin-portal.aspx">Admin Portal</a></li>                            
+                                <li runat="server" id="dashboard"      ><a href="./dashboard.aspx">Dashboard</a></li>
+                                <li runat="server" id="patientsportal" ><a href="./patient-portal.aspx">Patient's Portal</a></li>
+                                <li runat="server" id="nursesportal"   ><a href="./nurse-portal.aspx">Nurse's Portal</a></li>
+                                <li runat="server" id="doctorsportal"  ><a class="menu-top-active" href="./doctors-portal.aspx">Doctor's Portal</a></li>
+                                <li runat="server" id="adminportal"    ><a href="./admin-portal.aspx">Admin Portal</a></li>                            
                             </ul>
                         </div>
                     </div>
@@ -182,6 +182,7 @@
                                                                             <asp:Label ID="lblFullName" runat="server" Text='<%#Eval("FullName")%>'></asp:Label>
                                                                             <asp:Label ID="lblFirstName" runat="server" Text='<%#Eval("FirstName")%>' Visible="false"></asp:Label>
                                                                             <asp:Label ID="lblLastName" runat="server" Text='<%#Eval("LastName")%>' Visible="false"></asp:Label>
+                                                                            <asp:Label ID="lblOtherName" runat="server" Text='<%#Eval("OtherNames")%>' Visible="false"></asp:Label>
                                                                             <asp:Label ID="lblEmployeeID" runat="server" Text='<%#Eval("EmployeeID")%>' Visible="false"></asp:Label>
                                                                             <asp:Label ID="lblStaffTypeID" runat="server" Text='<%#Eval("StaffTypeID")%>' Visible="false"></asp:Label>
                                                                             <asp:Label ID="lblDOB" runat="server" Text='<%#Eval("DOB")%>' Visible="false"></asp:Label>
@@ -438,7 +439,7 @@
                                                                 </div>
                                                                 <div class="form-group">
                                                                     <label class="control-label">EMPLOYEE NAME</label>
-                                                                    <asp:TextBox runat="server" CssClass="form-control" ReadOnly="true"></asp:TextBox>
+                                                                    <asp:TextBox runat="server" CssClass="form-control" ID="EmployeeNameFullName" ReadOnly="true"></asp:TextBox>
                                                                 </div>                                                                
                                                                 <div class="form-group">
                                                                     <label class="control-label">TIME</label>

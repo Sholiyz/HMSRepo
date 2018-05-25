@@ -36,10 +36,10 @@ public partial class ResponseAlert : System.Web.UI.UserControl
     public void ShowNotification()
     {
         
-        string divwarningcss = "alert alert-warning alert-dismissible";
-        string divdangercss = "alert alert-danger alert-dismissable";
-        string divsuccesscss = "alert alert-success alert-dismissable";
-        string divinfocss = "alert alert-info alert-dismissable";
+        string divwarningcss = "alert alert-warning alert-dismissible text-center";
+        string divdangercss = "alert alert-danger alert-dismissable text-center";
+        string divsuccesscss = "alert alert-success alert-dismissable text-center";
+        string divinfocss = "alert alert-info alert-dismissable text-center";
         
         if (NoteType.ToLower() == "success")
         {
