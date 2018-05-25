@@ -17,7 +17,7 @@ public partial class Pages_hmsmaster : System.Web.UI.MasterPage
         }
         else
         {
-            Employee Emp = Pasture.GetEmployeeByID(1008);//CurrentUser.StaffID
+            Employee Emp = Pasture.GetEmployeeByID(CurrentUser.StaffID);//1008
             fullnameLiteraltext.Text = Emp.FullName;
             userroleLiteraltext.Text = Pasture.GetCurrentUserSessionRole();
 
