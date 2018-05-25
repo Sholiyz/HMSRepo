@@ -13,7 +13,7 @@ public partial class Pages_doctors_portal : System.Web.UI.Page
     protected void Page_Load(object sender, EventArgs e)
     {
         AuthUser CurrentUser = Pasture.GetCurrentUserSessionDetail();
-        if(CurrentUser != null)
+        if (CurrentUser != null)
         {
             string role = Pasture.GetCurrentUserSessionRole();
             ManageRoleView(role);
@@ -21,10 +21,13 @@ public partial class Pages_doctors_portal : System.Web.UI.Page
             if (haveopenedattendance > 0)
             {
                 //open doctors portal
+<<<<<<< HEAD
                 //open doctors portal
                 EmployeeNameFullName.Text = Pasture.GetEmployeeFullNameById(CurrentUser.StaffID);
                 AttendanceCurrentTime.Text = Pasture.GetAttendanceDateTime();
                 attandancemsg.InnerText = "GOOD BYE CLICK SIGN OUT TO CLOSE TODAY'S DUTY";
+=======
+>>>>>>> 42c4a9a8ad8266ce82e7522e5ca0a7cb1bb989be
                 AttendanceSigninButton.Text = "SIGN OUT";
             }
             else
@@ -64,7 +67,7 @@ public partial class Pages_doctors_portal : System.Web.UI.Page
     }
 
     #region WrittenBy Ola
- 
+
 
     protected void ShowAlertClick_Click(object sender, EventArgs e)
     {
@@ -184,11 +187,21 @@ public partial class Pages_doctors_portal : System.Web.UI.Page
         return imgbyte;
     }
 
-    public string GetImage(string staffID)
+    public string GetImage(int staffID)
     {
-        Employee Emp = Pasture.GetEmployeeByID(int.Parse(staffID));
+        Employee Emp = Pasture.GetEmployeeByID(staffID);
         string imageString = string.Empty;
         byte[] bytes = (byte[])Emp.Picture;
+        if (bytes != null)
+        {
+            imageString = Convert.ToBase64String(bytes, 0, bytes.Length);
+        }
+        return imageString;
+    }
+    public string  GetImageString(byte[] picture)
+    {
+        string imageString = string.Empty;
+        byte[] bytes = picture;
         if (bytes != null)
         {
             imageString = Convert.ToBase64String(bytes, 0, bytes.Length);
@@ -212,6 +225,107 @@ public partial class Pages_doctors_portal : System.Web.UI.Page
     #endregion
 
     #region CRUD
+    public void btnView_Click(object sender, EventArgs e)// EventArgs e
+    {
+        Button btn = (Button)sender;
+        int empId = Convert.ToInt32((btn.CommandArgument.ToString()));
+        Employee emp = Pasture.GetEmployeeByID(empId);
+
+        string imgurl = GetImageString(emp.Picture); // GetImage(empId);
+
+        txtFirstnameV.Text = emp.FirstName; 
+        txtLastnameV.Text = emp.LastName;
+        txtOthernamesV.Text = emp.OtherNames;
+        txtPhoneV.Text = emp.PhoneNumber;
+        txtGenderV.Text = emp.Gender.ToString(); 
+        txtAddressV.Text = emp.Address; 
+        txtMaritalStatusV.Text = emp.MaritalStatus; 
+        txtDOBV.Text = emp.DOB.ToString();
+        doctorviewimg.ImageUrl = "data:image/png;base64," + imgurl;
+
+        //HideDivs
+        HideDivsDocTab();
+        ViewDoctorDiv.Visible = true;
+
+    }
+
+    public void btnEdit_Click(object sender, EventArgs e)
+    {
+        Button btn = (Button)sender;
+        int empId = Convert.ToInt32((btn.CommandArgument.ToString()));
+        Employee emp = Pasture.GetEmployeeByID(empId);
+        ViewState["EmpID"] = empId;
+
+        string imgurl = GetImageString(emp.Picture); // GetImage(empId);
+
+        txtFirstnameE.Text = emp.FirstName; //(row.FindControl("lblFirstName") as Label).Text;
+        txtLastnameE.Text = emp.LastName; //(row.FindControl("lblLastName") as Label).Text;
+        txtOthernamesE.Text = emp.OtherNames;
+        txtPhoneE.Text = emp.PhoneNumber; //(row.FindControl("lblPhoneNumber") as Label).Text;
+        ddlGenderE.SelectedItem.Text = emp.Gender.ToString(); //(row.FindControl("lblGender") as Label).Text;
+        ddlMaritalStatusE.SelectedItem.Text = emp.MaritalStatus; //(row.FindControl("lblMaritalStatus") as Label).Text;
+        txtAddressE.Text = emp.Address; //(row.FindControl("lblAddress") as Label).Text;
+        txtDOBE.Text = emp.DOB.ToString(); //Convert.ToDateTime((row.FindControl("lblDOB") as Label).Text).ToString("yyyy-MM-dd");
+        doctorImage.ImageUrl = "data:image/png;base64," + imgurl;
+
+        //HideDivs
+        HideDivsDocTab();
+        EditDoctorDiv.Visible = true;
+    }
+
+    public void btnDeActivate_Click(object sender, EventArgs e)
+    {
+
+        Button btn = (Button)sender;
+        int empId = Convert.ToInt32((btn.CommandArgument.ToString()));
+        //Employee emp = Pasture.GetEmployeeByID(empId);
+
+        bool result;
+        string btnValue = btn.Text; //(row.FindControl("btnDeactivate") as Button).Text;
+        switch (btnValue)
+        {
+            case "Deactivate":
+                result = Pasture.DeactivateEmployee(empId);
+                if (result)
+                {
+                    BindGrid();
+                    //DisableButton(e);
+                    SxsMessage("Doctor Deactivated");
+                }
+                break;
+
+            case "Activate":
+                result = Pasture.ActivateEmployee(empId);
+                if (result)
+                {
+                    BindGrid();
+                    //EnableButton(e);
+                    SxsMessage("Doctor Activated");
+                }
+                break;
+            default:
+                break;
+        }
+
+    }
+
+    public void btnDelete_Click(object sender, EventArgs e)
+    {
+
+        Button btn = (Button)sender;
+        int empId = Convert.ToInt32((btn.CommandArgument.ToString()));
+        //Delete
+        int result = Pasture.DeleteEmployee(empId);
+        if (result > 0)
+        {
+            //Bind Data to Grid
+            BindGrid();
+            SxsMessage("Doctor deleted");
+        }
+    }
+    #endregion
+
+    #region Navigation
     protected void btnAddNewDoc_Click(object sender, EventArgs e)
     {
         //Redirect to Add New Page
@@ -258,6 +372,7 @@ public partial class Pages_doctors_portal : System.Web.UI.Page
         }
 
     }
+<<<<<<< HEAD
 
     protected void DoctorListGridView_RowCommand(object sender, GridViewCommandEventArgs e)
     {
@@ -355,6 +470,9 @@ public partial class Pages_doctors_portal : System.Web.UI.Page
         }
     }
 
+=======
+    
+>>>>>>> 42c4a9a8ad8266ce82e7522e5ca0a7cb1bb989be
     protected void btnBackView_Click(object sender, EventArgs e)
     {
         HideDivsDocTab();
@@ -375,7 +493,7 @@ public partial class Pages_doctors_portal : System.Web.UI.Page
                 PhoneNumber = txtPhoneE.Text.Trim(),
                 Address = txtAddressE.Text.Trim(),
                 DOB = Convert.ToDateTime(txtDOBE.Text).Date,
-                EmployeeID = Convert.ToInt32(ViewState["itemID"])
+                EmployeeID = Convert.ToInt32(ViewState["EmpID"])
             });
 
             if (result > 0)
@@ -416,6 +534,7 @@ public partial class Pages_doctors_portal : System.Web.UI.Page
     {
         SetAttendanceContainerVisible();
     }
+<<<<<<< HEAD
 
 
     private void SetDoctorContainerVisible()
@@ -527,4 +646,107 @@ public partial class Pages_doctors_portal : System.Web.UI.Page
     }
     #endregion
 
+=======
+   
+    protected void DoctorListGridView_PageIndexChanging(object sender, GridViewPageEventArgs e)
+    {
+        DoctorListGridView.PageIndex = e.NewPageIndex;
+        BindGrid();
+    }
+#endregion
+
+    //protected void DoctorListGridView_RowCommand(object sender, GridViewCommandEventArgs e)
+    //{
+    //    try
+    //    {
+    //        GridViewRow row = (GridViewRow)(((Button)e.CommandSource).NamingContainer);
+    //        string itemID = (row.FindControl("lblEmployeeID") as Label).Text;
+    //        string StaffTypeID = (row.FindControl("lblStaffTypeID") as Label).Text;
+
+    //        ViewState["itemID"] = itemID;
+    //        ViewState["StaffTypeID"] = StaffTypeID;
+
+    //        //GetImage
+    //        string imgurl = GetImage(itemID);
+
+
+    //        if (e.CommandArgument.Equals("View"))
+    //        {               
+    //            txtFirstnameV.Text = (row.FindControl("lblFirstName") as Label).Text;
+    //            txtLastnameV.Text = (row.FindControl("lblLastName") as Label).Text;
+    //            txtPhoneV.Text = (row.FindControl("lblPhoneNumber") as Label).Text;
+    //            txtGenderV.Text = (row.FindControl("lblGender") as Label).Text;
+    //            txtAddressV.Text = (row.FindControl("lblAddress") as Label).Text;
+    //            txtMaritalStatusV.Text = (row.FindControl("lblMaritalStatus") as Label).Text;
+    //            txtDOBV.Text = Convert.ToDateTime((row.FindControl("lblDOB") as Label).Text).ToString("yyyy-MM-dd");
+    //            doctorviewimg.ImageUrl = "data:image/png;base64," + imgurl;
+
+    //            //HideDivs
+    //            HideDivsDocTab();
+    //            ViewDoctorDiv.Visible = true;
+    //        }
+    //        else if (e.CommandArgument.Equals("Edit"))
+    //        {
+    //            txtFirstnameE.Text = (row.FindControl("lblFirstName") as Label).Text;
+    //            txtLastnameE.Text = (row.FindControl("lblLastName") as Label).Text;
+    //            txtPhoneE.Text = (row.FindControl("lblPhoneNumber") as Label).Text;
+    //            ddlGenderE.SelectedItem.Text = (row.FindControl("lblGender") as Label).Text;
+    //            ddlMaritalStatusE.SelectedItem.Text = (row.FindControl("lblMaritalStatus") as Label).Text;
+    //            txtAddressE.Text = (row.FindControl("lblAddress") as Label).Text;
+    //            txtDOBE.Text = Convert.ToDateTime((row.FindControl("lblDOB") as Label).Text).ToString("yyyy-MM-dd");
+    //            doctorImage.ImageUrl = "data:image/png;base64," + imgurl;
+
+    //            //HideDivs
+    //            HideDivsDocTab();
+    //            EditDoctorDiv.Visible = true;
+    //        }
+    //        else if (e.CommandArgument.Equals("Deactivate"))
+    //        {
+    //            bool result;
+    //            string btnValue = (row.FindControl("btnDeactivate") as Button).Text;
+    //            switch (btnValue)
+    //            {
+    //                case "Deactivate":
+    //                    result = Pasture.DeactivateEmployee(int.Parse(itemID));
+    //                    if (result)
+    //                    {
+    //                        BindGrid();
+    //                        //DisableButton(e);
+    //                        SxsMessage("Doctor Deactivated");
+    //                    }
+    //                    break;
+
+    //                case "Activate":
+    //                    result = Pasture.ActivateEmployee(int.Parse(itemID));
+    //                    if (result)
+    //                    {
+    //                        BindGrid();
+    //                        //EnableButton(e);
+    //                        SxsMessage("Doctor Activated");
+    //                    }
+    //                    break;
+    //                default:
+    //                    break;
+    //            }
+    //        }
+    //        else
+    //        {
+    //            //Delete
+    //            int result = Pasture.DeleteEmployee(int.Parse(itemID));
+    //            if (result > 0)
+    //            {
+    //                //Bind Data to Grid
+    //                BindGrid();
+    //                SxsMessage("Doctor deleted");
+    //            }
+
+    //        }
+    //    }
+    //    catch (Exception ex)
+    //    {
+
+    //        throw new Exception(ex.Message);
+    //    }
+    //}
+>>>>>>> 42c4a9a8ad8266ce82e7522e5ca0a7cb1bb989be
 }

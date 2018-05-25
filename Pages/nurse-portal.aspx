@@ -171,6 +171,7 @@
                                                                     </div>
                                                                 </div>
                                                             </div>
+<<<<<<< HEAD
                                                             <div class="table-responsive">
                                                                 <asp:GridView ID="NurseListGridView" runat="server" AutoGenerateColumns="false" CssClass="table table-condensed table-bordered " DataKeyNames="EmployeeID" EmptyDataText="There are no data records to display." OnRowCommand="NurseListGridView_RowCommand">
                                                                     <Columns>
@@ -229,6 +230,104 @@
                                                                         </asp:TemplateField>
                                                                     </Columns>
                                                                 </asp:GridView>
+=======
+                                                        </div>
+                                                        <div class="table-responsive">                                                           
+                                                            <asp:GridView ID="NurseListGridView" runat="server" AutoGenerateColumns="false" CssClass="table table-condensed table-bordered " DataKeyNames="EmployeeID" EmptyDataText="There are no data records to display." AllowPaging="True" PagerSettings-PageButtonCount="5" PagerStyle-CssClass="pagination-ys" RowStyle-HorizontalAlign="Right">
+                                                                <Columns>
+                                                                    <asp:TemplateField HeaderText="Name">
+                                                                        <ItemTemplate>
+                                                                            <asp:Label ID="lblFullName" runat="server" Text='<%#Eval("FullName")%>'></asp:Label>
+                                                                            <asp:Label ID="lblFirstName" runat="server" Text='<%#Eval("FirstName")%>' Visible="false"></asp:Label>
+                                                                            <asp:Label ID="lblLastName" runat="server" Text='<%#Eval("LastName")%>' Visible="false"></asp:Label>
+                                                                            <asp:Label ID="lblEmployeeID" runat="server" Text='<%#Eval("EmployeeID")%>' Visible="false"></asp:Label>
+                                                                            <asp:Label ID="lblStaffTypeID" runat="server" Text='<%#Eval("StaffTypeID")%>' Visible="false"></asp:Label>
+                                                                            <asp:Label ID="lblDOB" runat="server" Text='<%#Eval("DOB")%>' Visible="false"></asp:Label>
+                                                                            <asp:Label runat="server"></asp:Label>
+                                                                        </ItemTemplate>
+                                                                        <ItemStyle HorizontalAlign="Left"  />
+                                                                    </asp:TemplateField>
+                                                                    <asp:TemplateField HeaderText="Gender">
+                                                                        <ItemTemplate>
+                                                                            <asp:Label ID="lblGender" runat="server" Text='<%#Eval("Gender")%>'></asp:Label>
+                                                                            <asp:Label runat="server"></asp:Label>
+                                                                        </ItemTemplate>
+                                                                        <ItemStyle HorizontalAlign="Left"  />
+                                                                    </asp:TemplateField>
+                                                                    <asp:TemplateField HeaderText="Mar. Status">
+                                                                        <ItemTemplate>
+                                                                            <asp:Label ID="lblMaritalStatus" runat="server" Text='<%#Eval("MaritalStatus")%>'></asp:Label>
+                                                                            <asp:Label runat="server"></asp:Label>
+                                                                        </ItemTemplate>
+                                                                        <ItemStyle HorizontalAlign="Left"  />
+                                                                    </asp:TemplateField>
+                                                                    <asp:TemplateField HeaderText="Telephone">
+                                                                        <ItemTemplate>
+                                                                            <asp:Label ID="lblPhoneNumber" runat="server" Text='<%#Eval("PhoneNumber")%>'></asp:Label>
+                                                                            <asp:Label runat="server"></asp:Label>
+                                                                        </ItemTemplate>
+                                                                        <ItemStyle HorizontalAlign="Left"  />
+                                                                    </asp:TemplateField>
+                                                                    <asp:TemplateField HeaderText="Address">
+                                                                        <ItemTemplate>
+                                                                            <asp:Label ID="lblAddress" runat="server" Text='<%#Eval("Address")%>'></asp:Label>
+                                                                            <asp:Label runat="server"></asp:Label>
+                                                                        </ItemTemplate>
+                                                                        <ItemStyle HorizontalAlign="Left"  />
+                                                                    </asp:TemplateField>
+
+                                                                    <%--<asp:BoundField DataField="ID" HeaderText="Order ID" SortExpression="ID">
+                                                                        <HeaderStyle CssClass="hide" HorizontalAlign="Left" />
+                                                                        <ItemStyle CssClass="hide" HorizontalAlign="Left" />
+                                                                    </asp:BoundField>
+                                                                    <asp:BoundField DataField="Name" HeaderText="Order Name" SortExpression="Name">
+                                                                        <HeaderStyle HorizontalAlign="Left" />
+                                                                        <ItemStyle HorizontalAlign="Left" />
+                                                                    </asp:BoundField>
+                                                                    <asp:BoundField DataField="Price" HeaderText="Price" SortExpression="Price">
+                                                                        <HeaderStyle HorizontalAlign="Left" />
+                                                                        <ItemStyle HorizontalAlign="Left" />
+                                                                    </asp:BoundField>--%>
+
+                                                                   <%-- <asp:TemplateField HeaderText="Process Status">
+                                                                        <ItemTemplate>
+                                                                            <asp:Label runat="server" Text='<%#GetIsProcessStatus(Convert.ToBoolean(Eval("IsProcessing")))%>'></asp:Label>
+                                                                        </ItemTemplate>
+                                                                    </asp:TemplateField>
+                                                                    <asp:TemplateField HeaderText="Delivered Status">
+                                                                        <ItemTemplate>
+                                                                            <asp:Label runat="server" Text='<%#GetIsDeliveredStatus(Convert.ToBoolean(Eval("IsDelivered")))%>'></asp:Label>
+                                                                        </ItemTemplate>
+                                                                    </asp:TemplateField>
+                                                                    <asp:TemplateField HeaderText="Canceled Status">
+                                                                        <ItemTemplate>
+                                                                            <asp:Label runat="server" Text='<%#GetIsCancelledStatus(Convert.ToBoolean(Eval("IsCancelled")))%>'></asp:Label>
+                                                                        </ItemTemplate>
+                                                                    </asp:TemplateField>--%>
+                                                                    <asp:TemplateField HeaderText="Actions" HeaderStyle-CssClass="center text-center" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left" ItemStyle-VerticalAlign="Middle">
+                                                                        <ItemTemplate>
+                                                                            <div class="form-actions text-center">
+                                                                                <%--<asp:Button runat="server" Text="Processing" ID="lnkView" Enabled='<%#Eval("IsProcessing") %>' CssClass="btn btn-xs btn-success" />--%>
+                                                                                <asp:Button CommandArgument='<%#Eval("EmployeeID")%>' OnClick="btnView_Click"  runat="server" Text="View" ID="btnView" CssClass='<%# (Convert.ToBoolean(Eval("IsActive")) == true  ? "btn btn-sm btn-primary" : "btn btn-sm btn-primary disabled") %>' />
+                                                                                <asp:Button CommandArgument='<%#Eval("EmployeeID")%>' OnClick="btnEdit_Click" runat="server" Text="Edit" ID="btnEdit" CssClass='<%# (Convert.ToBoolean(Eval("IsActive")) == true  ? "btn btn-sm btn-warning" : "btn btn-sm btn-warning disabled") %>'  />
+                                                                                <asp:Button CommandArgument='<%#Eval("EmployeeID")%>' OnClick="btnDeActivate_Click" runat="server" Text='<%# (Convert.ToBoolean(Eval("IsActive")) == true  ? "Deactivate" : "Activate") %>' ID="btnDeactivate"  CssClass='<%# (Convert.ToBoolean(Eval("IsActive")) == true  ? "btn btn-sm btn-danger" : "btn btn-sm btn-success") %>' />
+                                                                                <asp:Button CommandArgument='<%#Eval("EmployeeID")%>' OnClick="btnDelete_Click" runat="server" Text="Delete" ID="btnDelete"  CssClass='<%# (Convert.ToBoolean(Eval("IsActive")) == true  ? "btn btn-sm btn-danger" : "btn btn-sm btn-danger disabled") %>' />
+                                                                            </div>
+                                                                        </ItemTemplate>
+
+<HeaderStyle HorizontalAlign="Center" CssClass="center text-center"></HeaderStyle>
+
+<ItemStyle HorizontalAlign="Left" VerticalAlign="Middle"></ItemStyle>
+                                                                    </asp:TemplateField>
+                                                                </Columns>
+
+<PagerSettings PageButtonCount="5"></PagerSettings>
+
+<PagerStyle CssClass="pagination-lg"></PagerStyle>
+
+<RowStyle HorizontalAlign="Right"></RowStyle>
+                                                            </asp:GridView>
+>>>>>>> 42c4a9a8ad8266ce82e7522e5ca0a7cb1bb989be
 
                                                             </div>
                                                         </div>

@@ -98,8 +98,8 @@ public partial class Pasture
             {
                 employee.FirstName = updEmployee.FirstName;
                 employee.LastName = updEmployee.LastName;
-                employee.OtherNames = employee.OtherNames;
-                employee.PhoneNumber = employee.PhoneNumber;
+                employee.OtherNames = updEmployee.OtherNames;
+                employee.PhoneNumber = updEmployee.PhoneNumber;
                 employee.Address = updEmployee.Address;
                 employee.DOB = updEmployee.DOB;
                 employee.Gender = updEmployee.Gender;
