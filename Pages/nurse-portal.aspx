@@ -42,7 +42,7 @@
                             <%--<div class="panel-heading">
                                   Nurse Portal  
                                 </div>--%>
-                            <div class="panel-body">
+                            <div class="panel-body" id="tabs">
                                 <ul class="nav nav-tabs">
                                     <li class="" id="nurseli" runat="server">
                                         <asp:LinkButton runat="server" ID="NurseDivNav" Text="NURSE MANAGEMENT" OnClick="NurseDivNav_Click"></asp:LinkButton>
@@ -163,9 +163,7 @@
                                                                 </div>
                                                             </div>
                                                         </div>
-
-                                                    </div>
-                                                    <div class="table-responsive">
+                                                        <div class="table-responsive">
                                                         <asp:GridView ID="NurseListGridView" runat="server" AutoGenerateColumns="false" CssClass="table table-condensed table-bordered " DataKeyNames="EmployeeID" EmptyDataText="There are no data records to display." AllowPaging="True" PagerStyle-Font-Size="Medium" PagerSettings-PageButtonCount="5" PagerStyle-HorizontalAlign="Center" OnPageIndexChanging="NurseListGridView_PageIndexChanging">
                                                             <PagerStyle CssClass="pagination-ys text-center" />
                                                              <Columns>
@@ -230,7 +228,7 @@
                                                         </asp:GridView>                                                      
 
                                                     </div>
-                                                </div>
+                                                    </div>
 
                                                 <%-- =====================================EDIT NURSE PROFILE======================================= --%>
                                                 <div class="form-group" id="EditNurseDiv" runat="server">
@@ -365,11 +363,11 @@
                                                 </div>
 
                                             </div>
+                                                </div>
                                         </div>
                                     </div>
-                                </div>
 
-                                <%-- ATTENDANCE TAB --%>
+                                 <%-- ATTENDANCE TAB --%>
                                 <div class="tab-pane fade" id="attendance" runat="server">
 
                                     <div class="col-md-12">
@@ -422,7 +420,7 @@
                                     </div>
 
                                 </div>
-
+                                </div>
 
                             </div>
                         </div>
@@ -432,7 +430,7 @@
 
         </div>
     </div>
-    </div>
+  
         <!-- CONTENT-WRAPPER SECTION END-->
 </asp:Content>
 
