@@ -173,7 +173,7 @@
                                                             </div>
                                                         </div>
                                                         <div class="table-responsive">
-                                                            <asp:GridView ID="UserListGridView" runat="server" AutoGenerateColumns="false" CssClass="table  table-bordered text-center" DataKeyNames="UserID" EmptyDataText="There are no data records to display.">
+                                                            <asp:GridView ID="UserListGridView" runat="server" AutoGenerateColumns="false" CssClass="table  table-bordered text-center" DataKeyNames="UserID" EmptyDataText="There are no data records to display." AllowPaging="True" OnPageIndexChanging="UserListGridView_PageIndexChanging">
                                                                 <Columns>
                                                                     <asp:BoundField DataField="UserID" HeaderText="User ID" SortExpression="ID">
                                                                         <HeaderStyle CssClass="hide" HorizontalAlign="Left" />
@@ -210,6 +210,10 @@
                                                                         </ItemTemplate>
                                                                     </asp:TemplateField>
                                                                 </Columns>
+
+                                                                <PagerSettings PageButtonCount="5" />
+                                                                <PagerStyle CssClass="pagination-ys" HorizontalAlign="Right" />
+
                                                             </asp:GridView>
                                                         </div>
                                                     </div>
@@ -348,7 +352,7 @@
                                                             </div>
                                                         </div>
                                                         <div class="table-responsive">
-                                                            <asp:GridView ID="transactiontypeListGridView" runat="server" AutoGenerateColumns="false" CssClass="table  table-bordered text-center" DataKeyNames="TransactionTypeID" EmptyDataText="There are no data records to display.">
+                                                            <asp:GridView ID="transactiontypeListGridView" runat="server" AutoGenerateColumns="false" CssClass="table  table-bordered text-center" DataKeyNames="TransactionTypeID" EmptyDataText="There are no data records to display." AllowPaging="True" OnPageIndexChanging="transactiontypeListGridView_PageIndexChanging">
                                                                 <Columns>
                                                                     <asp:BoundField DataField="TransactionTypeID" HeaderText="Transaction Type ID" SortExpression="ID">
                                                                         <HeaderStyle CssClass="hide" HorizontalAlign="Left" />
@@ -375,6 +379,8 @@
                                                                     </asp:TemplateField>
                                                                 </Columns>
 
+                                                                <PagerSettings PageButtonCount="5" />
+                                                                <PagerStyle CssClass="pagination-ys" HorizontalAlign="Right" />
 
                                                             </asp:GridView>
 
@@ -491,7 +497,7 @@
                                                             </div>
                                                         </div>
                                                         <div class="table-responsive">
-                                                            <asp:GridView ID="RoleListGrid" runat="server" AutoGenerateColumns="false" CssClass="table  table-bordered table-condensed text-center pager" DataKeyNames="RoleID" EmptyDataText="There are no data records to display.">
+                                                            <asp:GridView ID="RoleListGrid" runat="server" AutoGenerateColumns="false" CssClass="table  table-bordered table-condensed text-center pager" DataKeyNames="RoleID" EmptyDataText="There are no data records to display." AllowPaging="True" OnPageIndexChanging="RoleListGrid_PageIndexChanging">
                                                                 <Columns>
                                                                     <asp:BoundField DataField="RoleID" HeaderText="Role ID" SortExpression="RoleID" ItemStyle-BackColor="#00000A">
                                                                         <HeaderStyle CssClass="hide" HorizontalAlign="Left" />
@@ -517,6 +523,8 @@
                                                                     </asp:TemplateField>
                                                                 </Columns>
 
+                                                                <PagerSettings PageButtonCount="5" />
+                                                                <PagerStyle CssClass="pagination-ys" HorizontalAlign="Right" />
 
                                                             </asp:GridView>
 
@@ -641,7 +649,7 @@
                                                             </div>
                                                         </div>
                                                         <div class="table-responsive">
-                                                            <asp:GridView ID="DutyTypeListGridView" runat="server" AutoGenerateColumns="false" CssClass="table  table-bordered text-center" DataKeyNames="DutyTypeID" EmptyDataText="There are no data records to display.">
+                                                            <asp:GridView ID="DutyTypeListGridView" runat="server" AutoGenerateColumns="false" CssClass="table  table-bordered text-center" DataKeyNames="DutyTypeID" EmptyDataText="There are no data records to display." AllowPaging="True" OnPageIndexChanging="DutyTypeListGridView_PageIndexChanging">
                                                                 <Columns>
                                                                     <asp:BoundField DataField="DutyTypeID" HeaderText="DutyType ID" SortExpression="DutyTypeID">
                                                                         <HeaderStyle CssClass="hide" HorizontalAlign="Left" />
@@ -813,7 +821,7 @@
                                                         </div>
                                                         <div class="table-responsive">
 
-                                                            <asp:GridView ID="PatientPlanListGridView" runat="server" AutoGenerateColumns="false" CssClass="table  table-bordered text-center" DataKeyNames="PlanTypeID" EmptyDataText="There are no data records to display.">
+                                                            <asp:GridView ID="PatientPlanListGridView" runat="server" AutoGenerateColumns="false" CssClass="table  table-bordered text-center" DataKeyNames="PlanTypeID" EmptyDataText="There are no data records to display." AllowPaging="True" OnPageIndexChanging="PatientPlanListGridView_PageIndexChanging">
                                                                 <Columns>
                                                                     <asp:BoundField DataField="PlanTypeID" HeaderText="PlanType ID" SortExpression="PlanTypeID">
                                                                         <HeaderStyle CssClass="hide" HorizontalAlign="Left" />
@@ -839,6 +847,8 @@
                                                                     </asp:TemplateField>
                                                                 </Columns>
 
+                                                                <PagerSettings PageButtonCount="5" />
+                                                                <PagerStyle CssClass="pagination-ys" HorizontalAlign="Right" />
 
                                                             </asp:GridView>
 
@@ -973,7 +983,7 @@
                                                         </div>
                                                         <div class="table-responsive">
 
-                                                            <asp:GridView ID="NurseDutyListGridView" runat="server" AutoGenerateColumns="false" CssClass="table  table-bordered text-center" DataKeyNames="NurseDutyID" EmptyDataText="There are no data records to display.">
+                                                            <asp:GridView ID="NurseDutyListGridView" runat="server" AutoGenerateColumns="false" CssClass="table  table-bordered text-center" DataKeyNames="NurseDutyID" EmptyDataText="There are no data records to display." AllowPaging="True" OnPageIndexChanging="NurseDutyListGridView_PageIndexChanging">
                                                                 <Columns>
                                                                     <asp:BoundField DataField="NurseDutyID" HeaderText="NurseDutyID" SortExpression="NurseDutyID">
                                                                         <HeaderStyle CssClass="hide" HorizontalAlign="Left" />
@@ -983,11 +993,13 @@
                                                                         <ItemTemplate>
                                                                             <asp:Label runat="server" Text='<%#Pasture.GetEmployeeFullNameById(Convert.ToInt32(Eval("NurseID")))%>'></asp:Label>
                                                                         </ItemTemplate>
+                                                                        <ItemStyle HorizontalAlign="Left" />
                                                                     </asp:TemplateField>
                                                                     <asp:TemplateField HeaderText="DutyType">
                                                                         <ItemTemplate>
                                                                             <asp:Label runat="server" Text='<%#Pasture.GetDutyTypeNameByID(Convert.ToInt32(Eval("DutyTypeID")))%>'></asp:Label>
                                                                         </ItemTemplate>
+                                                                        <ItemStyle HorizontalAlign="Left" />
                                                                     </asp:TemplateField>
                                                                     <asp:BoundField DataField="StartDate" HeaderText="StartDate" SortExpression="StartDate" DataFormatString="{0:d}">
                                                                         <HeaderStyle HorizontalAlign="Left" />
@@ -1010,6 +1022,8 @@
                                                                     </asp:TemplateField>
                                                                 </Columns>
 
+                                                                <PagerSettings PageButtonCount="5" />
+                                                                <PagerStyle CssClass="pagination-ys" HorizontalAlign="Right" />
 
                                                             </asp:GridView>
 
@@ -1127,7 +1141,7 @@
                                                             </div>
                                                         </div>
                                                         <div class="table-responsive">
-                                                            <asp:GridView ID="AttendanceLogListGridView" runat="server" AutoGenerateColumns="false" CssClass="table  table-bordered text-center" DataKeyNames="AttendanceID" EmptyDataText="There are no data records to display.">
+                                                            <asp:GridView ID="AttendanceLogListGridView" runat="server" AutoGenerateColumns="false" CssClass="table  table-bordered text-center" DataKeyNames="AttendanceID" EmptyDataText="There are no data records to display." AllowPaging="True" OnPageIndexChanging="AttendanceLogListGridView_PageIndexChanging">
                                                                 <Columns>
                                                                     <asp:BoundField DataField="AttendanceID" HeaderText="AttendanceID" SortExpression="AttendanceID">
                                                                         <HeaderStyle CssClass="hide" HorizontalAlign="Left" />
@@ -1160,6 +1174,8 @@
 
                                                                 </Columns>
 
+                                                                <PagerSettings PageButtonCount="5" />
+                                                                <PagerStyle CssClass="pagination-ys" HorizontalAlign="Right" />
 
                                                             </asp:GridView>
 

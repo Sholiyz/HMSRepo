@@ -2048,4 +2048,46 @@ public partial class Pages_admin_portal : System.Web.UI.Page
     #endregion
 
 
+
+    protected void UserListGridView_PageIndexChanging(object sender, GridViewPageEventArgs e)
+    {
+        UserListGridView.PageIndex = e.NewPageIndex;
+        BindUserList();
+    }
+
+    protected void transactiontypeListGridView_PageIndexChanging(object sender, GridViewPageEventArgs e)
+    {
+        transactiontypeListGridView.PageIndex = e.NewPageIndex;
+        BindTranxTypeList();
+    }
+
+    protected void RoleListGrid_PageIndexChanging(object sender, GridViewPageEventArgs e)
+    {
+        RoleListGrid.PageIndex = e.NewPageIndex;
+        BindRoleList();
+    }
+
+    protected void DutyTypeListGridView_PageIndexChanging(object sender, GridViewPageEventArgs e)
+    {
+        DutyTypeListGridView.PageIndex = e.NewPageIndex;
+        BindDutyTyepList();
+    }
+
+    protected void PatientPlanListGridView_PageIndexChanging(object sender, GridViewPageEventArgs e)
+    {
+        PatientPlanListGridView.PageIndex = e.NewPageIndex;
+        BindPatientPlanList();
+    }
+
+    protected void NurseDutyListGridView_PageIndexChanging(object sender, GridViewPageEventArgs e)
+    {
+        NurseDutyListGridView.PageIndex = e.NewPageIndex;
+        BindAssignedNurseDutyList();
+    }
+
+    protected void AttendanceLogListGridView_PageIndexChanging(object sender, GridViewPageEventArgs e)
+    {
+        AttendanceLogListGridView.PageIndex = e.NewPageIndex;
+        BindAttendanceLogList();
+    }
 }
