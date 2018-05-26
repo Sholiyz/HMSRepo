@@ -31,7 +31,7 @@ public partial class Pages_nurse_portal : System.Web.UI.Page
                 SetAttendanceContainerVisible();
                 EmployeeNameFullName.Text = Pasture.GetEmployeeFullNameById(CurrentUser.StaffID);
                 AttendanceCurrentTime.Text = Pasture.GetAttendanceDateTime();
-                Response.Redirect("./patient-portal.aspx");
+                //Response.Redirect("./patient-portal.aspx");
                 return;
             }
         }
@@ -275,20 +275,7 @@ public partial class Pages_nurse_portal : System.Web.UI.Page
         return imageString;
     }
 
-<<<<<<< HEAD
-    //protected void PictureViewButton_Click(object sender, EventArgs e)
-    //{
-    //    byte[] imagesinsert = InsertImage(FileUploadNurse);
-    //    HttpPostedFile file = FileUploadNurse.PostedFile;
-    //    string imageString = "";
-    //    if (imagesinsert != null)
-    //    {
-    //        imageString = Convert.ToBase64String(imagesinsert, 0, imagesinsert.Length);
-    //    }
-    //    FileUploadNurse.Equals(file);
-    //    Addnurseimage.ImageUrl = "data:image/png;base64," + imageString;
-    //}
-=======
+
     public string GetImageString(byte[] picture)
     {
         string imageString = string.Empty;
@@ -299,7 +286,7 @@ public partial class Pages_nurse_portal : System.Web.UI.Page
         }
         return imageString;
     }
->>>>>>> 42c4a9a8ad8266ce82e7522e5ca0a7cb1bb989be
+
     #endregion
 
 
@@ -456,195 +443,6 @@ public partial class Pages_nurse_portal : System.Web.UI.Page
         ViewNurseListDiv.Visible = true;
     }
 
-<<<<<<< HEAD
-    protected void NurseListGridView_RowCommand(object sender, GridViewCommandEventArgs e)
-    {
-        try
-        {
-            GridViewRow row = (GridViewRow)(((Button)e.CommandSource).NamingContainer);
-            string itemID = (row.FindControl("lblEmployeeID") as Label).Text;
-            string StaffTypeID = (row.FindControl("lblStaffTypeID") as Label).Text;
-
-            ViewState["itemID"] = itemID;
-            ViewState["StaffTypeID"] = StaffTypeID;
-
-            //GetImage
-            string imgurl = GetImage(itemID);
-
-            if (e.CommandArgument.Equals("View"))
-            {
-                txtFirstnameV.Text = (row.FindControl("lblFirstName") as Label).Text;
-                txtLastnameV.Text = (row.FindControl("lblLastName") as Label).Text;
-                txtOthernamesV.Text= (row.FindControl("lblOtherName") as Label).Text; 
-                txtPhoneV.Text = (row.FindControl("lblPhoneNumber") as Label).Text;
-                txtGenderV.Text = (row.FindControl("lblGender") as Label).Text;
-                txtAddressV.Text = (row.FindControl("lblAddress") as Label).Text;
-                txtMaritalStatusV.Text = (row.FindControl("lblMaritalStatus") as Label).Text;
-                txtDOBV.Text = Convert.ToDateTime((row.FindControl("lblDOB") as Label).Text).ToString("yyyy-MM-dd");
-                nurseViewImage.ImageUrl = "data:image/png;base64," + imgurl;
-
-                //HideDivs
-                HideDivsNurseTab();
-                ViewNurseDiv.Visible = true;
-            }
-            else if (e.CommandArgument.Equals("Edit"))
-            {
-                txtFirstnameE.Text = (row.FindControl("lblFirstName") as Label).Text;
-                txtLastnameE.Text = (row.FindControl("lblLastName") as Label).Text;
-                txtPhoneE.Text = (row.FindControl("lblPhoneNumber") as Label).Text;
-                txtOthernamesE.Text = (row.FindControl("lblOtherName") as Label).Text;
-                ddlGenderE.SelectedItem.Text = (row.FindControl("lblGender") as Label).Text;
-                ddlMaritalStatusE.SelectedItem.Text = (row.FindControl("lblMaritalStatus") as Label).Text;
-                txtAddressE.Text = (row.FindControl("lblAddress") as Label).Text;
-                txtDOBE.Text = Convert.ToDateTime((row.FindControl("lblDOB") as Label).Text).ToString("yyyy-MM-dd");
-                nurseEditImage.ImageUrl = "data:image/png;base64," + imgurl;
-
-                //HideDivs
-                HideDivsNurseTab();
-                EditNurseDiv.Visible = true;
-            }
-            else if (e.CommandArgument.Equals("Deactivate"))
-            {
-                bool result;
-                string btnValue = (row.FindControl("btnDeactivate") as Button).Text;
-                switch (btnValue)
-                {
-                    case "Deactivate":
-                        result = Pasture.DeactivateEmployee(int.Parse(itemID));
-                        if (result)
-                        {
-                            BindGrid();
-                            //DisableButton(e);
-                            SxsMessage("Nurse Deactivated");
-                        }
-                        break;
-
-                    case "Activate":
-                        result = Pasture.ActivateEmployee(int.Parse(itemID));
-                        if (result)
-                        {
-                            BindGrid();
-                            //EnableButton(e);
-                            SxsMessage("Nurse Activated");
-                        }
-                        break;
-                    default:
-                        break;
-                }
-            }
-            else
-            {
-                //Delete
-                int result = Pasture.DeleteEmployee(int.Parse(itemID));
-                if (result > 0)
-                {
-                    //Bind Data to Grid
-                    BindGrid();
-                    SxsMessage("Nurse deleted");
-                }
-
-            }
-        }
-        catch (Exception ex)
-        {
-
-            throw new Exception(ex.Message);
-        }
-    }
-=======
-    //protected void NurseListGridView_RowCommand(object sender, GridViewCommandEventArgs e)
-    //{
-    //    try
-    //    {
-    //        GridViewRow row = (GridViewRow)(((Button)e.CommandSource).NamingContainer);
-    //        string itemID = (row.FindControl("lblEmployeeID") as Label).Text;
-    //        string StaffTypeID = (row.FindControl("lblStaffTypeID") as Label).Text;
-
-    //        ViewState["itemID"] = itemID;
-    //        ViewState["StaffTypeID"] = StaffTypeID;
-
-    //        //GetImage
-    //        string imgurl = GetImage(itemID);
-
-    //        if (e.CommandArgument.Equals("View"))
-    //        {
-    //            txtFirstnameV.Text = (row.FindControl("lblFirstName") as Label).Text;
-    //            txtLastnameV.Text = (row.FindControl("lblLastName") as Label).Text;
-    //            txtPhoneV.Text = (row.FindControl("lblPhoneNumber") as Label).Text;
-    //            txtGenderV.Text = (row.FindControl("lblGender") as Label).Text;
-    //            txtAddressV.Text = (row.FindControl("lblAddress") as Label).Text;
-    //            txtMaritalStatusV.Text = (row.FindControl("lblMaritalStatus") as Label).Text;
-    //            txtDOBV.Text = Convert.ToDateTime((row.FindControl("lblDOB") as Label).Text).ToString("yyyy-MM-dd");
-    //            nurseViewImage.ImageUrl = "data:image/png;base64," + imgurl;
-
-    //            //HideDivs
-    //            HideDivsNurseTab();
-    //            ViewNurseDiv.Visible = true;
-    //        }
-    //        else if (e.CommandArgument.Equals("Edit"))
-    //        {
-    //            txtFirstnameE.Text = (row.FindControl("lblFirstName") as Label).Text;
-    //            txtLastnameE.Text = (row.FindControl("lblLastName") as Label).Text;
-    //            txtPhoneE.Text = (row.FindControl("lblPhoneNumber") as Label).Text;
-    //            ddlGenderE.SelectedItem.Text = (row.FindControl("lblGender") as Label).Text;
-    //            ddlMaritalStatusE.SelectedItem.Text = (row.FindControl("lblMaritalStatus") as Label).Text;
-    //            txtAddressE.Text = (row.FindControl("lblAddress") as Label).Text;
-    //            txtDOBE.Text = Convert.ToDateTime((row.FindControl("lblDOB") as Label).Text).ToString("yyyy-MM-dd");
-    //            nurseEditImage.ImageUrl = "data:image/png;base64," + imgurl;
-
-    //            //HideDivs
-    //            HideDivsNurseTab();
-    //            EditNurseDiv.Visible = true;
-    //        }
-    //        else if (e.CommandArgument.Equals("Deactivate"))
-    //        {
-    //            bool result;
-    //            string btnValue = (row.FindControl("btnDeactivate") as Button).Text;
-    //            switch (btnValue)
-    //            {
-    //                case "Deactivate":
-    //                    result = Pasture.DeactivateEmployee(int.Parse(itemID));
-    //                    if (result)
-    //                    {
-    //                        BindGrid();
-    //                        //DisableButton(e);
-    //                        SxsMessage("Nurse Deactivated");
-    //                    }
-    //                    break;
-
-    //                case "Activate":
-    //                    result = Pasture.ActivateEmployee(int.Parse(itemID));
-    //                    if (result)
-    //                    {
-    //                        BindGrid();
-    //                        //EnableButton(e);
-    //                        SxsMessage("Nurse Activated");
-    //                    }
-    //                    break;
-    //                default:
-    //                    break;
-    //            }
-    //        }
-    //        else
-    //        {
-    //            //Delete
-    //            int result = Pasture.DeleteEmployee(int.Parse(itemID));
-    //            if (result > 0)
-    //            {
-    //                //Bind Data to Grid
-    //                BindGrid();
-    //                SxsMessage("Nurse deleted");
-    //            }
-
-    //        }
-    //    }
-    //    catch (Exception ex)
-    //    {
-
-    //        throw new Exception(ex.Message);
-    //    }
-    //}
->>>>>>> 42c4a9a8ad8266ce82e7522e5ca0a7cb1bb989be
 
     protected void btnUpdate_Click(object sender, EventArgs e)
     {
@@ -790,4 +588,10 @@ public partial class Pages_nurse_portal : System.Web.UI.Page
 
 
 
+
+    protected void NurseListGridView_PageIndexChanging(object sender, GridViewPageEventArgs e)
+    {
+        NurseListGridView.PageIndex = e.NewPageIndex;
+        BindGrid();
+    }
 }
