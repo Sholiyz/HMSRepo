@@ -1,0 +1,10 @@
+insert into AuthUsers (Username, Password, StaffID, StaffRoleID, CreatedByID, CreatedDate, FailedLoginCount, IsActive, IsDeleted) values ('tpresman0', 'zdKT5punkm', 1004, 1, 1, '2018-01-08', 0, 1, 0);
+insert into AuthUsers (Username, Password, StaffID, StaffRoleID, CreatedByID, CreatedDate, FailedLoginCount, IsActive, IsDeleted) values ('fsaye1', 'UipjXR911', 1005, 1, 1, '2018-01-27', 0, 1, 0);
+insert into AuthUsers (Username, Password, StaffID, StaffRoleID, CreatedByID, CreatedDate, FailedLoginCount, IsActive, IsDeleted) values ('lvescovo2', '2iJMUH', 1006, 1, 1, '2018-03-21', 0, 1, 0);
+insert into AuthUsers (Username, Password, StaffID, StaffRoleID, CreatedByID, CreatedDate, FailedLoginCount, IsActive, IsDeleted) values ('dwiddowson3', '36pL7xmC', 1007, 1, 1, '2018-05-17', 0, 1, 0);
+insert into AuthUsers (Username, Password, StaffID, StaffRoleID, CreatedByID, CreatedDate, FailedLoginCount, IsActive, IsDeleted) values ('tschoolfield4', 'Ex9u4L', 1008, 1, 1, '2017-11-23', 0, 1, 0);
+insert into AuthUsers (Username, Password, StaffID, StaffRoleID, CreatedByID, CreatedDate, FailedLoginCount, IsActive, IsDeleted) values ('fsubhan5', 'dxSoKv', 1009, 1, 1, '2017-07-15', 0, 1, 0);
+insert into AuthUsers (Username, Password, StaffID, StaffRoleID, CreatedByID, CreatedDate, FailedLoginCount, IsActive, IsDeleted) values ('vclapp6', '9GKeiORxb3c', 1010, 1, 1, '2017-11-01', 0, 1, 0);
+insert into AuthUsers (Username, Password, StaffID, StaffRoleID, CreatedByID, CreatedDate, FailedLoginCount, IsActive, IsDeleted) values ('sraulin7', 'uIqC1d', 1011, 1, 1, '2017-07-31', 0, 1, 0);
+insert into AuthUsers (Username, Password, StaffID, StaffRoleID, CreatedByID, CreatedDate, FailedLoginCount, IsActive, IsDeleted) values ('sfettis8', '96xoYVGKGkoX', 1012, 1, 1, '2017-07-28', 0, 1, 0);
+insert into AuthUsers (Username, Password, StaffID, StaffRoleID, CreatedByID, CreatedDate, FailedLoginCount, IsActive, IsDeleted) values ('sbowstead9', 'bM6lisg', 1013, 1, 1, '2018-05-21', 0, 1, 0);

@@ -155,7 +155,7 @@
                                                             </div>
                                                         </div>
                                                         <div class="table-responsive center-block">
-                                                            <asp:GridView ID="DoctorListGridView" runat="server" AutoGenerateColumns="false" CssClass="table  table-bordered table-condensed text-center" DataKeyNames="EmployeeID" EmptyDataText="There are no data records to display." AllowPaging="True" OnPageIndexChanging="DoctorListGridView_PageIndexChanging" PageSize="15" PagerSettings-PageButtonCount="5" PagerStyle-CssClass="pagination-ys">
+                                                            <asp:GridView ID="DoctorListGridView" runat="server" AutoGenerateColumns="false" CssClass="table  table-bordered table-condensed text-center" DataKeyNames="EmployeeID" EmptyDataText="There are no data records to display." AllowPaging="True" OnPageIndexChanging="DoctorListGridView_PageIndexChanging" PageSize="10" PagerSettings-PageButtonCount="5" PagerStyle-CssClass="pagination-ys">
                                                                 <Columns>
 
 
