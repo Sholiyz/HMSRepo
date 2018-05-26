@@ -221,7 +221,8 @@
                                                                         <ItemStyle HorizontalAlign="Left" VerticalAlign="Middle"></ItemStyle>
                                                                     </asp:TemplateField>
                                                                 </Columns>
-
+                                                                <PagerSettings PageButtonCount="5" />
+                                                                <PagerStyle CssClass="pagination-ys" HorizontalAlign="Right" />
                                                             </asp:GridView>
 
                                                         </div>
