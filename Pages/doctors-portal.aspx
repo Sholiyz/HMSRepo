@@ -5,6 +5,7 @@
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="Server">
 </asp:Content>
+<<<<<<< HEAD
 
 <asp:Content ID="Content2" ContentPlaceHolderID="NavigationMenu" Runat="Server">
      <section class="menu-section">
@@ -20,6 +21,21 @@
                                 <li runat="server" id="adminportal"    ><a href="./admin-portal.aspx">Admin Portal</a></li>                            
                             </ul>
                         </div>
+=======
+<asp:Content ID="Content2" ContentPlaceHolderID="NavigationMenu" runat="Server">
+    <section class="menu-section">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="navbar-collapse collapse ">
+                        <ul id="menu-top" class="nav navbar-nav navbar-right">
+                               <li runat="server" id="dashboard"      ><a href="./dashboard.aspx">Dashboard</a></li>
+                                <li runat="server" id="patientsportal" ><a href="./patient-portal.aspx">Patient's Portal</a></li>
+                                <li runat="server" id="nursesportal"   ><a href="./nurse-portal.aspx">Nurse's Portal</a></li>
+                                <li runat="server" id="doctorsportal"  ><a class="menu-top-active" href="./doctors-portal.aspx">Doctor's Portal</a></li>
+                                <li runat="server" id="adminportal"    ><a href="./admin-portal.aspx">Admin Portal</a></li>  
+                        </ul>
+>>>>>>> 811f19121f01d667c56e194d4372b601176849bc
 
                     </div>
                 </div>
@@ -166,11 +182,19 @@
                                                                     <asp:TemplateField HeaderText="Name">
                                                                         <ItemTemplate>
                                                                             <asp:Label ID="lblFullName" runat="server" Text='<%#Eval("FullName")%>'></asp:Label>
-                                                                            <asp:Label ID="lblFirstName" runat="server" Text='<%#Eval("FirstName")%>' Visible="false"></asp:Label>
+<%--                                                                            <asp:Label ID="lblFirstName" runat="server" Text='<%#Eval("FirstName")%>' Visible="false"></asp:Label>
                                                                             <asp:Label ID="lblLastName" runat="server" Text='<%#Eval("LastName")%>' Visible="false"></asp:Label>
+<<<<<<< HEAD
                                                                             <asp:Label ID="lblOtherName" runat="server" Text='<%#Eval("OtherNames")%>' Visible="false"></asp:Label>
                                                                             <asp:Label ID="lblEmployeeID" runat="server" Text='<%#Eval("EmployeeID")%>' Visible="false"></asp:Label>
                                                                             <asp:Label ID="lblStaffTypeID" runat="server" Text='<%#Eval("StaffTypeID")%>' Visible="false"></asp:Label>
+=======
+
+                                                                            <asp:Label ID="lblOtherName" runat="server" Text='<%#Eval("OtherNames")%>' Visible="false"></asp:Label>
+                                                                            <asp:Label ID="lblEmployeeID" runat="server" Text='<%#Eval("EmployeeID")%>' Visible="false"></asp:Label>
+                                                                            <asp:Label ID="lblStaffTypeID" runat="server" Text='<%#Eval("StaffTypeID")%>' Visible="false"></asp:Label>--%>
+
+>>>>>>> 811f19121f01d667c56e194d4372b601176849bc
                                                                             <asp:Label ID="lblDOB" runat="server" Text='<%#Eval("DOB")%>' Visible="false"></asp:Label>
                                                                             <asp:Label runat="server"></asp:Label>
                                                                         </ItemTemplate>
@@ -394,16 +418,20 @@
 
                                         <div class="col-md-12">
                                             <div class="panel panel-default">
-                                                <div class="panel-body">
-                                                    <div class="form-group" id="DorctorAttendanceDiv" runat="server">
-                                                        <div class="form-group">
-                                                            <div class="row form-group">
-                                                                <div class="col-md-6 text-left">
-                                                                    <h4>ATTENDANCE</h4>
-                                                                </div>
-                                                                <div class="col-md-6 text-right">
+                                            <div class="col-md-12">
+                                                <div class="panel panel-default">
+                                                    <div class="panel-body">
+                                                        <div class="form-group" id="NurseAttendanceDiv" runat="server">
+                                                            <div class="form-group">
+                                                                <div class="row form-group">
+                                                                    <div class="col-md-6 text-left">
+                                                                        <h4>ATTENDANCE</h4>
+                                                                    </div>
+                                                                    <div class="col-md-6 text-right">
+                                                                    </div>
                                                                 </div>
                                                             </div>
+<<<<<<< HEAD
                                                         </div>
                                                         <div class="row">
                                                             <div class="col-lg-3">
@@ -431,11 +459,44 @@
                                                             </div>
                                                         </div>
                                                             <div class="col-lg-3">
+=======
+                                                            <div class="row">
+                                                                <div class="col-lg-3">
+                                                                </div>
+                                                                <div class="col-lg-6">
+                                                                    <div class="form-group">
+                                                                        <label class="control-label" runat="server" id="attandancemsg">WELCOME CLICK SIGN IN FOR TODAY'S DUTY</label>
+                                                                    </div>
+                                                                    <div class="form-group">
+                                                                        <label class="control-label">EMPLOYEE NAME</label>
+                                                                        <asp:TextBox runat="server" CssClass="form-control" ID="EmployeeNameFullName" ReadOnly="true"></asp:TextBox>
+                                                                    </div>
+                                                                    <div class="form-group">
+                                                                        <label class="control-label">TIME</label>
+                                                                        <asp:TextBox runat="server" Text="" ID="AttendanceCurrentTime" CssClass="form-control" ReadOnly="true"></asp:TextBox>
+
+                                                                    </div>
+                                                                    <div class="form-group">
+                                                                        <div class="row">
+                                                                            <div class="col-lg-6 text-left">
+                                                                            </div>
+                                                                            <div class="col-lg-6 text-right">
+                                                                                <asp:Button runat="server" CssClass="btn btn-default btn-primary" ID="AttendanceSigninButton" Text="SIGN IN" OnClick="AttendanceSigninButton_Click" />
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-lg-3">
+                                                                </div>
+>>>>>>> 811f19121f01d667c56e194d4372b601176849bc
                                                             </div>
                                                         </div>
+
+                                                        <hr />
                                                     </div>
                                                 </div>
                                             </div>
+
                                         </div>
 
                                     </div>
