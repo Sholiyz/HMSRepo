@@ -1494,13 +1494,38 @@ public partial class Pages_patient_portal : System.Web.UI.Page
 
     #endregion
 
+    #region Pagination Control
+    protected void PatientListGridView_PageIndexChanging(object sender, GridViewPageEventArgs e)
+    {
+        PatientListGridView.PageIndex = e.NewPageIndex;
+        BindPatientList();
+    }
+
+    protected void PatientWithFamilyPlanListGridView_PageIndexChanging(object sender, GridViewPageEventArgs e)
+    {
+        PatientWithFamilyPlanListGridView.PageIndex = e.NewPageIndex;
+        BindPatientsWithFamilyList();
+    }
+
+    protected void PatientFamilyMemberListGridView_PageIndexChanging(object sender, GridViewPageEventArgs e)
+    {
+        int patientid = (int)Session["CurrentPatientIDViewingMember"];
+        PatientFamilyMemberListGridView.PageIndex = e.NewPageIndex;
+        BindFamilyMemberList(patientid);
+    }
+
+    protected void ConsultationListGridView_PageIndexChanging(object sender, GridViewPageEventArgs e)
+    {
+        ConsultationListGridView.PageIndex = e.NewPageIndex;
+        BindConsultationList();
+    }
+
+    protected void VitalSignListGridView_PageIndexChanging(object sender, GridViewPageEventArgs e)
+    {
+        VitalSignListGridView.PageIndex = e.NewPageIndex;
+        BindVitalSignList();
+    }
+    #endregion
 
 
-
-
-
-
-
-
-    
 }

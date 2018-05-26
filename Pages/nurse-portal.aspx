@@ -222,7 +222,7 @@
                                                                     </asp:TemplateField>
                                                                 </Columns>
                                                                 <PagerSettings PageButtonCount="5" />
-                                                                <PagerStyle CssClass="pagination-ys" HorizontalAlign="Right" />
+                                                                <PagerStyle CssClass="pagination-ys" HorizontalAlign="Left" />
                                                             </asp:GridView>
 
                                                         </div>

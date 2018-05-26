@@ -84,6 +84,7 @@
                                         <div class="col-md-12">
                                             <div class="panel panel-default">
                                                 <div class="panel-body">
+                                                    <hr />
                                                     <div class="form-group" id="AddUserDiv" runat="server">
                                                         <div class="form-group">
                                                             <div class="row form-group">
@@ -135,6 +136,7 @@
                                                             </div>
                                                         </div>
                                                     </div>
+                                                    <%--<hr />--%>
                                                     <div class="form-group" id="ViewUserListDiv" runat="server">
 
                                                         <div class="form-group">
@@ -211,6 +213,7 @@
                                                             </asp:GridView>
                                                         </div>
                                                     </div>
+                                                    <%--<hr />--%>
                                                     <div class="form-group" id="EditUserDiv" runat="server">
                                                         <h4>EDIT USER</h4>
                                                         <div class="row">
@@ -252,7 +255,7 @@
                                                             </div>
                                                         </div>
                                                     </div>
-
+                                                    <%--<hr />--%>
                                                     <div class="form-group" id="ViewUserCreationDiv" runat="server">
                                                         <h4>VIEW USER DETAIL</h4>
                                                         <div class="row">
@@ -377,7 +380,7 @@
 
                                                         </div>
                                                     </div>
-                                                    <hr />
+                                                    <%--<hr />--%>
                                                     <div class="form-group" id="EditTransactionTypeDiv" runat="server">
                                                         <h4>EDIT TRANSACTION TYPE</h4>
                                                         <div class="row">
@@ -407,7 +410,7 @@
                                                             </div>
                                                         </div>
                                                     </div>
-                                                    <hr />
+                                                    <%--<hr />--%>
                                                     <div class="form-group" id="ViewTransactionTypeDiv" runat="server">
                                                         <h4>VIEW TRANSACTION TYPE</h4>
                                                         <div class="row">
@@ -956,7 +959,7 @@
                                                             </div>
                                                         </div>
                                                     </div>
-
+                                                    <%--<hr />--%>
                                                     <div class="form-group" id="ViewNurseDutyListDiv" runat="server">
                                                         <div class="form-group">
                                                             <div class="row form-group">
@@ -1012,7 +1015,7 @@
 
                                                         </div>
                                                     </div>
-
+                                                    <%--<hr />--%>
                                                     <div class="form-group" id="EditNurseDutyDiv" runat="server">
                                                         <h4>EDIT NURSE DUTY</h4>
                                                         <div class="row">
@@ -1050,7 +1053,7 @@
                                                             </div>
                                                         </div>
                                                     </div>
-
+                                                    <%--<hr />--%>
                                                     <div class="form-group" id="ViewNurseDutyDiv" runat="server">
                                                         <h4>VIEW ASSIGNED NURSE DUTY</h4>
                                                         <div class="row">
@@ -1214,7 +1217,7 @@
                                                             </div>
                                                         </div>
                                                     </div>
-
+                                                    <%--<hr />--%>
                                                     <div class="form-group" id="EditHospitalDetailDiv" runat="server">
                                                         <h4>EDIT HOSPITAL DETAIL</h4>
                                                         <div class="row">

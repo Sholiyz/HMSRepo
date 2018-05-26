@@ -546,8 +546,6 @@ public partial class Pages_doctors_portal : System.Web.UI.Page
         SetAttendanceContainerVisible();
     }
 
-
-
     private void SetDoctorContainerVisible()
     {
         HideContentView();
@@ -608,7 +606,6 @@ public partial class Pages_doctors_portal : System.Web.UI.Page
     }
     private void ManageRoleView(string rolename)
     {
-
         //string role = "edmin"; //Pasture.GetCurrentUserSessionRole();
         if (rolename.ToLower() == "admin")
         {
@@ -653,22 +650,19 @@ public partial class Pages_doctors_portal : System.Web.UI.Page
         {
 
         }
-
     }
     #endregion
 
 
    #region ment
-
     protected void DoctorListGridView_PageIndexChanging(object sender, GridViewPageEventArgs e)
     {
         DoctorListGridView.PageIndex = e.NewPageIndex;
         BindGrid();
     }
+   #endregion
 
-    #endregion
-
-    #region comment
+   #region comment
     //protected void DoctorListGridView_RowCommand(object sender, GridViewCommandEventArgs e)
     //{
     //    try

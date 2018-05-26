@@ -177,7 +177,8 @@
                                                             </div>
                                                         </div>
                                                         <div class="table-responsive">
-                                                            <asp:GridView ID="PatientListGridView" runat="server" AutoGenerateColumns="false" CssClass="table  table-bordered text-center" DataKeyNames="PatientID" EmptyDataText="There are no data records to display.">
+                                                            <asp:GridView ID="PatientListGridView" runat="server" AutoGenerateColumns="false" CssClass="table  table-bordered text-center" DataKeyNames="PatientID" EmptyDataText="There are no data records to display." AllowPaging="True" PagerStyle-Font-Size="Medium" PagerSettings-PageButtonCount="5" PagerStyle-HorizontalAlign="Center" OnPageIndexChanging="PatientListGridView_PageIndexChanging">
+                                                                <PagerStyle CssClass="pagination-ys text-center" />
                                                                 <Columns>
                                                                     <asp:BoundField DataField="PatientID" HeaderText="Patient ID" SortExpression="PatientID">
                                                                         <HeaderStyle CssClass="hide" HorizontalAlign="Left" />
@@ -212,6 +213,8 @@
                                                                         </ItemTemplate>
                                                                     </asp:TemplateField>
                                                                 </Columns>
+                                                                <PagerSettings PageButtonCount="5" />
+                                                                <PagerStyle CssClass="pagination-ys" HorizontalAlign="Left" />
                                                             </asp:GridView>
 
                                                         </div>
@@ -481,7 +484,8 @@
                                                             </div>
                                                         </div>
                                                         <div class="table-responsive">
-                                                            <asp:GridView ID="PatientWithFamilyPlanListGridView" runat="server" AutoGenerateColumns="false" CssClass="table  table-bordered text-center text-center" DataKeyNames="PatientID" EmptyDataText="There are no data records to display.">
+                                                            <asp:GridView ID="PatientWithFamilyPlanListGridView" runat="server" AutoGenerateColumns="false" CssClass="table  table-bordered text-center text-center" DataKeyNames="PatientID" EmptyDataText="There are no data records to display." AllowPaging="True" PagerStyle-Font-Size="Medium" PagerSettings-PageButtonCount="5" PagerStyle-HorizontalAlign="Center" OnPageIndexChanging="PatientWithFamilyPlanListGridView_PageIndexChanging">
+                                                                 <PagerStyle CssClass="pagination-ys text-center" />
                                                                 <Columns>
                                                                     <asp:BoundField DataField="PatientID" HeaderText="PatientID" SortExpression="PatientFMID">
                                                                         <HeaderStyle CssClass="hide" HorizontalAlign="Left" />
@@ -514,6 +518,8 @@
                                                                         </ItemTemplate>
                                                                     </asp:TemplateField>
                                                                 </Columns>
+                                                                <PagerSettings PageButtonCount="5" />
+                                                                <PagerStyle CssClass="pagination-ys" HorizontalAlign="Left" />
                                                             </asp:GridView>
 
                                                         </div>
@@ -607,7 +613,8 @@
                                                             </div>
                                                         </div>
                                                         <div class="table-responsive">
-                                                            <asp:GridView ID="PatientFamilyMemberListGridView" runat="server" AutoGenerateColumns="false" CssClass="table  table-bordered text-center" DataKeyNames="FamilyMemberID" EmptyDataText="There are no data records to display.">
+                                                            <asp:GridView ID="PatientFamilyMemberListGridView" runat="server" AutoGenerateColumns="false" CssClass="table  table-bordered text-center" DataKeyNames="FamilyMemberID" EmptyDataText="There are no data records to display." AllowPaging="True" PagerStyle-Font-Size="Medium" PagerSettings-PageButtonCount="5" PagerStyle-HorizontalAlign="Center" OnPageIndexChanging="PatientFamilyMemberListGridView_PageIndexChanging">
+                                                                <PagerStyle CssClass="pagination-ys text-center" />
                                                                 <Columns>
                                                                     <asp:BoundField DataField="FamilyMemberID" HeaderText="FamilyMemberID" SortExpression="ID">
                                                                         <HeaderStyle CssClass="hide" HorizontalAlign="Left" />
@@ -636,6 +643,8 @@
                                                                         </ItemTemplate>
                                                                     </asp:TemplateField>
                                                                 </Columns>
+                                                                 <PagerSettings PageButtonCount="5" />
+                                                                <PagerStyle CssClass="pagination-ys" HorizontalAlign="Left" />
                                                             </asp:GridView>
 
                                                         </div>
@@ -868,7 +877,8 @@
                                                             </div>
                                                         </div>
                                                         <div class="table-responsive">
-                                                            <asp:GridView ID="ConsultationListGridView" runat="server" AutoGenerateColumns="false" CssClass="table  table-bordered text-center text-center" DataKeyNames="ConsultationID" EmptyDataText="There are no data records to display.">
+                                                            <asp:GridView ID="ConsultationListGridView" runat="server" AutoGenerateColumns="false" CssClass="table  table-bordered text-center text-center" DataKeyNames="ConsultationID" EmptyDataText="There are no data records to display." AllowPaging="True" PagerStyle-Font-Size="Medium" PagerSettings-PageButtonCount="5" PagerStyle-HorizontalAlign="Center" OnPageIndexChanging="ConsultationListGridView_PageIndexChanging">
+                                                                <PagerStyle CssClass="pagination-ys text-center" />
                                                                 <Columns>
                                                                     <asp:BoundField DataField="ConsultationID" HeaderText="ConsultationID" SortExpression="ConsultationID">
                                                                         <HeaderStyle CssClass="hide" HorizontalAlign="Left" />
@@ -898,6 +908,8 @@
                                                                         </ItemTemplate>
                                                                     </asp:TemplateField>
                                                                 </Columns>
+                                                                <PagerSettings PageButtonCount="5" />
+<PagerStyle CssClass="pagination-ys" HorizontalAlign="Left" />
                                                             </asp:GridView>
                                                         </div>
                                                     </div>
@@ -1083,7 +1095,8 @@
                                                             </div>
                                                         </div>
                                                         <div class="table-responsive">
-                                                            <asp:GridView ID="VitalSignListGridView" runat="server" AutoGenerateColumns="false" CssClass="table  table-bordered text-center text-center" DataKeyNames="ID" EmptyDataText="There are no data records to display.">
+                                                            <asp:GridView ID="VitalSignListGridView" runat="server" AutoGenerateColumns="false" CssClass="table  table-bordered text-center text-center" DataKeyNames="ID" EmptyDataText="There are no data records to display." AllowPaging="True" PagerStyle-Font-Size="Medium" PagerSettings-PageButtonCount="5" PagerStyle-HorizontalAlign="Center" OnPageIndexChanging="VitalSignListGridView_PageIndexChanging">
+                                                                <PagerStyle CssClass="pagination-ys text-center" />
                                                                 <Columns>
                                                                     <asp:BoundField DataField="ID" HeaderText="Order ID" SortExpression="ID">
                                                                         <HeaderStyle CssClass="hide" HorizontalAlign="Left" />
@@ -1113,11 +1126,12 @@
                                                                                 <asp:Button runat="server" CommandArgument='<%# Eval("ID") %>' Text="View" ID="ViewVitalSignBtn" OnClick="ViewVitalSignBtn_Click" CssClass="btn btn-sm btn-primary" />
                                                                                 <asp:Button runat="server" CommandArgument='<%# Eval("ID") %>' Text="Edit" ID="EditVitalSignBtn" OnClick="EditVitalSignBtn_Click" CssClass="btn btn-sm btn-warning" />
 
-
                                                                             </div>
                                                                         </ItemTemplate>
                                                                     </asp:TemplateField>
                                                                 </Columns>
+                                                                <PagerSettings PageButtonCount="5" />
+<PagerStyle CssClass="pagination-ys" HorizontalAlign="Left" />
                                                             </asp:GridView>
                                                         </div>
                                                     </div>

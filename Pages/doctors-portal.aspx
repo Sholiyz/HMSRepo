@@ -142,6 +142,7 @@
                                                             </div>
                                                         </div>
                                                     </div>
+
                                                     <%-- ==============================VIEW DOCTOR LIST ===================================== --%>
                                                     <div class="form-group" id="ViewDoctorListDiv" runat="server">
                                                         <div class="form-group">
@@ -391,7 +392,6 @@
 
                                     <%-- ATTENDANCE TAB --%>
                                     <div class="tab-pane fade" id="attendance" runat="server">
-
                                         <div class="col-md-12">
                                             <div class="panel panel-default">
                                                 <div class="panel-body">
@@ -440,14 +440,9 @@
                                                 <hr />
                                                 </div>
                                              </div>
-
-                                     </div>
-
-                                        </div>
-
                                     </div>
-
-
+                                   </div>
+                                   </div>
                                 </div>
                             </div>
                         </div>
