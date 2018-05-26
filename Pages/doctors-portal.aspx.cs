@@ -12,62 +12,66 @@ public partial class Pages_doctors_portal : System.Web.UI.Page
     bool IsPageRefresh = false;
     protected void Page_Load(object sender, EventArgs e)
     {
-        AuthUser CurrentUser = Pasture.GetCurrentUserSessionDetail();
-        if (CurrentUser != null)
-        {
-            string role = Pasture.GetCurrentUserSessionRole();
-            ManageRoleView(role);
-            int haveopenedattendance = Pasture.GetUnlockedAttendanceLogByUserIDList(CurrentUser.UserID);
-            if (haveopenedattendance > 0)
-            {
-<<<<<<< HEAD
-=======
-                //open doctors portal
->>>>>>> 811f19121f01d667c56e194d4372b601176849bc
-
-                //open doctors portal
-                EmployeeNameFullName.Text = Pasture.GetEmployeeFullNameById(CurrentUser.StaffID);
-                AttendanceCurrentTime.Text = Pasture.GetAttendanceDateTime();
-                attandancemsg.InnerText = "GOOD BYE CLICK SIGN OUT TO CLOSE TODAY'S DUTY";
-
-<<<<<<< HEAD
-=======
-                AttendanceSigninButton.Text = "SIGN OUT";
->>>>>>> 811f19121f01d667c56e194d4372b601176849bc
-            }
-            else
-            {
-                //open attendace sheet
-                SetAttendanceContainerVisible();
-                EmployeeNameFullName.Text = Pasture.GetEmployeeFullNameById(CurrentUser.StaffID);
-                AttendanceCurrentTime.Text = Pasture.GetAttendanceDateTime();
-                // Response.Redirect("./patient-portal.aspx");
-                return;
-            }
-        }
+        
 
 
 
         if (!Page.IsPostBack)
         {
-            ViewState["ViewStateId"] = System.Guid.NewGuid().ToString();
-            Session["SessionId"] = ViewState["ViewStateId"].ToString();
+            string role = "";
+            AuthUser CurrentUser = Pasture.GetCurrentUserSessionDetail();
+            if (CurrentUser != null)
+            {
+                role = Pasture.GetCurrentUserSessionRole();
+                ManageRoleView(role);
+                int haveopenedattendance = Pasture.GetUnlockedAttendanceLogByUserIDList(CurrentUser.UserID);
+                if (haveopenedattendance > 0)
+                {
 
-            BindGrid();
-            HideDivsDocTab();
-            ViewDoctorListDiv.Visible = true;
+
+                    //open doctors portal
+                    EmployeeNameFullName.Text = Pasture.GetEmployeeFullNameById(CurrentUser.StaffID);
+                    AttendanceCurrentTime.Text = Pasture.GetAttendanceDateTime();
+                    attandancemsg.InnerText = "GOOD BYE CLICK SIGN OUT TO CLOSE TODAY'S DUTY";
+                    AttendanceSigninButton.Text = "SIGN OUT";
+
+                }
+                else
+                {
+                    //open attendace sheet
+                    SetAttendanceContainerVisible();
+                    EmployeeNameFullName.Text = Pasture.GetEmployeeFullNameById(CurrentUser.StaffID);
+                    AttendanceCurrentTime.Text = Pasture.GetAttendanceDateTime();
+                    // Response.Redirect("./patient-portal.aspx");
+                    return;
+                }
+            }
+            //ViewState["ViewStateId"] = System.Guid.NewGuid().ToString();
+            //Session["SessionId"] = ViewState["ViewStateId"].ToString();
+            role = Pasture.GetCurrentUserSessionRole();
+            if (role != null)
+            {
+                ManageRoleView(role);
+
+            }
+            else
+            {
+                Response.Redirect("./login.aspx");
+                return;
+            }
+         
             //DoctorListGridView.DataSource = LoadOrderItems();
             //DoctorListGridView.DataBind();
         }
-        else
-        {
-            if (ViewState["ViewStateId"].ToString() != Session["SessionId"].ToString())
-            {
-                IsPageRefresh = true;
-            }
-            Session["SessionId"] = System.Guid.NewGuid().ToString();
-            ViewState["ViewStateId"] = Session["SessionId"].ToString();
-        }
+        //else
+        //{
+        //    //if (ViewState["ViewStateId"].ToString() != Session["SessionId"].ToString())
+        //    //{
+        //    //    IsPageRefresh = true;
+        //    //}
+        //    //Session["SessionId"] = System.Guid.NewGuid().ToString();
+        //    //ViewState["ViewStateId"] = Session["SessionId"].ToString();
+        //}
 
     }
 
@@ -245,7 +249,7 @@ public partial class Pages_doctors_portal : System.Web.UI.Page
         txtGenderV.Text = emp.Gender.ToString();
         txtAddressV.Text = emp.Address;
         txtMaritalStatusV.Text = emp.MaritalStatus;
-        txtDOBV.Text = emp.DOB.ToString();
+        txtDOBV.Text = emp.DOB.Date.ToString();
         doctorviewimg.ImageUrl = "data:image/png;base64," + imgurl;
 
         //HideDivs
@@ -270,7 +274,7 @@ public partial class Pages_doctors_portal : System.Web.UI.Page
         ddlGenderE.SelectedItem.Text = emp.Gender.ToString(); //(row.FindControl("lblGender") as Label).Text;
         ddlMaritalStatusE.SelectedItem.Text = emp.MaritalStatus; //(row.FindControl("lblMaritalStatus") as Label).Text;
         txtAddressE.Text = emp.Address; //(row.FindControl("lblAddress") as Label).Text;
-        txtDOBE.Text = emp.DOB.ToString(); //Convert.ToDateTime((row.FindControl("lblDOB") as Label).Text).ToString("yyyy-MM-dd");
+        txtDOBE.Text = emp.DOB.Date.ToString(); //Convert.ToDateTime((row.FindControl("lblDOB") as Label).Text).ToString("yyyy-MM-dd");
         doctorImage.ImageUrl = "data:image/png;base64," + imgurl;
 
         //HideDivs
@@ -377,8 +381,7 @@ public partial class Pages_doctors_portal : System.Web.UI.Page
         }
 
     }
-<<<<<<< HEAD
-=======
+
 
     //protected void DoctorListGridView_RowCommand(object sender, GridViewCommandEventArgs e)
     //{
@@ -476,7 +479,7 @@ public partial class Pages_doctors_portal : System.Web.UI.Page
     //    }
     //}
 
->>>>>>> 811f19121f01d667c56e194d4372b601176849bc
+
 
     protected void btnBackView_Click(object sender, EventArgs e)
     {
@@ -533,16 +536,16 @@ public partial class Pages_doctors_portal : System.Web.UI.Page
     {
         SetDoctorContainerVisible();
         BindGrid();
+        HideDivsDocTab();
+        ViewDoctorListDiv.Visible = true;
+        
     }
 
     protected void AttendanceDivNav_Click(object sender, EventArgs e)
     {
         SetAttendanceContainerVisible();
     }
-<<<<<<< HEAD
 
-=======
->>>>>>> 811f19121f01d667c56e194d4372b601176849bc
 
 
     private void SetDoctorContainerVisible()
@@ -654,18 +657,15 @@ public partial class Pages_doctors_portal : System.Web.UI.Page
     }
     #endregion
 
-<<<<<<< HEAD
-    #region ment
-=======
 
-   
->>>>>>> 811f19121f01d667c56e194d4372b601176849bc
+   #region ment
+
     protected void DoctorListGridView_PageIndexChanging(object sender, GridViewPageEventArgs e)
     {
         DoctorListGridView.PageIndex = e.NewPageIndex;
         BindGrid();
     }
-<<<<<<< HEAD
+
     #endregion
 
     #region comment
@@ -682,19 +682,8 @@ public partial class Pages_doctors_portal : System.Web.UI.Page
 
     //        //GetImage
     //        string imgurl = GetImage(itemID);
-
-=======
->>>>>>> 811f19121f01d667c56e194d4372b601176849bc
-
-    
-
-<<<<<<< HEAD
     //        throw new Exception(ex.Message);
     //    }
     //}
     #endregion
-
-
-=======
->>>>>>> 811f19121f01d667c56e194d4372b601176849bc
 }

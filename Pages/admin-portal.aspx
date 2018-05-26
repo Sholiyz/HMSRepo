@@ -13,11 +13,11 @@
                 <div class="col-md-12">
                     <div class="navbar-collapse collapse ">
                         <ul id="menu-top" class="nav navbar-nav navbar-right">
-                            <li runat="server" id="dashboard" ><a href="./dashboard.aspx">Dashboard</a></li>
-                            <li runat="server" id="patientsportal" ><a href="./patient-portal.aspx">Patient's Portal</a></li>
-                            <li runat="server" id="nursesportal" ><a href="./nurse-portal.aspx">Nurse's Portal</a></li>
-                            <li runat="server" id="doctorsportal" ><a href="./doctors-portal.aspx">Doctor's Portal</a></li>
-                            <li runat="server" id="adminportal" ><a class="menu-top-active" href="./admin-portal.aspx">Admin Portal</a></li>
+                            <li runat="server" id="dashboard"><a href="./dashboard.aspx">Dashboard</a></li>
+                            <li runat="server" id="patientsportal"><a href="./patient-portal.aspx">Patient's Portal</a></li>
+                            <li runat="server" id="nursesportal"><a href="./nurse-portal.aspx">Nurse's Portal</a></li>
+                            <li runat="server" id="doctorsportal"><a href="./doctors-portal.aspx">Doctor's Portal</a></li>
+                            <li runat="server" id="adminportal"><a class="menu-top-active" href="./admin-portal.aspx">Admin Portal</a></li>
                         </ul>
                     </div>
                 </div>
@@ -136,7 +136,7 @@
                                                         </div>
                                                     </div>
                                                     <div class="form-group" id="ViewUserListDiv" runat="server">
-                                                       
+
                                                         <div class="form-group">
                                                             <div class="row form-group">
                                                                 <div class="col-md-6 text-left">
@@ -147,7 +147,7 @@
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                        <hr style="border-top: 1px solid #232121;"/>
+                                                        <hr style="border-top: 1px solid #232121;" />
                                                         <div class="form-group">
                                                             <div class="row form-group">
                                                                 <div class="col-sm-2 col-md-2 form-group text-right">
@@ -165,7 +165,7 @@
                                                                 <div class="col-sm-2 col-md-1 form-group text-left">
                                                                     <asp:Button runat="server" CssClass="btn btn-default btn-primary text-right" ID="UserSearchButton" Text="SEARCH" OnClick="UserSearchButton_Click" />
                                                                 </div>
-                                                               <%-- <div class="col-sm-2 col-md-2 form-group text-right">
+                                                                <%-- <div class="col-sm-2 col-md-2 form-group text-right">
                                                                     <asp:Button runat="server" CssClass="btn btn-default btn-primary text-right" ID="Button1" OnClick="ViewUserlistAddUserButton_Click" Text="ADD NEW USER" />
                                                                 </div>--%>
                                                             </div>
@@ -181,7 +181,7 @@
                                                                         <ItemTemplate>
                                                                             <asp:Label runat="server" Text='<%#Pasture.GetEmployeeFullNameById(int.Parse(Eval("StaffID").ToString()))%>'></asp:Label>
                                                                         </ItemTemplate>
-                                                                        <ItemStyle HorizontalAlign="Left"  />
+                                                                        <ItemStyle HorizontalAlign="Left" />
                                                                     </asp:TemplateField>
 
                                                                     <asp:BoundField DataField="UserName" HeaderText="UserName" SortExpression="Name">
@@ -193,7 +193,7 @@
                                                                         <ItemTemplate>
                                                                             <asp:Label runat="server" Text='<%#Pasture.GetRoleNameByRoleID(int.Parse(Eval("StaffRoleID").ToString()))%>'></asp:Label>
                                                                         </ItemTemplate>
-                                                                        <ItemStyle HorizontalAlign="Left"  />
+                                                                        <ItemStyle HorizontalAlign="Left" />
                                                                     </asp:TemplateField>
 
                                                                     <asp:TemplateField HeaderText="Actions" HeaderStyle-CssClass="center text-center" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center" ItemStyle-VerticalAlign="Middle">
@@ -1205,7 +1205,7 @@
                                                                         <div class="col-lg-6 text-left">
                                                                         </div>
                                                                         <div class="col-lg-6 text-right">
-                                                                            <asp:Button runat="server" CssClass="btn btn-default btn-primary" Text="PROCEED" ID="AddHospitalDetailProceedButton" OnClick="AddHospitalDetailProceedButton_Click"/>
+                                                                            <asp:Button runat="server" CssClass="btn btn-default btn-primary" Text="PROCEED" ID="AddHospitalDetailProceedButton" OnClick="AddHospitalDetailProceedButton_Click" />
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -1308,21 +1308,7 @@
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="row">
-
-                    <%--  <div class="col-md-12">
-
-                        <div class="alert alert-info">
-                            <asp:Button runat="server" ID="ShowAlertClick" Text="Show Note" CssClass="btn btn-default btn-primary" OnClick="ShowAlertClick_Click" />
-                            <asp:Button runat="server" ID="ShowPopAlert" Text="Show pop Note" CssClass="btn btn-default btn-primary" OnClick="ShowPopAlert_Click" />
-                            Click to test Notification Message
-                            <br />
-                            <strong>ALERT EXAMPLE :</strong> This is an alert example . You can use differnt classes like alert-success, alert-warning,etc.
-                        </div>
-
-                    </div>--%>
-                </div>
+                </div>               
             </div>
         </div>
     </div>
