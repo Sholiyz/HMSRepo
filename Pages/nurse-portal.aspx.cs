@@ -10,37 +10,39 @@ public partial class Pages_nurse_portal : System.Web.UI.Page
     bool IsPageRefresh = false;
     protected void Page_Load(object sender, EventArgs e)
     {
-        AuthUser CurrentUser = Pasture.GetCurrentUserSessionDetail();
-        if (CurrentUser != null)
-        {
-            string role = Pasture.GetCurrentUserSessionRole();
-            ManageRoleView(role);
-            int haveopenedattendance = Pasture.GetUnlockedAttendanceLogByUserIDList(CurrentUser.UserID);
-            if (haveopenedattendance > 0)
-            {
-                //open doctors portal
-                //open doctors portal
-                EmployeeNameFullName.Text = Pasture.GetEmployeeFullNameById(CurrentUser.StaffID);
-                AttendanceCurrentTime.Text = Pasture.GetAttendanceDateTime();
-                attandancemsg.InnerText = "GOOD BYE CLICK SIGN OUT TO CLOSE TODAY'S DUTY";
-                AttendanceSigninButton.Text = "SIGN OUT";
-            }
-            else
-            {
-                //open attendace sheet
-                SetAttendanceContainerVisible();
-                EmployeeNameFullName.Text = Pasture.GetEmployeeFullNameById(CurrentUser.StaffID);
-                AttendanceCurrentTime.Text = Pasture.GetAttendanceDateTime();
-                //Response.Redirect("./patient-portal.aspx");
-                return;
-            }
-        }
+        
 
         if (!Page.IsPostBack)
         {
+            string role = "";
+            AuthUser CurrentUser = Pasture.GetCurrentUserSessionDetail();
+            if (CurrentUser != null)
+            {
+                role = Pasture.GetCurrentUserSessionRole();
+                ManageRoleView(role);
+                int haveopenedattendance = Pasture.GetUnlockedAttendanceLogByUserIDList(CurrentUser.UserID);
+                if (haveopenedattendance > 0)
+                {
+                    //open doctors portal
+                    //open doctors portal
+                    EmployeeNameFullName.Text = Pasture.GetEmployeeFullNameById(CurrentUser.StaffID);
+                    AttendanceCurrentTime.Text = Pasture.GetAttendanceDateTime();
+                    attandancemsg.InnerText = "GOOD BYE CLICK SIGN OUT TO CLOSE TODAY'S DUTY";
+                    AttendanceSigninButton.Text = "SIGN OUT";
+                }
+                else
+                {
+                    //open attendace sheet
+                    SetAttendanceContainerVisible();
+                    EmployeeNameFullName.Text = Pasture.GetEmployeeFullNameById(CurrentUser.StaffID);
+                    AttendanceCurrentTime.Text = Pasture.GetAttendanceDateTime();
+                    //Response.Redirect("./patient-portal.aspx");
+                    return;
+                }
+            }
             //ViewState["ViewStateId"] = System.Guid.NewGuid().ToString();
             //Session["SessionId"] = ViewState["ViewStateId"].ToString();
-            string role = Pasture.GetCurrentUserSessionRole();
+             role = Pasture.GetCurrentUserSessionRole();
             if (role != null)
             {
                 ManageRoleView(role);
@@ -53,15 +55,7 @@ public partial class Pages_nurse_portal : System.Web.UI.Page
             }
            
         }
-        //else
-        //{
-        //    if (ViewState["ViewStateId"].ToString() != Session["SessionId"].ToString())
-        //    {
-        //        IsPageRefresh = true;
-        //    }
-        //    Session["SessionId"] = System.Guid.NewGuid().ToString();
-        //    ViewState["ViewStateId"] = Session["SessionId"].ToString();
-        //}
+       
     }
 
     #region Written By Ola
