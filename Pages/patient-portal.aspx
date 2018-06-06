@@ -1115,7 +1115,7 @@
 
                                                                     <asp:TemplateField HeaderText="Staff Name" ItemStyle-CssClass="text-left" HeaderStyle-CssClass="text-center">
                                                                         <ItemTemplate>
-                                                                            <asp:Label runat="server" Text='<%#Pasture.GetEmployeeFullNameById(Convert.ToInt32(Eval("PatientID")))%>'></asp:Label>
+                                                                            <asp:Label runat="server" Text='<%#Pasture.GetEmployeeFullNameByuserId(Convert.ToInt32(Eval("StaffID")))%>'></asp:Label>
                                                                         </ItemTemplate>
                                                                     </asp:TemplateField>
 

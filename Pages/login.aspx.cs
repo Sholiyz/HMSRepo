@@ -49,6 +49,11 @@ public partial class Pages_login : System.Web.UI.Page
                 PastureAlert.PopErrorAlert("Bad Request- Account does not exist!!!");
                 return;
             }
+            if (valresponse == 105)
+            {
+                PastureAlert.PopErrorAlert("Bad Connection- DataBase Connection issues contact the adminstrator!!!");
+                return;
+            }
         }
         else
         {

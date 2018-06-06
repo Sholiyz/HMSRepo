@@ -1149,7 +1149,7 @@
                                                                     </asp:BoundField>
                                                                     <asp:TemplateField HeaderText="Employee">
                                                                         <ItemTemplate>
-                                                                            <asp:Label runat="server" Text='<%#Pasture.GetEmployeeFullNameById(Convert.ToInt32(Eval("StaffID")))%>'></asp:Label>
+                                                                            <asp:Label runat="server" Text='<%#Pasture.GetEmployeeFullNameByuserId(Convert.ToInt32(Eval("StaffID")))%>'></asp:Label>
                                                                         </ItemTemplate>
                                                                     </asp:TemplateField>
                                                                     <asp:TemplateField HeaderText="DutyType">

@@ -523,6 +523,11 @@ public partial class Pages_nurse_portal : System.Web.UI.Page
             AttendanceLog UserAttendance = new AttendanceLog();
             UserAttendance.ClockInTime = AttendanceTime;
             int response = Pasture.ClockUserInAttendanceLog(UserAttendance);
+            if (response == -1)
+            {
+                PastureAlert.PopSuccessAlert("You Currently Do not have any assiged duty!!.");
+                Response.Redirect("./patient-portal.aspx");
+            }
             if (response > 0)
             {
 

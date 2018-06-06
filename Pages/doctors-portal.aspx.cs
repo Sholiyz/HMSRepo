@@ -12,10 +12,6 @@ public partial class Pages_doctors_portal : System.Web.UI.Page
     bool IsPageRefresh = false;
     protected void Page_Load(object sender, EventArgs e)
     {
-        
-
-
-
         if (!Page.IsPostBack)
         {
             string role = "";
@@ -28,7 +24,10 @@ public partial class Pages_doctors_portal : System.Web.UI.Page
                 if (haveopenedattendance > 0)
                 {
 
-
+                    SetDoctorContainerVisible();
+                    BindGrid();
+                    HideDivsDocTab();
+                    ViewDoctorListDiv.Visible = true;
                     //open doctors portal
                     EmployeeNameFullName.Text = Pasture.GetEmployeeFullNameById(CurrentUser.StaffID);
                     AttendanceCurrentTime.Text = Pasture.GetAttendanceDateTime();
@@ -584,6 +583,11 @@ public partial class Pages_doctors_portal : System.Web.UI.Page
 
             AttendanceLog AttLog = new AttendanceLog();
             int response = Pasture.ClockUserOutAttendanceLog(CurrentUser.UserID, AttendanceTime);
+            //if (response == -1)
+            //{
+            //    PastureAlert.PopSuccessAlert("You Currently Donnot have an assiged duty!!.");
+            //    Response.Redirect("./patient-portal.aspx");
+            //}
             if (response > 0)
             {
                 PastureAlert.PopSuccessAlert("You have successfully signed out.");
@@ -595,9 +599,14 @@ public partial class Pages_doctors_portal : System.Web.UI.Page
             AttendanceLog UserAttendance = new AttendanceLog();
             UserAttendance.ClockInTime = AttendanceTime;
             int response = Pasture.ClockUserInAttendanceLog(UserAttendance);
+            if (response == -1)
+            {
+                PastureAlert.PopSuccessAlert("You Currently Do not have any assiged duty!!.");
+                Response.Redirect("./patient-portal.aspx");
+            }
             if (response > 0)
             {
-
+               
                 PastureAlert.PopSuccessAlert("You have successfully signed in.");
                 Response.Redirect("./patient-portal.aspx");
                 return;
@@ -613,11 +622,11 @@ public partial class Pages_doctors_portal : System.Web.UI.Page
             patientsportal.Visible = true;
             nursesportal.Visible = true;
             doctorsportal.Visible = true;
-            adminportal.Visible = true;
-            SetDoctorContainerVisible();
-            BindGrid();
+            adminportal.Visible = true;                       
             HideContentView();
+            SetDoctorContainerVisible(); 
             ViewDoctorListDiv.Visible = true;
+            BindGrid();
             return;
         }
         if (rolename.ToLower().Contains("nurse"))

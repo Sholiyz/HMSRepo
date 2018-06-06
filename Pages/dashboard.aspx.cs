@@ -11,7 +11,16 @@ public partial class Pages_dashboard : System.Web.UI.Page
     {
 
         string role = Pasture.GetCurrentUserSessionRole();
-        ManageRoleView(role);
+        if (role != null)
+        {
+            ManageRoleView(role);
+
+        }
+        else
+        {
+            Response.Redirect("./login.aspx");
+            return;
+        }
 
         CurrentPatientNumberLiteral.Text = Pasture.GetPatientsCount().ToString();
 
